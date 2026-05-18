@@ -1,0 +1,1298 @@
+-------------------------------------------------------------------------------
+Test set: TestSuite
+-------------------------------------------------------------------------------
+Tests run: 338, Failures: 141, Errors: 0, Skipped: 0, Time elapsed: 101.4 s <<< FAILURE! -- in TestSuite
+runners.ParallelTestRunner.runScenario["API should return 400 when URI loan_id does not match payload loan_id", "Loan Recovery API - Strict Datatype Validation"](3) -- Time elapsed: 0.219 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code mismatch
+Expected: <400>
+     but: was <403>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at utils.ResponseValidator.validateStatusCode(ResponseValidator.java:23)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be(ApiStepDefinitions.java:452)
+	at ✽.the response status code should be 400(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:57)
+
+runners.ParallelTestRunner.runScenario["Loan ID field should not accept values containing allowed special characters", "Loan Recovery API - Strict Datatype Validation"](6) -- Time elapsed: 0.334 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 400 should be one of: 200,201
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "200,201"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:105)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](53) -- Time elapsed: 0.389 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 500 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](54) -- Time elapsed: 0.183 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](55) -- Time elapsed: 0.317 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](56) -- Time elapsed: 0.161 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](57) -- Time elapsed: 0.355 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](58) -- Time elapsed: 0.139 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](59) -- Time elapsed: 0.373 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](60) -- Time elapsed: 0.124 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](61) -- Time elapsed: 0.397 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](62) -- Time elapsed: 0.072 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](63) -- Time elapsed: 0.714 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](64) -- Time elapsed: 0.075 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](65) -- Time elapsed: 0.398 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](66) -- Time elapsed: 0.110 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](67) -- Time elapsed: 0.459 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](68) -- Time elapsed: 0.093 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](69) -- Time elapsed: 0.410 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](70) -- Time elapsed: 0.106 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](71) -- Time elapsed: 0.633 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](72) -- Time elapsed: 0.020 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](74) -- Time elapsed: 0.747 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](74) -- Time elapsed: 0.747 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](75) -- Time elapsed: 0.475 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](76) -- Time elapsed: 0.546 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](77) -- Time elapsed: 0.499 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](78) -- Time elapsed: 0.031 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](79) -- Time elapsed: 0.431 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](80) -- Time elapsed: 0.085 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](81) -- Time elapsed: 0.700 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](82) -- Time elapsed: 0.701 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](83) -- Time elapsed: 0.637 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](84) -- Time elapsed: 0.188 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](85) -- Time elapsed: 0.593 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](86) -- Time elapsed: 0.388 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](87) -- Time elapsed: 0.289 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](88) -- Time elapsed: 0.483 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text fields should reject values containing disallowed special characters", "Loan Recovery API - Strict Datatype Validation"](90) -- Time elapsed: 0 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:179)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](92) -- Time elapsed: 0.810 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](94) -- Time elapsed: 0.899 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](95) -- Time elapsed: 0.389 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](96) -- Time elapsed: 0.423 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](97) -- Time elapsed: 0.154 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](98) -- Time elapsed: 0.342 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](99) -- Time elapsed: 0.211 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](103) -- Time elapsed: 0.064 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](104) -- Time elapsed: 0.482 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](105) -- Time elapsed: 0.050 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](106) -- Time elapsed: 0.476 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](107) -- Time elapsed: 0 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](108) -- Time elapsed: 0.660 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](109) -- Time elapsed: 0.179 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](110) -- Time elapsed: 0.354 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](111) -- Time elapsed: 0.121 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](112) -- Time elapsed: 0.357 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](113) -- Time elapsed: 0.131 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](114) -- Time elapsed: 0.376 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](115) -- Time elapsed: 0.095 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](116) -- Time elapsed: 0.633 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](117) -- Time elapsed: 0.025 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](119) -- Time elapsed: 0.693 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](119) -- Time elapsed: 0.693 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](120) -- Time elapsed: 0.520 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](121) -- Time elapsed: 0 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](123) -- Time elapsed: 0.498 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](123) -- Time elapsed: 0.499 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](124) -- Time elapsed: 0.497 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](125) -- Time elapsed: 0.534 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](127) -- Time elapsed: 0.609 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](127) -- Time elapsed: 0.610 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](128) -- Time elapsed: 0.500 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](129) -- Time elapsed: 0.235 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](130) -- Time elapsed: 0.235 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](131) -- Time elapsed: 0.243 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](132) -- Time elapsed: 0.384 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](133) -- Time elapsed: 0.104 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](134) -- Time elapsed: 0.466 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](135) -- Time elapsed: 0.024 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](136) -- Time elapsed: 0.504 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](137) -- Time elapsed: 0.193 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](138) -- Time elapsed: 0.294 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](139) -- Time elapsed: 0.190 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](140) -- Time elapsed: 0.309 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](141) -- Time elapsed: 0.165 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](142) -- Time elapsed: 0.444 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](143) -- Time elapsed: 0.069 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](144) -- Time elapsed: 0.605 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](145) -- Time elapsed: 0.039 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](146) -- Time elapsed: 0.486 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](147) -- Time elapsed: 0.022 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](148) -- Time elapsed: 0.633 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](149) -- Time elapsed: 0.198 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](150) -- Time elapsed: 0.406 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](151) -- Time elapsed: 0.083 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](152) -- Time elapsed: 0.406 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](153) -- Time elapsed: 0.086 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](154) -- Time elapsed: 0.360 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](155) -- Time elapsed: 0.088 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](156) -- Time elapsed: 0.409 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](157) -- Time elapsed: 0.093 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](158) -- Time elapsed: 0.388 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](159) -- Time elapsed: 0.112 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](160) -- Time elapsed: 0.445 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](161) -- Time elapsed: 0.044 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](163) -- Time elapsed: 0.520 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Text field should reject values exceeding max length of 255", "Loan Recovery API - Strict Datatype Validation"](164) -- Time elapsed: 0.020 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:248)
+
+runners.ParallelTestRunner.runScenario["Integer field should reject decimal values", "Loan Recovery API - Strict Datatype Validation"](173) -- Time elapsed: 0.340 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:391)
+
+runners.ParallelTestRunner.runScenario["Integer field should reject decimal values", "Loan Recovery API - Strict Datatype Validation"](174) -- Time elapsed: 0.192 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:391)
+
+runners.ParallelTestRunner.runScenario["Integer field should reject negative values", "Loan Recovery API - Strict Datatype Validation"](175) -- Time elapsed: 0.526 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:410)
+
+runners.ParallelTestRunner.runScenario["Integer field should reject decimal values", "Loan Recovery API - Strict Datatype Validation"](176) -- Time elapsed: 0.132 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:391)
+
+runners.ParallelTestRunner.runScenario["Integer field should reject negative values", "Loan Recovery API - Strict Datatype Validation"](177) -- Time elapsed: 0.476 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:410)
+
+runners.ParallelTestRunner.runScenario["CIBIL score should reject values outside 300-900 range", "Loan Recovery API - Strict Datatype Validation"](178) -- Time elapsed: 0.103 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:428)
+
+runners.ParallelTestRunner.runScenario["CIBIL score should reject values above 900", "Loan Recovery API - Strict Datatype Validation"](179) -- Time elapsed: 0.372 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:441)
+
+runners.ParallelTestRunner.runScenario["Amount field should reject negative values", "Loan Recovery API - Strict Datatype Validation"](180) -- Time elapsed: 0.116 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:458)
+
+runners.ParallelTestRunner.runScenario["Amount field should reject negative values", "Loan Recovery API - Strict Datatype Validation"](181) -- Time elapsed: 0.372 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:458)
+
+runners.ParallelTestRunner.runScenario["Amount field should reject negative values", "Loan Recovery API - Strict Datatype Validation"](182) -- Time elapsed: 0.126 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:458)
+
+runners.ParallelTestRunner.runScenario["Amount field should reject scientific notation", "Loan Recovery API - Strict Datatype Validation"](183) -- Time elapsed: 0.379 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:477)
+
+runners.ParallelTestRunner.runScenario["Amount field should reject scientific notation", "Loan Recovery API - Strict Datatype Validation"](184) -- Time elapsed: 0.169 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:477)
+
+runners.ParallelTestRunner.runScenario["Amount field should reject values with more than 2 decimal places", "Loan Recovery API - Strict Datatype Validation"](185) -- Time elapsed: 0.348 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:495)
+
+runners.ParallelTestRunner.runScenario["Percentage field should reject values above 100", "Loan Recovery API - Strict Datatype Validation"](186) -- Time elapsed: 0.122 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:508)
+
+runners.ParallelTestRunner.runScenario["Percentage field should reject negative values", "Loan Recovery API - Strict Datatype Validation"](188) -- Time elapsed: 0.257 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:521)
+
+runners.ParallelTestRunner.runScenario["Email should reject invalid email formats", "Loan Recovery API - Strict Datatype Validation"](193) -- Time elapsed: 0.483 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:563)
+
+runners.ParallelTestRunner.runScenario["Email should reject invalid email formats", "Loan Recovery API - Strict Datatype Validation"](194) -- Time elapsed: 0.165 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:563)
+
+runners.ParallelTestRunner.runScenario["Email should reject invalid email formats", "Loan Recovery API - Strict Datatype Validation"](195) -- Time elapsed: 0.322 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:563)
+
+runners.ParallelTestRunner.runScenario["Email should reject invalid email formats", "Loan Recovery API - Strict Datatype Validation"](196) -- Time elapsed: 0.190 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:563)
+
+runners.ParallelTestRunner.runScenario["Pincode should reject invalid formats", "Loan Recovery API - Strict Datatype Validation"](197) -- Time elapsed: 0.370 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:587)
+
+runners.ParallelTestRunner.runScenario["Pincode should reject invalid formats", "Loan Recovery API - Strict Datatype Validation"](198) -- Time elapsed: 0.236 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:587)
+
+runners.ParallelTestRunner.runScenario["Pincode should reject invalid formats", "Loan Recovery API - Strict Datatype Validation"](200) -- Time elapsed: 0.167 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:587)
+
+runners.ParallelTestRunner.runScenario["URL should reject values not starting with http:// or https://", "Loan Recovery API - Strict Datatype Validation"](201) -- Time elapsed: 0.382 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:611)
+
+runners.ParallelTestRunner.runScenario["URL should reject invalid URL formats", "Loan Recovery API - Strict Datatype Validation"](202) -- Time elapsed: 0.113 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code 201 should be one of: 400,422
+Expected: is <true>
+     but: was <false>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be_one_of(ApiStepDefinitions.java:472)
+	at ✽.the response status code should be one of "400,422"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:624)
+
+runners.ParallelTestRunner.runScenario["Persisted loan recovery fields should have correct datatype in DB", "Loan Recovery API - Strict Datatype Validation"](321) -- Time elapsed: 0.054 s <<< FAILURE!
+java.lang.RuntimeException: DB connection failed
+	at utils.DbClient.getConnection(DbClient.java:33)
+	at utils.DbClient.fetchSingleColumn(DbClient.java:53)
+	at stepdefinitions.LoanRecoveryDbDatatypeSteps.validateDbDatatypeAndValue(LoanRecoveryDbDatatypeSteps.java:41)
+	at ✽.DB column "loan_id" in table "lending_loan_details" should have datatype "VARCHAR" and match API field "loan_id" for loan "{LOAN_ID}"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:837)
+Caused by: java.sql.SQLException: No suitable driver found for jdbc:postgresql://staging.cluster-cjptbdwkk3pc.ap-south-1.rds.amazonaws.com/stag_recovery
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:707)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at utils.DbClient.getConnection(DbClient.java:25)
+	... 3 more
+
+runners.ParallelTestRunner.runScenario["Persisted loan recovery fields should have correct datatype in DB", "Loan Recovery API - Strict Datatype Validation"](322) -- Time elapsed: 0.565 s <<< FAILURE!
+java.lang.RuntimeException: DB connection failed
+	at utils.DbClient.getConnection(DbClient.java:33)
+	at utils.DbClient.fetchSingleColumn(DbClient.java:53)
+	at stepdefinitions.LoanRecoveryDbDatatypeSteps.validateDbDatatypeAndValue(LoanRecoveryDbDatatypeSteps.java:41)
+	at ✽.DB column "total_loan_amount" in table "lending_loan_details" should have datatype "NUMERIC" and match API field "total_loan_amount" for loan "{LOAN_ID}"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:837)
+Caused by: java.sql.SQLException: No suitable driver found for jdbc:postgresql://staging.cluster-cjptbdwkk3pc.ap-south-1.rds.amazonaws.com/stag_recovery
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:707)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at utils.DbClient.getConnection(DbClient.java:25)
+	... 3 more
+
+runners.ParallelTestRunner.runScenario["Persisted loan recovery fields should have correct datatype in DB", "Loan Recovery API - Strict Datatype Validation"](323) -- Time elapsed: 0.102 s <<< FAILURE!
+java.lang.RuntimeException: DB connection failed
+	at utils.DbClient.getConnection(DbClient.java:33)
+	at utils.DbClient.fetchSingleColumn(DbClient.java:53)
+	at stepdefinitions.LoanRecoveryDbDatatypeSteps.validateDbDatatypeAndValue(LoanRecoveryDbDatatypeSteps.java:41)
+	at ✽.DB column "emi_amount" in table "lending_loan_details" should have datatype "NUMERIC" and match API field "emi_amount" for loan "{LOAN_ID}"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:837)
+Caused by: java.sql.SQLException: No suitable driver found for jdbc:postgresql://staging.cluster-cjptbdwkk3pc.ap-south-1.rds.amazonaws.com/stag_recovery
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:707)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at utils.DbClient.getConnection(DbClient.java:25)
+	... 3 more
+
+runners.ParallelTestRunner.runScenario["Persisted loan recovery fields should have correct datatype in DB", "Loan Recovery API - Strict Datatype Validation"](324) -- Time elapsed: 0.406 s <<< FAILURE!
+java.lang.RuntimeException: DB connection failed
+	at utils.DbClient.getConnection(DbClient.java:33)
+	at utils.DbClient.fetchSingleColumn(DbClient.java:53)
+	at stepdefinitions.LoanRecoveryDbDatatypeSteps.validateDbDatatypeAndValue(LoanRecoveryDbDatatypeSteps.java:41)
+	at ✽.DB column "applicant_cibil_score" in table "lending_loan_details" should have datatype "INTEGER" and match API field "applicant_cibil_score" for loan "{LOAN_ID}"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:837)
+Caused by: java.sql.SQLException: No suitable driver found for jdbc:postgresql://staging.cluster-cjptbdwkk3pc.ap-south-1.rds.amazonaws.com/stag_recovery
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:707)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at utils.DbClient.getConnection(DbClient.java:25)
+	... 3 more
+
+runners.ParallelTestRunner.runScenario["Persisted loan recovery fields should have correct datatype in DB", "Loan Recovery API - Strict Datatype Validation"](325) -- Time elapsed: 0.125 s <<< FAILURE!
+java.lang.RuntimeException: DB connection failed
+	at utils.DbClient.getConnection(DbClient.java:33)
+	at utils.DbClient.fetchSingleColumn(DbClient.java:53)
+	at stepdefinitions.LoanRecoveryDbDatatypeSteps.validateDbDatatypeAndValue(LoanRecoveryDbDatatypeSteps.java:41)
+	at ✽.DB column "tenure_finished" in table "lending_loan_details" should have datatype "BOOLEAN" and match API field "tenure_finished" for loan "{LOAN_ID}"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:837)
+Caused by: java.sql.SQLException: No suitable driver found for jdbc:postgresql://staging.cluster-cjptbdwkk3pc.ap-south-1.rds.amazonaws.com/stag_recovery
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:707)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at utils.DbClient.getConnection(DbClient.java:25)
+	... 3 more
+
+runners.ParallelTestRunner.runScenario["Persisted loan recovery fields should have correct datatype in DB", "Loan Recovery API - Strict Datatype Validation"](326) -- Time elapsed: 0.565 s <<< FAILURE!
+java.lang.RuntimeException: DB connection failed
+	at utils.DbClient.getConnection(DbClient.java:33)
+	at utils.DbClient.fetchSingleColumn(DbClient.java:53)
+	at stepdefinitions.LoanRecoveryDbDatatypeSteps.validateDbDatatypeAndValue(LoanRecoveryDbDatatypeSteps.java:41)
+	at ✽.DB column "interest_on_loan" in table "lending_loan_details" should have datatype "NUMERIC" and match API field "interest_on_loan" for loan "{LOAN_ID}"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:837)
+Caused by: java.sql.SQLException: No suitable driver found for jdbc:postgresql://staging.cluster-cjptbdwkk3pc.ap-south-1.rds.amazonaws.com/stag_recovery
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:707)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at utils.DbClient.getConnection(DbClient.java:25)
+	... 3 more
+
+runners.ParallelTestRunner.runScenario["Persisted loan recovery fields should have correct datatype in DB", "Loan Recovery API - Strict Datatype Validation"](327) -- Time elapsed: 0.151 s <<< FAILURE!
+java.lang.RuntimeException: DB connection failed
+	at utils.DbClient.getConnection(DbClient.java:33)
+	at utils.DbClient.fetchSingleColumn(DbClient.java:53)
+	at stepdefinitions.LoanRecoveryDbDatatypeSteps.validateDbDatatypeAndValue(LoanRecoveryDbDatatypeSteps.java:41)
+	at ✽.DB column "applicant_email" in table "lending_loan_details" should have datatype "VARCHAR" and match API field "applicant_email" for loan "{LOAN_ID}"(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/001_loan_upload_v1.feature:837)
+Caused by: java.sql.SQLException: No suitable driver found for jdbc:postgresql://staging.cluster-cjptbdwkk3pc.ap-south-1.rds.amazonaws.com/stag_recovery
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:707)
+	at java.sql/java.sql.DriverManager.getConnection(DriverManager.java:230)
+	at utils.DbClient.getConnection(DbClient.java:25)
+	... 3 more
+
+runners.ParallelTestRunner.runScenario["Get company details with bifurcation prefix true", "Recovery Company API validation"](328) -- Time elapsed: 0.015 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code mismatch
+Expected: <200>
+     but: was <403>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at utils.ResponseValidator.validateStatusCode(ResponseValidator.java:23)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be(ApiStepDefinitions.java:452)
+	at ✽.the response status code should be 200(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/003_recovery_company.feature:20)
+
+runners.ParallelTestRunner.runScenario["Get company details with bifurcation prefix true", "Recovery Company API validation"](329) -- Time elapsed: 0.138 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code mismatch
+Expected: <200>
+     but: was <403>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at utils.ResponseValidator.validateStatusCode(ResponseValidator.java:23)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be(ApiStepDefinitions.java:452)
+	at ✽.the response status code should be 200(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/003_recovery_company.feature:43)
+
+runners.ParallelTestRunner.runScenario["Get company details with bifurcation prefix false", "Recovery Company API validation"](330) -- Time elapsed: 0.021 s <<< FAILURE!
+java.lang.AssertionError: 
+Status code mismatch
+Expected: <200>
+     but: was <403>
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at utils.ResponseValidator.validateStatusCode(ResponseValidator.java:23)
+	at stepdefinitions.ApiStepDefinitions.the_response_status_code_should_be(ApiStepDefinitions.java:452)
+	at ✽.the response status code should be 200(file:///Users/pod1/cg-api-test-framework/src/test/resources/features/recovery/003_recovery_company.feature:55)
+
