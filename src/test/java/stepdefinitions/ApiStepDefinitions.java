@@ -41,6 +41,8 @@ public class ApiStepDefinitions {
     private Response response;
     private String requestBody;
     private final java.util.Set<String> headersToRemove = new java.util.HashSet<>();
+    /** Headers set via Gherkin (original name → resolved value), re-applied on send when some are removed. */
+    private final java.util.LinkedHashMap<String, String> storedHeaders = new java.util.LinkedHashMap<>();
     private final java.util.Map<String, String> storedPathParams = new java.util.HashMap<>();
     private final java.util.Map<String, String> storedQueryParams = new java.util.HashMap<>();
 
@@ -84,10 +86,17 @@ public class ApiStepDefinitions {
             }
             // Don't set Referer here - it will be set automatically based on request URI
             if (!"Referer".equals(headerName)) {
+                storedHeaders.put(headerName, value);
                 request.header(headerName, value);
                 logger.info("Added header: {} = {}", headerName, value);
             }
         }
+    }
+
+    @Given("I remove header {string}")
+    public void i_remove_header(String headerName) {
+        headersToRemove.add(headerName.toLowerCase());
+        logger.info("Marked header '{}' for removal on send", headerName);
     }
 
     @Given("I set the request body:")
@@ -195,13 +204,6 @@ public class ApiStepDefinitions {
         }
     }
 
-//    @Given("I remove header {string}")
-//    public void i_remove_header(String headerName) {
-//        // Track header to remove - we'll exclude it when sending the request
-//        headersToRemove.add(headerName.toLowerCase());
-//        logger.info("Marked header '{}' for removal", headerName);
-//    }
-
     @Then("the validation error should contain")
     public void the_validation_error_should_contain(DataTable table) {
 
@@ -288,52 +290,30 @@ public class ApiStepDefinitions {
     public void i_send_a_request_to(String httpMethod, String endpoint) {
         HttpMethod method = HttpMethod.valueOf(httpMethod.toUpperCase());
         
-        // If we need to remove headers, rebuild request without those headers
+        // Rebuild request without headers marked for removal (keeps role, Content-Type, etc.)
         if (!headersToRemove.isEmpty()) {
-            // Rebuild request specification without excluded headers
-            RequestSpecification baseSpec;
-            
-            // Remove Authorization header if authenticationtoken is marked for removal
-            if (headersToRemove.contains("authenticationtoken") || headersToRemove.contains("authorization")) {
-                // Get base spec without Authorization header by building a new one
-                baseSpec = io.restassured.RestAssured.given()
-                    .baseUri(configReader.getBaseUrl())
-                    .contentType(configReader.getDefaultContentType())
-                    .accept(configReader.getDefaultAcceptType());
-                
-                // Re-add logging filters
-                if (!configReader.isCiMode()) {
-                    if (configReader.isRequestLoggingEnabled()) {
-                        baseSpec.filter(new io.restassured.filter.log.RequestLoggingFilter());
-                    }
-                    if (configReader.isResponseLoggingEnabled()) {
-                        baseSpec.filter(new io.restassured.filter.log.ResponseLoggingFilter());
-                    }
+            request = restAssuredBase.getRequestSpec();
+
+            for (Map.Entry<String, String> header : storedHeaders.entrySet()) {
+                if (!headersToRemove.contains(header.getKey().toLowerCase())) {
+                    request.header(header.getKey(), header.getValue());
                 }
-            } else {
-                baseSpec = restAssuredBase.getRequestSpec();
             }
-            
-            // Start with the base spec
-            request = baseSpec;
-            
-            // Re-apply path parameters (must be set before query params and body)
+
             for (Map.Entry<String, String> pathParam : storedPathParams.entrySet()) {
                 request.pathParam(pathParam.getKey(), pathParam.getValue());
             }
-            
-            // Re-apply query parameters
+
             for (Map.Entry<String, String> queryParam : storedQueryParams.entrySet()) {
                 request.queryParam(queryParam.getKey(), queryParam.getValue());
             }
-            
-            // Re-apply body if it exists
+
             if (requestBody != null && !requestBody.isEmpty()) {
                 request.body(requestBody);
             }
-            
-            logger.info("Rebuilt request specification excluding headers: {}", headersToRemove);
-            headersToRemove.clear(); // Clear for next request
+
+            logger.info("Rebuilt request excluding headers: {}", headersToRemove);
+            headersToRemove.clear();
         }
         
         // Build full URI for Referer header
