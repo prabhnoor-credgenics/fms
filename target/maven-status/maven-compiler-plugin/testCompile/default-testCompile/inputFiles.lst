@@ -1,7 +1,0 @@
-/Users/pod1/cg-api-test-framework/src/test/java/hooks/Hooks.java
-/Users/pod1/cg-api-test-framework/src/test/java/runners/ParallelTestRunner.java
-/Users/pod1/cg-api-test-framework/src/test/java/runners/TestRunner.java
-/Users/pod1/cg-api-test-framework/src/test/java/stepdefinitions/ApiStepDefinitions.java
-/Users/pod1/cg-api-test-framework/src/test/java/stepdefinitions/DataTypeValidationSteps.java
-/Users/pod1/cg-api-test-framework/src/test/java/stepdefinitions/LoanRecoveryDbDatatypeSteps.java
-/Users/pod1/cg-api-test-framework/src/test/java/stepdefinitions/ScenarioDataStepDefinitions.java

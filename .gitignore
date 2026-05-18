@@ -15,7 +15,8 @@ logs/
 *.rar
 
 # Maven
-target/
+target/*
+!target/.gitkeep
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
