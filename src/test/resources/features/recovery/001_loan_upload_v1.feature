@@ -823,6 +823,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | co_applicant_address_type                 |
 
 
+#    //hello
   @api @db-validation @loan-recovery @datatype-validation
   Scenario Outline: Persisted loan recovery fields should have correct datatype in DB
     Given I set the query parameters:
