@@ -58,3 +58,5 @@ src/main/resources/secrets/*
 
 .idea/
 
+loggings/
+
