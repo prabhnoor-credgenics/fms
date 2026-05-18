@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "company_details",
+    "message",
+    "message_template",
+    "message_placeholder"
+  ],
+  "properties": {
+    "company_details": {
+      "type": "object",
+      "required": [
+        "is_data_purging_enabled",
+        "enable_auto_calculation",
+        "custom_dpd_bucket",
+        "default_portfolio_month",
+        "payment_allocation_month",
+        "is_amount_bifurcation_enabled",
+        "amount_bifurcation_variables"
+      ],
+      "properties": {
+        "is_data_purging_enabled": {
+          "type": "boolean"
+        },
+        "enable_auto_calculation": {
+          "type": "boolean"
+        },
+        "custom_dpd_bucket": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "bucket_name",
+              "bucket_interval"
+            ],
+            "properties": {
+              "bucket_name": {
+                "type": "string"
+              },
+              "bucket_interval": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                  "type": "integer"
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "default_portfolio_month": {
+          "type": "string"
+        },
+        "payment_allocation_month": {
+          "type": "string"
+        },
+        "is_amount_bifurcation_enabled": {
+          "type": "boolean"
+        },
+        "amount_bifurcation_variables": {
+          "type": "array"
+        }
+      },
+      "additionalProperties": true
+    },
+    "message": {
+      "type": "string"
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}
