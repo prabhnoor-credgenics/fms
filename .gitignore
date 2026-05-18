@@ -49,12 +49,11 @@ test-output/
 cucumber-reports/
 
 # Secrets
-src/main/resources/secrets
+src/main/resources/secrets/crypto.properties
 
 # Markdown documentation (kept local, not pushed to main)
 *.md
 
-secrets/
+
 .idea/
-src/main/resources/secrets/crypto.properties
 
