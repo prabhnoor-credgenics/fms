@@ -54,4 +54,5 @@ src/main/resources/secrets
 *.md
 
 secrets/
+.idea/
 
