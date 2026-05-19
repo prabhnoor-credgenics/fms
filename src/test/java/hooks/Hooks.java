@@ -45,6 +45,7 @@ public class Hooks {
         scenarioTestDataResolver.ensureUniqueLoanIdIfEnabled();
 
         UserRole role = scenario.getSourceTagNames().contains("@approver")
+                || scenario.getSourceTagNames().contains("@company-creation")
                 ? UserRole.APPROVER
                 : UserRole.CREATOR;
 

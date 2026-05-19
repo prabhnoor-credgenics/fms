@@ -25,9 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-/**
- * Step definitions for API testing
- */
+
 public class ApiStepDefinitions {
     private static final Logger logger = LogManager.getLogger(ApiStepDefinitions.class);
 
@@ -41,7 +39,7 @@ public class ApiStepDefinitions {
     private Response response;
     private String requestBody;
     private final java.util.Set<String> headersToRemove = new java.util.HashSet<>();
-    /** Headers set via Gherkin (original name → resolved value), re-applied on send when some are removed. */
+
     private final java.util.LinkedHashMap<String, String> storedHeaders = new java.util.LinkedHashMap<>();
     private final java.util.Map<String, String> storedPathParams = new java.util.HashMap<>();
     private final java.util.Map<String, String> storedQueryParams = new java.util.HashMap<>();
@@ -119,20 +117,14 @@ public class ApiStepDefinitions {
         logger.info("Request body loaded from file '{}' and placeholders replaced", filePath);
     }
 
-    /**
-     * Replace all placeholders including {LOAN_ID} and {ALLOCATION_MONTH} from config
-     * Also converts boolean values to strings for API compatibility
-     */
+
     private String replacePlaceholdersInBody(String body) {
         String processedBody = scenarioTestDataResolver.replaceScenarioPlaceholders(body);
         processedBody = convertBooleansToStrings(processedBody);
         return processedBody;
     }
     
-    /**
-     * Convert boolean JSON values (true/false) to string values ("TRUE"/"FALSE")
-     * for fields that API expects as strings
-     */
+
     private String convertBooleansToStrings(String jsonBody) {
         // Fields that should be converted from boolean to string
         String[] booleanFields = {
@@ -204,6 +196,20 @@ public class ApiStepDefinitions {
         }
     }
 
+
+    private Response activeResponse() {
+        if (response != null) {
+            return response;
+        }
+        Response fromContext = testContext.getResponse();
+        if (fromContext == null) {
+            throw new IllegalStateException(
+                    "No API response available. Send a request or run a service step first."
+            );
+        }
+        return fromContext;
+    }
+
     @Then("the validation error should contain")
     public void the_validation_error_should_contain(DataTable table) {
 
@@ -213,7 +219,7 @@ public class ApiStepDefinitions {
                 table.asMap(String.class, String.class);
 
         Map<String, String> actual =
-                response.jsonPath()
+                activeResponse().jsonPath()
                         .getMap("error");
 
         softAssert.assertNotNull(
@@ -253,9 +259,7 @@ public class ApiStepDefinitions {
         updateJsonFieldInternal(jsonPath, null);
     }
     
-    /**
-     * Internal method to update JSON field
-     */
+
     private void updateJsonFieldInternal(String jsonPath, String value) {
         if (this.requestBody == null || this.requestBody.isEmpty()) {
             throw new IllegalStateException("Request body must be set before updating JSON field. Use 'I set the request body' or 'I set the request body from file' first.");
@@ -365,9 +369,7 @@ public class ApiStepDefinitions {
         logResponseDetails(response);
     }
 
-    /**
-     * Applies endpoint-specific schema validation automatically for every API hit.
-     */
+
     private void autoValidateResponseSchema(String endpoint, int statusCode) {
         String schemaPath = null;
         boolean isSuccess = statusCode >= 200 && statusCode < 300;
@@ -392,9 +394,7 @@ public class ApiStepDefinitions {
         }
     }
     
-    /**
-     * Log detailed response information
-     */
+
     private void logResponseDetails(Response response) {
         logger.info("=== API Response Details ===");
         logger.info("Status Code: {}", response.getStatusCode());
@@ -429,19 +429,19 @@ public class ApiStepDefinitions {
 
     @Then("the response status code should be {int}")
     public void the_response_status_code_should_be(int statusCode) {
-        ResponseValidator.validateStatusCode(response, statusCode);
+        ResponseValidator.validateStatusCode(activeResponse(), statusCode);
     }
 
     @Then("the response message should be {string}")
     public void verifyResponseMessage(String expectedMessage) {
-        response.then()
+        activeResponse().then()
                 .body("message", equalTo(expectedMessage));
     }
 
     @Then("the response status code should be one of {string}")
     public void the_response_status_code_should_be_one_of(String statusCodes) {
         String[] codes = statusCodes.split(",");
-        int actualStatusCode = response.getStatusCode();
+        int actualStatusCode = activeResponse().getStatusCode();
         boolean matches = false;
         for (String code : codes) {
             if (actualStatusCode == Integer.parseInt(code.trim())) {
@@ -455,44 +455,44 @@ public class ApiStepDefinitions {
 
     @Then("the response body should contain field {string} with value {string}")
     public void the_response_body_should_contain_field_with_value(String jsonPath, String expectedValue) {
-        ResponseValidator.validateJsonField(response, jsonPath, expectedValue);
+        ResponseValidator.validateJsonField(activeResponse(), jsonPath, expectedValue);
     }
 
     @Then("the response body should contain field {string}")
     public void the_response_body_should_contain_field(String jsonPath) {
-        Object value = response.jsonPath().get(jsonPath);
+        Object value = activeResponse().jsonPath().get(jsonPath);
         assertThat("Field " + jsonPath + " should exist", value, Matchers.notNullValue());
         logger.info("Field '{}' exists in response with value: {}", jsonPath, value);
     }
 
     @Then("the response header {string} should be {string}")
     public void the_response_header_should_be(String headerName, String expectedValue) {
-        ResponseValidator.validateHeader(response, headerName, expectedValue);
+        ResponseValidator.validateHeader(activeResponse(), headerName, expectedValue);
     }
 
     @Then("the response content type should be {string}")
     public void the_response_content_type_should_be(String contentType) {
-        ResponseValidator.validateContentType(response, contentType);
+        ResponseValidator.validateContentType(activeResponse(), contentType);
     }
 
     @Then("the response body should not be empty")
     public void the_response_body_should_not_be_empty() {
-        ResponseValidator.validateResponseBodyNotEmpty(response);
+        ResponseValidator.validateResponseBodyNotEmpty(activeResponse());
     }
 
     @Then("the response should match json schema {string}")
     public void the_response_should_match_json_schema(String schemaPath) {
-        response.then().assertThat().body(matchesJsonSchemaInClasspath(schemaPath));
+        activeResponse().then().assertThat().body(matchesJsonSchemaInClasspath(schemaPath));
         logger.info("Response schema validation passed for: {}", schemaPath);
     }
 
     @Then("I store the response for later use")
     public void i_store_the_response_for_later_use() {
-        logger.info("Response stored for later use. Status code: {}", response.getStatusCode());
+        logger.info("Response stored for later use. Status code: {}", activeResponse().getStatusCode());
     }
 
     public Response getResponse() {
-        return response;
+        return activeResponse();
     }
 
     public RequestSpecification getRequest() {

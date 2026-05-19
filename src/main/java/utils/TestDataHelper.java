@@ -9,9 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.UUID;
 
-/**
- * Per-scenario test data helper. Random-string placeholders are cached in {@link TestContext}.
- */
+
 public class TestDataHelper {
     private static final Logger logger = LogManager.getLogger(TestDataHelper.class);
     private static final Random RANDOM = new Random();

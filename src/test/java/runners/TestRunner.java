@@ -14,7 +14,10 @@ import io.cucumber.testng.CucumberOptions;
                 "auth",
                 "base",
                 "utils",
-                "utils.crypto"
+                "utils.crypto",
+                "service",
+                "payload",
+                "validators"
         },
         plugin = {
                 "pretty",

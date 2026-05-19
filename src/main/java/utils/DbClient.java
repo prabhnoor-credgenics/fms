@@ -7,9 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-/**
- * Per-scenario database client. Uses prepared statements for values and closes resources safely.
- */
+
 public class DbClient {
 
     private final ConfigReader configReader;

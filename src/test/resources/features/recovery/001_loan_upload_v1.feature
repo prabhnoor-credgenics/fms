@@ -102,7 +102,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "loan_id" to "loan^123"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
-    Then the response status code should be one of "200,201"
+    Then the response status code should be one of "400"
 
   @datatype-validation @text @special-characters @positive @creator
   Scenario Outline: Text fields should accept values containing allowed special characters

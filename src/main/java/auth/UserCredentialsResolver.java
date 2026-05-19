@@ -6,14 +6,7 @@ import enums.UserRole;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * Resolves login credentials from {@code global.properties} for a given environment, role, and slot.
- *
- * <p>Creator slot 0: {@code {env}.email} or {@code {env}.user.0.email}<br>
- * Creator slot N: {@code {env}.user.N.email}<br>
- * Approver slot 0: {@code {env}.approver.email} or {@code {env}.approver.user.0.email}<br>
- * Approver slot N: {@code {env}.approver.user.N.email}
- */
+
 public class UserCredentialsResolver {
 
     private static final Logger logger = LogManager.getLogger(UserCredentialsResolver.class);

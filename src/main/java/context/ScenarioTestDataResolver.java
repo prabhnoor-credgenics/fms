@@ -3,10 +3,7 @@ package context;
 import config.ConfigReader;
 import utils.TestDataHelper;
 
-/**
- * Resolves loan ID, company ID, and allocation month for the current scenario.
- * Scenario-level values override {@code global.properties}; unique loan IDs are generated when enabled.
- */
+
 public class ScenarioTestDataResolver {
 
     private final TestContext testContext;
@@ -23,9 +20,7 @@ public class ScenarioTestDataResolver {
         this.testDataHelper = testDataHelper;
     }
 
-    /**
-     * Ensures each parallel scenario has its own loan ID when configured, avoiding cross-thread collisions.
-     */
+
     public void ensureUniqueLoanIdIfEnabled() {
         if (!configReader.isUniqueLoanIdPerScenarioEnabled()) {
             return;

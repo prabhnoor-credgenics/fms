@@ -7,9 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utils.TestDataHelper;
 
-/**
- * Steps to set per-scenario test data overrides (safe for parallel execution).
- */
+
 public class ScenarioDataStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(ScenarioDataStepDefinitions.class);

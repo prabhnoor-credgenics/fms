@@ -2,9 +2,7 @@ package utils;
 
 import org.apache.logging.log4j.ThreadContext;
 
-/**
- * Binds scenario, thread, and parallel user slot to Log4j2 MDC for readable parallel logs.
- */
+
 public final class LoggingContext {
 
     public static final String SCENARIO_NAME = "scenarioName";

@@ -5,22 +5,29 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Per-scenario state holder. Created once per Cucumber scenario by PicoContainer.
- */
+
 public class TestContext {
 
     private String authToken;
     private String companyId;
     private String trademark;
+    private String companyName;
+    private String companyEmail;
+    private String adminEmail;
+    private String profileId;
+    private String userId;
+    private String companyType;
+    private String clientType;
+    private String companySubType;
+    private String tenantType;
     private Response response;
 
-    /** Scenario-specific overrides (take priority over global.properties). */
+
     private String scenarioLoanId;
     private String scenarioCompanyId;
     private String scenarioAllocationMonth;
     private String scenarioName;
-    /** Parallel user pool slot (0 .. poolSize-1), bound to the TestNG worker thread. */
+
     private int userSlot;
 
     private final Map<String, String> randomStringCache = new HashMap<>();
@@ -55,6 +62,78 @@ public class TestContext {
 
     public void setTrademark(String trademark) {
         this.trademark = trademark;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyEmail() {
+        return companyEmail;
+    }
+
+    public void setCompanyEmail(String companyEmail) {
+        this.companyEmail = companyEmail;
+    }
+
+    public String getAdminEmail() {
+        return adminEmail;
+    }
+
+    public void setAdminEmail(String adminEmail) {
+        this.adminEmail = adminEmail;
+    }
+
+    public String getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(String companyType) {
+        this.companyType = companyType;
+    }
+
+    public String getClientType() {
+        return clientType;
+    }
+
+    public void setClientType(String clientType) {
+        this.clientType = clientType;
+    }
+
+    public String getCompanySubType() {
+        return companySubType;
+    }
+
+    public void setCompanySubType(String companySubType) {
+        this.companySubType = companySubType;
+    }
+
+    public String getTenantType() {
+        return tenantType;
+    }
+
+    public void setTenantType(String tenantType) {
+        this.tenantType = tenantType;
     }
 
     public String getScenarioLoanId() {

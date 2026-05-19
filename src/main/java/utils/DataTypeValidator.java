@@ -31,15 +31,7 @@ public class DataTypeValidator {
         "^\\d{5,8}$"
     );
 
-    /**
-     * Validate text field (string datatype)
-     * - Must be string
-     * - Leading zeros allowed
-     * - Spaces allowed between characters
-     * - Trim leading/trailing spaces
-     * - Reject null, arrays, objects, boolean, numeric-only values
-     * - Max length: 255
-     */
+
     public static boolean isValidText(String value, int maxLength) {
         if (value == null) {
             logger.warn("Text validation failed: value is null");
@@ -62,12 +54,7 @@ public class DataTypeValidator {
         return true;
     }
 
-    /**
-     * Validate boolean field
-     * - Accept: true / false (case-insensitive)
-     * - Excel: TRUE / FALSE / Yes / No
-     * - Reject: 1, 0, null, strings, numbers
-     */
+
     public static boolean isValidBoolean(String value) {
         if (value == null) {
             return false;
@@ -77,11 +64,7 @@ public class DataTypeValidator {
                normalized.equals("YES") || normalized.equals("NO");
     }
 
-    /**
-     * Validate integer field
-     * - Positive integers only
-     * - Reject decimals, negatives, strings, scientific notation
-     */
+
     public static boolean isValidInteger(String value) {
         if (value == null || value.trim().isEmpty()) {
             return false;
@@ -95,9 +78,7 @@ public class DataTypeValidator {
         }
     }
 
-    /**
-     * Validate integer with range
-     */
+
     public static boolean isValidIntegerInRange(String value, int min, int max) {
         if (!isValidInteger(value)) {
             return false;
@@ -110,12 +91,7 @@ public class DataTypeValidator {
         }
     }
 
-    /**
-     * Validate decimal field
-     * - Positive decimal only
-     * - Precision up to 2 decimals
-     * - Reject negative, strings
-     */
+
     public static boolean isValidDecimal(String value) {
         if (value == null || value.trim().isEmpty()) {
             return false;
@@ -137,13 +113,7 @@ public class DataTypeValidator {
         }
     }
 
-    /**
-     * Validate amount field
-     * - Positive decimal
-     * - Zero allowed
-     * - Precision up to 2 decimals
-     * - Reject negative, currency symbols, scientific notation
-     */
+
     public static boolean isValidAmount(String value) {
         if (value == null || value.trim().isEmpty()) {
             return false;
@@ -164,12 +134,7 @@ public class DataTypeValidator {
         return isValidDecimal(value);
     }
 
-    /**
-     * Validate percentage field
-     * - Numeric only
-     * - Range 0-100
-     * - Decimal allowed
-     */
+
     public static boolean isValidPercentage(String value) {
         if (!isValidDecimal(value)) {
             return false;
@@ -183,12 +148,7 @@ public class DataTypeValidator {
         }
     }
 
-    /**
-     * Validate mobile number (international)
-     * - Digits only
-     * - Length 5-15 digits
-     * - Reject spaces, commas, symbols, letters
-     */
+
     public static boolean isValidMobileNumber(String value) {
         if (value == null || value.trim().isEmpty()) {
             return false;
@@ -196,11 +156,7 @@ public class DataTypeValidator {
         return MOBILE_PATTERN.matcher(value.trim()).matches();
     }
 
-    /**
-     * Validate email address
-     * - Standard email regex
-     * - Reject multiple '@', consecutive dots, invalid domains
-     */
+
     public static boolean isValidEmail(String value) {
         if (value == null || value.trim().isEmpty()) {
             return false;
@@ -223,11 +179,7 @@ public class DataTypeValidator {
         return EMAIL_PATTERN.matcher(email).matches();
     }
 
-    /**
-     * Validate pincode (international)
-     * - Digits only
-     * - Length 5-8 digits
-     */
+
     public static boolean isValidPincode(String value) {
         if (value == null || value.trim().isEmpty()) {
             return false;
@@ -235,11 +187,7 @@ public class DataTypeValidator {
         return PINCODE_PATTERN.matcher(value.trim()).matches();
     }
 
-    /**
-     * Validate URL/link
-     * - Must start with http:// or https://
-     * - Valid URL format
-     */
+
     public static boolean isValidUrl(String value) {
         if (value == null || value.trim().isEmpty()) {
             return false;
@@ -252,11 +200,7 @@ public class DataTypeValidator {
         return URL_PATTERN.matcher(url).matches();
     }
 
-    /**
-     * Validate date (ISO format YYYY-MM-DD)
-     * - ISO format only
-     * - Reject DD-MM-YYYY, Excel serial numbers, invalid dates
-     */
+
     public static boolean isValidDate(String value) {
         if (value == null || value.trim().isEmpty()) {
             return false;
@@ -292,9 +236,7 @@ public class DataTypeValidator {
         }
     }
 
-    /**
-     * Validate CIBIL score (Range: 300-900)
-     */
+
     public static boolean isValidCibilScore(String value) {
         return isValidIntegerInRange(value, 300, 900);
     }

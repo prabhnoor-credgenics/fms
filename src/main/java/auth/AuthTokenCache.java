@@ -8,10 +8,7 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Caches auth tokens per environment, role, user type, and parallel user slot.
- * Each slot uses a different login, so tokens must not be shared across slots.
- */
+
 public class AuthTokenCache {
 
     private record CacheKey(Environment env, UserRole role, String userType, int userSlot) {}

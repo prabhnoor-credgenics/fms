@@ -70,12 +70,7 @@ public class ConfigReader {
         return publicKey;
     }
 
-    /**
-     * Resolves RSA public key from secrets/crypto.properties.
-     * Primary: {@code {env}.public.key} (e.g. stag.public.key, dev.public.key).
-     * Legacy: PROD_PUBLIC_KEY / DEV_PUBLIC_KEY.
-     * Fallback: STAG and UAT use dev.public.key when env-specific key is absent.
-     */
+
     private String resolvePublicKey(Environment env) {
         String envKey = env.getValue() + ".public.key";
         String publicKey = cryptoProperties.getProperty(envKey);
@@ -262,10 +257,27 @@ public class ConfigReader {
         return Boolean.parseBoolean(getProperty("parallel.execution.enabled", "false"));
     }
 
-    /**
-     * When true, request/response RestAssured filters are not attached (recommended for CI parallel runs).
-     */
+
     public boolean isCiMode() {
         return Boolean.parseBoolean(System.getProperty("ci.mode", getProperty("ci.mode", "false")));
+    }
+
+    public String getCompanyCreationAliasProfileId() {
+        return getProperty("company.creation.alias_profile_id", "icoPMIUXyTzl");
+    }
+
+    public String getCompanyCreationCountryIsdCode() {
+        return getProperty("company.creation.country_isd_code", "+91");
+    }
+
+    public String getCompanyCreationGstNumber() {
+        return getProperty("company.creation.gst_number", "24AAACC1206D1ZM");
+    }
+
+    public String getCompanyCreationWhitelistedIps() {
+        return getProperty(
+                "company.creation.whitelisted_ips",
+                "103.55.60.250,103.55.60.251"
+        );
     }
 }

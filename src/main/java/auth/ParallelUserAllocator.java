@@ -7,10 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Assigns a stable user slot (0 .. poolSize-1) to each TestNG worker thread so parallel
- * scenarios use different credentials and do not invalidate each other's sessions.
- */
 public class ParallelUserAllocator {
 
     private static final Logger logger = LogManager.getLogger(ParallelUserAllocator.class);
@@ -23,9 +19,7 @@ public class ParallelUserAllocator {
         this.configReader = configReader;
     }
 
-    /**
-     * Binds the current thread to a user slot and stores it on {@link TestContext}.
-     */
+
     public void allocateForCurrentThread(TestContext testContext) {
         int poolSize = configReader.getParallelUserPoolSize();
         int slot = resolveSlotForCurrentThread(poolSize);
@@ -54,7 +48,7 @@ public class ParallelUserAllocator {
         });
     }
 
-    /** Clears thread bindings (e.g. between TestNG suite runs in the same JVM). */
+
     public static void reset() {
         THREAD_TO_SLOT.clear();
     }

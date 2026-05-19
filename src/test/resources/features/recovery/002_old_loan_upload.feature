@@ -1,8 +1,5 @@
 @jjjapijhk @loan-recovery
-Feature: Loan Recovery API
-  As an API user
-  I want to create and manage loan recovery records
-  So that loan recovery operations can be automated
+Feature: Loan Recovery Old Loan Upload API
 
   Background:
     Given scenario loan id is unique
