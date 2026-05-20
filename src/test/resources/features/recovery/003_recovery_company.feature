@@ -3,7 +3,7 @@ Feature: Recovery Company API and Company Creation Flow
 
 
 
-  @company-creation @approver @smoke @e2e
+   @chief-admin @smoke @e2e
   Scenario: End-to-end company creation and validation
     Given company creation test data is prepared
     When I create company with validation step 1
@@ -22,33 +22,33 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery_company_success_schema.json"
 
-  @company-creation @approver @company-creation-step1
+  @chief-admin @company-creation-step1
   Scenario: Create Company Step 1 - Basic details
     Given company creation test data is prepared
     When I create company with validation step 1
     Then company creation step 1 should be successful
     And company creation stored identifiers should be present
 
-  @company-creation @approver @company-creation-step2
+  @chief-admin @company-creation-step2
   Scenario: Create Company Step 2 - Permissions setup
     Given company creation step 1 is completed
     When I create company with validation step 2
     Then company creation step 2 should be successful
 
-  @company-creation @approver @company-creation-step3
+  @chief-admin @company-creation-step3
   Scenario: Create Company Step 3 - Admin setup
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3
     Then company creation step 3 should be successful
 
-  @company-creation @approver @company-creation-step4
+  @chief-admin @company-creation-step4
   Scenario: Create Company Step 4 - Finalize company creation
     Given company creation steps 1, 2 and 3 are completed
     When I create company with validation step 4
     Then company creation step 4 should be successful
     And company creation final identifiers should be present
 
-  @company-creation @approver @company-creation-get
+  @chief-admin @company-creation-get
   Scenario: Get Company Details after creation
     Given company creation steps 1, 2 and 3 are completed
     When I create company with validation step 4

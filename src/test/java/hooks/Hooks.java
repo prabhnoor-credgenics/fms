@@ -44,10 +44,14 @@ public class Hooks {
         testContext.clearRandomStringCache();
         scenarioTestDataResolver.ensureUniqueLoanIdIfEnabled();
 
-        UserRole role = scenario.getSourceTagNames().contains("@approver")
-                || scenario.getSourceTagNames().contains("@company-creation")
-                ? UserRole.APPROVER
-                : UserRole.CREATOR;
+        UserRole role;
+        if (scenario.getSourceTagNames().contains("@chief-admin")) {
+            role = UserRole.CHIEF_ADMIN;
+        } else if (scenario.getSourceTagNames().contains("@approver")) {
+            role = UserRole.APPROVER;
+        } else {
+            role = UserRole.CREATOR;
+        }
 
         logger.info("Scenario '{}' | thread '{}' | userSlot {} | role: {}",
                 scenario.getName(), Thread.currentThread().getName(), testContext.getUserSlot(), role);

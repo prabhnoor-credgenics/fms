@@ -23,7 +23,10 @@ public class UserCredentialsResolver {
         String email;
         String password;
 
-        if (role == UserRole.APPROVER) {
+        if (role == UserRole.CHIEF_ADMIN) {
+            email = configReader.getProperty(envKey(env, "cheif.admin.email"));
+            password = configReader.getProperty(envKey(env, "cheif.admin.password"));
+        } else if (role == UserRole.APPROVER) {
             if (slot == 0) {
                 email = firstNonBlank(
                         configReader.getProperty(envKey(env, "approver.email")),
@@ -92,6 +95,9 @@ public class UserCredentialsResolver {
 
     public static String credentialPropertyHint(Environment env, UserRole role, int slot) {
         String envPrefix = env.name().toLowerCase();
+        if (role == UserRole.CHIEF_ADMIN) {
+            return envPrefix + ".cheif.admin.email / " + envPrefix + ".cheif.admin.password";
+        }
         if (role == UserRole.APPROVER) {
             if (slot == 0) {
                 return envPrefix + ".approver.email / " + envPrefix + ".approver.password "
