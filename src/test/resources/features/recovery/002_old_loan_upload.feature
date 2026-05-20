@@ -19,10 +19,12 @@ Feature: Loan Recovery Old Loan Upload API
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
+    And the request body should match json schema "schemas/loan_upload_request_schema.json"
     When I send a "POST" request to "/recovery/loan/{loanId}"
     Then the response status code should be one of "200,201"
     And the response content type should be "application/json"
     And the response body should not be empty
+    And the response should match json schema "schemas/loan_recovery_success_schema.json"
 
   @positive
   Scenario: Create loan recovery record with all required fields

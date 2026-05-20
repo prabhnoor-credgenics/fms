@@ -11,10 +11,16 @@ import payload.CompanyCreationPayloadBuilder;
 import service.CompanyCreationService;
 import validators.business.CompanyCreationValidator;
 
+import helpers.SchemaHelper;
+
 import static constants.FrameworkConstants.SCHEMA_COMPANY_GET_SUCCESS;
+import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP1_REQUEST;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP1_SUCCESS;
+import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP2_REQUEST;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP2_SUCCESS;
+import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP3_REQUEST;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP3_SUCCESS;
+import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP4_REQUEST;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP4_SUCCESS;
 
 
@@ -78,6 +84,12 @@ public class CompanyCreationStepDefinitions {
         companyCreationService.createCompanyStep1();
     }
 
+    @When("I create company with validation step 1 without mandatory field {string}")
+    public void i_create_company_with_validation_step_1_without_mandatory_field(String fieldName) {
+        company_creation_test_data_is_prepared();
+        companyCreationService.createCompanyStep1WithoutMandatoryField(fieldName);
+    }
+
     @When("I create company with validation step 2")
     public void i_create_company_with_validation_step_2() {
         companyCreationValidator.assertTrademarkConsistentAcrossSteps();
@@ -88,6 +100,24 @@ public class CompanyCreationStepDefinitions {
     public void i_create_company_with_validation_step_3() {
         companyCreationValidator.assertTrademarkConsistentAcrossSteps();
         companyCreationService.createCompanyStep3();
+    }
+
+    @When("I create company with validation step 3 without mandatory admin field {string}")
+    public void i_create_company_with_validation_step_3_without_mandatory_admin_field(String adminFieldName) {
+        companyCreationValidator.assertTrademarkConsistentAcrossSteps();
+        companyCreationService.createCompanyStep3WithoutAdminField(adminFieldName);
+    }
+
+    @When("I create company with validation step 3 without email only")
+    public void i_create_company_with_validation_step_3_without_email_only() {
+        companyCreationValidator.assertTrademarkConsistentAcrossSteps();
+        companyCreationService.createCompanyStep3WithoutEmailOnly();
+    }
+
+    @When("I create company with validation step 3 without email and mobile")
+    public void i_create_company_with_validation_step_3_without_email_and_mobile() {
+        companyCreationValidator.assertTrademarkConsistentAcrossSteps();
+        companyCreationService.createCompanyStep3WithoutEmailAndMobile();
     }
 
     @When("I create company with validation step 4")
@@ -111,6 +141,38 @@ public class CompanyCreationStepDefinitions {
         Response response = requireResponse();
         companyCreationValidator.validateSchema(response, SCHEMA_COMPANY_STEP1_SUCCESS);
         companyCreationValidator.extractAndStoreStep1(response);
+    }
+
+    @Then("company creation request should match json schema {string}")
+    public void company_creation_request_should_match_json_schema(String schemaPath) {
+        String body = testContext.getLastRequestBody();
+        if (body == null || body.isBlank()) {
+            throw new IllegalStateException(
+                    "No company creation request body in context. Execute a company creation When step first."
+            );
+        }
+        SchemaHelper.validateRequestBody(body, schemaPath);
+        logger.info("Company creation request schema validation passed: {}", schemaPath);
+    }
+
+    @Then("company creation step 1 request should match json schema")
+    public void company_creation_step_1_request_should_match_json_schema() {
+        company_creation_request_should_match_json_schema(SCHEMA_COMPANY_STEP1_REQUEST);
+    }
+
+    @Then("company creation step 2 request should match json schema")
+    public void company_creation_step_2_request_should_match_json_schema() {
+        company_creation_request_should_match_json_schema(SCHEMA_COMPANY_STEP2_REQUEST);
+    }
+
+    @Then("company creation step 3 request should match json schema")
+    public void company_creation_step_3_request_should_match_json_schema() {
+        company_creation_request_should_match_json_schema(SCHEMA_COMPANY_STEP3_REQUEST);
+    }
+
+    @Then("company creation step 4 request should match json schema")
+    public void company_creation_step_4_request_should_match_json_schema() {
+        company_creation_request_should_match_json_schema(SCHEMA_COMPANY_STEP4_REQUEST);
     }
 
     @Then("company creation step 2 should be successful")

@@ -1,10 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["success", "message"],
+  "required": ["success", "message", "message_template", "message_placeholder"],
   "properties": {
     "success": { "type": "boolean" },
-    "message": { "type": "string" }
+    "message": { "type": "string", "minLength": 1 },
+    "message_template": { "type": "string" },
+    "message_placeholder": { "type": "object" }
   },
   "additionalProperties": true
 }

@@ -133,7 +133,35 @@ public class JsonUtils {
             throw new RuntimeException("Failed to update JSON field: " + jsonPath, e);
         }
     }
-    
+
+    public static String removeJsonField(String jsonString, String jsonPath) {
+        try {
+            JsonNode rootNode = objectMapper.readTree(jsonString);
+            String[] pathParts = jsonPath.split("\\.");
+            JsonNode parent = rootNode;
+            String fieldToRemove = pathParts[pathParts.length - 1];
+
+            for (int i = 0; i < pathParts.length - 1; i++) {
+                parent = parent.get(pathParts[i]);
+                if (parent == null) {
+                    logger.warn("Path '{}' not found in JSON; field not removed", jsonPath);
+                    return jsonString;
+                }
+            }
+
+            if (parent.isObject()) {
+                ((ObjectNode) parent).remove(fieldToRemove);
+            } else {
+                logger.warn("Cannot remove field '{}' — parent is not an object", jsonPath);
+                return jsonString;
+            }
+
+            return objectMapper.writeValueAsString(rootNode);
+        } catch (Exception e) {
+            logger.error("Error removing JSON field '{}': {}", jsonPath, e.getMessage(), e);
+            throw new RuntimeException("Failed to remove JSON field: " + jsonPath, e);
+        }
+    }
 
     private static JsonNode convertToJsonNode(Object value) {
         if (value == null) {

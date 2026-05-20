@@ -28,6 +28,13 @@ public final class SchemaHelper {
         
         REQUEST_BODY_MAPPINGS.put("test-data/loan_recovery_request.json",
                 "schemas/loan_upload_request_schema.json");
+        REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step1.json",
+                "schemas/company_creation_step1_request_schema.json");
+        REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step2.json",
+                "schemas/company_creation_step2_request_schema.json");
+        REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step3.json",
+                "schemas/company_creation_step3_request_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/loan/", "schemas/loan_recovery_success_schema.json");
     }
 
     private SchemaHelper() {
@@ -85,5 +92,17 @@ public final class SchemaHelper {
             }
         }
         LOGGER.debug("No request-body schema mapping configured for '{}'", testDataPath);
+    }
+
+    public static void validateRequestBody(String requestBody, String schemaClasspath) {
+        if (requestBody == null || requestBody.isBlank()) {
+            throw new IllegalArgumentException("Request body must not be blank for schema validation");
+        }
+        org.hamcrest.MatcherAssert.assertThat(
+                "Request body failed schema validation against " + schemaClasspath,
+                requestBody,
+                matchesJsonSchemaInClasspath(schemaClasspath)
+        );
+        LOGGER.info("Request body schema validation passed for: {}", schemaClasspath);
     }
 }

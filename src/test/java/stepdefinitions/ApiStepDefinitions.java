@@ -191,6 +191,9 @@ public class ApiStepDefinitions {
                 storedQueryParams.isEmpty() ? null : new LinkedHashMap<>(storedQueryParams),
                 requestBody
         );
+        if (requestBody != null && !requestBody.isBlank()) {
+            testContext.setLastRequestBody(requestBody);
+        }
         logger.info("Sending {} request to endpoint: {}", method, endpoint);
         response = executeHttp(method, endpoint);
         logger.info("Response received with status code: {}", response.getStatusCode());

@@ -7,28 +7,79 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: End-to-end company creation and validation
     Given company creation test data is prepared
     When I create company with validation step 1
-    Then the response status code should be 201
+    Then company creation step 1 request should match json schema
+    And the response status code should be 201
     And the response body should contain field "message"
     And the response should match json schema "schemas/company_creation_step1_success_schema.json"
     Then company creation step 1 should be successful
     And company creation stored identifiers should be present
     When I create company with validation step 2
-    Then the response status code should be 201
+    Then company creation step 2 request should match json schema
+    And the response status code should be 201
     And the response message should be "Permissions validated and saved."
     And the response should match json schema "schemas/company_creation_step2_success_schema.json"
     Then company creation step 2 should be successful
     When I create company with validation step 3
-    Then the response status code should be 201
+    Then company creation step 3 request should match json schema
+    And the response status code should be 201
     And the response message should be "Admin details validated and saved."
     And the response should match json schema "schemas/company_creation_step3_success_schema.json"
     Then company creation step 3 should be successful
     When I create company with validation step 4
-    Then the response status code should be 201
+    Then company creation step 4 request should match json schema
+    And the response status code should be 201
     And the response message should be "company created successfully"
     And the response should match json schema "schemas/company_creation_step4_success_schema.json"
     Then company creation step 4 should be successful
 
+  @negative @company-creation-step1 @chief-admin
+  Scenario Outline: Step 1 should fail when mandatory field <field_name> is missing
+    Given company creation test data is prepared
+    When I create company with validation step 1 without mandatory field "<field_name>"
+    Then the response status code should be one of "400,422"
+    And the response should match json schema "schemas/company_creation_error_schema.json"
 
+    Examples:
+      | field_name                        |
+      | company_name                      |
+      | trademark                         |
+      | company_email                     |
+      | company_type                      |
+      | company_code                      |
+      | gst_number                        |
+      | country_isd_code                  |
+      | calling_dialer_server             |
+      | calling_mode                      |
+      | is_uat_company                    |
+      | is_test_company                   |
+      | is_purging_enabled                |
+      | authorized_representative_name    |
+      | authorized_representative_email   |
+
+  @negative @company-creation-step3 @chief-admin
+  Scenario Outline: Step 3 should fail when mandatory admin field <field_name> is missing
+    Given company creation steps 1 and 2 are completed
+    When I create company with validation step 3 without mandatory admin field "<field_name>"
+    Then the response status code should be one of "400,422"
+    And the response should match json schema "schemas/company_creation_error_schema.json"
+
+    Examples:
+      | field_name  |
+      | first_name  |
+
+  @negative @company-creation-step3 @chief-admin
+  Scenario: Step 3 should fail when email is missing and mobile is not provided
+    Given company creation steps 1 and 2 are completed
+    When I create company with validation step 3 without email only
+    Then the response status code should be one of "400,422"
+    And the response should match json schema "schemas/company_creation_error_schema.json"
+
+  @negative @company-creation-step3 @chief-admin
+  Scenario: Step 3 should fail when both email and mobile are missing
+    Given company creation steps 1 and 2 are completed
+    When I create company with validation step 3 without email and mobile
+    Then the response status code should be one of "400,422"
+    And the response should match json schema "schemas/company_creation_error_schema.json"
 
   @positive
   Scenario: Get company details with bifurcation prefix true

@@ -24,6 +24,7 @@ public class TestContext {
     private String companySubType;
     private String tenantType;
     private Response response;
+    private String lastRequestBody;
 
 
     private String scenarioLoanId;
@@ -41,6 +42,14 @@ public class TestContext {
 
     public void setResponse(Response response) {
         this.response = response;
+    }
+
+    public String getLastRequestBody() {
+        return lastRequestBody;
+    }
+
+    public void setLastRequestBody(String lastRequestBody) {
+        this.lastRequestBody = lastRequestBody;
     }
 
     public String getAuthToken() {

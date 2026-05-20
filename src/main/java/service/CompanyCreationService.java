@@ -42,12 +42,28 @@ public class CompanyCreationService {
         return postCompanyPayload(payloadBuilder.buildStep1Payload(), 1);
     }
 
+    public Response createCompanyStep1WithoutMandatoryField(String fieldName) {
+        return postCompanyPayload(payloadBuilder.buildStep1PayloadWithoutMandatoryField(fieldName), 1);
+    }
+
     public Response createCompanyStep2() {
         return postCompanyPayload(payloadBuilder.buildStep2Payload(), 2);
     }
 
     public Response createCompanyStep3() {
         return postCompanyPayload(payloadBuilder.buildStep3Payload(), 3);
+    }
+
+    public Response createCompanyStep3WithoutAdminField(String adminFieldName) {
+        return postCompanyPayload(payloadBuilder.buildStep3PayloadWithoutAdminField(adminFieldName), 3);
+    }
+
+    public Response createCompanyStep3WithoutEmailOnly() {
+        return postCompanyPayload(payloadBuilder.buildStep3PayloadWithoutEmailOnly(), 3);
+    }
+
+    public Response createCompanyStep3WithoutEmailAndMobile() {
+        return postCompanyPayload(payloadBuilder.buildStep3PayloadWithoutEmailAndMobile(), 3);
     }
 
     public Response createCompanyStep4() {
@@ -96,6 +112,7 @@ public class CompanyCreationService {
             throw new IllegalArgumentException("Request body must not be blank for step " + step);
         }
         requireAuthToken();
+        testContext.setLastRequestBody(body);
         Map<String, String> headers = new LinkedHashMap<>();
         headers.put("authenticationtoken", LoggingHelper.maskToken(testContext.getAuthToken()));
         headers.put("accept", "application/json, text/plain, */*");

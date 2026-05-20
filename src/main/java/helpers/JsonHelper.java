@@ -17,6 +17,10 @@ public final class JsonHelper {
         return JsonUtils.updateJsonField(json, jsonPath, value);
     }
 
+    public static String removeField(String json, String jsonPath) {
+        return JsonUtils.removeJsonField(json, jsonPath);
+    }
+
     public static String prettyPrint(String json) {
         return JsonUtils.prettyPrint(json);
     }

@@ -57,6 +57,11 @@ public class FrameworkConstants {
     public static final String SCHEMA_COMPANY_STEP3_SUCCESS = "schemas/company_creation_step3_success_schema.json";
     public static final String SCHEMA_COMPANY_STEP4_SUCCESS = "schemas/company_creation_step4_success_schema.json";
     public static final String SCHEMA_COMPANY_GET_SUCCESS = "schemas/company_creation_get_success_schema.json";
+    public static final String SCHEMA_COMPANY_STEP1_REQUEST = "schemas/company_creation_step1_request_schema.json";
+    public static final String SCHEMA_COMPANY_STEP2_REQUEST = "schemas/company_creation_step2_request_schema.json";
+    public static final String SCHEMA_COMPANY_STEP3_REQUEST = "schemas/company_creation_step3_request_schema.json";
+    public static final String SCHEMA_COMPANY_STEP4_REQUEST = "schemas/company_creation_step4_request_schema.json";
+    public static final String SCHEMA_COMPANY_ERROR = "schemas/company_creation_error_schema.json";
 
     
     public static final String PROP_ENVIRONMENT = "environment";

@@ -5,11 +5,17 @@ import context.TestContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import helpers.FileHelper;
+import helpers.JsonHelper;
 import helpers.RandomDataHelper;
+import helpers.SchemaHelper;
 
 import static constants.FrameworkConstants.COMPANY_STEP1_TEMPLATE;
 import static constants.FrameworkConstants.COMPANY_STEP2_TEMPLATE;
 import static constants.FrameworkConstants.COMPANY_STEP3_TEMPLATE;
+import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP1_REQUEST;
+import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP2_REQUEST;
+import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP3_REQUEST;
+import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP4_REQUEST;
 
 
 public class CompanyCreationPayloadBuilder {
@@ -81,11 +87,25 @@ public class CompanyCreationPayloadBuilder {
     }
 
     public String buildStep1Payload() {
+        String payload = assembleStep1Payload();
+        SchemaHelper.validateRequestBody(payload, SCHEMA_COMPANY_STEP1_REQUEST);
+        logger.debug("Built company creation step 1 payload for trademark={}", testContext.getTrademark());
+        return payload;
+    }
+
+    public String buildStep1PayloadWithoutMandatoryField(String fieldName) {
+        String payload = JsonHelper.removeField(assembleStep1Payload(), "data." + fieldName);
+        logger.debug("Built step 1 payload without mandatory field '{}' for trademark={}",
+                fieldName, testContext.getTrademark());
+        return payload;
+    }
+
+    private String assembleStep1Payload() {
         requireTrademarkPrepared();
         requireAuthorizedRepresentativeNamePrepared();
         String template = FileHelper.readResourceAsString(COMPANY_STEP1_TEMPLATE);
         String[] ips = configReader.getCompanyCreationWhitelistedIps().split(",");
-        String payload = template
+        return template
                 .replace("{COMPANY_TYPE}", COMPANY_TYPE)
                 .replace("{CLIENT_TYPE}", CLIENT_TYPE)
                 .replace("{COMPANY_SUB_TYPE}", COMPANY_SUB_TYPE)
@@ -100,32 +120,73 @@ public class CompanyCreationPayloadBuilder {
                 .replace("{ALIAS_PROFILE_ID}", configReader.getCompanyCreationAliasProfileId())
                 .replace("{WHITELISTED_IP_1}", ips[0].trim())
                 .replace("{WHITELISTED_IP_2}", ips.length > 1 ? ips[1].trim() : ips[0].trim());
-
-        logger.debug("Built company creation step 1 payload for trademark={}", testContext.getTrademark());
-        return payload;
     }
 
     public String buildStep2Payload() {
         requireTrademarkPrepared();
         String template = FileHelper.readResourceAsString(COMPANY_STEP2_TEMPLATE);
         String payload = template.replace("{TRADEMARK}", escapeJson(testContext.getTrademark()));
+        SchemaHelper.validateRequestBody(payload, SCHEMA_COMPANY_STEP2_REQUEST);
         logger.debug("Built company creation step 2 payload for trademark={}", testContext.getTrademark());
         return payload;
     }
 
     public String buildStep3Payload() {
+        String payload = assembleStep3Payload();
+        SchemaHelper.validateRequestBody(payload, SCHEMA_COMPANY_STEP3_REQUEST);
+        logger.debug("Built company creation step 3 payload for trademark={}", testContext.getTrademark());
+        return payload;
+    }
+
+    public String buildStep3PayloadWithoutAdminField(String adminFieldName) {
+        String payload = JsonHelper.removeField(
+                assembleStep3Payload(),
+                "data.company_admin_details." + adminFieldName
+        );
+        logger.debug(
+                "Built step 3 payload without admin field '{}' for trademark={}",
+                adminFieldName,
+                testContext.getTrademark()
+        );
+        return payload;
+    }
+
+    public String buildStep3PayloadWithoutEmailOnly() {
+        String payload = JsonHelper.removeField(
+                assembleStep3PayloadNoMobile(),
+                "data.company_admin_details.email"
+        );
+        logger.debug("Built step 3 payload without email (mobile not sent) for trademark={}",
+                testContext.getTrademark());
+        return payload;
+    }
+
+    public String buildStep3PayloadWithoutEmailAndMobile() {
+        String payload = assembleStep3Payload();
+        payload = JsonHelper.removeField(payload, "data.company_admin_details.email");
+        payload = JsonHelper.removeField(payload, "data.company_admin_details.mobile");
+        logger.debug(
+                "Built step 3 payload without email and mobile for trademark={}",
+                testContext.getTrademark()
+        );
+        return payload;
+    }
+
+    private String assembleStep3PayloadNoMobile() {
+        return JsonHelper.removeField(assembleStep3Payload(), "data.company_admin_details.mobile");
+    }
+
+    private String assembleStep3Payload() {
         requireTrademarkPrepared();
         requireAdminEmailPrepared();
         requireAdminNamePrepared();
         String template = FileHelper.readResourceAsString(COMPANY_STEP3_TEMPLATE);
-        String payload = template
+        return template
                 .replace("{TRADEMARK}", escapeJson(testContext.getTrademark()))
                 .replace("{COUNTRY_ISD_CODE}", configReader.getCompanyCreationCountryIsdCode())
                 .replace("{ADMIN_EMAIL}", escapeJson(testContext.getAdminEmail()))
                 .replace("{ADMIN_FIRST_NAME}", escapeJson(testContext.getAdminFirstName()))
                 .replace("{ADMIN_LAST_NAME}", escapeJson(testContext.getAdminLastName()));
-        logger.debug("Built company creation step 3 payload for trademark={}", testContext.getTrademark());
-        return payload;
     }
 
     public String buildStep4Payload() {
@@ -136,6 +197,7 @@ public class CompanyCreationPayloadBuilder {
                   "trademark": "%s"
                 }
                 """.formatted(escapeJson(testContext.getTrademark()));
+        SchemaHelper.validateRequestBody(payload, SCHEMA_COMPANY_STEP4_REQUEST);
         logger.debug("Built company creation step 4 payload for trademark={}", testContext.getTrademark());
         return payload;
     }
