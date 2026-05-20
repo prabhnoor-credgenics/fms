@@ -24,6 +24,7 @@ public class TestContext {
     private String companySubType;
     private String tenantType;
     private Response response;
+    private Response savedComparisonResponse;
     private String lastRequestBody;
 
 
@@ -42,6 +43,14 @@ public class TestContext {
 
     public void setResponse(Response response) {
         this.response = response;
+    }
+
+    public Response getSavedComparisonResponse() {
+        return savedComparisonResponse;
+    }
+
+    public void setSavedComparisonResponse(Response savedComparisonResponse) {
+        this.savedComparisonResponse = savedComparisonResponse;
     }
 
     public String getLastRequestBody() {

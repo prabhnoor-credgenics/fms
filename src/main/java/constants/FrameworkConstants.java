@@ -42,9 +42,12 @@ public class FrameworkConstants {
     public static final String ENDPOINT_USER_COMPANY = "/user/company";
     public static final String ENDPOINT_RECOVERY_COMPANY = "/recovery/company";
     public static final String ENDPOINT_GLOBAL_STATUS = "/recovery/global-status";
+    public static final String ENDPOINT_RECOVERY_VARIABLES = "/recovery/variables";
 
     public static final String SCHEMA_GLOBAL_STATUS_SUCCESS = "schemas/global_status_success_schema.json";
     public static final String SCHEMA_GLOBAL_STATUS_ERROR = "schemas/global_status_error_schema.json";
+    public static final String SCHEMA_RECOVERY_VARIABLES_SUCCESS = "schemas/recovery_variables_success_schema.json";
+    public static final String SCHEMA_RECOVERY_VARIABLES_ERROR = "schemas/recovery_variables_error_schema.json";
 
     
     public static final String COMPANY_STEP1_TEMPLATE = "test-data/company_creation_step1.json";
