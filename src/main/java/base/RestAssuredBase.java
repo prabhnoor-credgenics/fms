@@ -10,9 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * Builds request specifications per scenario without mutating global RestAssured state.
- */
+
 public class RestAssuredBase {
     private static final Logger logger = LogManager.getLogger(RestAssuredBase.class);
 

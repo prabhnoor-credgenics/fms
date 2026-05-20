@@ -1,0 +1,31 @@
+{
+  "validation_step": 1,
+  "data": {
+    "company_type": "{COMPANY_TYPE}",
+    "client_type": "{CLIENT_TYPE}",
+    "company_sub_type": "{COMPANY_SUB_TYPE}",
+    "calling_dialer_server": "incall_ind_server",
+    "calling_mode": "national",
+    "is_test_company": true,
+    "country_isd_code": "{COUNTRY_ISD_CODE}",
+    "company_name": "{COMPANY_NAME}",
+    "trademark": "{TRADEMARK}",
+    "company_email": ["{COMPANY_EMAIL}"],
+    "authorized_representative_name": "{AUTHORIZED_REP_NAME}",
+    "authorized_representative_email": "{COMPANY_EMAIL}",
+    "contact_number": "9876543210",
+    "gst_number": "{GST_NUMBER}",
+    "company_code": "{COMPANY_CODE}",
+    "company_whitelisted_ips": ["{WHITELISTED_IP_1}", "{WHITELISTED_IP_2}"],
+    "is_purging_enabled": true,
+    "retention_in_months": 6,
+    "is_uat_company": false,
+    "alias_profile_id": "{ALIAS_PROFILE_ID}",
+    "authorized_representative_mobile": "9661533072",
+    "address_text": "Street y3mg, Area 57s",
+    "address_state": "State_h8sb",
+    "address_city": "City_rc418",
+    "address_pincode": "155617",
+    "tenant_type": "{TENANT_TYPE}"
+  }
+}

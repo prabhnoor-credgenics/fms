@@ -5,7 +5,7 @@ import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utils.DataTypeValidator;
+import validators.datatype.DataTypeValidator;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

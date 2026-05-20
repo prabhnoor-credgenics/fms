@@ -1,7 +1,7 @@
 package hooks;
 
-import auth.AuthManager;
-import auth.ParallelUserAllocator;
+import auth.allocator.ParallelUserAllocator;
+import auth.manager.AuthManager;
 import context.ScenarioTestDataResolver;
 import context.TestContext;
 import enums.UserRole;
@@ -45,6 +45,7 @@ public class Hooks {
         scenarioTestDataResolver.ensureUniqueLoanIdIfEnabled();
 
         UserRole role = scenario.getSourceTagNames().contains("@approver")
+                || scenario.getSourceTagNames().contains("@company-creation")
                 ? UserRole.APPROVER
                 : UserRole.CREATOR;
 

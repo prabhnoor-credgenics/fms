@@ -1,8 +1,6 @@
 package constants;
 
-/**
- * Framework constants for common values
- */
+
 public class FrameworkConstants {
     
     // HTTP Status Codes
@@ -39,6 +37,22 @@ public class FrameworkConstants {
     // Test Data Paths
     public static final String TEST_DATA_PATH = "test-data";
     public static final String JSON_SCHEMAS_PATH = "schemas";
+
+    // API Endpoints
+    public static final String ENDPOINT_USER_COMPANY = "/user/company";
+    public static final String ENDPOINT_RECOVERY_COMPANY = "/recovery/company";
+
+    // Company creation test-data templates
+    public static final String COMPANY_STEP1_TEMPLATE = "test-data/company_creation_step1.json";
+    public static final String COMPANY_STEP2_TEMPLATE = "test-data/company_creation_step2.json";
+    public static final String COMPANY_STEP3_TEMPLATE = "test-data/company_creation_step3.json";
+
+    // Company creation response schemas
+    public static final String SCHEMA_COMPANY_STEP1_SUCCESS = "schemas/company_creation_step1_success_schema.json";
+    public static final String SCHEMA_COMPANY_STEP2_SUCCESS = "schemas/company_creation_step2_success_schema.json";
+    public static final String SCHEMA_COMPANY_STEP3_SUCCESS = "schemas/company_creation_step3_success_schema.json";
+    public static final String SCHEMA_COMPANY_STEP4_SUCCESS = "schemas/company_creation_step4_success_schema.json";
+    public static final String SCHEMA_COMPANY_GET_SUCCESS = "schemas/company_creation_get_success_schema.json";
 
     // Property Keys
     public static final String PROP_ENVIRONMENT = "environment";

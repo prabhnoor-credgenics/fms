@@ -1,0 +1,25 @@
+{
+  "validation_step": 3,
+  "data": {
+    "company_admin_details": {
+      "country_isd_code": "{COUNTRY_ISD_CODE}",
+      "preferred_language": "en_in",
+      "first_name": "{ADMIN_FIRST_NAME}",
+      "last_name": "{ADMIN_LAST_NAME}",
+      "email": "{ADMIN_EMAIL}",
+      "mobile": "9643933976",
+      "client_employee_id": "role_api_auto",
+      "team": "team 1",
+      "location": "location 1",
+      "department": "department 1",
+      "address_text": "Street y3mg, Area 57s",
+      "address_city": "Cityrc",
+      "address_state": "State",
+      "address_pincode": "155617",
+      "address_latitude": "28.557447",
+      "address_longitude": "77.345345",
+      "mobile_isd_code": "{COUNTRY_ISD_CODE}"
+    },
+    "trademark": "{TRADEMARK}"
+  }
+}

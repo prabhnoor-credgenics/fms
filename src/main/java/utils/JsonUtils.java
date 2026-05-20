@@ -8,19 +8,12 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.InputStream;
 
-/**
- * Utility class for JSON operations
- */
+
 public class JsonUtils {
     private static final Logger logger = LogManager.getLogger(JsonUtils.class);
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    /**
-     * Read JSON file from resources directory and return as String
-     * 
-     * @param filePath Path to JSON file in resources (e.g., "test-data/user.json")
-     * @return JSON content as String
-     */
+
     public static String readJsonFromFile(String filePath) {
         try (InputStream inputStream = JsonUtils.class.getClassLoader().getResourceAsStream(filePath)) {
             if (inputStream == null) {
@@ -37,12 +30,7 @@ public class JsonUtils {
         }
     }
 
-    /**
-     * Convert Java object to JSON string
-     * 
-     * @param object Object to convert
-     * @return JSON string representation
-     */
+
     public static String toJsonString(Object object) {
         try {
             String json = objectMapper.writeValueAsString(object);
@@ -54,14 +42,7 @@ public class JsonUtils {
         }
     }
 
-    /**
-     * Convert JSON string to Java object
-     * 
-     * @param jsonString JSON string to parse
-     * @param clazz Target class type
-     * @param <T> Generic type
-     * @return Parsed object of type T
-     */
+
     public static <T> T fromJsonString(String jsonString, Class<T> clazz) {
         try {
             T object = objectMapper.readValue(jsonString, clazz);
@@ -73,12 +54,7 @@ public class JsonUtils {
         }
     }
 
-    /**
-     * Pretty print JSON string with indentation
-     * 
-     * @param jsonString JSON string to format
-     * @return Formatted JSON string
-     */
+
     public static String prettyPrint(String jsonString) {
         try {
             Object jsonObject = objectMapper.readValue(jsonString, Object.class);
@@ -91,12 +67,7 @@ public class JsonUtils {
         }
     }
 
-    /**
-     * Validate JSON string format
-     * 
-     * @param jsonString JSON string to validate
-     * @return true if valid JSON, false otherwise
-     */
+
     public static boolean isValidJson(String jsonString) {
         try {
             objectMapper.readTree(jsonString);
@@ -108,14 +79,7 @@ public class JsonUtils {
         }
     }
 
-    /**
-     * Update a JSON field using JSONPath-like notation (e.g., "field", "nested.field", "array[0].field")
-     * 
-     * @param jsonString Original JSON string
-     * @param jsonPath JSONPath to the field (supports dot notation and array indices)
-     * @param newValue New value (can be null, String, Number, Boolean, or String representation)
-     * @return Updated JSON string
-     */
+
     public static String updateJsonField(String jsonString, String jsonPath, Object newValue) {
         try {
             JsonNode rootNode = objectMapper.readTree(jsonString);
@@ -170,9 +134,7 @@ public class JsonUtils {
         }
     }
     
-    /**
-     * Convert a value to JsonNode
-     */
+
     private static JsonNode convertToJsonNode(Object value) {
         if (value == null) {
             return objectMapper.getNodeFactory().nullNode();

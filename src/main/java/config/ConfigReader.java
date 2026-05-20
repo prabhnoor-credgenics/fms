@@ -10,14 +10,23 @@ import java.util.Properties;
 
 public class ConfigReader {
     private static final Logger logger = LogManager.getLogger(ConfigReader.class);
-    private static final String PROPERTIES_FILE = "global.properties";
+    private static final String GLOBAL_PROPERTIES_FILE = "global.properties";
     private static final String CRYPTO_PROPERTIES_FILE = "secrets/crypto.properties";
+    private static final String ENVIRONMENT_KEY = "environment";
 
+    /**
+     * Merged properties view: {@code global.properties} loaded first (env-agnostic), then the
+     * env-specific file ({@code <env>.properties}) overlaid on top so any key duplicated in
+     * the env file wins. Crypto values stay in their own properties (kept off classpath).
+     */
     private final Properties properties = new Properties();
     private final Properties cryptoProperties = new Properties();
 
+    private String activeEnvironment;
+
     public ConfigReader() {
-        loadProperties();
+        loadGlobalProperties();
+        loadEnvironmentProperties();
         loadCryptoProperties();
     }
 
@@ -40,17 +49,60 @@ public class ConfigReader {
         }
     }
 
-    private void loadProperties() {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
+    private void loadGlobalProperties() {
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(GLOBAL_PROPERTIES_FILE)) {
             if (inputStream == null) {
-                logger.error("Properties file '{}' not found in classpath", PROPERTIES_FILE);
-                throw new RuntimeException("Properties file not found: " + PROPERTIES_FILE);
+                logger.error("Properties file '{}' not found in classpath", GLOBAL_PROPERTIES_FILE);
+                throw new RuntimeException("Properties file not found: " + GLOBAL_PROPERTIES_FILE);
             }
             properties.load(inputStream);
-            logger.info("Successfully loaded properties from {}", PROPERTIES_FILE);
+            logger.info("Successfully loaded properties from {}", GLOBAL_PROPERTIES_FILE);
         } catch (IOException e) {
             logger.error("Error loading properties file: {}", e.getMessage(), e);
             throw new RuntimeException("Failed to load properties file", e);
+        }
+    }
+
+    /**
+     * Reads {@code environment} from {@code global.properties} (with optional
+     * {@code -Denvironment=...} JVM override) and merges {@code <env>.properties} on top so
+     * env-specific keys (base URL, emails, passwords, api key company id, …) live in their
+     * own file. Missing env file is fatal — the framework cannot run without one.
+     */
+    private void loadEnvironmentProperties() {
+        String envOverride = System.getProperty(ENVIRONMENT_KEY);
+        String envName = (envOverride != null && !envOverride.isBlank())
+                ? envOverride.trim()
+                : properties.getProperty(ENVIRONMENT_KEY);
+
+        if (envName == null || envName.isBlank()) {
+            throw new RuntimeException(
+                    "'environment' key is missing from " + GLOBAL_PROPERTIES_FILE
+                            + " and no -Denvironment=... was provided."
+            );
+        }
+
+        activeEnvironment = envName.trim().toLowerCase();
+        properties.setProperty(ENVIRONMENT_KEY, activeEnvironment);
+
+        String envFile = activeEnvironment + ".properties";
+        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(envFile)) {
+            if (inputStream == null) {
+                logger.error("Environment properties file '{}' not found in classpath", envFile);
+                throw new RuntimeException(
+                        "Environment properties file not found: " + envFile
+                                + ". Create src/main/resources/" + envFile
+                                + " with env-specific keys (base url, emails, passwords, api key company id, …)."
+                );
+            }
+            Properties envProperties = new Properties();
+            envProperties.load(inputStream);
+            properties.putAll(envProperties);
+            logger.info("Successfully loaded environment properties from {} ({} keys)",
+                    envFile, envProperties.size());
+        } catch (IOException e) {
+            logger.error("Error loading environment properties file '{}': {}", envFile, e.getMessage(), e);
+            throw new RuntimeException("Failed to load environment properties file: " + envFile, e);
         }
     }
 
@@ -70,12 +122,7 @@ public class ConfigReader {
         return publicKey;
     }
 
-    /**
-     * Resolves RSA public key from secrets/crypto.properties.
-     * Primary: {@code {env}.public.key} (e.g. stag.public.key, dev.public.key).
-     * Legacy: PROD_PUBLIC_KEY / DEV_PUBLIC_KEY.
-     * Fallback: STAG and UAT use dev.public.key when env-specific key is absent.
-     */
+
     private String resolvePublicKey(Environment env) {
         String envKey = env.getValue() + ".public.key";
         String publicKey = cryptoProperties.getProperty(envKey);
@@ -151,8 +198,7 @@ public class ConfigReader {
     }
 
     public Environment getEnvironment() {
-        String env = getProperty("environment");
-        return Environment.valueOf(env.toUpperCase());
+        return Environment.valueOf(activeEnvironment.toUpperCase());
     }
 
     public String getBaseUrl() {
@@ -262,10 +308,27 @@ public class ConfigReader {
         return Boolean.parseBoolean(getProperty("parallel.execution.enabled", "false"));
     }
 
-    /**
-     * When true, request/response RestAssured filters are not attached (recommended for CI parallel runs).
-     */
+
     public boolean isCiMode() {
         return Boolean.parseBoolean(System.getProperty("ci.mode", getProperty("ci.mode", "false")));
+    }
+
+    public String getCompanyCreationAliasProfileId() {
+        return getProperty("company.creation.alias_profile_id", "icoPMIUXyTzl");
+    }
+
+    public String getCompanyCreationCountryIsdCode() {
+        return getProperty("company.creation.country_isd_code", "+91");
+    }
+
+    public String getCompanyCreationGstNumber() {
+        return getProperty("company.creation.gst_number", "24AAACC1206D1ZM");
+    }
+
+    public String getCompanyCreationWhitelistedIps() {
+        return getProperty(
+                "company.creation.whitelisted_ips",
+                "103.55.60.250,103.55.60.251"
+        );
     }
 }

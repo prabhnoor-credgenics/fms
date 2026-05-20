@@ -1,0 +1,68 @@
+{
+  "validation_step": 2,
+  "data": {
+    "trademark": "{TRADEMARK}",
+    "permissions": {
+      "Approval Service": {
+        "all_data_access": {
+          "meta_data": {
+            "description": "Users can access all approval data",
+            "name": "All Data Access"
+          },
+          "read": true
+        },
+        "approval_company_settings": {
+          "meta_data": {
+            "description": "Users can view and edit approval module settings",
+            "name": "Approval Settings Module"
+          },
+          "read": true,
+          "write": true
+        },
+        "approval_management_page": {
+          "meta_data": {
+            "description": "Users can view and perform actions on requests pending on them",
+            "name": "Manage Approvals"
+          },
+          "write": true
+        },
+        "approval_policy": {
+          "meta_data": {
+            "description": "Users with this permission will be able to view/edit/create the approval policy for an organization",
+            "name": "Approval Policy"
+          },
+          "read": true,
+          "write": true
+        }
+      },
+      "User Management Module": {
+        "users": {
+          "levels": true,
+          "meta_data": {
+            "description": "Ability to create, edit and delete in the user management section of settings",
+            "name": "User Management"
+          },
+          "read": true,
+          "write": true
+        },
+        "profiles": {
+          "levels": true,
+          "meta_data": {
+            "description": "Ability to create and edit permission groups for all users in the user management section of settings",
+            "name": "Permission Group Management"
+          },
+          "write": true
+        }
+      },
+      "Core Collection Modules": {
+        "loan_upload": {
+          "meta_data": {
+            "description": "Ability to upload new loans in bulk on-to the platform through excel upload in data upload section",
+            "name": "Loan Upload"
+          },
+          "write": true
+        }
+      }
+    }
+  }
+}

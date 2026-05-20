@@ -1,8 +1,5 @@
 @jjjapijhk @loan-recovery
-Feature: Loan Recovery API
-  As an API user
-  I want to create and manage loan recovery records
-  So that loan recovery operations can be automated
+Feature: Loan Recovery Old Loan Upload API
 
   Background:
     Given scenario loan id is unique
@@ -185,6 +182,7 @@ Feature: Loan Recovery API
     And I set the path parameters:
       | loanId | loan-test-123!@# |
     And I set the request body from file "test-data/loan_recovery_request.json"
+    And I update JSON field "loan_id" to "loan-test-123!@#"
     When I send a "POST" request to "/recovery/loan/{loanId}"
     Then the response status code should be one of "200,201,400"
 
@@ -193,7 +191,7 @@ Feature: Loan Recovery API
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
-      | loanId | {LOAN_ID} |
+      | loanId | {RANDOM_STRING:500} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "loan_id" to "{RANDOM_STRING:500}"
     When I send a "POST" request to "/recovery/loan/{loanId}"

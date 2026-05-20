@@ -54,8 +54,8 @@ src/main/resources/secrets/*
 
 # Markdown documentation (kept local, not pushed to main)
 *.md
-
-
+target/*
+!target/.gitkeep
 .idea/
 
 loggings/
