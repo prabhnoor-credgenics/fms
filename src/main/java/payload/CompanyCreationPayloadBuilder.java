@@ -4,8 +4,8 @@ import config.ConfigReader;
 import context.TestContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utils.JsonUtils;
-import utils.TestDataHelper;
+import helpers.FileHelper;
+import helpers.RandomDataHelper;
 
 import static constants.FrameworkConstants.COMPANY_STEP1_TEMPLATE;
 import static constants.FrameworkConstants.COMPANY_STEP2_TEMPLATE;
@@ -23,46 +23,66 @@ public class CompanyCreationPayloadBuilder {
 
     private final ConfigReader configReader;
     private final TestContext testContext;
-    private final TestDataHelper testDataHelper;
 
     public CompanyCreationPayloadBuilder(
             ConfigReader configReader,
-            TestContext testContext,
-            TestDataHelper testDataHelper
+            TestContext testContext
     ) {
         this.configReader = configReader;
         this.testContext = testContext;
-        this.testDataHelper = testDataHelper;
     }
 
 
     public void prepareCompanyCreationTestData() {
-        String suffix = testDataHelper.generateUUID().replace("-", "").substring(0, 8);
-        String companyName = "Test Company " + suffix;
-        String trademark = "Tests Company " + suffix;
-        String companyEmail = "TestCompany" + suffix + "@yopmail.com";
-        String adminEmail = "TestAdmin" + suffix + "@yopmail.com";
+        String companyName = RandomDataHelper.uniqueCompanyName();
+        String trademark = RandomDataHelper.uniqueCompanyName();
+        String digits = digitsSuffix(companyName);
+        String companyEmail = "TestCompany" + digits + "@yopmail.com";
+        String adminEmail = "TestAdmin" + digits + "@yopmail.com";
+        String authorizedRepresentativeName = RandomDataHelper.randomName();
+        String adminFirstName = RandomDataHelper.randomFirstName();
+        String adminLastName = RandomDataHelper.randomLastName();
 
         testContext.setCompanyName(companyName);
         testContext.setTrademark(trademark);
         testContext.setCompanyEmail(companyEmail);
         testContext.setAdminEmail(adminEmail);
+        testContext.setAuthorizedRepresentativeName(authorizedRepresentativeName);
+        testContext.setAdminFirstName(adminFirstName);
+        testContext.setAdminLastName(adminLastName);
         testContext.setCompanyType(COMPANY_TYPE);
         testContext.setClientType(CLIENT_TYPE);
         testContext.setCompanySubType(COMPANY_SUB_TYPE);
         testContext.setTenantType(TENANT_TYPE);
 
         logger.info(
-                "Prepared company creation test data: trademark={}, companyName={}, companyEmail={}",
+                "Prepared company creation test data: trademark={}, companyName={}, companyEmail={}, "
+                        + "authorizedRepresentativeName={}, adminFirstName={}, adminLastName={}",
                 trademark,
                 companyName,
-                companyEmail
+                companyEmail,
+                authorizedRepresentativeName,
+                adminFirstName,
+                adminLastName
         );
+    }
+
+    /** Extracts the trailing digits from a name like {@code "Company123456"} → {@code "123456"}. */
+    private static String digitsSuffix(String name) {
+        if (name == null) {
+            return "";
+        }
+        int i = name.length();
+        while (i > 0 && Character.isDigit(name.charAt(i - 1))) {
+            i--;
+        }
+        return name.substring(i);
     }
 
     public String buildStep1Payload() {
         requireTrademarkPrepared();
-        String template = JsonUtils.readJsonFromFile(COMPANY_STEP1_TEMPLATE);
+        requireAuthorizedRepresentativeNamePrepared();
+        String template = FileHelper.readResourceAsString(COMPANY_STEP1_TEMPLATE);
         String[] ips = configReader.getCompanyCreationWhitelistedIps().split(",");
         String payload = template
                 .replace("{COMPANY_TYPE}", COMPANY_TYPE)
@@ -73,6 +93,7 @@ public class CompanyCreationPayloadBuilder {
                 .replace("{COMPANY_NAME}", escapeJson(testContext.getCompanyName()))
                 .replace("{TRADEMARK}", escapeJson(testContext.getTrademark()))
                 .replace("{COMPANY_EMAIL}", escapeJson(testContext.getCompanyEmail()))
+                .replace("{AUTHORIZED_REP_NAME}", escapeJson(testContext.getAuthorizedRepresentativeName()))
                 .replace("{GST_NUMBER}", configReader.getCompanyCreationGstNumber())
                 .replace("{COMPANY_CODE}", escapeJson(testContext.getTrademark()))
                 .replace("{ALIAS_PROFILE_ID}", configReader.getCompanyCreationAliasProfileId())
@@ -85,7 +106,7 @@ public class CompanyCreationPayloadBuilder {
 
     public String buildStep2Payload() {
         requireTrademarkPrepared();
-        String template = JsonUtils.readJsonFromFile(COMPANY_STEP2_TEMPLATE);
+        String template = FileHelper.readResourceAsString(COMPANY_STEP2_TEMPLATE);
         String payload = template.replace("{TRADEMARK}", escapeJson(testContext.getTrademark()));
         logger.debug("Built company creation step 2 payload for trademark={}", testContext.getTrademark());
         return payload;
@@ -94,16 +115,14 @@ public class CompanyCreationPayloadBuilder {
     public String buildStep3Payload() {
         requireTrademarkPrepared();
         requireAdminEmailPrepared();
-        String suffix = testContext.getAdminEmail().substring(
-                testContext.getAdminEmail().indexOf("TestAdmin") + 9,
-                testContext.getAdminEmail().indexOf('@')
-        );
-        String template = JsonUtils.readJsonFromFile(COMPANY_STEP3_TEMPLATE);
+        requireAdminNamePrepared();
+        String template = FileHelper.readResourceAsString(COMPANY_STEP3_TEMPLATE);
         String payload = template
                 .replace("{TRADEMARK}", escapeJson(testContext.getTrademark()))
                 .replace("{COUNTRY_ISD_CODE}", configReader.getCompanyCreationCountryIsdCode())
                 .replace("{ADMIN_EMAIL}", escapeJson(testContext.getAdminEmail()))
-                .replace("{ADMIN_LAST_NAME}", suffix);
+                .replace("{ADMIN_FIRST_NAME}", escapeJson(testContext.getAdminFirstName()))
+                .replace("{ADMIN_LAST_NAME}", escapeJson(testContext.getAdminLastName()));
         logger.debug("Built company creation step 3 payload for trademark={}", testContext.getTrademark());
         return payload;
     }
@@ -132,6 +151,24 @@ public class CompanyCreationPayloadBuilder {
         if (testContext.getAdminEmail() == null || testContext.getAdminEmail().isBlank()) {
             throw new IllegalStateException(
                     "Admin email is not set. Call 'Given company creation test data is prepared' first."
+            );
+        }
+    }
+
+    private void requireAuthorizedRepresentativeNamePrepared() {
+        String name = testContext.getAuthorizedRepresentativeName();
+        if (name == null || name.isBlank()) {
+            throw new IllegalStateException(
+                    "Authorized representative name is not set. Call 'Given company creation test data is prepared' first."
+            );
+        }
+    }
+
+    private void requireAdminNamePrepared() {
+        if (testContext.getAdminFirstName() == null || testContext.getAdminFirstName().isBlank()
+                || testContext.getAdminLastName() == null || testContext.getAdminLastName().isBlank()) {
+            throw new IllegalStateException(
+                    "Admin first/last name is not set. Call 'Given company creation test data is prepared' first."
             );
         }
     }

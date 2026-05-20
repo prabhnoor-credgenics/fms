@@ -7,7 +7,7 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import payload.CompanyCreationPayloadBuilder;
-import utils.JsonUtils;
+import helpers.LoggingHelper;
 
 import java.util.Objects;
 
@@ -160,15 +160,6 @@ public class CompanyCreationService {
     }
 
     private void logResponseBody(Response response) {
-        String body = response.getBody().asString();
-        if (body == null || body.isBlank()) {
-            logger.info("Response body: (empty)");
-            return;
-        }
-        try {
-            logger.info("Response body:\n{}", JsonUtils.prettyPrint(body));
-        } catch (Exception e) {
-            logger.info("Response body: {}", body);
-        }
+        LoggingHelper.logResponseBody(response);
     }
 }

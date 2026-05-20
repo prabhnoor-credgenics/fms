@@ -11,7 +11,7 @@
     "company_name": "{COMPANY_NAME}",
     "trademark": "{TRADEMARK}",
     "company_email": ["{COMPANY_EMAIL}"],
-    "authorized_representative_name": "{COMPANY_NAME}",
+    "authorized_representative_name": "{AUTHORIZED_REP_NAME}",
     "authorized_representative_email": "{COMPANY_EMAIL}",
     "contact_number": "9876543210",
     "gst_number": "{GST_NUMBER}",

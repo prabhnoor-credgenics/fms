@@ -1,9 +1,13 @@
 package context;
 
 import config.ConfigReader;
+import helpers.RandomDataHelper;
 import utils.TestDataHelper;
 
-
+/**
+ * Resolves loan ID, company ID, and allocation month for the current scenario.
+ * Scenario-level values override {@code global.properties} / {@code <env>.properties}; unique loan IDs are generated when enabled.
+ */
 public class ScenarioTestDataResolver {
 
     private final TestContext testContext;
@@ -28,9 +32,7 @@ public class ScenarioTestDataResolver {
         if (testContext.getScenarioLoanId() != null && !testContext.getScenarioLoanId().isBlank()) {
             return;
         }
-        String prefix = configReader.getLoanIdPrefix();
-        String uniqueLoanId = prefix + "_" + testDataHelper.generateUUID().replace("-", "").substring(0, 12);
-        testContext.setScenarioLoanId(uniqueLoanId);
+        testContext.setScenarioLoanId(RandomDataHelper.uniqueLoanId());
     }
 
     public String resolveLoanId() {
@@ -42,7 +44,7 @@ public class ScenarioTestDataResolver {
             return fromConfig;
         }
         throw new IllegalStateException(
-                "Loan ID is not set. Use 'Given scenario loan id is ...', enable test.data.unique.loan.id.per.scenario, or set loan.id in global.properties"
+                "Loan ID is not set. Use 'Given scenario loan id is ...', enable test.data.unique.loan.id.per.scenario in global.properties, or set loan.id in global.properties"
         );
     }
 
@@ -72,11 +74,11 @@ public class ScenarioTestDataResolver {
             return null;
         }
         String result = testDataHelper.replacePlaceholders(text);
-        result = result.replace("{LOAN_ID}", resolveLoanId());
-        result = result.replace("{COMPANY_ID}", resolveCompanyId());
+        result = result.replace(ContextKeys.LOAN_ID, resolveLoanId());
+        result = result.replace(ContextKeys.COMPANY_ID, resolveCompanyId());
         String allocationMonth = resolveAllocationMonth();
         if (allocationMonth != null && !allocationMonth.isBlank()) {
-            result = result.replace("{ALLOCATION_MONTH}", allocationMonth);
+            result = result.replace(ContextKeys.ALLOCATION_MONTH, allocationMonth);
         }
         return result;
     }

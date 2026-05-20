@@ -57,7 +57,7 @@
   "applicant_language": "hi,en,te",
   "applicant_legal_heir": "gupta",
   "applicant_monthly_income": "100",
-  "applicant_name": "testinguser111",
+  "applicant_name": "{RANDOM_NAME}",
   "applicant_notice_reference_number": "sdad-2313-321",
   "applicant_occupation": "govt.servent",
   "applicant_pan_number": "123456789987",
@@ -147,7 +147,7 @@
         }
       ],
       "co_applicant_type": "workers1",
-      "co_applicant_name": "testinguser1",
+      "co_applicant_name": "{RANDOM_NAME}",
       "co_applicant_legal_heir": "sharma family",
       "co_applicant_prefix": "bhardwaj"
     },
@@ -227,7 +227,7 @@
         }
       ],
       "co_applicant_type": "workers1",
-      "co_applicant_name": "testinguser1",
+      "co_applicant_name": "{RANDOM_NAME}",
       "co_applicant_legal_heir": "sharma family",
       "co_applicant_prefix": "bhardwaj"
     }
@@ -297,7 +297,7 @@
   "loan_foreclosure_amount": "1800.89",
   "loan_guarantor": [
     {
-      "loan_guarantor_name": "guarantorname1",
+      "loan_guarantor_name": "{RANDOM_NAME}",
       "loan_guarantor_gender": "male",
       "loan_guarantor_contact_details": [
         {
@@ -334,7 +334,7 @@
   "loan_region": "testing2",
   "loan_regional_manager_contact_email": "s1testint_1@yopmail.com",
   "loan_regional_manager_contact_number": "1234567890",
-  "loan_regional_manager_name": "testing manager",
+  "loan_regional_manager_name": "{RANDOM_NAME}",
   "loan_source_branch_address": "s-48 industrial sector noida",
   "loan_tenure": "60",
   "loan_type": "delhi",
@@ -371,7 +371,7 @@
           "reference_contact_number_is_active": "FALSE"
         }
       ],
-      "name": "testreference_1",
+      "name": "{RANDOM_NAME}",
       "reference_gender": "male",
       "reference_pan_number": "1234567899",
       "reference_address": [
@@ -444,7 +444,7 @@
           "reference_contact_number_is_active": "FALSE"
         }
       ],
-      "name": "testinglistlist2",
+      "name": "{RANDOM_NAME}",
       "reference_gender": "male",
       "reference_pan_number": "ABCDE1234F",
       "reference_address": [
@@ -517,7 +517,7 @@
           "reference_contact_number_is_active": "FALSE"
         }
       ],
-      "name": "naming1",
+      "name": "{RANDOM_NAME}",
       "reference_gender": "female",
       "reference_pan_number": "XCVBN1234Z",
       "reference_address": [

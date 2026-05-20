@@ -1,4 +1,4 @@
-package utils.crypto;
+package auth.crypto;
 
 import config.ConfigReader;
 import org.apache.logging.log4j.LogManager;

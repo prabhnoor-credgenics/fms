@@ -1,4 +1,4 @@
-package models;
+package models.loanrecovery;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,5 +1,8 @@
-package auth;
+package auth.service;
 
+import auth.crypto.RSAEncryptionUtil;
+import auth.model.UserCredentials;
+import auth.resolver.UserCredentialsResolver;
 import config.ConfigReader;
 import context.TestContext;
 import enums.Environment;
@@ -8,7 +11,6 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import utils.crypto.RSAEncryptionUtil;
 
 import java.util.List;
 import java.util.Map;

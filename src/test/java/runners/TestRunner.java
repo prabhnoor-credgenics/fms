@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 
 
 @CucumberOptions(
-        features = "src/test/resources/features",
+        features = "src/test/resources/features/recovery",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -14,7 +14,7 @@ import io.cucumber.testng.CucumberOptions;
                 "auth",
                 "base",
                 "utils",
-                "utils.crypto",
+                "helpers",
                 "service",
                 "payload",
                 "validators"

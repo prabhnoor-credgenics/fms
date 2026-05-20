@@ -1,4 +1,4 @@
-package auth;
+package auth.service;
 
 import config.ConfigReader;
 import context.TestContext;

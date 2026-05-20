@@ -1,13 +1,7 @@
 @api @recovery-company
 Feature: Recovery Company API and Company Creation Flow
-  As an API automation engineer
-  I want to create companies through the multi-step /user/company flow
-  And validate recovery company endpoints
-  So that company onboarding and recovery configuration remain stable
 
-  # ---------------------------------------------------------------------------
-  # Company creation (POST /user/company) — use @approver credentials via Hooks
-  # ---------------------------------------------------------------------------
+
 
   @company-creation @approver @smoke @e2e
   Scenario: End-to-end company creation and validation
@@ -62,9 +56,7 @@ Feature: Recovery Company API and Company Creation Flow
     When I get user company details for the created company
     Then the created company details should match test context
 
-  # ---------------------------------------------------------------------------
-  # Recovery GET /recovery/company
-  # ---------------------------------------------------------------------------
+
 
   @positive
   Scenario: Get company details with bifurcation prefix true

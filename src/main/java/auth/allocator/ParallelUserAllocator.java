@@ -1,4 +1,4 @@
-package auth;
+package auth.allocator;
 
 import config.ConfigReader;
 import context.TestContext;

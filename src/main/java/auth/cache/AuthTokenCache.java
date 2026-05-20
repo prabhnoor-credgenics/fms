@@ -1,4 +1,4 @@
-package auth;
+package auth.cache;
 
 import config.ConfigReader;
 import enums.Environment;

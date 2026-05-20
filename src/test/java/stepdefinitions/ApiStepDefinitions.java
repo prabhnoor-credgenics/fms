@@ -2,59 +2,68 @@ package stepdefinitions;
 
 import base.RestAssuredBase;
 import config.ConfigReader;
+import context.ContextKeys;
 import context.ScenarioTestDataResolver;
 import context.TestContext;
 import enums.HttpMethod;
+import helpers.AssertionHelper;
+import helpers.FileHelper;
+import helpers.JsonHelper;
+import helpers.LoggingHelper;
+import helpers.PayloadHelper;
+import helpers.ResponseHelper;
+import helpers.SchemaHelper;
 import io.cucumber.datatable.DataTable;
-import org.testng.asserts.SoftAssert;
-import utils.JsonUtils;
-import utils.ResponseValidator;
-import utils.TestDataHelper;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hamcrest.Matchers;
+import org.testng.asserts.SoftAssert;
+import utils.ResponseValidator;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-
+/**
+ * Core HTTP step definitions — orchestrates request building, execution, and assertions.
+ * Business logic is delegated to {@code helpers.*} and {@link ScenarioTestDataResolver}.
+ */
 public class ApiStepDefinitions {
+
     private static final Logger logger = LogManager.getLogger(ApiStepDefinitions.class);
 
     private final TestContext testContext;
     private final ConfigReader configReader;
     private final RestAssuredBase restAssuredBase;
-    private final TestDataHelper testDataHelper;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
 
     private RequestSpecification request;
     private Response response;
     private String requestBody;
-    private final java.util.Set<String> headersToRemove = new java.util.HashSet<>();
-
-    private final java.util.LinkedHashMap<String, String> storedHeaders = new java.util.LinkedHashMap<>();
-    private final java.util.Map<String, String> storedPathParams = new java.util.HashMap<>();
-    private final java.util.Map<String, String> storedQueryParams = new java.util.HashMap<>();
+    private final Set<String> headersToRemove = new HashSet<>();
+    private final LinkedHashMap<String, String> storedHeaders = new LinkedHashMap<>();
+    private final Map<String, String> storedPathParams = new HashMap<>();
+    private final Map<String, String> storedQueryParams = new HashMap<>();
 
     public ApiStepDefinitions(
             TestContext testContext,
             ConfigReader configReader,
             RestAssuredBase restAssuredBase,
-            TestDataHelper testDataHelper,
             ScenarioTestDataResolver scenarioTestDataResolver
     ) {
         this.testContext = testContext;
         this.configReader = configReader;
         this.restAssuredBase = restAssuredBase;
-        this.testDataHelper = testDataHelper;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
     }
 
@@ -69,20 +78,17 @@ public class ApiStepDefinitions {
         for (Map.Entry<String, String> header : headers.entrySet()) {
             String headerName = header.getKey();
             String headerNameLower = headerName.toLowerCase();
-            
-            // Skip if this header is marked for removal
+
             if (headersToRemove.contains(headerNameLower)) {
                 logger.info("Skipping header '{}' as it is marked for removal", headerName);
                 continue;
             }
-            
+
             String value = header.getValue();
-            // Replace {AUTH_TOKEN} placeholder with config value
-            if ("authenticationtoken".equals(headerNameLower) && "{AUTH_TOKEN}".equals(value)) {
+            if ("authenticationtoken".equals(headerNameLower) && ContextKeys.AUTH_TOKEN.equals(value)) {
                 value = testContext.getAuthToken();
                 logger.info("Using authenticationtoken from TestContext");
             }
-            // Don't set Referer here - it will be set automatically based on request URI
             if (!"Referer".equals(headerName)) {
                 storedHeaders.put(headerName, value);
                 request.header(headerName, value);
@@ -99,7 +105,6 @@ public class ApiStepDefinitions {
 
     @Given("I set the request body:")
     public void i_set_the_request_body(String body) {
-        // Replace placeholders in the body
         String processedBody = replacePlaceholdersInBody(body);
         this.requestBody = processedBody;
         request.body(processedBody);
@@ -108,48 +113,16 @@ public class ApiStepDefinitions {
 
     @Given("I set the request body from file {string}")
     public void i_set_the_request_body_from_file(String filePath) {
-        // Read JSON from file
-        String jsonBody = JsonUtils.readJsonFromFile(filePath);
-        // Replace placeholders with generated test data and config values
+        String jsonBody = FileHelper.readResourceAsString(filePath);
         String processedBody = replacePlaceholdersInBody(jsonBody);
+        SchemaHelper.autoValidateRequestSchema(filePath, processedBody);
         this.requestBody = processedBody;
         request.body(processedBody);
         logger.info("Request body loaded from file '{}' and placeholders replaced", filePath);
     }
 
-
-    private String replacePlaceholdersInBody(String body) {
-        String processedBody = scenarioTestDataResolver.replaceScenarioPlaceholders(body);
-        processedBody = convertBooleansToStrings(processedBody);
-        return processedBody;
-    }
-    
-
-    private String convertBooleansToStrings(String jsonBody) {
-        // Fields that should be converted from boolean to string
-        String[] booleanFields = {
-            "tenure_finished",
-            "backed_by_security",
-            "backed_by_surety"
-        };
-        
-        String result = jsonBody;
-        for (String field : booleanFields) {
-            // Pattern to match: "field": true or "field": false (with optional whitespace)
-            // Replace with: "field": "TRUE" or "field": "FALSE"
-            String truePattern = "\"" + field + "\"\\s*:\\s*true\\b";
-            String falsePattern = "\"" + field + "\"\\s*:\\s*false\\b";
-            
-            result = result.replaceAll(truePattern, "\"" + field + "\": \"TRUE\"");
-            result = result.replaceAll(falsePattern, "\"" + field + "\": \"FALSE\"");
-        }
-        
-        return result;
-    }
-
     @Given("I set the query parameters:")
     public void i_set_the_query_parameters(Map<String, String> queryParams) {
-        // Add default query parameters first (if not explicitly provided)
         if (!queryParams.containsKey("replace_previous_data")) {
             String replacePreviousData = configReader.getReplacePreviousData();
             storedQueryParams.put("replace_previous_data", replacePreviousData);
@@ -162,16 +135,14 @@ public class ApiStepDefinitions {
             request.queryParam("replace_given_data", replaceGivenData);
             logger.info("Added default query parameter: replace_given_data = {}", replaceGivenData);
         }
-        
+
         for (Map.Entry<String, String> param : queryParams.entrySet()) {
             String paramName = param.getKey();
             String paramNameLower = paramName == null ? "" : paramName.toLowerCase();
             String value = param.getValue();
-            // Replace {COMPANY_ID} placeholder with config value
-            if ("company_id".equals(paramNameLower) && "{COMPANY_ID}".equals(value)) {
+            if ("company_id".equals(paramNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
                 value = scenarioTestDataResolver.resolveCompanyId();
             }
-            // Store query param for potential rebuilding
             storedQueryParams.put(param.getKey(), value);
             request.queryParam(param.getKey(), value);
             logger.info("Added query parameter: {} = {}", param.getKey(), value);
@@ -182,72 +153,18 @@ public class ApiStepDefinitions {
     public void i_set_the_path_parameters(Map<String, String> pathParams) {
         for (Map.Entry<String, String> param : pathParams.entrySet()) {
             String value = param.getValue();
-            // Replace {LOAN_ID} placeholder with config value (support both loanId and loan_id keys)
-            if (("loanId".equals(param.getKey()) || "loan_id".equals(param.getKey())) && "{LOAN_ID}".equals(value)) {
+            if (("loanId".equals(param.getKey()) || "loan_id".equals(param.getKey()))
+                    && ContextKeys.LOAN_ID.equals(value)) {
                 value = scenarioTestDataResolver.resolveLoanId();
                 logger.info("Using scenario loan id: {}", value);
             } else {
                 value = scenarioTestDataResolver.replaceScenarioPlaceholders(value);
             }
-            // Store path param for potential rebuilding
             storedPathParams.put(param.getKey(), value);
             request.pathParam(param.getKey(), value);
             logger.info("Added path parameter: {} = {}", param.getKey(), value);
         }
     }
-
-
-    private Response activeResponse() {
-        if (response != null) {
-            return response;
-        }
-        Response fromContext = testContext.getResponse();
-        if (fromContext == null) {
-            throw new IllegalStateException(
-                    "No API response available. Send a request or run a service step first."
-            );
-        }
-        return fromContext;
-    }
-
-    @Then("the validation error should contain")
-    public void the_validation_error_should_contain(DataTable table) {
-
-        SoftAssert softAssert = new SoftAssert();
-
-        Map<String, String> expected =
-                table.asMap(String.class, String.class);
-
-        Map<String, String> actual =
-                activeResponse().jsonPath()
-                        .getMap("error");
-
-        softAssert.assertNotNull(
-                actual,
-                "Error data is null in response"
-        );
-
-        expected.forEach((key, value) -> {
-
-            softAssert.assertTrue(
-                    actual.containsKey(key),
-                    "Missing error key: " + key
-            );
-
-            if (actual.containsKey(key)) {
-                softAssert.assertEquals(
-                        actual.get(key),
-                        value,
-                        "Mismatch for error key: " + key
-                );
-            }
-        });
-
-
-        softAssert.assertAll();
-    }
-
-
 
     @Given("I update JSON field {string} to {string}")
     public void i_update_json_field_to(String jsonPath, String value) {
@@ -258,173 +175,34 @@ public class ApiStepDefinitions {
     public void i_update_json_field_to_null(String jsonPath) {
         updateJsonFieldInternal(jsonPath, null);
     }
-    
-
-    private void updateJsonFieldInternal(String jsonPath, String value) {
-        if (this.requestBody == null || this.requestBody.isEmpty()) {
-            throw new IllegalStateException("Request body must be set before updating JSON field. Use 'I set the request body' or 'I set the request body from file' first.");
-        }
-        
-        String processedValue = value;
-        
-        if (processedValue != null) {
-            // Replace placeholders in the value
-            processedValue = scenarioTestDataResolver.replaceScenarioPlaceholders(processedValue);
-            
-            // Handle null values (case-insensitive check)
-            if ("null".equalsIgnoreCase(processedValue.trim())) {
-                processedValue = null;
-            } else {
-                // Remove surrounding quotes if the value is wrapped in quotes (handles cases like "yes", "no", etc.)
-                String trimmed = processedValue.trim();
-                if (trimmed.length() >= 2 && trimmed.startsWith("\"") && trimmed.endsWith("\"")) {
-                    processedValue = trimmed.substring(1, trimmed.length() - 1);
-                }
-            }
-        }
-        
-        // Update JSON using JsonUtils
-        String updatedBody = JsonUtils.updateJsonField(this.requestBody, jsonPath, processedValue);
-        this.requestBody = updatedBody;
-        request.body(updatedBody);
-        logger.info("Updated JSON field '{}' to '{}'", jsonPath, processedValue);
-    }
 
     @When("I send a {string} request to {string}")
     public void i_send_a_request_to(String httpMethod, String endpoint) {
         HttpMethod method = HttpMethod.valueOf(httpMethod.toUpperCase());
-        
-        // Rebuild request without headers marked for removal (keeps role, Content-Type, etc.)
-        if (!headersToRemove.isEmpty()) {
-            request = restAssuredBase.getRequestSpec();
-
-            for (Map.Entry<String, String> header : storedHeaders.entrySet()) {
-                if (!headersToRemove.contains(header.getKey().toLowerCase())) {
-                    request.header(header.getKey(), header.getValue());
-                }
-            }
-
-            for (Map.Entry<String, String> pathParam : storedPathParams.entrySet()) {
-                request.pathParam(pathParam.getKey(), pathParam.getValue());
-            }
-
-            for (Map.Entry<String, String> queryParam : storedQueryParams.entrySet()) {
-                request.queryParam(queryParam.getKey(), queryParam.getValue());
-            }
-
-            if (requestBody != null && !requestBody.isEmpty()) {
-                request.body(requestBody);
-            }
-
-            logger.info("Rebuilt request excluding headers: {}", headersToRemove);
-            headersToRemove.clear();
-        }
-        
-        // Build full URI for Referer header
-        String baseUri = configReader.getBaseUrl();
-        // Replace {loanId} or {loan_id} placeholder in endpoint with actual loan_id from config for Referer
-        String resolvedEndpoint = endpoint;
-        try {
-            String loanId = scenarioTestDataResolver.resolveLoanId();
-            resolvedEndpoint = resolvedEndpoint.replace("{loanId}", loanId)
-                    .replace("{loan_id}", loanId);
-        } catch (IllegalStateException ignored) {
-            // Referer may not need loan id for all endpoints
-        }
-        String fullUrl = baseUri + resolvedEndpoint;
-        // Set Referer header to the full URI
-        request.header("Referer", fullUrl);
-        logger.info("Set Referer header to: {}", fullUrl);
-        
+        rebuildRequestIfHeadersRemoved();
+        applyRefererHeader(endpoint);
         logger.info("Sending {} request to endpoint: {}", method, endpoint);
-
-        switch (method) {
-            case GET:
-                response = request.get(endpoint);
-                break;
-            case POST:
-                response = request.post(endpoint);
-                break;
-            case PUT:
-                response = request.put(endpoint);
-                break;
-            case PATCH:
-                response = request.patch(endpoint);
-                break;
-            case DELETE:
-                response = request.delete(endpoint);
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported HTTP method: " + method);
-        }
-
+        response = executeHttp(method, endpoint);
         logger.info("Response received with status code: {}", response.getStatusCode());
-
-        // Auto-validate response contract schema per API endpoint
-        autoValidateResponseSchema(endpoint, response.getStatusCode());
-        
+        SchemaHelper.autoValidateSuccessSchema(endpoint, response.getStatusCode(), response);
         testContext.setResponse(response);
-        
-        // Log complete response details
-        logResponseDetails(response);
+        LoggingHelper.logResponseDetails(response);
     }
 
+    @Then("the validation error should contain")
+    public void the_validation_error_should_contain(DataTable table) {
+        SoftAssert softAssert = new SoftAssert();
+        Map<String, String> expected = table.asMap(String.class, String.class);
+        Map<String, String> actual = activeResponse().jsonPath().getMap("error");
 
-    private void autoValidateResponseSchema(String endpoint, int statusCode) {
-        String schemaPath = null;
-        boolean isSuccess = statusCode >= 200 && statusCode < 300;
-
-        if (endpoint != null && endpoint.contains("/recovery/v1/loan")) {
-            if (isSuccess) {
-                schemaPath = "schemas/loan_recovery_success_schema.json";
+        softAssert.assertNotNull(actual, "Error data is null in response");
+        expected.forEach((key, value) -> {
+            softAssert.assertTrue(actual.containsKey(key), "Missing error key: " + key);
+            if (actual.containsKey(key)) {
+                softAssert.assertEquals(actual.get(key), value, "Mismatch for error key: " + key);
             }
-            // Error payloads vary by status (401 message-only, 403, HTML-wrapped 400, etc.);
-            // scenarios assert error schema explicitly when needed.
-        } else if (endpoint != null && endpoint.contains("/recovery/company")) {
-            if (isSuccess) {
-                schemaPath = "schemas/recovery_company_success_schema.json";
-            }
-        }
-
-        if (schemaPath != null) {
-            response.then().assertThat().body(matchesJsonSchemaInClasspath(schemaPath));
-            logger.info("Auto schema validation passed for endpoint '{}' using '{}'", endpoint, schemaPath);
-        } else {
-            logger.info("No auto schema mapping configured for endpoint '{}'", endpoint);
-        }
-    }
-    
-
-    private void logResponseDetails(Response response) {
-        logger.info("=== API Response Details ===");
-        logger.info("Status Code: {}", response.getStatusCode());
-        logger.info("Status Line: {}", response.getStatusLine());
-        
-        // Log Response Headers
-        logger.info("Response Headers:");
-        response.getHeaders().forEach(header -> 
-            logger.info("  {}: {}", header.getName(), header.getValue())
-        );
-        
-        // Log Response Body
-        String responseBody = response.getBody().asString();
-        if (responseBody != null && !responseBody.isEmpty()) {
-            logger.info("Response Body:");
-            // If body is JSON, try to pretty print it
-            if (response.getContentType() != null && response.getContentType().contains("json")) {
-                try {
-                    String prettyJson = JsonUtils.prettyPrint(responseBody);
-                    logger.info(prettyJson);
-                } catch (Exception e) {
-                    logger.info(responseBody);
-                }
-            } else {
-                logger.info(responseBody);
-            }
-        } else {
-            logger.info("Response Body: (empty)");
-        }
-        logger.info("=== End Response Details ===");
+        });
+        softAssert.assertAll();
     }
 
     @Then("the response status code should be {int}")
@@ -434,23 +212,12 @@ public class ApiStepDefinitions {
 
     @Then("the response message should be {string}")
     public void verifyResponseMessage(String expectedMessage) {
-        activeResponse().then()
-                .body("message", equalTo(expectedMessage));
+        activeResponse().then().body("message", equalTo(expectedMessage));
     }
 
     @Then("the response status code should be one of {string}")
     public void the_response_status_code_should_be_one_of(String statusCodes) {
-        String[] codes = statusCodes.split(",");
-        int actualStatusCode = activeResponse().getStatusCode();
-        boolean matches = false;
-        for (String code : codes) {
-            if (actualStatusCode == Integer.parseInt(code.trim())) {
-                matches = true;
-                break;
-            }
-        }
-        assertThat("Status code " + actualStatusCode + " should be one of: " + statusCodes, matches, Matchers.is(true));
-        logger.info("Status code {} is valid (one of: {})", actualStatusCode, statusCodes);
+        AssertionHelper.assertStatusCodeOneOf(activeResponse(), statusCodes);
     }
 
     @Then("the response body should contain field {string} with value {string}")
@@ -460,9 +227,7 @@ public class ApiStepDefinitions {
 
     @Then("the response body should contain field {string}")
     public void the_response_body_should_contain_field(String jsonPath) {
-        Object value = activeResponse().jsonPath().get(jsonPath);
-        assertThat("Field " + jsonPath + " should exist", value, Matchers.notNullValue());
-        logger.info("Field '{}' exists in response with value: {}", jsonPath, value);
+        AssertionHelper.assertFieldExists(activeResponse(), jsonPath);
     }
 
     @Then("the response header {string} should be {string}")
@@ -486,6 +251,19 @@ public class ApiStepDefinitions {
         logger.info("Response schema validation passed for: {}", schemaPath);
     }
 
+    @Then("the request body should match json schema {string}")
+    public void the_request_body_should_match_json_schema(String schemaPath) {
+        if (requestBody == null || requestBody.isEmpty()) {
+            throw new IllegalStateException(
+                    "Request body must be set before schema validation. "
+                            + "Use 'I set the request body' or 'I set the request body from file' first."
+            );
+        }
+        assertThat("Request body failed schema validation against " + schemaPath,
+                requestBody, matchesJsonSchemaInClasspath(schemaPath));
+        logger.info("Request body schema validation passed for: {}", schemaPath);
+    }
+
     @Then("I store the response for later use")
     public void i_store_the_response_for_later_use() {
         logger.info("Response stored for later use. Status code: {}", activeResponse().getStatusCode());
@@ -497,7 +275,81 @@ public class ApiStepDefinitions {
 
     public RequestSpecification getRequest() {
         return request;
-    }}
+    }
 
+    private Response activeResponse() {
+        return ResponseHelper.resolve(response, testContext);
+    }
 
+    private String replacePlaceholdersInBody(String body) {
+        return PayloadHelper.convertBooleansToStrings(
+                scenarioTestDataResolver.replaceScenarioPlaceholders(body)
+        );
+    }
 
+    private void updateJsonFieldInternal(String jsonPath, String value) {
+        if (requestBody == null || requestBody.isEmpty()) {
+            throw new IllegalStateException(
+                    "Request body must be set before updating JSON field. "
+                            + "Use 'I set the request body' or 'I set the request body from file' first."
+            );
+        }
+        String processedValue = value;
+        if (processedValue != null) {
+            processedValue = scenarioTestDataResolver.replaceScenarioPlaceholders(processedValue);
+            if (PayloadHelper.isNullToken(processedValue)) {
+                processedValue = null;
+            } else {
+                processedValue = PayloadHelper.stripSurroundingQuotes(processedValue);
+            }
+        }
+        String updatedBody = JsonHelper.updateField(requestBody, jsonPath, processedValue);
+        this.requestBody = updatedBody;
+        request.body(updatedBody);
+        logger.info("Updated JSON field '{}' to '{}'", jsonPath, processedValue);
+    }
+
+    private void rebuildRequestIfHeadersRemoved() {
+        if (headersToRemove.isEmpty()) {
+            return;
+        }
+        request = restAssuredBase.getRequestSpec();
+        for (Map.Entry<String, String> header : storedHeaders.entrySet()) {
+            if (!headersToRemove.contains(header.getKey().toLowerCase())) {
+                request.header(header.getKey(), header.getValue());
+            }
+        }
+        storedPathParams.forEach((k, v) -> request.pathParam(k, v));
+        storedQueryParams.forEach((k, v) -> request.queryParam(k, v));
+        if (requestBody != null && !requestBody.isEmpty()) {
+            request.body(requestBody);
+        }
+        logger.info("Rebuilt request excluding headers: {}", headersToRemove);
+        headersToRemove.clear();
+    }
+
+    private void applyRefererHeader(String endpoint) {
+        String baseUri = configReader.getBaseUrl();
+        String resolvedEndpoint = endpoint;
+        try {
+            String loanId = scenarioTestDataResolver.resolveLoanId();
+            resolvedEndpoint = resolvedEndpoint.replace("{loanId}", loanId).replace("{loan_id}", loanId);
+        } catch (IllegalStateException ignored) {
+            // Referer may not need loan id for all endpoints
+        }
+        String fullUrl = baseUri + resolvedEndpoint;
+        request.header("Referer", fullUrl);
+        logger.info("Set Referer header to: {}", fullUrl);
+    }
+
+    private Response executeHttp(HttpMethod method, String endpoint) {
+        return switch (method) {
+            case GET -> request.get(endpoint);
+            case POST -> request.post(endpoint);
+            case PUT -> request.put(endpoint);
+            case PATCH -> request.patch(endpoint);
+            case DELETE -> request.delete(endpoint);
+            default -> throw new IllegalArgumentException("Unsupported HTTP method: " + method);
+        };
+    }
+}

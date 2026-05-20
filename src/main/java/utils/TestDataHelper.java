@@ -1,6 +1,8 @@
 package utils;
 
+import context.ContextKeys;
 import context.TestContext;
+import helpers.RandomDataHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.UUID;
+import java.util.regex.Matcher;
 
 
 public class TestDataHelper {
@@ -61,9 +64,19 @@ public class TestDataHelper {
 
     public String replacePlaceholders(String template) {
         String result = template;
-        result = result.replace("{UUID}", generateUUID());
-        result = result.replace("{EMAIL}", generateRandomEmail());
-        result = result.replace("{TIMESTAMP}", getCurrentTimestamp());
+        result = result.replace(ContextKeys.UUID, generateUUID());
+        result = result.replace(ContextKeys.EMAIL, generateRandomEmail());
+        result = result.replace(ContextKeys.TIMESTAMP, getCurrentTimestamp());
+
+        // Each {RANDOM_NAME} occurrence resolves to a fresh full name so co-applicants,
+        // references, guarantors etc. get distinct values within the same payload.
+        while (result.contains(ContextKeys.RANDOM_NAME)) {
+            String name = RandomDataHelper.randomName();
+            result = result.replaceFirst(
+                    java.util.regex.Pattern.quote(ContextKeys.RANDOM_NAME),
+                    Matcher.quoteReplacement(name)
+            );
+        }
 
         while (result.contains("{RANDOM_INT:")) {
             int start = result.indexOf("{RANDOM_INT:");

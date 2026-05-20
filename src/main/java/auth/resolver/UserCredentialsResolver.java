@@ -1,4 +1,6 @@
-package auth;
+package auth.resolver;
+
+import auth.model.UserCredentials;
 
 import config.ConfigReader;
 import enums.Environment;
@@ -73,12 +75,12 @@ public class UserCredentialsResolver {
     private void validatePresent(String email, String password, Environment env, UserRole role, int slot) {
         if (email == null || email.isBlank() || password == null || password.isBlank()) {
             String hint = credentialPropertyHint(env, role, slot);
+            String envFile = env.name().toLowerCase() + ".properties";
             int poolSize = configReader.getParallelUserPoolSize();
             int threadCount = configReader.getParallelThreadCount();
             throw new IllegalStateException(
                     "Missing parallel user credentials for slot " + slot + ". "
-                            + "Configure " + hint + " in src/main/resources/global.properties "
-                            + "(not data.properties). "
+                            + "Configure " + hint + " in src/main/resources/" + envFile + ". "
                             + "parallel.user.pool.size=" + poolSize
                             + " requires " + poolSize + " distinct user(s) for slots 0.."
                             + (poolSize - 1) + ". "

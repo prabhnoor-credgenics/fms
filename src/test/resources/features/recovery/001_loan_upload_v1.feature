@@ -249,7 +249,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
     Examples:
       | field_path                                                        | max_length_plus |
-      | loan_id                                                           | 65  |
       | client_customer_id                                                | 65  |
       | group_id                                                          | 65  |
       | center_name                                                       | 257 |

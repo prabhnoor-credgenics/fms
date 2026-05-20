@@ -1,10 +1,16 @@
-package auth;
+package auth.manager;
 
+import auth.cache.AuthTokenCache;
+import auth.service.ApiKeyService;
+import auth.service.UserLoginService;
 import config.ConfigReader;
 import context.TestContext;
 import enums.Environment;
 import enums.UserRole;
 
+/**
+ * Orchestrates authentication for each scenario (user login, API key, token cache).
+ */
 public class AuthManager {
 
     private final ConfigReader configReader;
@@ -45,7 +51,9 @@ public class AuthManager {
             case "user" -> userLoginService.performUserLogin(env, role, userSlot);
             case "api_key_single_company" -> apiKeyService.generateSingleCompanyApiKey(env);
             case "api_key_multiple_companies" -> apiKeyService.loadMultiCompanyApiKey(env);
-            default -> throw new RuntimeException("Invalid user_type in global.properties");
+            default -> throw new RuntimeException(
+                    "Invalid user_type in global.properties (expected: user | api_key_single_company | api_key_multiple_companies)"
+            );
         }
 
         authTokenCache.put(

@@ -9,7 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import payload.CompanyCreationPayloadBuilder;
 import service.CompanyCreationService;
-import validators.CompanyCreationValidator;
+import validators.business.CompanyCreationValidator;
 
 import static constants.FrameworkConstants.SCHEMA_COMPANY_GET_SUCCESS;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP1_SUCCESS;

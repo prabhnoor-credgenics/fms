@@ -1,4 +1,4 @@
-package validators;
+package validators.business;
 
 import context.TestContext;
 import io.restassured.response.Response;

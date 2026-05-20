@@ -14,6 +14,9 @@ public class TestContext {
     private String companyName;
     private String companyEmail;
     private String adminEmail;
+    private String authorizedRepresentativeName;
+    private String adminFirstName;
+    private String adminLastName;
     private String profileId;
     private String userId;
     private String companyType;
@@ -86,6 +89,30 @@ public class TestContext {
 
     public void setAdminEmail(String adminEmail) {
         this.adminEmail = adminEmail;
+    }
+
+    public String getAuthorizedRepresentativeName() {
+        return authorizedRepresentativeName;
+    }
+
+    public void setAuthorizedRepresentativeName(String authorizedRepresentativeName) {
+        this.authorizedRepresentativeName = authorizedRepresentativeName;
+    }
+
+    public String getAdminFirstName() {
+        return adminFirstName;
+    }
+
+    public void setAdminFirstName(String adminFirstName) {
+        this.adminFirstName = adminFirstName;
+    }
+
+    public String getAdminLastName() {
+        return adminLastName;
+    }
+
+    public void setAdminLastName(String adminLastName) {
+        this.adminLastName = adminLastName;
     }
 
     public String getProfileId() {
