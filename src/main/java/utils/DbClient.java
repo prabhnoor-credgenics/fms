@@ -32,10 +32,7 @@ public class DbClient {
         }
     }
 
-    /**
-     * Fetches a single column for a row identified by a parameterized WHERE clause.
-     * Table and column names are validated (alphanumeric + underscore only) because JDBC cannot bind identifiers.
-     */
+    
     public DbRow fetchSingleColumn(
             String tableName,
             String columnName,

@@ -8,9 +8,7 @@ import context.TestContext;
 import enums.Environment;
 import enums.UserRole;
 
-/**
- * Orchestrates authentication for each scenario (user login, API key, token cache).
- */
+
 public class AuthManager {
 
     private final ConfigReader configReader;

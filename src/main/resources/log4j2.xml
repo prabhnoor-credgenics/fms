@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%X{threadName}] [slot:%X{userSlot}] [%X{scenarioName}] %-5level %logger{36} - %msg%n"/>
+        <Console name="Console" target="SYSTEM_ERR">
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{HH:mm:ss} %-5level %logger{36} - %msg%n"/>
         </Console>
 
         <RollingFile name="RollingFile" fileName="logs/api-test-framework.log"
@@ -17,25 +18,9 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="stepdefinitions" level="DEBUG" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingFile"/>
-        </Logger>
-        <Logger name="hooks" level="DEBUG" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingFile"/>
-        </Logger>
-        <Logger name="auth" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingFile"/>
-        </Logger>
-        <Logger name="io.restassured" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingFile"/>
-        </Logger>
         <Root level="INFO">
-            <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>

@@ -9,9 +9,11 @@ import enums.Environment;
 import enums.UserRole;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import helpers.LoggingHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,13 +42,32 @@ public class UserLoginService {
     public void performUserLogin(Environment env, UserRole role, int userSlot) {
         UserCredentials credentials = userCredentialsResolver.resolve(env, role, userSlot);
 
-        String encryptedPayload = rsaEncryptionUtil.encrypt(
-                "{\"username\":\"" + credentials.email() + "\"," +
-                        "\"password\":\"" + credentials.password() + "\"," +
-                        "\"username_type\":\"email\"}"
+        String loginJson = String.format(
+                "{\"username\":\"%s\",\"password\":\"%s\",\"username_type\":\"email\"}",
+                credentials.email(),
+                credentials.password()
         );
+        String encryptedPayload = rsaEncryptionUtil.encrypt(loginJson);
 
         String baseUrl = configReader.getBaseUrl();
+        Map<String, String> loginHeaders = new LinkedHashMap<>();
+        loginHeaders.put("accept", "application/json, text/plain, */*");
+        loginHeaders.put("origin", baseUrl);
+        loginHeaders.put("referer", baseUrl + "/login");
+        loginHeaders.put("Content-Type", "application/x-www-form-urlencoded");
+        String logBody = String.format(
+                "{\"username\":\"%s\",\"password\":\"***\",\"username_type\":\"email\"}%n"
+                        + "[RSA encrypted body on wire, length=%d]",
+                credentials.email(),
+                encryptedPayload.length()
+        );
+        LoggingHelper.logRequestDetails(
+                "POST",
+                "/user/public/login?source=web",
+                loginHeaders,
+                null,
+                logBody
+        );
         Response loginResponse = given()
                 .baseUri(baseUrl)
                 .body(encryptedPayload)
@@ -59,8 +80,13 @@ public class UserLoginService {
                 .then()
                 .extract()
                 .response();
+        LoggingHelper.logResponseDetails(loginResponse);
+        assertStatus(loginResponse, 200, "POST /user/public/login?source=web");
 
         String authToken = loginResponse.jsonPath().getString("data.authentication_token");
+        if (authToken == null || authToken.isBlank()) {
+            throw new IllegalStateException("Login response missing data.authentication_token");
+        }
         testContext.setAuthToken(authToken);
         testContext.setUserSlot(userSlot);
         logger.info("User logged in for env={}, role={}, slot={}", env, role, userSlot);
@@ -70,6 +96,17 @@ public class UserLoginService {
 
     private void fetchAndStoreCompanyId(String authToken) {
         String baseUrl = configReader.getBaseUrl();
+        Map<String, String> queryParams = new LinkedHashMap<>();
+        queryParams.put("auth_token", LoggingHelper.maskToken(authToken));
+        Map<String, String> headers = new LinkedHashMap<>();
+        headers.put("referer", baseUrl + "/user/public/verify/user");
+        LoggingHelper.logRequestDetails(
+                "GET",
+                "/user/public/verify/user",
+                headers,
+                queryParams,
+                null
+        );
         Response response = given()
                 .baseUri(baseUrl)
                 .header("referer", baseUrl + "/user/public/verify/user")
@@ -77,9 +114,10 @@ public class UserLoginService {
                 .when()
                 .get("/user/public/verify/user")
                 .then()
-                .statusCode(200)
                 .extract()
                 .response();
+        LoggingHelper.logResponseDetails(response);
+        assertStatus(response, 200, "GET /user/public/verify/user");
 
         JsonPath jp = response.jsonPath();
         Object assignedCompaniesObj = jp.get("output.assigned_companies");
@@ -110,4 +148,17 @@ public class UserLoginService {
         testContext.setCompanyId(companyId);
         logger.info("Company ID stored for user slot {}: {}", testContext.getUserSlot(), companyId);
     }
+
+    private void assertStatus(Response response, int expected, String operation) {
+        if (response == null) {
+            throw new IllegalStateException(operation + " returned null response");
+        }
+        int actual = response.getStatusCode();
+        if (actual != expected) {
+            throw new AssertionError(
+                    operation + " expected status code <" + expected + "> but was <" + actual + ">."
+            );
+        }
+    }
+
 }

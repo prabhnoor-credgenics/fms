@@ -10,6 +10,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import helpers.LoggingHelper;
 import utils.DbClient;
 import utils.LoggingContext;
 
@@ -53,15 +54,18 @@ public class Hooks {
             role = UserRole.CREATOR;
         }
 
-        logger.info("Scenario '{}' | thread '{}' | userSlot {} | role: {}",
+        logger.debug("Scenario '{}' | thread '{}' | userSlot {} | role: {}",
                 scenario.getName(), Thread.currentThread().getName(), testContext.getUserSlot(), role);
         authManager.initializeAuthentication(role);
     }
 
     @After
-    public void tearDown() {
+    public void tearDown(Scenario scenario) {
+        if (scenario.isFailed()) {
+            LoggingHelper.logScenarioFailure(scenario.getName());
+        }
         dbClient.close();
         LoggingContext.clear();
-        logger.info("Scenario teardown completed (user slot {})", testContext.getUserSlot());
+        logger.debug("Scenario teardown completed (user slot {})", testContext.getUserSlot());
     }
 }

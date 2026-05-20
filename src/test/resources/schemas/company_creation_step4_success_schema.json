@@ -16,7 +16,9 @@
           "properties": {
             "profile_id": { "type": "string", "minLength": 1 },
             "user_id": { "type": "string", "minLength": 1 },
-            "calling_user_result": { "type": "string" }
+            "calling_user_result": {
+              "type": ["string", "null"]
+            }
           },
           "additionalProperties": true
         },

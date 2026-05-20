@@ -3,66 +3,2097 @@
   "data": {
     "trademark": "{TRADEMARK}",
     "permissions": {
-      "Approval Service": {
-        "all_data_access": {
-          "meta_data": {
-            "description": "Users can access all approval data",
-            "name": "All Data Access"
-          },
-          "read": true
-        },
-        "approval_company_settings": {
-          "meta_data": {
-            "description": "Users can view and edit approval module settings",
-            "name": "Approval Settings Module"
-          },
-          "read": true,
-          "write": true
-        },
-        "approval_management_page": {
-          "meta_data": {
-            "description": "Users can view and perform actions on requests pending on them",
-            "name": "Manage Approvals"
-          },
-          "write": true
-        },
-        "approval_policy": {
-          "meta_data": {
-            "description": "Users with this permission will be able to view/edit/create the approval policy for an organization",
-            "name": "Approval Policy"
-          },
-          "read": true,
-          "write": true
-        }
+  "Agency Management Module": {
+    "agency_master_permissions": {
+      "levels": true,
+      "meta_data": {
+        "description": "This permission allows LOP user to access master permission set shared to agency",
+        "name": "Agency Master Permissions"
       },
-      "User Management Module": {
-        "users": {
-          "levels": true,
-          "meta_data": {
-            "description": "Ability to create, edit and delete in the user management section of settings",
-            "name": "User Management"
-          },
-          "read": true,
-          "write": true
-        },
-        "profiles": {
-          "levels": true,
-          "meta_data": {
-            "description": "Ability to create and edit permission groups for all users in the user management section of settings",
-            "name": "Permission Group Management"
-          },
-          "write": true
-        }
+      "read": true,
+      "required_in_headers": true,
+      "write": true
+    },
+    "mapped_agency_users": {
+      "levels": true,
+      "meta_data": {
+        "description": "This permission allows LOP user to access agency users mapped in LOP",
+        "name": "Mapped Agency Users"
       },
-      "Core Collection Modules": {
-        "loan_upload": {
-          "meta_data": {
-            "description": "Ability to upload new loans in bulk on-to the platform through excel upload in data upload section",
-            "name": "Loan Upload"
-          },
-          "write": true
-        }
-      }
+      "read": true,
+      "required_in_headers": true
+    }
+  },
+  "Approval Service": {
+    "all_data_access": {
+      "meta_data": {
+        "description": "Users can access all approval data",
+        "name": "All Data Access"
+      },
+      "read": true
+    },
+    "approval_company_settings": {
+      "meta_data": {
+        "description": "Users can view and edit approval module settings",
+        "name": "Approval Settings Module"
+      },
+      "read": true,
+      "write": true
+    },
+    "approval_management_page": {
+      "meta_data": {
+        "description": "Users can view and perform actions on requests pending on them",
+        "name": "Manage Approvals"
+      },
+      "write": true
+    },
+    "approval_policy": {
+      "meta_data": {
+        "description": "Users with this permission will be able to view/edit/create the approval policy for an organization",
+        "name": "Approval Policy"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "calling": {
+    "additional_contact_number": {
+      "meta_data": {
+        "description": "Provides access to add additional contact number against the loan id through calling pop-up",
+        "name": "Add Additional Contact Number"
+      },
+      "write": true
+    },
+    "agent_leaderboard": {
+      "meta_data": {
+        "description": "Provides access to Agent Leaderboard",
+        "name": "Agent Leaderboard"
+      },
+      "write": true
+    },
+    "agent_talking_script": {
+      "meta_data": {
+        "description": "Provides access to create, edit and delete Agent Talking Script",
+        "name": "Agent Talking Script"
+      },
+      "write": true
+    },
+    "allocation_based_apr": {
+      "meta_data": {
+        "description": "Provides access to Allocation based APR",
+        "name": "Allocation Based APR"
+      },
+      "read": true
+    },
+    "autodialer": {
+      "meta_data": {
+        "description": "Activates autodialer fuctionalities for the environment.",
+        "name": "Autodialer Call"
+      },
+      "write": true
+    },
+    "call_upload": {
+      "meta_data": {
+        "description": "Provides access to upload bulk calling data.",
+        "name": "Calling Upload"
+      },
+      "write": true
+    },
+    "call_variable_management": {
+      "meta_data": {
+        "description": "Provides access to call variables under call settings.",
+        "name": "Call Variables Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "calling_campaign_operation": {
+      "meta_data": {
+        "description": "Provides access to campaign operations like pause, edit, delete etc.",
+        "name": "Calling Campaign Operations"
+      },
+      "write": true
+    },
+    "campaign": {
+      "meta_data": {
+        "description": "Provides access to calling campaigns under Campaign Management.",
+        "name": "Campaign Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "click_to_call": {
+      "meta_data": {
+        "description": "Provides access to Click to Call service.",
+        "name": "Click To Call"
+      },
+      "write": true
+    },
+    "company_settings": {
+      "meta_data": {
+        "description": "Provides access to the Tele-calling tab in company details.",
+        "name": "Tele-calling Settings"
+      },
+      "read": true,
+      "write": true
+    },
+    "complete_data": {
+      "meta_data": {
+        "description": "Complete Data Access For Report.",
+        "name": "Complete Data Access For Report"
+      },
+      "read": true,
+      "required_in_headers": true
+    },
+    "create_calling_campaign": {
+      "meta_data": {
+        "description": "Provides access to create calling campaign.",
+        "name": "Create Calling Campaign"
+      },
+      "read": true,
+      "write": true
+    },
+    "did_management_v2": {
+      "meta_data": {
+        "description": "Provides access to DID Management under company settings.",
+        "name": "DID Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "disposition_priority_settings": {
+      "meta_data": {
+        "description": "Provides access to modify Disposition Priority Settings",
+        "name": "Disposition Priority Settings"
+      },
+      "read": true,
+      "write": true
+    },
+    "download_call_recording": {
+      "meta_data": {
+        "description": "Provides access to download call recordings.",
+        "name": "Download Call Recording"
+      },
+      "read": true
+    },
+    "extended_duration_apr": {
+      "meta_data": {
+        "description": "Provides access to the Extended Duration Agent Productivity Report in the calling dashboard",
+        "name": "Extended Duration Agent Productivity Report"
+      },
+      "read": true
+    },
+    "inbound": {
+      "meta_data": {
+        "description": "Provides access to inbound dialer functionalities.",
+        "name": "Inbound"
+      },
+      "read": true,
+      "write": true
+    },
+    "inbound_campaign": {
+      "meta_data": {
+        "description": "Provides access to inbound campaigns.",
+        "name": "Inbound Campaign"
+      },
+      "read": true,
+      "write": true
+    },
+    "incoming_lead_report": {
+      "meta_data": {
+        "description": "Provides access to Incoming Lead Report",
+        "name": "Incoming Lead Report"
+      },
+      "read": true
+    },
+    "limit_calls_to_current_allocation_month": {
+      "meta_data": {
+        "description": "If turned on, calls can't be placed on previous allocation months.",
+        "name": "Limit Calls To Current Allocation Month"
+      },
+      "write": true
+    },
+    "play_call_recording": {
+      "meta_data": {
+        "description": "Provides access to play recordings.",
+        "name": "Play Call Recording"
+      },
+      "read": true
+    },
+    "post_call_communication": {
+      "meta_data": {
+        "description": "Provides access to configure post call communication",
+        "name": "Post Call Communication"
+      },
+      "read": true,
+      "write": true
+    },
+    "predictive": {
+      "meta_data": {
+        "description": "Provides access to trigger Predictive calls in campaigns.",
+        "name": "Predictive Call"
+      },
+      "read": true,
+      "write": true
+    },
+    "reminder_report": {
+      "meta_data": {
+        "description": "Provides access to reminder report.",
+        "name": "Reminder Report"
+      },
+      "read": true
+    },
+    "report_customisation": {
+      "meta_data": {
+        "description": "Provides access to the report customisation page under call Settings.",
+        "name": "Report Customisation"
+      },
+      "write": true
+    },
+    "supervisor_actions": {
+      "meta_data": {
+        "description": "Provides mandatory supervisor actions for calling campaigns.",
+        "name": "Supervisor Actions"
+      },
+      "write": true
+    },
+    "supervisor_leaderboard": {
+      "meta_data": {
+        "description": "Provides access to Supervisor Leaderboard",
+        "name": "Supervisor Leaderboard"
+      },
+      "write": true
+    },
+    "supervisor_monitoring": {
+      "meta_data": {
+        "description": "Provides monitoring access to supervisors.",
+        "name": "Supervisor Monitoring"
+      },
+      "read": true
+    },
+    "toll_free_number": {
+      "meta_data": {
+        "description": "Provides access to Toll Free Number Management.",
+        "name": "Toll Free Number Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "voicebot": {
+      "meta_data": {
+        "description": "Provides access to Voice Bot tabs in the Bulk Process and Communication page of the Loan Details.",
+        "name": "Voice Bot"
+      },
+      "read": true
+    },
+    "voicebot_did_management": {
+      "meta_data": {
+        "description": "Provides access to Voice Bot DID Management page",
+        "name": "Voice Bot DID Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "voicebot_settings": {
+      "meta_data": {
+        "description": "Provides access to the Voice Bot settings tab in the Company Details page.",
+        "name": "Voice Bot Settings"
+      },
+      "read": true,
+      "write": true
+    },
+    "voicebot_template_management": {
+      "meta_data": {
+        "description": "Provides access to the Template Management section",
+        "name": "Voice Bot Template Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "voicebot_trigger": {
+      "meta_data": {
+        "description": "Users with this permission will be able to trigger Voice Bot from the portfolio page.",
+        "name": "Voice Bot Trigger"
+      },
+      "write": true
+    }
+  },
+  "CG Payment Module": {
+    "company_settings": {
+      "meta_data": {
+        "description": "Enables you to view and edit company settings",
+        "name": "Billzy Company Settings"
+      },
+      "read": true,
+      "write": true
+    },
+    "e-nach": {
+      "meta_data": {
+        "description": "Enables you to configure enach",
+        "name": "Generate / Send E-NACH Links"
+      },
+      "read": true,
+      "write": true
+    },
+    "e-nach-plan": {
+      "meta_data": {
+        "description": "Enables you to view and edit enach plan",
+        "name": "E-NACH Plan Creation"
+      },
+      "read": true,
+      "write": true
+    },
+    "payment_link_amount_customisation": {
+      "meta_data": {
+        "description": "Enables you to customize payment link amount",
+        "name": "Billzy Sender Level Amount Customisation"
+      },
+      "write": true
+    },
+    "portfolio_export": {
+      "meta_data": {
+        "description": "Enables you to export transaction data",
+        "name": "Export Transaction Data"
+      },
+      "read": true
+    },
+    "recurring_payment_company_settings": {
+      "meta_data": {
+        "description": "Enables you to Change Recuring Payment Company Settings",
+        "name": "Indonesian Recurring Payment Company Setting"
+      },
+      "read": true,
+      "write": true
+    },
+    "recurring_subscription_trigger_request": {
+      "meta_data": {
+        "description": "Enables you to send Bulk Recurring Subscription from Portfolio",
+        "name": "Send Indonesian Recurring Subscription Request On Portfolio"
+      },
+      "write": true
+    },
+    "sender_level_upi_settings": {
+      "meta_data": {
+        "description": "Sender Level Permission for UPI Collect",
+        "name": "Sender Level Permission for UPI Collect"
+      },
+      "read": true,
+      "write": true
+    },
+    "upi_company_settings": {
+      "meta_data": {
+        "description": "Enables you to Change UPI Collect Payment Company Settings",
+        "name": "UPI Collect Company Settings"
+      },
+      "read": true,
+      "write": true
+    },
+    "upi_trigger": {
+      "meta_data": {
+        "description": "Enables you to send Bulk UPI Collect from Portfolio",
+        "name": "Send UPI Collect Request On Portfolio"
+      },
+      "write": true
+    }
+  },
+  "Chat Bot": {
+    "chatbot_permissions": {
+      "meta_data": {
+        "description": "Chat Bot",
+        "name": "Chat Bot"
+      },
+      "write": true
+    }
+  },
+  "Core Collection Modules": {
+    "access_loan_edit_history": {
+      "meta_data": {
+        "description": "Ability to access the edit history of any Loan Id",
+        "name": "Access Loan Edit History"
+      },
+      "read": true
+    },
+    "access_unmasked_data": {
+      "meta_data": {
+        "description": "Enables you to view unmasked data and select what variables will be masked on platform",
+        "name": "Bypass Data Masking"
+      },
+      "read": true,
+      "required_in_headers": true
+    },
+    "add_borrower_details": {
+      "meta_data": {
+        "description": "This permission will allow users to only add details of different borrower types from Loan Details page",
+        "name": "Add Borrower Details"
+      },
+      "write": true
+    },
+    "add_payment": {
+      "meta_data": {
+        "description": "It will enable user to add payment from Loan Details page",
+        "name": "Add Payment"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "allocate_and_deallocate_loans": {
+      "meta_data": {
+        "description": "Gives user ability to allocate and de-allocate loans through portfolio,excel and workflow",
+        "name": "Allocate and Deallocate loans"
+      },
+      "write": true
+    },
+    "archive_and_unarchive_loan": {
+      "meta_data": {
+        "description": "Ability to archive and un-archive loans from portfolio and archive loans section respectively",
+        "name": "Archive Loans"
+      },
+      "write": true
+    },
+    "authorised_officer_assignment": {
+      "meta_data": {
+        "description": "This feature is not available out of the box, there are some variable configurations that need to be in place for this feature to work properly. Do not enable this permission without proper implementation.",
+        "name": "AO Assignment"
+      },
+      "write": true
+    },
+    "complete_data_access": {
+      "meta_data": {
+        "description": "This permission gives user access to all loans or transactions irrespective of where they are in organization tree",
+        "name": "Complete Data Access"
+      },
+      "read": true,
+      "required_in_headers": true
+    },
+    "custom_integrations": {
+      "meta_data": {
+        "description": "This permission allows the user to modify custom integrations settings for the company.",
+        "name": "Custom Integrations"
+      },
+      "write": true
+    },
+    "export_communication": {
+      "meta_data": {
+        "description": "Download specific data points of communication done via calling, email, SMS, voice and whatsapp",
+        "name": "Communication Export"
+      },
+      "read": true
+    },
+    "export_digital_notice": {
+      "meta_data": {
+        "description": "Download report which will give you status & tracking of digital notice generated on the platform",
+        "name": "Digital Notice Export"
+      },
+      "read": true
+    },
+    "export_loans": {
+      "meta_data": {
+        "description": "Ability to export loans from portfolio page for a given set of selected loans",
+        "name": "Loans Export"
+      },
+      "read": true
+    },
+    "export_payments": {
+      "meta_data": {
+        "description": "Ability to export payments from portfolio page for a given set of selected loans",
+        "name": "Payments Export"
+      },
+      "read": true
+    },
+    "loan_collection_stage": {
+      "meta_data": {
+        "description": "This permission provides the ability to access the collection stage configuration for the company.",
+        "name": "Collection Stage"
+      },
+      "read": true,
+      "write": true
+    },
+    "loan_update": {
+      "meta_data": {
+        "description": "Ability to upload new loans in bulk on-to the platform through excel upload in data upload section",
+        "name": "Loan Update"
+      },
+      "write": true
+    },
+    "loan_upload": {
+      "meta_data": {
+        "description": "Ability to upload new loans in bulk on-to the platform through excel upload in data upload section",
+        "name": "Loan Upload"
+      },
+      "write": true
+    },
+    "loan_upload_with_replace_given_data": {
+      "meta_data": {
+        "description": "Loan Upload (Replace Previous Data for uploaded columns only)",
+        "name": "Loan Upload (Replace Previous Data for uploaded columns only)"
+      },
+      "write": true
+    },
+    "loan_upload_with_replace_previous_data": {
+      "meta_data": {
+        "description": "Loan Upload (Remove All Previous Data)",
+        "name": "Loan Upload (Remove All Previous Data)"
+      },
+      "write": true
+    },
+    "move_loans": {
+      "meta_data": {
+        "description": "Ability to move loans to current allocation month from a previous month through portfolio page",
+        "name": "Move Loans"
+      },
+      "write": true
+    },
+    "out_of_hierarchy_allocation": {
+      "meta_data": {
+        "description": "If this permission is enabled for a permission group, users can perform bulk allocation/deallocation (via Excel upload) to and from users outside their reporting hierarchy.",
+        "name": "Out of Hierarchy Allocation"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "payment_receipt_management": {
+      "meta_data": {
+        "description": "This permission allows users to access payment receipt management tab under platform settings.",
+        "name": "Payment Receipt Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "payment_upload": {
+      "meta_data": {
+        "description": "Ability to upload payments in bulk on-to the platform through excel upload in data upload section",
+        "name": "Payment Upload"
+      },
+      "read": true,
+      "required_in_headers": true,
+      "write": true
+    },
+    "portfolio_customisation": {
+      "meta_data": {
+        "description": "Ability to enable or disable variables/filters on the portfolio and also change the order of visibility",
+        "name": "Portfolio Customisation"
+      },
+      "write": true
+    },
+    "send_receipt": {
+      "meta_data": {
+        "description": "This permission provides the ability to send the payment receipt froom loan details page.",
+        "name": "Send Receipt"
+      },
+      "write": true
+    },
+    "settings_company_details": {
+      "meta_data": {
+        "description": "This permission will give access to user to edit company details from the settings page",
+        "name": "Edit Company Details"
+      },
+      "write": true
+    },
+    "settings_loan_status": {
+      "meta_data": {
+        "description": "Enables you to view all disposition status at one place and you can easily customize it too",
+        "name": "Status Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "settings_loan_variables": {
+      "meta_data": {
+        "description": "Ability to add new custom variables and edit their attributes from loan variables section in settings",
+        "name": "Variable Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "status_update": {
+      "meta_data": {
+        "description": "This permission provides access to the remarks and status upload functionality which is a part of Data Upload Tab.",
+        "name": "Remarks and Status Upload"
+      },
+      "write": true
+    },
+    "tags": {
+      "meta_data": {
+        "description": "Ability to add and remove tags from loans",
+        "name": "Tags"
+      },
+      "write": true
+    }
+  },
+  "dashboard": {
+    "billzy-payments": {
+      "meta_data": {
+        "description": "Control the visibility of Billzy-Payments Dashboard to user",
+        "name": "Billzy-Payments Dashboard"
+      },
+      "read": true
+    },
+    "calling": {
+      "meta_data": {
+        "description": "Control the visibility of Calling Dashboard to user",
+        "name": "Calling Dashboard"
+      },
+      "read": true
+    },
+    "collection performance": {
+      "meta_data": {
+        "description": "Collection Performance",
+        "name": "Collection Performance"
+      },
+      "read": true
+    },
+    "communication": {
+      "meta_data": {
+        "description": "Control the visibility of Communication Dashboard to user",
+        "name": "Communication Dashboard"
+      },
+      "read": true,
+      "write": true
+    },
+    "dashboard-configuration": {
+      "meta_data": {
+        "description": "Control the configuration of dashboard",
+        "name": "Dashboard Configuration"
+      },
+      "read": true,
+      "write": true
+    },
+    "digital communication insights": {
+      "meta_data": {
+        "description": "Control the visibility of Digital Communication Insights Dashboard to user",
+        "name": "Digital Communication Insights Dashboard"
+      },
+      "read": true
+    },
+    "dpd insights": {
+      "meta_data": {
+        "description": "Control the visibility of DPD Insights Dashboard to user",
+        "name": "DPD Insights Dashboard"
+      },
+      "read": true
+    },
+    "fos": {
+      "meta_data": {
+        "description": "Control the visibility of FOS Dashboard to user",
+        "name": "FOS Dashboard"
+      },
+      "read": true
+    },
+    "litigation": {
+      "meta_data": {
+        "description": "Control the visibility of Litigation Dashboard to user",
+        "name": "Litigation Dashboard"
+      },
+      "read": true
+    },
+    "notice": {
+      "meta_data": {
+        "description": "Control the visibility of Notice Dashboard to user",
+        "name": "Notice Dashboard"
+      },
+      "read": true
+    },
+    "overview": {
+      "meta_data": {
+        "description": "Control the visibility of Overview Dashboard to user",
+        "name": "Overview Dashboard"
+      },
+      "read": true
+    },
+    "reminder": {
+      "meta_data": {
+        "description": "Control the visibility of Reminder Dashboard to user",
+        "name": "Reminder Dashboard"
+      },
+      "read": true
+    },
+    "settlement": {
+      "meta_data": {
+        "description": "Control the visibility of Settlement Dashboard to user",
+        "name": "Settlement Dashboard"
+      },
+      "read": true
+    }
+  },
+  "Data Science": {
+    "Borrower Interaction Score - Month-over-Month Insights": {
+      "meta_data": {
+        "description": "Tracks monthly changes in borrower engagement and contactability scores to monitor behavioral trends.",
+        "name": "Borrower Interaction Score - Month-over-Month Insights"
+      },
+      "read": true
+    },
+    "Borrower Probability of Response Across Channels": {
+      "meta_data": {
+        "description": "Predicts the likelihood of borrower response across various channels based on persona and outreach history.",
+        "name": "Borrower Probability of Response Across Channels"
+      },
+      "read": true
+    },
+    "Borrower Receptiveness Behaviour": {
+      "meta_data": {
+        "description": "Aggregated score reflecting borrower overall connectivity and responsiveness, helping shape campaign strategies.",
+        "name": "Borrower Receptiveness Behaviour"
+      },
+      "read": true
+    },
+    "Borrower Risk Profile": {
+      "meta_data": {
+        "description": "Classifies borrower into risk segments based on historical behavior and assigns a corresponding risk score.",
+        "name": "Borrower Risk Profile"
+      },
+      "read": true
+    },
+    "Bounce Prediction Score": {
+      "meta_data": {
+        "description": "Predicts the probability of a borrower missing their upcoming EMI before the due date.",
+        "name": "Bounce Prediction Score"
+      },
+      "read": true
+    },
+    "Intent to Pay Score": {
+      "meta_data": {
+        "description": "Indicates the borrower likelihood or willingness to make a payment.",
+        "name": "Intent to Pay Score"
+      },
+      "read": true
+    },
+    "Recommendation on preferred communication intensity": {
+      "meta_data": {
+        "description": "Suggests optimal communication frequency for each borrower preferred channel.",
+        "name": "Recommendation on preferred communication intensity"
+      },
+      "read": true
+    },
+    "Recommendation on responsiveness of the borrower": {
+      "meta_data": {
+        "description": "Recommends the most effective language, time, and channel for borrower communication based on past responsiveness.",
+        "name": "Recommendation on responsiveness of the borrower"
+      },
+      "read": true
+    },
+    "Risk & Payment Behaviour - Comparison of Scores": {
+      "meta_data": {
+        "description": "Month-wise comparison of key behavioral indicators: risk profile, bounce prediction, and intent to pay scores.",
+        "name": "Risk & Payment Behaviour - Comparison of Scores"
+      },
+      "read": true
+    }
+  },
+  "Digital Comm Campaign Management": {
+    "rules": {
+      "meta_data": {
+        "description": "Schedule digital communication campaigns",
+        "name": "Digital Comm Campaign Management"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "Digital Communications": {
+    "company_link_configurations": {
+      "meta_data": {
+        "description": "Company Link Configurations",
+        "name": "Company Link Configurations"
+      },
+      "read": true,
+      "write": true
+    },
+    "contact_preference_configurations": {
+      "meta_data": {
+        "description": "Contact Preference Configurations",
+        "name": "Contact Preference Configurations"
+      },
+      "read": true,
+      "write": true
+    },
+    "content_creation": {
+      "meta_data": {
+        "description": "AI Videos",
+        "name": "AI Videos"
+      },
+      "read": true,
+      "write": true
+    },
+    "digital_channels_tab": {
+      "meta_data": {
+        "description": "Digital Channels Tab",
+        "name": "Digital Channels Tab"
+      },
+      "read": true,
+      "write": true
+    },
+    "dtmf_ivr": {
+      "meta_data": {
+        "description": "Trigger DTMF IVR",
+        "name": "DTMF IVR"
+      },
+      "read": true,
+      "write": true
+    },
+    "dtmf_ivr_campaigns": {
+      "meta_data": {
+        "description": "Trigger Bulk DTMF IVR Requests",
+        "name": "Bulk DTMF IVR Requests"
+      },
+      "read": true,
+      "write": true
+    },
+    "dtmf_ivr_configurations": {
+      "meta_data": {
+        "description": "DTMF IVR Configurations",
+        "name": "DTMF IVR Configurations"
+      },
+      "read": true,
+      "write": true
+    },
+    "email": {
+      "meta_data": {
+        "description": "Trigger EMAIL",
+        "name": "EMAIL"
+      },
+      "read": true,
+      "write": true
+    },
+    "email_campaigns": {
+      "meta_data": {
+        "description": "Trigger Bulk Email Requests",
+        "name": "Bulk Email Requests"
+      },
+      "read": true,
+      "write": true
+    },
+    "email_configurations": {
+      "meta_data": {
+        "description": "Email Configurations",
+        "name": "Email Configurations"
+      },
+      "read": true,
+      "write": true
+    },
+    "excel_driven_master_campaigns": {
+      "meta_data": {
+        "description": "Trigger Excel Driven Master Campaign Requests",
+        "name": "Excel Driven Master Campaign Requests"
+      },
+      "read": true,
+      "write": true
+    },
+    "master_campaigns": {
+      "meta_data": {
+        "description": "Trigger Master Campaign Requests",
+        "name": "Master Campaign Requests"
+      },
+      "read": true,
+      "write": true
+    },
+    "obd_ivr": {
+      "meta_data": {
+        "description": "Trigger OBD IVR",
+        "name": "OBD IVR"
+      },
+      "read": true,
+      "write": true
+    },
+    "obd_ivr_campaigns": {
+      "meta_data": {
+        "description": "Trigger Bulk OBD IVR Requests",
+        "name": "Bulk OBD IVR Requests"
+      },
+      "read": true,
+      "write": true
+    },
+    "obd_ivr_configurations": {
+      "meta_data": {
+        "description": "OBD IVR Configurations",
+        "name": "OBD IVR Configurations"
+      },
+      "read": true,
+      "write": true
+    },
+    "payment_configurations": {
+      "meta_data": {
+        "description": "Payment Configurations",
+        "name": "Payment Configurations"
+      },
+      "read": true,
+      "write": true
+    },
+    "rcs": {
+      "meta_data": {
+        "description": "Trigger RCS",
+        "name": "RCS"
+      },
+      "read": true,
+      "write": true
+    },
+    "rcs_campaigns": {
+      "meta_data": {
+        "description": "Trigger Bulk RCS Requests",
+        "name": "Bulk RCS Requests"
+      },
+      "read": true,
+      "write": true
+    },
+    "rcs_configurations": {
+      "meta_data": {
+        "description": "RCS Configurations",
+        "name": "RCS Configurations"
+      },
+      "read": true,
+      "write": true
+    },
+    "render_video": {
+      "meta_data": {
+        "description": "Render Video",
+        "name": "Render Video"
+      },
+      "read": true,
+      "write": true
+    },
+    "sms": {
+      "meta_data": {
+        "description": "Trigger SMS",
+        "name": "SMS"
+      },
+      "read": true,
+      "write": true
+    },
+    "sms_campaigns": {
+      "meta_data": {
+        "description": "Trigger Bulk SMS Requests",
+        "name": "Bulk SMS Requests"
+      },
+      "read": true,
+      "write": true
+    },
+    "sms_configurations": {
+      "meta_data": {
+        "description": "SMS Configurations",
+        "name": "SMS Configurations"
+      },
+      "read": true,
+      "write": true
+    },
+    "template_management": {
+      "meta_data": {
+        "description": "Digital Channel Templates",
+        "name": "Digital Channel Templates"
+      },
+      "read": true,
+      "write": true
+    },
+    "universal_api_configurations": {
+      "meta_data": {
+        "description": "Universal API Configurations",
+        "name": "Universal API Configurations"
+      },
+      "read": true,
+      "write": true
+    },
+    "voice_bot": {
+      "meta_data": {
+        "description": "Trigger Voice Bot",
+        "name": "Voice Bot"
+      },
+      "write": true
+    },
+    "whatsapp": {
+      "meta_data": {
+        "description": "Trigger Whatsapp Bot",
+        "name": "Whatsapp"
+      },
+      "read": true,
+      "write": true
+    },
+    "whatsapp_bot": {
+      "meta_data": {
+        "description": "Trigger WHATSAPP BOT",
+        "name": "WHATSAPP BOT"
+      },
+      "read": true,
+      "write": true
+    },
+    "whatsapp_bot_campaigns": {
+      "meta_data": {
+        "description": "Trigger Bulk Whatsapp Bot Requests",
+        "name": "Bulk Whatsapp Bot Requests"
+      },
+      "read": true,
+      "write": true
+    },
+    "whatsapp_campaigns": {
+      "meta_data": {
+        "description": "Trigger Bulk Whatsapp Requests",
+        "name": "Bulk Whatsapp Requests"
+      },
+      "read": true,
+      "write": true
+    },
+    "whatsapp_configurations": {
+      "meta_data": {
+        "description": "WhatsApp Configurations",
+        "name": "WhatsApp Configurations"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "Document Management": {
+    "company_documents": {
+      "levels": true,
+      "meta_data": {
+        "description": "Provides access to upload/download files in central file manager",
+        "name": "CG Drive"
+      },
+      "read": true,
+      "required_in_headers": true,
+      "write": true
+    },
+    "document_types": {
+      "levels": true,
+      "meta_data": {
+        "description": "Provides access to document type section in settings to configure the supported document types",
+        "name": "Document Types"
+      },
+      "write": true
+    },
+    "loan_documents": {
+      "meta_data": {
+        "description": "Provides access to upload/download files at a loan or customer level",
+        "name": "Loan Documents"
+      },
+      "read": true,
+      "required_in_headers": true,
+      "write": true
+    },
+    "user_documents": {
+      "levels": true,
+      "meta_data": {
+        "description": "This permission provides access to upload and view documents against a given user",
+        "name": "User Documents"
+      },
+      "read": true,
+      "required_in_headers": true,
+      "write": true
+    }
+  },
+  "fos": {
+    "branch_collection_management": {
+      "meta_data": {
+        "description": "User would be able to view the Branch Collection Managment section and sub-tabs within this section",
+        "name": "branch_collection_management"
+      },
+      "read": true,
+      "write": true
+    },
+    "change_requests_module": {
+      "meta_data": {
+        "description": "Used for viewing and responding to edit/cancel verification requests",
+        "name": "change_requests_module"
+      },
+      "read": true,
+      "write": true
+    },
+    "deferred_verification": {
+      "meta_data": {
+        "description": "Allow user to mark 'Approved As Deferred' in deposit cash verification",
+        "name": "deferred_verification"
+      },
+      "write": true
+    },
+    "deposit_verification_module": {
+      "meta_data": {
+        "description": "Used for viewing and responding to deposit verification requests",
+        "name": "deposit_verification_module"
+      },
+      "read": true,
+      "write": true
+    },
+    "field_collection_dashboard": {
+      "meta_data": {
+        "description": "User would be able to view the Field Collection Dashboard tab and sub-tabs within this section",
+        "name": "field_collection_dashboard"
+      },
+      "read": true
+    },
+    "form_management": {
+      "meta_data": {
+        "description": "User would be able to view the Form Management tab and sub-tabs within this section",
+        "name": "form_management"
+      },
+      "write": true
+    },
+    "fos_settings_module": {
+      "meta_data": {
+        "description": "Used for viewing and updating fos settings",
+        "name": "fos_settings_module"
+      },
+      "read": true,
+      "write": true
+    },
+    "lead_addition": {
+      "meta_data": {
+        "description": "Used for adding sales leads from fos app",
+        "name": "add_new_lead"
+      },
+      "write": true
+    },
+    "live_agent_tracking_module": {
+      "meta_data": {
+        "description": "Used for viewing live agent location",
+        "name": "live_agent_tracking_module"
+      },
+      "read": true
+    },
+    "non_allocated_loan_access": {
+      "meta_data": {
+        "description": "Used to allow the agents to perform visits on loans beyond their general allocation",
+        "name": "non_allocated_loan_access"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "online_verification_module": {
+      "meta_data": {
+        "description": "Used for viewing and responding to online deposit verification requests",
+        "name": "online_verification_module"
+      },
+      "read": true,
+      "write": true
+    },
+    "restrict_collection_form": {
+      "meta_data": {
+        "description": "restrict collection form access",
+        "name": "restrict_collection_form"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "restrict_document_upload_from_gallery": {
+      "meta_data": {
+        "description": "Restrict Field Users from uploading documents from the gallery",
+        "name": "restrict_document_upload_from_gallery"
+      },
+      "write": true
+    },
+    "supervisor_visit_cancellation": {
+      "meta_data": {
+        "description": "Allows users to cancel visits for which Collection re-submission is not allowed.",
+        "name": "supervisor_visit_cancellation"
+      },
+      "write": true
+    },
+    "visibility_basis_of_loan_allocation": {
+      "meta_data": {
+        "description": "allow the user to view data basis loan allocation",
+        "name": "visibility_basis_of_loan_allocation"
+      },
+      "required_in_headers": true,
+      "write": true
+    }
+  },
+  "litigation": {
+    "add_onboarding_stage": {
+      "meta_data": {
+        "description": "Add new stage during onboarding",
+        "name": "Add Onboarding Stage"
+      },
+      "write": true
+    },
+    "add_rate_card": {
+      "meta_data": {
+        "description": "Add a new rate card",
+        "name": "Add Rate Card"
+      },
+      "write": true
+    },
+    "advocate_de_empanelment": {
+      "meta_data": {
+        "description": "Enables you to view advocate de-empanelment details",
+        "name": "Advocate De-Empanelment"
+      },
+      "read": true,
+      "write": true
+    },
+    "advocate_empanelment": {
+      "meta_data": {
+        "description": "Enables you to view advocate empanelment details",
+        "name": "Advocate Empanelment"
+      },
+      "read": true,
+      "write": true
+    },
+    "advocate_performance": {
+      "meta_data": {
+        "description": "Enables you to access advocate performance management page and take actions",
+        "name": "Advocate Performance"
+      },
+      "read": true,
+      "write": true
+    },
+    "approve_requests": {
+      "meta_data": {
+        "description": "Approve stages or case actions requests",
+        "name": "Approve Requests"
+      },
+      "write": true
+    },
+    "assign_case_manager": {
+      "meta_data": {
+        "description": "Enables you to assign/unassign managers to a case",
+        "name": "Assign Case Manager"
+      },
+      "write": true
+    },
+    "billing_management": {
+      "meta_data": {
+        "description": "Access to the Billing Management Page",
+        "name": "Billing Management"
+      },
+      "read": true
+    },
+    "borrower_settings": {
+      "meta_data": {
+        "description": "Enables user to access and update borrower settings",
+        "name": "Borrower Settings"
+      },
+      "read": true,
+      "write": true
+    },
+    "bulk_case_upload": {
+      "meta_data": {
+        "description": "Enables you to access legal bulk upload page",
+        "name": "Bulk Case Upload"
+      },
+      "read": true
+    },
+    "case_finder": {
+      "meta_data": {
+        "description": "Enables you to view E-Court Services page and take actions",
+        "name": "E-Court Services Page"
+      },
+      "read": true,
+      "write": true
+    },
+    "case_manager_overview": {
+      "meta_data": {
+        "description": "View case manager overview page",
+        "name": "Case Manager Overview"
+      },
+      "read": true,
+      "write": true
+    },
+    "case_status": {
+      "meta_data": {
+        "description": "Update case status",
+        "name": "Case Status"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "case_view": {
+      "meta_data": {
+        "description": "Enables users to log in to the CaseView App and perform actions",
+        "name": "Case View Mobile App"
+      },
+      "read": true,
+      "write": true
+    },
+    "case_view_management": {
+      "meta_data": {
+        "description": "Enables users to manage, update, and edit all features of the CaseView app.",
+        "name": "Case View Management"
+      },
+      "write": true
+    },
+    "clear_onboarding_form": {
+      "meta_data": {
+        "description": "Clear onboarding form",
+        "name": "Clear Onboarding Form"
+      },
+      "write": true
+    },
+    "company_settings": {
+      "meta_data": {
+        "description": "Enables user to access and update company settings",
+        "name": "Company Settings"
+      },
+      "read": true,
+      "write": true
+    },
+    "dashboard": {
+      "meta_data": {
+        "description": "View Litigation Dashboard",
+        "name": "Legal Operations Board"
+      },
+      "read": true
+    },
+    "data_deletion_allocation": {
+      "meta_data": {
+        "description": "Permission to delete vendor allocation details",
+        "name": "Data Deletion: Allocation Details"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "data_deletion_cases": {
+      "meta_data": {
+        "description": "Permission to delete entire cases",
+        "name": "Data Deletion: Cases"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "data_deletion_ecourt": {
+      "meta_data": {
+        "description": "Permission to delete eCourt tracking information",
+        "name": "Data Deletion: eCourt Tracking"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "data_deletion_stages": {
+      "meta_data": {
+        "description": "Permission to delete stages",
+        "name": "Data Deletion: Stages"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "delete_rate_card": {
+      "meta_data": {
+        "description": "Delete a rate card ",
+        "name": "Delete Rate Card"
+      },
+      "write": true
+    },
+    "derived_variables": {
+      "meta_data": {
+        "description": "Enables you to take actions related to Derived Variables",
+        "name": "Derived Variables"
+      },
+      "read": true,
+      "write": true
+    },
+    "edit_history": {
+      "meta_data": {
+        "description": "View edit history",
+        "name": "Edit History"
+      },
+      "read": true
+    },
+    "edit_onboarding_stage": {
+      "meta_data": {
+        "description": "Edit existing stage during onboarding",
+        "name": "Edit Onboarding Stage"
+      },
+      "write": true
+    },
+    "edit_rate_card": {
+      "meta_data": {
+        "description": "Edit existing rate card ",
+        "name": "Edit Rate Card"
+      },
+      "write": true
+    },
+    "edit_stage_documents": {
+      "meta_data": {
+        "description": "Update stage and case Documents",
+        "name": "Edit Stage Documents"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "edit_vendor_fees": {
+      "meta_data": {
+        "description": "Edit pre-filled vendor fees",
+        "name": "Edit Vendor Fees"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "legal_approvals": {
+      "meta_data": {
+        "description": "Enables you to access legal approvals page",
+        "name": "Legal Approvals"
+      },
+      "write": true
+    },
+    "legal_config": {
+      "meta_data": {
+        "description": "Enables you to access and update legal configurations",
+        "name": "Legal Config"
+      },
+      "write": true
+    },
+    "legal_portfolio": {
+      "meta_data": {
+        "description": "Enables you to access legal portfolio",
+        "name": "Legal Portfolio"
+      },
+      "read": true
+    },
+    "legal_process_tracking": {
+      "meta_data": {
+        "description": "Enables you to access legal process tracking page",
+        "name": "Legal Process Tracking"
+      },
+      "read": true
+    },
+    "legal_report_export": {
+      "meta_data": {
+        "description": "Enables you to view the Legal tab under Bulk export to download the legal reports",
+        "name": "Legal Report Export"
+      },
+      "write": true
+    },
+    "reminder": {
+      "meta_data": {
+        "description": "Enables you to view reminders page on UI",
+        "name": "Reminder"
+      },
+      "read": true
+    },
+    "replace_case": {
+      "meta_data": {
+        "description": "Access to Replace Case Page",
+        "name": "Replace Case"
+      },
+      "write": true
+    },
+    "schedule_meeting": {
+      "meta_data": {
+        "description": "Enables you to view schedule meetings, update and cancel them",
+        "name": "Schedule Meeting"
+      },
+      "write": true
+    },
+    "stage": {
+      "meta_data": {
+        "description": "Create or update stage and case",
+        "name": "Stage"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "update_payment_details": {
+      "meta_data": {
+        "description": "Update billing payment details",
+        "name": "Update Payment Details"
+      },
+      "required_in_headers": true,
+      "write": true
+    },
+    "virtual_hearing": {
+      "meta_data": {
+        "description": "Enables you to view scheduled hearings and take action on them",
+        "name": "Virtual Hearing"
+      },
+      "read": true,
+      "required_in_headers": true,
+      "write": true
+    }
+  },
+  "notice": {
+    "download_digital_notice_pdf": {
+      "meta_data": {
+        "description": "User will be able to download the digital notice PDFs generated on the platform",
+        "name": "Download Digital Notice PDF"
+      },
+      "read": true
+    },
+    "download_notice_documents": {
+      "meta_data": {
+        "description": "User will be able to download the notice documents ZIP generated on the platform",
+        "name": "Download Notice Documents"
+      },
+      "read": true
+    },
+    "download_notice_tracking_pdf": {
+      "meta_data": {
+        "description": "User will be able to download the physical notice tracking details",
+        "name": "Download Notice Tracking PDF"
+      },
+      "read": true
+    },
+    "download_preview": {
+      "meta_data": {
+        "description": "User will be able to Download Preview",
+        "name": "Download Preview"
+      },
+      "write": true
+    },
+    "export_digital_notice": {
+      "meta_data": {
+        "description": "Download report which will give you status & tracking of digital notice generated on the platform",
+        "name": "Digital Notice Export"
+      },
+      "read": true
+    },
+    "export_physical_notice": {
+      "meta_data": {
+        "description": "Download report which will give you data points around delivery status and tracking funnel of physical notices",
+        "name": "Physical Notice Tracking Export"
+      },
+      "read": true
+    },
+    "forms": {
+      "meta_data": {
+        "description": "User will be able to view and create forms",
+        "name": "Forms"
+      },
+      "read": true,
+      "write": true
+    },
+    "generate_notice": {
+      "meta_data": {
+        "description": "Generate notices",
+        "name": "Generate Notice"
+      },
+      "write": true
+    },
+    "notice_draft": {
+      "meta_data": {
+        "description": "View or upload notice drafts",
+        "name": "Notice Draft"
+      },
+      "read": true,
+      "write": true
+    },
+    "notice_tracking_page": {
+      "meta_data": {
+        "description": "User will be able to view Notice Tracking Page",
+        "name": "Notice Tracking Page"
+      },
+      "read": true
+    },
+    "notice_upload": {
+      "meta_data": {
+        "description": "Upload Notices",
+        "name": "Notice Upload"
+      },
+      "write": true
+    },
+    "pod_upload": {
+      "meta_data": {
+        "description": "Upload Notice POD Pdf",
+        "name": "Notice POD Upload"
+      },
+      "write": true
+    }
+  },
+  "Policy Control Module": {
+    "day_time_control": {
+      "meta_data": {
+        "description": "Day Time Control",
+        "name": "Day Time Control Module"
+      },
+      "read": true,
+      "write": true
+    },
+    "dnd": {
+      "meta_data": {
+        "description": "Dnd Control",
+        "name": "Dnd Control Module"
+      },
+      "read": true,
+      "write": true
+    },
+    "exclude_dates": {
+      "meta_data": {
+        "description": "Exclude Dates",
+        "name": "Exclude Dates Module"
+      },
+      "read": true,
+      "write": true
+    },
+    "exclude_status": {
+      "meta_data": {
+        "description": "Exclude Status",
+        "name": "Exclude Status Module"
+      },
+      "read": true,
+      "write": true
+    },
+    "frequency_control": {
+      "meta_data": {
+        "description": "Frequency Control",
+        "name": "Frequency Control Module"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "Reports": {
+    "all_report_access": {
+      "meta_data": {
+        "description": "Provides read access.",
+        "name": "All reports access"
+      },
+      "read": true
+    },
+    "create_report": {
+      "meta_data": {
+        "description": "Provides access to configure reports.",
+        "name": "Create report"
+      },
+      "write": true
+    },
+    "schedule_report_for_others": {
+      "meta_data": {
+        "description": "Provides access to schedule report for others",
+        "name": "Schedule report for others"
+      },
+      "write": true
+    }
+  },
+  "repossession": {
+    "asset_management": {
+      "meta_data": {
+        "description": "Used for viewing and editing asset management page",
+        "name": "asset_management"
+      },
+      "read": true,
+      "write": true
+    },
+    "repossession_data_upload": {
+      "meta_data": {
+        "description": "",
+        "name": "repossession_data_upload"
+      },
+      "write": true
+    },
+    "repossession_draft": {
+      "meta_data": {
+        "description": "This setting will manage the access of repossession drafts",
+        "name": "repossession_draft"
+      },
+      "read": true,
+      "write": true
+    },
+    "repossession_eligibility_update": {
+      "meta_data": {
+        "description": "This setting will manage the access of marking eligibility of repossession on a Loan.",
+        "name": "repossession_eligibility_update"
+      },
+      "read": true,
+      "write": true
+    },
+    "repossession_form_update": {
+      "meta_data": {
+        "description": "This setting will manage the access of scheduling repo visit and filling of repossession form on a Loan in application.",
+        "name": "repossession_form_update"
+      },
+      "read": true,
+      "write": true
+    },
+    "repossession_management": {
+      "meta_data": {
+        "description": "Used for viewing and editing repo management page",
+        "name": "repossession_management"
+      },
+      "read": true,
+      "required_in_headers": true,
+      "write": true
+    },
+    "repossession_settings": {
+      "meta_data": {
+        "description": "Used for viewing and editing repossession settings",
+        "name": "repossession_settings"
+      },
+      "read": true,
+      "write": true
+    },
+    "repossession_tracker": {
+      "meta_data": {
+        "description": "This setting will manage the access of the Repossession Tracker section that will be inside a Loan.",
+        "name": "repossession_tracker"
+      },
+      "read": true,
+      "write": true
+    },
+    "restrict_document_upload_from_gallery": {
+      "meta_data": {
+        "description": "Restrict Field Users from uploading documents from the gallery",
+        "name": "restrict_document_upload_from_gallery"
+      },
+      "write": true
+    },
+    "stockyard_management": {
+      "meta_data": {
+        "description": "Used for viewing and editing stockyard management page",
+        "name": "stockyard_management"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "Segment Management": {
+    "group_segment": {
+      "meta_data": {
+        "description": "Provides access to group segment.",
+        "name": "Group Segment"
+      },
+      "read": true,
+      "write": true
+    },
+    "lead_loan": {
+      "meta_data": {
+        "description": "Provides access to lead loan configuration.",
+        "name": "Lead loan configuration"
+      },
+      "read": true,
+      "write": true
+    },
+    "segment": {
+      "meta_data": {
+        "description": "Provides access to segment.",
+        "name": "Segment"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "settlement": {
+    "all_data_access": {
+      "meta_data": {
+        "description": "Users can access all settlement data",
+        "name": "All Data Access"
+      },
+      "read": true
+    },
+    "assigning_settlement_bucket": {
+      "meta_data": {
+        "description": "Users with this permission will be able to Assign Bucket/Mark Eligible or Reassign bucket on the platform",
+        "name": "Assigning Settlement Bucket"
+      },
+      "write": true
+    },
+    "discount_limit": {
+      "meta_data": {
+        "description": "User with this permission will be able to see discount limit on UI",
+        "name": "discount limit"
+      },
+      "read": true
+    },
+    "edit_bifurcation_variables": {
+      "meta_data": {
+        "description": "Users with this permission will be able to edit the bifurcation amount while raising settlement requests",
+        "name": "Edit Bifurcation Variables"
+      },
+      "write": true
+    },
+    "edit_settlement_request": {
+      "meta_data": {
+        "description": "Users with this permission will be able to edit the settlement amount, payment schedule and other settlement attributes",
+        "name": "Edit Settlement Request Details"
+      },
+      "write": true
+    },
+    "generate_settlement": {
+      "meta_data": {
+        "description": "Users with this permission will be able to generate settlement offer letter on the platform",
+        "name": "Generate Settlement"
+      },
+      "write": true
+    },
+    "raise_settlement_request": {
+      "meta_data": {
+        "description": "Users with this given permission will be able to see and use the raise settlement request option",
+        "name": "Raise Settlement Request"
+      },
+      "write": true
+    },
+    "settlement_bucket_management": {
+      "meta_data": {
+        "description": "Users with this permission will be able to view/edit the settlement buckets and their settings for an organization",
+        "name": "Settlement Bucket Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "settlement_company_settings": {
+      "meta_data": {
+        "description": "Users can view and edit settlement module settings",
+        "name": "Settlement Settings Module"
+      },
+      "read": true,
+      "write": true
+    },
+    "settlement_draft": {
+      "meta_data": {
+        "description": "View or upload settlement drafts",
+        "name": "Settlement Draft"
+      },
+      "read": true,
+      "write": true
+    },
+    "settlement_tracking_page": {
+      "meta_data": {
+        "description": "Users with this permission will be able to view the manage settlement page",
+        "name": "View Manage Settlement Page"
+      },
+      "read": true,
+      "write": true
+    },
+    "update_settlement_status": {
+      "meta_data": {
+        "description": "Users with this permission will be able to update settlement status on the platform",
+        "name": "Update Settlement Request Status"
+      },
+      "write": true
+    }
+  },
+  "Solitary Communications": {
+    "dtmf_ivr": {
+      "meta_data": {
+        "description": "Trigger DTMF IVR",
+        "name": "DTMF IVR"
+      },
+      "read": true,
+      "write": true
+    },
+    "email": {
+      "meta_data": {
+        "description": "Trigger Email",
+        "name": "Email"
+      },
+      "read": true,
+      "write": true
+    },
+    "obd_ivr": {
+      "meta_data": {
+        "description": "Trigger OBD IVR",
+        "name": "OBD IVR"
+      },
+      "read": true,
+      "write": true
+    },
+    "rcs": {
+      "meta_data": {
+        "description": "Trigger RCS",
+        "name": "RCS"
+      },
+      "read": true,
+      "write": true
+    },
+    "sms": {
+      "meta_data": {
+        "description": "Trigger SMS",
+        "name": "SMS"
+      },
+      "read": true,
+      "write": true
+    },
+    "template_management": {
+      "meta_data": {
+        "description": "Digital Channel Templates",
+        "name": "Digital Channel Templates"
+      },
+      "read": true,
+      "write": true
+    },
+    "whatsapp": {
+      "meta_data": {
+        "description": "Trigger Whatsapp Bot",
+        "name": "Whatsapp"
+      },
+      "read": true,
+      "write": true
+    },
+    "whatsapp_bot": {
+      "meta_data": {
+        "description": "Trigger Whatsapp Bot",
+        "name": "Whatsapp Bot"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "StarTrack": {
+    "Cohort": {
+      "meta_data": {
+        "description": "Section to form the group of users for Performance Plan",
+        "name": "Cohort Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "Incentive": {
+      "meta_data": {
+        "description": "Section to create a plan to measure incentives of the users",
+        "name": "Incentive Plan Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "Kpi-Kra": {
+      "meta_data": {
+        "description": "Section to form KPIs for Performance Plan",
+        "name": "KRA/KPI Management"
+      },
+      "read": true,
+      "write": true
+    },
+    "Manage_performance_data": {
+      "meta_data": {
+        "description": " Upload data for the variables created outside CG system",
+        "name": "Data Upload for External Variable"
+      },
+      "read": true,
+      "write": true
+    },
+    "Manage_performance_variable": {
+      "meta_data": {
+        "description": "Create variables outside CG system to form KPIs",
+        "name": "External Variable Creation"
+      },
+      "read": true,
+      "write": true
+    },
+    "Plan": {
+      "meta_data": {
+        "description": "Section to create plans to assess the performance of users",
+        "name": "Performance Plan Management"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "User Management Module": {
+    "configure_sso": {
+      "levels": true,
+      "meta_data": {
+        "description": "This permission will give you access to configure different  types of SSO",
+        "name": "SSO Configuration"
+      },
+      "read": true,
+      "write": true
+    },
+    "profiles": {
+      "levels": true,
+      "meta_data": {
+        "description": "Ability to create and edit permission groups for all users in the user management section of settings",
+        "name": "Permission Group Management"
+      },
+      "write": true
+    },
+    "roles": {
+      "levels": true,
+      "meta_data": {
+        "description": "Ability to create, edit and modify hierarchy of roles in the user management section of settings",
+        "name": "Roles Management"
+      },
+      "write": true
+    },
+    "settings_company_details": {
+      "levels": true,
+      "meta_data": {
+        "description": "This permission will give access to user to edit company details from the settings page",
+        "name": "Edit Company Details"
+      },
+      "write": true
+    },
+    "settings_connection_configuration": {
+      "levels": true,
+      "meta_data": {
+        "description": "Permission to view & edit connection configuration",
+        "name": "Connection Configuration (S3 and SFTP)"
+      },
+      "read": true,
+      "write": true
+    },
+    "settings_outgoing_webhook": {
+      "levels": true,
+      "meta_data": {
+        "description": "Ability to configure outgoing webhooks for a company in the settings",
+        "name": "Outgoing Webhook"
+      },
+      "read": true,
+      "write": true
+    },
+    "settings_user_variables": {
+      "levels": true,
+      "meta_data": {
+        "description": "Ability to configure additional variables of users in a company",
+        "name": "User Variables"
+      },
+      "write": true
+    },
+    "single_factor_authentication": {
+      "levels": true,
+      "meta_data": {
+        "description": "This permission allows user to access platform without OTP authentication",
+        "name": "Single Factor Authentication"
+      },
+      "read": true,
+      "required_in_headers": true
+    },
+    "territory_management": {
+      "levels": true,
+      "meta_data": {
+        "description": "This permission allows the user to configure territory tree as well as manage individual territories defined in a given company",
+        "name": "Territory Management"
+      },
+      "read": true,
+      "required_in_headers": true,
+      "write": true
+    },
+    "user_device_validation": {
+      "levels": true,
+      "meta_data": {
+        "description": "Permission that makes the validation of device id required",
+        "name": "User Device Validation"
+      },
+      "write": true
+    },
+    "users": {
+      "levels": true,
+      "meta_data": {
+        "description": "Ability to create, edit and delete in the user management section of settings",
+        "name": "User Management"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "WhatsApp ChatR": {
+    "two_way_communication_permission": {
+      "meta_data": {
+        "description": "Two Way WhatsApp Communication",
+        "name": "WhatsApp ChatR"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "Workflow Management": {
+    "manual_workflow": {
+      "meta_data": {
+        "description": "Provides access to trigger manual workflow",
+        "name": "Manual Workflow"
+      },
+      "read": true,
+      "write": true
+    },
+    "reports_and_dashboard": {
+      "meta_data": {
+        "description": "Provides access reports & dashboard",
+        "name": "Reports & Dashboard"
+      },
+      "read": true
+    },
+    "workflow": {
+      "meta_data": {
+        "description": "Provides access to workflow.",
+        "name": "Workflow"
+      },
+      "read": true,
+      "write": true
+    }
+  }
+}
     }
   }
 }

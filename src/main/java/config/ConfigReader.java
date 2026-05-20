@@ -14,11 +14,7 @@ public class ConfigReader {
     private static final String CRYPTO_PROPERTIES_FILE = "secrets/crypto.properties";
     private static final String ENVIRONMENT_KEY = "environment";
 
-    /**
-     * Merged properties view: {@code global.properties} loaded first (env-agnostic), then the
-     * env-specific file ({@code <env>.properties}) overlaid on top so any key duplicated in
-     * the env file wins. Crypto values stay in their own properties (kept off classpath).
-     */
+    
     private final Properties properties = new Properties();
     private final Properties cryptoProperties = new Properties();
 
@@ -63,12 +59,7 @@ public class ConfigReader {
         }
     }
 
-    /**
-     * Reads {@code environment} from {@code global.properties} (with optional
-     * {@code -Denvironment=...} JVM override) and merges {@code <env>.properties} on top so
-     * env-specific keys (base URL, emails, passwords, api key company id, …) live in their
-     * own file. Missing env file is fatal — the framework cannot run without one.
-     */
+    
     private void loadEnvironmentProperties() {
         String envOverride = System.getProperty(ENVIRONMENT_KEY);
         String envName = (envOverride != null && !envOverride.isBlank())
@@ -251,16 +242,17 @@ public class ConfigReader {
         return getProperty("company.id", "");
     }
 
+    public String getApiKeyGlobalCompanyId() {
+        Environment env = getEnvironment();
+        return getProperty(env.getValue() + ".api.key.global.company.id", "");
+    }
+
+    public long getMaxResponseTimeMs() {
+        return Long.parseLong(getProperty("api.max.response.time.ms", "5000"));
+    }
+
     public String getAllocationMonth() {
         return getProperty("allocation.month", "");
-    }
-
-    public String getReplacePreviousData() {
-        return getProperty("replace.previous.data", "false");
-    }
-
-    public String getReplaceGivenData() {
-        return getProperty("replace.given.data", "false");
     }
 
     public boolean isUniqueLoanIdPerScenarioEnabled() {
@@ -287,11 +279,7 @@ public class ConfigReader {
         return Integer.parseInt(getProperty("parallel.thread.count", "2"));
     }
 
-    /**
-     * Number of distinct user accounts for parallel threads (slot 0 .. poolSize-1).
-     * Defaults to {@link #getParallelThreadCount()} so it stays in sync with testng thread-count.
-     * Override with {@code -Dparallel.user.pool.size=N}.
-     */
+    
     public int getParallelUserPoolSize() {
         String override = System.getProperty("parallel.user.pool.size");
         if (override != null && !override.isBlank()) {

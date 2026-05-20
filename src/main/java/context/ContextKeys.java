@@ -1,8 +1,6 @@
 package context;
 
-/**
- * Placeholder and runtime context key constants used across scenario data resolution.
- */
+
 public final class ContextKeys {
 
     public static final String AUTH_TOKEN = "{AUTH_TOKEN}";

@@ -2,9 +2,7 @@ package helpers;
 
 import utils.JsonUtils;
 
-/**
- * JSON read/update facade — delegates to {@link JsonUtils} for a single implementation.
- */
+
 public final class JsonHelper {
 
     private JsonHelper() {

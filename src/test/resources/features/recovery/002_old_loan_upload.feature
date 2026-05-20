@@ -8,6 +8,9 @@ Feature: Loan Recovery Old Loan Upload API
       | role                | admin |
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN} |
+    And I set the query parameters:
+      | replace_previous_data | false |
+      | replace_given_data    | false |
 
   @smoke @positive
   Scenario: Create loan recovery record with valid data

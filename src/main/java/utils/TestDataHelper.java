@@ -68,8 +68,8 @@ public class TestDataHelper {
         result = result.replace(ContextKeys.EMAIL, generateRandomEmail());
         result = result.replace(ContextKeys.TIMESTAMP, getCurrentTimestamp());
 
-        // Each {RANDOM_NAME} occurrence resolves to a fresh full name so co-applicants,
-        // references, guarantors etc. get distinct values within the same payload.
+        
+        
         while (result.contains(ContextKeys.RANDOM_NAME)) {
             String name = RandomDataHelper.randomName();
             result = result.replaceFirst(

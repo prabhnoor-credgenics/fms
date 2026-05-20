@@ -38,7 +38,7 @@ public class CompanyCreationPayloadBuilder {
         String trademark = RandomDataHelper.uniqueCompanyName();
         String digits = digitsSuffix(companyName);
         String companyEmail = "TestCompany" + digits + "@yopmail.com";
-        String adminEmail = "TestAdmin" + digits + "@yopmail.com";
+        String adminEmail = RandomDataHelper.generateRandomEmail();
         String authorizedRepresentativeName = RandomDataHelper.randomName();
         String adminFirstName = RandomDataHelper.randomFirstName();
         String adminLastName = RandomDataHelper.randomLastName();
@@ -56,18 +56,19 @@ public class CompanyCreationPayloadBuilder {
         testContext.setTenantType(TENANT_TYPE);
 
         logger.info(
-                "Prepared company creation test data: trademark={}, companyName={}, companyEmail={}, "
+                "Prepared company creation test data: trademark={}, companyName={}, companyEmail={}, adminEmail={}, "
                         + "authorizedRepresentativeName={}, adminFirstName={}, adminLastName={}",
                 trademark,
                 companyName,
                 companyEmail,
+                adminEmail,
                 authorizedRepresentativeName,
                 adminFirstName,
                 adminLastName
         );
     }
 
-    /** Extracts the trailing digits from a name like {@code "Company123456"} → {@code "123456"}. */
+    
     private static String digitsSuffix(String name) {
         if (name == null) {
             return "";

@@ -21,7 +21,7 @@
       ],
       "properties": {
         "is_data_purging_enabled": {
-          "type": "boolean"
+          "type": ["boolean", "null"]
         },
         "enable_auto_calculation": {
           "type": "boolean"
@@ -51,13 +51,13 @@
           }
         },
         "default_portfolio_month": {
-          "type": "string"
+          "type": ["string", "null"]
         },
         "payment_allocation_month": {
           "type": "string"
         },
         "is_amount_bifurcation_enabled": {
-          "type": "boolean"
+          "type": ["boolean", "null"]
         },
         "amount_bifurcation_variables": {
           "type": "array"

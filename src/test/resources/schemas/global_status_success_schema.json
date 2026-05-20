@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "data",
+    "message",
+    "success",
+    "message_template",
+    "message_placeholder"
+  ],
+  "properties": {
+    "data": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "global_status_id",
+          "company_id",
+          "global_status_name",
+          "global_status_key",
+          "active",
+          "is_default",
+          "is_deleted",
+          "priority"
+        ],
+        "properties": {
+          "global_status_id": {
+            "type": "integer"
+          },
+          "company_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "global_status_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "global_status_key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "is_default": {
+            "type": "boolean"
+          },
+          "is_deleted": {
+            "type": "boolean"
+          },
+          "priority": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "success": {
+      "type": "boolean"
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}
