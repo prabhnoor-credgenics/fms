@@ -23,6 +23,7 @@ public final class SchemaHelper {
         DEFAULT_MAPPINGS.put("/recovery/global-status", "schemas/global_status_success_schema.json");
         DEFAULT_MAPPINGS.put("/recovery/variables", "schemas/recovery_variables_success_schema.json");
         DEFAULT_MAPPINGS.put("/recovery/loan-stage/config", "schemas/loan_stage_config_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/exports", "schemas/recovery_exports_success_schema.json");
 
         
         

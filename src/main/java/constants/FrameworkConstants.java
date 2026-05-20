@@ -44,6 +44,7 @@ public class FrameworkConstants {
     public static final String ENDPOINT_GLOBAL_STATUS = "/recovery/global-status";
     public static final String ENDPOINT_RECOVERY_VARIABLES = "/recovery/variables";
     public static final String ENDPOINT_LOAN_STAGE_CONFIG = "/recovery/loan-stage/config";
+    public static final String ENDPOINT_RECOVERY_EXPORTS = "/recovery/exports";
 
     public static final String SCHEMA_GLOBAL_STATUS_SUCCESS = "schemas/global_status_success_schema.json";
     public static final String SCHEMA_GLOBAL_STATUS_ERROR = "schemas/global_status_error_schema.json";
@@ -51,6 +52,8 @@ public class FrameworkConstants {
     public static final String SCHEMA_RECOVERY_VARIABLES_ERROR = "schemas/recovery_variables_error_schema.json";
     public static final String SCHEMA_LOAN_STAGE_CONFIG_SUCCESS = "schemas/loan_stage_config_success_schema.json";
     public static final String SCHEMA_LOAN_STAGE_CONFIG_ERROR = "schemas/loan_stage_config_error_schema.json";
+    public static final String SCHEMA_RECOVERY_EXPORTS_SUCCESS = "schemas/recovery_exports_success_schema.json";
+    public static final String SCHEMA_RECOVERY_EXPORTS_ERROR = "schemas/recovery_exports_error_schema.json";
 
     
     public static final String COMPANY_STEP1_TEMPLATE = "test-data/company_creation_step1.json";
