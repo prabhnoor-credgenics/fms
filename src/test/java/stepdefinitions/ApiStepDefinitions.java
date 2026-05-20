@@ -17,13 +17,18 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.http.Header;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
+
+import utils.JsonUtils;
 import utils.ResponseValidator;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -178,17 +183,249 @@ public class ApiStepDefinitions {
 
     @When("I send a {string} request to {string}")
     public void i_send_a_request_to(String httpMethod, String endpoint) {
+
         HttpMethod method = HttpMethod.valueOf(httpMethod.toUpperCase());
-        rebuildRequestIfHeadersRemoved();
-        applyRefererHeader(endpoint);
+
+        if (!headersToRemove.isEmpty()) {
+
+            RequestSpecification baseSpec;
+
+            if (headersToRemove.contains("authenticationtoken")
+                    || headersToRemove.contains("authorization")) {
+
+                baseSpec = io.restassured.RestAssured.given()
+                        .baseUri(configReader.getBaseUrl())
+                        .contentType(configReader.getDefaultContentType())
+                        .accept(configReader.getDefaultAcceptType());
+
+            } else {
+                baseSpec = restAssuredBase.getRequestSpec();
+            }
+
+            request = baseSpec;
+
+            for (Map.Entry<String, String> pathParam : storedPathParams.entrySet()) {
+                request.pathParam(pathParam.getKey(), pathParam.getValue());
+            }
+
+           
+            for (Map.Entry<String, String> queryParam : storedQueryParams.entrySet()) {
+                request.queryParam(queryParam.getKey(), queryParam.getValue());
+            }
+
+         
+            if (requestBody != null && !requestBody.isEmpty()) {
+                request.body(requestBody);
+            }
+
+            logger.info("Rebuilt request specification excluding headers: {}", headersToRemove);
+            headersToRemove.clear();
+        }
+
+        String baseUri = configReader.getBaseUrl();
+        String resolvedEndpoint = endpoint;
+
+        try {
+            String loanId = scenarioTestDataResolver.resolveLoanId();
+            resolvedEndpoint = resolvedEndpoint
+                    .replace("{loanId}", loanId)
+                    .replace("{loan_id}", loanId);
+        } catch (IllegalStateException ignored) {
+           
+        }
+
+        String fullUrl = baseUri + resolvedEndpoint;
+
+        request.header("Referer", fullUrl);
+
+        logger.info("Set Referer header to: {}", fullUrl);
         logger.info("Sending {} request to endpoint: {}", method, endpoint);
-        response = executeHttp(method, endpoint);
+
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+
+        LocalDateTime requestTime = LocalDateTime.now();
+        long startTime = System.currentTimeMillis();
+
+        StringBuilder apiLogs = new StringBuilder();
+
+        // REQUEST LOGGING
+        apiLogs.append("========== REQUEST ==========\n");
+
+        apiLogs.append("REQUEST TIME: ")
+                .append(requestTime.format(formatter))
+                .append("\n");
+
+        apiLogs.append("METHOD: ")
+                .append(method)
+                .append("\n");
+
+        apiLogs.append("URL: ")
+                .append(fullUrl)
+                .append("\n\n");
+
+        apiLogs.append("PATH PARAMETERS:\n");
+
+        if (storedPathParams.isEmpty()) {
+            apiLogs.append("None\n");
+        } else {
+            for (Map.Entry<String, String> entry : storedPathParams.entrySet()) {
+                apiLogs.append(entry.getKey())
+                        .append(": ")
+                        .append(entry.getValue())
+                        .append("\n");
+            }
+        }
+
+        apiLogs.append("\nQUERY PARAMETERS:\n");
+
+        if (storedQueryParams.isEmpty()) {
+            apiLogs.append("None\n");
+        } else {
+            for (Map.Entry<String, String> entry : storedQueryParams.entrySet()) {
+                apiLogs.append(entry.getKey())
+                        .append(": ")
+                        .append(entry.getValue())
+                        .append("\n");
+            }
+        }
+
+        apiLogs.append("\nHEADERS:\n");
+        apiLogs.append("Referer: ")
+                .append(fullUrl)
+                .append("\n");
+
+        if (requestBody != null && !requestBody.isEmpty()) {
+            apiLogs.append("\nREQUEST BODY:\n");
+            apiLogs.append(requestBody).append("\n");
+        }
+
+        // EXECUTE REQUEST
+        switch (method) {
+
+            case GET:
+                response = request.get(endpoint);
+                break;
+
+            case POST:
+                response = request.post(endpoint);
+                break;
+
+            case PUT:
+                response = request.put(endpoint);
+                break;
+
+            case PATCH:
+                response = request.patch(endpoint);
+                break;
+
+            case DELETE:
+                response = request.delete(endpoint);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported HTTP method: " + method);
+        }
+
+        LocalDateTime responseTime = LocalDateTime.now();
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+
         logger.info("Response received with status code: {}", response.getStatusCode());
-        SchemaHelper.autoValidateSuccessSchema(endpoint, response.getStatusCode(), response);
+
+        // RESPONSE LOGGING
+        apiLogs.append("\n========== RESPONSE ==========\n");
+
+        apiLogs.append("RESPONSE TIME: ")
+                .append(responseTime.format(formatter))
+                .append("\n");
+
+        apiLogs.append("DURATION: ")
+                .append(duration)
+                .append(" ms\n");
+
+        apiLogs.append("STATUS CODE: ")
+                .append(response.getStatusCode())
+                .append("\n");
+
+        apiLogs.append("\nRESPONSE HEADERS:\n");
+
+        for (Header header : response.getHeaders()) {
+            apiLogs.append(header.getName())
+                    .append(": ")
+                    .append(header.getValue())
+                    .append("\n");
+        }
+
+        apiLogs.append("\nRESPONSE BODY:\n");
+        apiLogs.append(response.getBody().asPrettyString());
+
+      
+        testContext.setApiLogs(apiLogs.toString());
+
+        
+        autoValidateResponseSchema(endpoint, response.getStatusCode());
+
         testContext.setResponse(response);
-        LoggingHelper.logResponseDetails(response);
+
+        logResponseDetails(response);
     }
 
+    
+        private void autoValidateResponseSchema(String endpoint, int statusCode) {
+        String schemaPath = null;
+        boolean isSuccess = statusCode >= 200 && statusCode < 300;
+
+        if (endpoint != null && endpoint.contains("/recovery/v1/loan")) {
+            if (isSuccess) {
+                schemaPath = "schemas/loan_recovery_success_schema.json";
+            }
+            
+        } else if (endpoint != null && endpoint.contains("/recovery/company")) {
+            if (isSuccess) {
+                schemaPath = "schemas/recovery_company_success_schema.json";
+            }
+        }
+
+        if (schemaPath != null) {
+            response.then().assertThat().body(matchesJsonSchemaInClasspath(schemaPath));
+            logger.info("Auto schema validation passed for endpoint '{}' using '{}'", endpoint, schemaPath);
+        } else {
+            logger.info("No auto schema mapping configured for endpoint '{}'", endpoint);
+        }
+    }
+
+   
+    private void logResponseDetails(Response response) {
+        logger.info("=== API Response Details ===");
+        logger.info("Status Code: {}", response.getStatusCode());
+        logger.info("Status Line: {}", response.getStatusLine());
+
+       
+        logger.info("Response Headers:");
+        response.getHeaders().forEach(header ->
+            logger.info("  {}: {}", header.getName(), header.getValue())
+        );
+
+        String responseBody = response.getBody().asString();
+        if (responseBody != null && !responseBody.isEmpty()) {
+            logger.info("Response Body:");
+        
+            if (response.getContentType() != null && response.getContentType().contains("json")) {
+                try {
+                    String prettyJson = JsonUtils.prettyPrint(responseBody);
+                    logger.info(prettyJson);
+                } catch (Exception e) {
+                    logger.info(responseBody);
+                }
+            } else {
+                logger.info(responseBody);
+            }
+        } else {
+            logger.info("Response Body: (empty)");
+        }
+        logger.info("=== End Response Details ===");
+    }
     @Then("the validation error should contain")
     public void the_validation_error_should_contain(DataTable table) {
         SoftAssert softAssert = new SoftAssert();
