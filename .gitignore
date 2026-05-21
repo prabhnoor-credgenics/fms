@@ -59,9 +59,5 @@ target/*
 .idea/
 
 loggings/
-<<<<<<< Updated upstream
 README.md
-=======
-
 /target/
->>>>>>> Stashed changes
