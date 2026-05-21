@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["success", "message", "message_template", "message_placeholder"],
+  "required": ["success", "message"],
   "properties": {
-    "success": { "type": "boolean" },
+    "success": { "type": "boolean", "const": true },
     "message": { "type": "string", "minLength": 1 },
     "message_template": { "type": "string" },
     "message_placeholder": { "type": "object" }

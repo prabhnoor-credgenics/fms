@@ -6,7 +6,10 @@ import org.apache.logging.log4j.Logger;
 import utils.JsonUtils;
 import utils.LoggingContext;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public final class LoggingHelper {
@@ -24,16 +27,101 @@ public final class LoggingHelper {
             Map<String, String> queryParams,
             String body
     ) {
+        logRequestDetails(method, null, endpoint, headers, queryParams, body);
+    }
+
+    public static void logRequestDetails(
+            String method,
+            String baseUrl,
+            String endpoint,
+            Map<String, String> headers,
+            Map<String, String> queryParams,
+            String body
+    ) {
+        logRequestDetails(method, baseUrl, endpoint, headers, queryParams, body, null);
+    }
+
+    public static void logRequestDetails(
+            String method,
+            String baseUrl,
+            String endpoint,
+            Map<String, String> headers,
+            Map<String, String> queryParams,
+            String body,
+            String curlBodyOverride
+    ) {
+        String curlBody = curlBodyOverride != null ? curlBodyOverride : body;
+        String curl = buildCurlCommand(method, baseUrl, endpoint, headers, queryParams, curlBody);
+
         console("");
         console("STEP: " + stepLabel());
         console("--- REQUEST ---");
-        console("  " + method + " " + endpoint);
+        console("  " + method + " " + joinUrl(baseUrl, endpoint));
         if (queryParams != null && !queryParams.isEmpty()) {
             queryParams.forEach((name, value) -> console("  Query: " + name + " = " + value));
         }
+        if (headers != null && !headers.isEmpty()) {
+            headers.forEach((name, value) -> console("  Header: " + name + " = " + value));
+        }
         console("  Body:");
         consoleBody(body);
-        fileLog("REQUEST {} {} | step={}", method, endpoint, stepLabel());
+        console("  cURL:");
+        for (String line : curl.split("\n", -1)) {
+            console("    " + line);
+        }
+        fileLog("REQUEST {} {} | step={}", method, joinUrl(baseUrl, endpoint), stepLabel());
+        fileLog("REQUEST cURL: {}", curl.replace('\n', ' '));
+    }
+
+    public static String buildCurlCommand(
+            String method,
+            String baseUrl,
+            String endpoint,
+            Map<String, String> headers,
+            Map<String, String> queryParams,
+            String body
+    ) {
+        String httpMethod = method == null ? "GET" : method.toUpperCase();
+        String url = joinUrl(baseUrl, endpoint);
+        if (queryParams != null && !queryParams.isEmpty() && !endpointContainsQuery(url)) {
+            url = url + "?" + encodeQueryParams(queryParams);
+        }
+
+        StringBuilder curl = new StringBuilder("curl --location '")
+                .append(escapeSingleQuotes(url))
+                .append("'");
+
+        if (headers != null) {
+            for (Map.Entry<String, String> header : headers.entrySet()) {
+                if (header.getKey() == null || header.getKey().isBlank()) {
+                    continue;
+                }
+                curl.append(" \\\n  --header '")
+                        .append(escapeSingleQuotes(header.getKey() + ": " + nullToEmpty(header.getValue())))
+                        .append("'");
+            }
+        }
+
+        if (body != null && !body.isBlank() && sendsBody(httpMethod)) {
+            curl.append(" \\\n  --data '").append(escapeSingleQuotes(body)).append("'");
+        }
+
+        if (!"GET".equals(httpMethod)) {
+            curl.append(" \\\n  --request ").append(httpMethod);
+        }
+
+        return curl.toString();
+    }
+
+    public static String resolveEndpointWithPathParams(String endpoint, Map<String, String> pathParams) {
+        if (endpoint == null || pathParams == null || pathParams.isEmpty()) {
+            return endpoint;
+        }
+        String resolved = endpoint;
+        for (Map.Entry<String, String> param : pathParams.entrySet()) {
+            resolved = resolved.replace("{" + param.getKey() + "}", param.getValue());
+        }
+        return resolved;
     }
 
     public static void logResponseDetails(Response response) {
@@ -52,13 +140,14 @@ public final class LoggingHelper {
 
     public static void logApiExchange(
             String method,
+            String baseUrl,
             String endpoint,
             Map<String, String> headers,
             Map<String, String> queryParams,
             String requestBody,
             Response response
     ) {
-        logRequestDetails(method, endpoint, headers, queryParams, requestBody);
+        logRequestDetails(method, baseUrl, endpoint, headers, queryParams, requestBody);
         logResponseDetails(response);
     }
 
@@ -131,5 +220,43 @@ public final class LoggingHelper {
 
     private static void fileLog(String pattern, Object... args) {
         FILE_LOGGER.info(pattern, args);
+    }
+
+    private static String joinUrl(String baseUrl, String endpoint) {
+        if (endpoint == null) {
+            return "";
+        }
+        if (baseUrl == null || baseUrl.isBlank()) {
+            return endpoint;
+        }
+        String base = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
+        String path = endpoint.startsWith("/") ? endpoint : "/" + endpoint;
+        return base + path;
+    }
+
+    private static boolean endpointContainsQuery(String url) {
+        return url != null && url.contains("?");
+    }
+
+    private static String encodeQueryParams(Map<String, String> queryParams) {
+        return queryParams.entrySet().stream()
+                .map(entry -> URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8)
+                        + "="
+                        + URLEncoder.encode(nullToEmpty(entry.getValue()), StandardCharsets.UTF_8))
+                .collect(Collectors.joining("&"));
+    }
+
+    private static boolean sendsBody(String httpMethod) {
+        return "POST".equals(httpMethod)
+                || "PUT".equals(httpMethod)
+                || "PATCH".equals(httpMethod);
+    }
+
+    private static String escapeSingleQuotes(String value) {
+        return nullToEmpty(value).replace("'", "'\\''");
+    }
+
+    private static String nullToEmpty(String value) {
+        return value == null ? "" : value;
     }
 }

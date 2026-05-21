@@ -75,7 +75,14 @@ public class CompanyCreationService {
         requireCompanyId();
         Map<String, String> queryParams = new LinkedHashMap<>();
         queryParams.put("company_id", testContext.getCompanyId());
-        LoggingHelper.logRequestDetails("GET", ENDPOINT_USER_COMPANY, null, queryParams, null);
+        LoggingHelper.logRequestDetails(
+                "GET",
+                configReader.getBaseUrl(),
+                ENDPOINT_USER_COMPANY,
+                null,
+                queryParams,
+                null
+        );
         Response response = authorizedRequest()
                 .queryParam("company_id", testContext.getCompanyId())
                 .when()
@@ -93,7 +100,14 @@ public class CompanyCreationService {
         Map<String, String> queryParams = new LinkedHashMap<>();
         queryParams.put("company_id", testContext.getCompanyId());
         queryParams.put("bifurcation_prefix", String.valueOf(bifurcationPrefix));
-        LoggingHelper.logRequestDetails("GET", ENDPOINT_RECOVERY_COMPANY, null, queryParams, null);
+        LoggingHelper.logRequestDetails(
+                "GET",
+                configReader.getBaseUrl(),
+                ENDPOINT_RECOVERY_COMPANY,
+                null,
+                queryParams,
+                null
+        );
         Response response = authorizedRequest()
                 .queryParam("company_id", testContext.getCompanyId())
                 .queryParam("bifurcation_prefix", bifurcationPrefix)
@@ -118,7 +132,14 @@ public class CompanyCreationService {
         headers.put("accept", "application/json, text/plain, */*");
         headers.put("origin", uiOrigin());
         headers.put("referer", uiCreateCompanyReferer());
-        LoggingHelper.logRequestDetails("POST", ENDPOINT_USER_COMPANY, headers, null, body);
+        LoggingHelper.logRequestDetails(
+                "POST",
+                configReader.getBaseUrl(),
+                ENDPOINT_USER_COMPANY,
+                headers,
+                null,
+                body
+        );
 
         Response response = authorizedRequest()
                 .header("origin", uiOrigin())

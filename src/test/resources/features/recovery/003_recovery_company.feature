@@ -36,16 +36,16 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario Outline: Step 1 should fail when mandatory field <field_name> is missing
     Given company creation test data is prepared
     When I create company with validation step 1 without mandatory field "<field_name>"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be one of "400"
     And the response should match json schema "schemas/company_creation_error_schema.json"
 
     Examples:
       | field_name                        |
       | company_name                      |
       | trademark                         |
-      | company_email                     |
       | company_type                      |
       | company_code                      |
+      | company_email                     |
       | gst_number                        |
       | country_isd_code                  |
       | calling_dialer_server             |
@@ -60,7 +60,7 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario Outline: Step 3 should fail when mandatory admin field <field_name> is missing
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3 without mandatory admin field "<field_name>"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be one of "400"
     And the response should match json schema "schemas/company_creation_error_schema.json"
 
     Examples:
@@ -71,14 +71,14 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Step 3 should fail when email is missing and mobile is not provided
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3 without email only
-    Then the response status code should be one of "400,422"
+    Then the response status code should be one of "400"
     And the response should match json schema "schemas/company_creation_error_schema.json"
 
   @negative @company-creation-step3 @chief-admin
   Scenario: Step 3 should fail when both email and mobile are missing
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3 without email and mobile
-    Then the response status code should be one of "400,422"
+    Then the response status code should be one of "400"
     And the response should match json schema "schemas/company_creation_error_schema.json"
 
   @positive
@@ -124,7 +124,7 @@ Feature: Recovery Company API and Company Creation Flow
     And I set the request headers:
       | authenticationtoken  | invalid_token_12345 |
     When I send a "GET" request to "/recovery/company"
-    Then the response status code should be one of "400,401,403"
+    Then the response status code should be one of "401"
     And the response should match json schema "schemas/recovery_company_error_schema.json"
 
   @negative
@@ -137,7 +137,7 @@ Feature: Recovery Company API and Company Creation Flow
     And I set the query parameters:
       | bifurcation_prefix  | true |
     When I send a "GET" request to "/recovery/company"
-    Then the response status code should be one of "400,401,403,422"
+    Then the response status code should be one of "403"
     And the response should match json schema "schemas/recovery_company_error_schema.json"
 
   @negative
@@ -151,7 +151,7 @@ Feature: Recovery Company API and Company Creation Flow
       | company_id          | invalid-company-id |
       | bifurcation_prefix  | true               |
     When I send a "GET" request to "/recovery/company"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be one of "401"
     And the response should match json schema "schemas/recovery_company_error_schema.json"
 
   @negative
@@ -165,7 +165,7 @@ Feature: Recovery Company API and Company Creation Flow
       | company_id          | 00000000-0000-0000-0000-000000000000 |
       | bifurcation_prefix  | true                                 |
     When I send a "GET" request to "/recovery/company"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be one of "403"
     And the response should match json schema "schemas/recovery_company_error_schema.json"
 
   @negative

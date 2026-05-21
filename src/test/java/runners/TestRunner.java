@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 
 
 @CucumberOptions(
-        features = "src/test/resources/features/recovery/004_global_status.feature",
+        features = "src/test/resources/features/recovery",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -26,7 +26,7 @@ import io.cucumber.testng.CucumberOptions;
                 "junit:target/cucumber-reports/cucumber.xml",
                 "timeline:target/cucumber-reports/timeline"
         },
-        tags = "@api"
+        tags = "not @loan-recovery"
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 }

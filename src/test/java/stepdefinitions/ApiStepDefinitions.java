@@ -184,9 +184,14 @@ public class ApiStepDefinitions {
         HttpMethod method = HttpMethod.valueOf(httpMethod.toUpperCase());
         rebuildRequestIfHeadersRemoved();
         String referer = applyRefererHeader(endpoint);
+        String resolvedEndpoint = LoggingHelper.resolveEndpointWithPathParams(
+                endpoint,
+                storedPathParams.isEmpty() ? null : storedPathParams
+        );
         LoggingHelper.logRequestDetails(
                 method.name(),
-                endpoint,
+                configReader.getBaseUrl(),
+                resolvedEndpoint,
                 headersForLogging(referer),
                 storedQueryParams.isEmpty() ? null : new LinkedHashMap<>(storedQueryParams),
                 requestBody

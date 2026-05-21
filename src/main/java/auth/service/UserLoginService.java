@@ -63,10 +63,12 @@ public class UserLoginService {
         );
         LoggingHelper.logRequestDetails(
                 "POST",
+                baseUrl,
                 "/user/public/login?source=web",
                 loginHeaders,
                 null,
-                logBody
+                logBody,
+                encryptedPayload
         );
         Response loginResponse = given()
                 .baseUri(baseUrl)
@@ -102,6 +104,7 @@ public class UserLoginService {
         headers.put("referer", baseUrl + "/user/public/verify/user");
         LoggingHelper.logRequestDetails(
                 "GET",
+                baseUrl,
                 "/user/public/verify/user",
                 headers,
                 queryParams,
