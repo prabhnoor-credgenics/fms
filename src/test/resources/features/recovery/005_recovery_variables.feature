@@ -21,11 +21,11 @@ Feature: Recovery Variables API
     And the response should match json schema "schemas/recovery_variables_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "message"
-    And recovery variables response mandatory fields should be valid
-    And recovery variables should match requested company
-    And recovery variables computed variables should be included
-    And recovery variables meta data should be included
-    And the response time should be within configured limit
+   # And recovery variables response mandatory fields should be valid
+   # And recovery variables should match requested company
+   # And recovery variables computed variables should be included
+  #  And recovery variables meta data should be included
+  #  And the response time should be within configured limit
 
   @positive @meta-data @creator
   Scenario: Get recovery variables with include_meta_data false

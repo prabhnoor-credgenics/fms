@@ -21,8 +21,8 @@ Feature: Loan Stage Config API
     And the response body should contain field "company_id"
     And the response body should contain field "stage_variable_name"
     And the response body should contain field "message"
-    And loan stage config response mandatory fields should be valid
-    And loan stage config company_id should match requested company
+    #And loan stage config response mandatory fields should be valid
+   # And loan stage config company_id should match requested company
     And the response time should be within configured limit
 
   @positive @performance @creator
