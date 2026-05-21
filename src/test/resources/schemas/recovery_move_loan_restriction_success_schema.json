@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loan Data Response",
+  "type": "object",
+  "required": [
+    "success",
+    "message",
+    "data",
+    "error",
+    "message_template",
+    "message_placeholder"
+  ],
+  "properties": {
+    "success": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": [
+        "recovery_status",
+        "global_status",
+        "is_move_loan_restriction_enabled"
+      ],
+      "properties": {
+        "recovery_status": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            ["fully recovered"]
+          ]
+        },
+        "global_status": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            ["closed"]
+          ]
+        },
+        "is_move_loan_restriction_enabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "error": {
+      "type": ["object", "string", "null"]
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": ["object", "null"]
+    }
+  },
+  "additionalProperties": false
+}

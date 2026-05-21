@@ -60,3 +60,7 @@ target/*
 
 loggings/
 README.md
+
+!TestReports/.gitkeep
+TestReports/*
+/target/

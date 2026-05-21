@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RecoveryVariablesResponseSchema",
+  "type": "object",
+  "required": [
+    "output",
+    "message",
+    "message_template",
+    "message_placeholder"
+  ],
+  "properties": {
+    "output": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "variable",
+          "variable_type",
+          "is_default",
+          "variable_category",
+          "type",
+          "operators"
+        ],
+        "properties": {
+          "variable": {
+            "type": "string"
+          },
+          "variable_type": {
+            "type": "string"
+          },
+          "is_default": {
+            "type": "boolean"
+          },
+          "variable_category": {
+            "type": "string"
+          },
+          "is_dropdown": {
+            "type": "boolean"
+          },
+          "dropdown_values": {
+            "type": ["array", "null"],
+            "items": {
+              "type": "string"
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": ["str", "int", "float", "bool", "date"]
+          },
+          "operators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "message": {
+      "type": "string",
+      "const": "success"
+    },
+    "message_template": {
+      "type": "string",
+      "const": "success"
+    },
+    "message_placeholder": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
