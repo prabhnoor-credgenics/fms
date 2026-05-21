@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "id",
+    "company_id",
+    "stage_variable_id",
+    "normalize_stage_variable_id",
+    "roll_back_counter",
+    "roll_forward_counter",
+    "stabilize_counter",
+    "normalize_counter",
+    "rollback_reduction_factor",
+    "rollforward_reduction_factor",
+    "stabilize_reduction_factor",
+    "normalize_reduction_factor",
+    "stage_variable_name",
+    "normalize_stage_variable_name",
+    "message",
+    "message_template",
+    "message_placeholder"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "company_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage_variable_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "normalize_stage_variable_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "roll_back_counter": {
+      "type": "integer"
+    },
+    "roll_forward_counter": {
+      "type": "integer"
+    },
+    "stabilize_counter": {
+      "type": "integer"
+    },
+    "normalize_counter": {
+      "type": "integer"
+    },
+    "rollback_reduction_factor": {
+      "type": "number"
+    },
+    "rollforward_reduction_factor": {
+      "type": "number"
+    },
+    "stabilize_reduction_factor": {
+      "type": "number"
+    },
+    "normalize_reduction_factor": {
+      "type": "number"
+    },
+    "stage_variable_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "normalize_stage_variable_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

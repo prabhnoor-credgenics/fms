@@ -63,7 +63,7 @@ public class JsonUtils {
             return prettyJson;
         } catch (Exception e) {
             logger.error("Error pretty printing JSON: {}", e.getMessage(), e);
-            return jsonString; // Return original if formatting fails
+            return jsonString; 
         }
     }
 
@@ -89,7 +89,7 @@ public class JsonUtils {
             for (int i = 0; i < pathParts.length - 1; i++) {
                 String part = pathParts[i];
                 
-                // Handle array notation (e.g., "array[0]")
+                
                 if (part.contains("[") && part.contains("]")) {
                     String arrayName = part.substring(0, part.indexOf('['));
                     int index = Integer.parseInt(part.substring(part.indexOf('[') + 1, part.indexOf(']')));
@@ -100,14 +100,14 @@ public class JsonUtils {
                 
                 if (currentNode == null) {
                     logger.warn("Path '{}' not found in JSON, creating path", jsonPath);
-                    return jsonString; // Return original if path doesn't exist
+                    return jsonString; 
                 }
             }
             
-            // Get the last part of the path
+            
             String lastPart = pathParts[pathParts.length - 1];
             
-            // Handle array notation in last part
+            
             if (lastPart.contains("[") && lastPart.contains("]")) {
                 String arrayName = lastPart.substring(0, lastPart.indexOf('['));
                 int index = Integer.parseInt(lastPart.substring(lastPart.indexOf('[') + 1, lastPart.indexOf(']')));
@@ -117,7 +117,7 @@ public class JsonUtils {
                     ((com.fasterxml.jackson.databind.node.ArrayNode) arrayNode).set(index, valueNode);
                 }
             } else {
-                // Update the field value
+                
                 JsonNode valueNode = convertToJsonNode(newValue);
                 if (currentNode.isObject()) {
                     ((ObjectNode) currentNode).set(lastPart, valueNode);
@@ -133,7 +133,35 @@ public class JsonUtils {
             throw new RuntimeException("Failed to update JSON field: " + jsonPath, e);
         }
     }
-    
+
+    public static String removeJsonField(String jsonString, String jsonPath) {
+        try {
+            JsonNode rootNode = objectMapper.readTree(jsonString);
+            String[] pathParts = jsonPath.split("\\.");
+            JsonNode parent = rootNode;
+            String fieldToRemove = pathParts[pathParts.length - 1];
+
+            for (int i = 0; i < pathParts.length - 1; i++) {
+                parent = parent.get(pathParts[i]);
+                if (parent == null) {
+                    logger.warn("Path '{}' not found in JSON; field not removed", jsonPath);
+                    return jsonString;
+                }
+            }
+
+            if (parent.isObject()) {
+                ((ObjectNode) parent).remove(fieldToRemove);
+            } else {
+                logger.warn("Cannot remove field '{}' — parent is not an object", jsonPath);
+                return jsonString;
+            }
+
+            return objectMapper.writeValueAsString(rootNode);
+        } catch (Exception e) {
+            logger.error("Error removing JSON field '{}': {}", jsonPath, e.getMessage(), e);
+            throw new RuntimeException("Failed to remove JSON field: " + jsonPath, e);
+        }
+    }
 
     private static JsonNode convertToJsonNode(Object value) {
         if (value == null) {
@@ -142,14 +170,14 @@ public class JsonUtils {
         
         if (value instanceof String) {
             String strValue = (String) value;
-            // Try to parse as boolean
+            
             if ("true".equalsIgnoreCase(strValue)) {
                 return objectMapper.getNodeFactory().booleanNode(true);
             }
             if ("false".equalsIgnoreCase(strValue)) {
                 return objectMapper.getNodeFactory().booleanNode(false);
             }
-            // Try to parse as number
+            
             try {
                 if (strValue.contains(".")) {
                     return objectMapper.getNodeFactory().numberNode(Double.parseDouble(strValue));
@@ -157,7 +185,7 @@ public class JsonUtils {
                     return objectMapper.getNodeFactory().numberNode(Long.parseLong(strValue));
                 }
             } catch (NumberFormatException e) {
-                // It's a string
+                
                 return objectMapper.getNodeFactory().textNode(strValue);
             }
         }
@@ -170,7 +198,7 @@ public class JsonUtils {
             return objectMapper.getNodeFactory().booleanNode((Boolean) value);
         }
         
-        // For other types, convert to string first
+        
         return objectMapper.getNodeFactory().textNode(value.toString());
     }
 }

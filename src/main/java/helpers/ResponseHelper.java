@@ -3,18 +3,14 @@ package helpers;
 import context.TestContext;
 import io.restassured.response.Response;
 
-/**
- * Resolves the active API response from step-local state or {@link TestContext}.
- */
+
 public final class ResponseHelper {
 
     private ResponseHelper() {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    /**
-     * Prefers the step-local response; falls back to {@link TestContext#getResponse()}.
-     */
+    
     public static Response resolve(Response localResponse, TestContext testContext) {
         if (localResponse != null) {
             return localResponse;

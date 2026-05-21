@@ -1,13 +1,6 @@
 package config;
 
-/**
- * Typed property key constants for {@link ConfigReader}.
- *
- * <p>Env-agnostic keys live in {@code global.properties}; env-specific keys
- * (base URL, emails, passwords, api-key company id, …) live in
- * {@code <env>.properties} (loaded by {@code ConfigReader} based on the
- * {@code environment} key in {@code global.properties}).
- */
+
 public final class ConfigKeys {
 
     public static final String ENVIRONMENT = "environment";

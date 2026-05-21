@@ -9,13 +9,7 @@ import java.util.Map;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-/**
- * Endpoint → success-response JSON schema mapping for automatic contract checks on 2xx responses.
- *
- * <p>Add new endpoints by inserting a {@link #register(String, String)} call (or modifying
- * {@link #DEFAULT_MAPPINGS}) — keeps the schema registry in one place instead of scattered
- * {@code if}/{@code else} chains in step definitions.
- */
+
 public final class SchemaHelper {
 
     private static final Logger LOGGER = LogManager.getLogger(SchemaHelper.class);
@@ -26,41 +20,41 @@ public final class SchemaHelper {
     static {
         DEFAULT_MAPPINGS.put("/recovery/v1/loan", "schemas/loan_recovery_success_schema.json");
         DEFAULT_MAPPINGS.put("/recovery/company", "schemas/recovery_company_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/global-status", "schemas/global_status_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/variables", "schemas/recovery_variables_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/loan-stage/config", "schemas/loan_stage_config_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/exports", "schemas/recovery_exports_success_schema.json");
 
-        // Request-body contract checks: validate the canonical payload template loaded from
-        // {@code test-data/...} files before the API call. Mutations performed via
-        // {@code I update JSON field ...} happen AFTER this step, so negative scenarios
-        // that intentionally corrupt fields are unaffected.
+        
+        
+        
+        
         REQUEST_BODY_MAPPINGS.put("test-data/loan_recovery_request.json",
                 "schemas/loan_upload_request_schema.json");
+        REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step1.json",
+                "schemas/company_creation_step1_request_schema.json");
+        REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step2.json",
+                "schemas/company_creation_step2_request_schema.json");
+        REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step3.json",
+                "schemas/company_creation_step3_request_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/loan/", "schemas/loan_recovery_success_schema.json");
     }
 
     private SchemaHelper() {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    /**
-     * Adds or overrides an endpoint substring → schema mapping at runtime (useful for tests).
-     */
+    
     public static void register(String endpointSubstring, String schemaClasspath) {
         DEFAULT_MAPPINGS.put(endpointSubstring, schemaClasspath);
     }
 
-    /**
-     * Adds or overrides a request-body source path → schema mapping at runtime.
-     */
+    
     public static void registerRequestSchema(String testDataPathSubstring, String schemaClasspath) {
         REQUEST_BODY_MAPPINGS.put(testDataPathSubstring, schemaClasspath);
     }
 
-    /**
-     * Validates the response against its registered success schema when the status is 2xx and the
-     * endpoint matches a known mapping. No-op when status is non-2xx or no mapping exists.
-     *
-     * @param endpoint   request endpoint (may contain path placeholders)
-     * @param statusCode response status code
-     * @param response   Rest Assured response (must not be null)
-     */
+    
     public static void autoValidateSuccessSchema(String endpoint, int statusCode, Response response) {
         if (response == null) {
             return;
@@ -83,14 +77,7 @@ public final class SchemaHelper {
         LOGGER.info("No auto schema mapping configured for endpoint '{}'", endpoint);
     }
 
-    /**
-     * Validates the JSON request body against the schema registered for the given test-data source
-     * path. No-op when no mapping is configured. Throws a Hamcrest assertion error when the body
-     * does not satisfy the schema, surfacing the offending field paths in the failure message.
-     *
-     * @param testDataPath path used to load the request body (e.g. {@code "test-data/loan_recovery_request.json"})
-     * @param requestBody  resolved request body (placeholders already substituted)
-     */
+    
     public static void autoValidateRequestSchema(String testDataPath, String requestBody) {
         if (testDataPath == null || requestBody == null || requestBody.isEmpty()) {
             return;
@@ -108,5 +95,17 @@ public final class SchemaHelper {
             }
         }
         LOGGER.debug("No request-body schema mapping configured for '{}'", testDataPath);
+    }
+
+    public static void validateRequestBody(String requestBody, String schemaClasspath) {
+        if (requestBody == null || requestBody.isBlank()) {
+            throw new IllegalArgumentException("Request body must not be blank for schema validation");
+        }
+        org.hamcrest.MatcherAssert.assertThat(
+                "Request body failed schema validation against " + schemaClasspath,
+                requestBody,
+                matchesJsonSchemaInClasspath(schemaClasspath)
+        );
+        LOGGER.info("Request body schema validation passed for: {}", schemaClasspath);
     }
 }

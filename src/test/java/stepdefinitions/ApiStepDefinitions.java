@@ -38,11 +38,11 @@ import java.util.Set;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import org.testng.Assert;
 
-/**
- * Core HTTP step definitions — orchestrates request building, execution, and assertions.
- * Business logic is delegated to {@code helpers.*} and {@link ScenarioTestDataResolver}.
- */
+
 public class ApiStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(ApiStepDefinitions.class);
@@ -80,6 +80,7 @@ public class ApiStepDefinitions {
 
     @Given("I set the request headers:")
     public void i_set_the_request_headers(Map<String, String> headers) {
+        ensureRequestPrepared();
         for (Map.Entry<String, String> header : headers.entrySet()) {
             String headerName = header.getKey();
             String headerNameLower = headerName.toLowerCase();
@@ -93,6 +94,10 @@ public class ApiStepDefinitions {
             if ("authenticationtoken".equals(headerNameLower) && ContextKeys.AUTH_TOKEN.equals(value)) {
                 value = testContext.getAuthToken();
                 logger.info("Using authenticationtoken from TestContext");
+            }
+            if ("x-company-id".equals(headerNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
+                value = scenarioTestDataResolver.resolveCompanyId();
+                logger.info("Using x-company-id from resolved company id");
             }
             if (!"Referer".equals(headerName)) {
                 storedHeaders.put(headerName, value);
@@ -108,8 +113,16 @@ public class ApiStepDefinitions {
         logger.info("Marked header '{}' for removal on send", headerName);
     }
 
+    private void ensureRequestPrepared() {
+        if (request == null) {
+            request = restAssuredBase.getRequestSpec();
+            logger.info("Request specification auto-prepared");
+        }
+    }
+
     @Given("I set the request body:")
     public void i_set_the_request_body(String body) {
+        ensureRequestPrepared();
         String processedBody = replacePlaceholdersInBody(body);
         this.requestBody = processedBody;
         request.body(processedBody);
@@ -118,6 +131,7 @@ public class ApiStepDefinitions {
 
     @Given("I set the request body from file {string}")
     public void i_set_the_request_body_from_file(String filePath) {
+        ensureRequestPrepared();
         String jsonBody = FileHelper.readResourceAsString(filePath);
         String processedBody = replacePlaceholdersInBody(jsonBody);
         SchemaHelper.autoValidateRequestSchema(filePath, processedBody);
@@ -128,19 +142,7 @@ public class ApiStepDefinitions {
 
     @Given("I set the query parameters:")
     public void i_set_the_query_parameters(Map<String, String> queryParams) {
-        if (!queryParams.containsKey("replace_previous_data")) {
-            String replacePreviousData = configReader.getReplacePreviousData();
-            storedQueryParams.put("replace_previous_data", replacePreviousData);
-            request.queryParam("replace_previous_data", replacePreviousData);
-            logger.info("Added default query parameter: replace_previous_data = {}", replacePreviousData);
-        }
-        if (!queryParams.containsKey("replace_given_data")) {
-            String replaceGivenData = configReader.getReplaceGivenData();
-            storedQueryParams.put("replace_given_data", replaceGivenData);
-            request.queryParam("replace_given_data", replaceGivenData);
-            logger.info("Added default query parameter: replace_given_data = {}", replaceGivenData);
-        }
-
+        ensureRequestPrepared();
         for (Map.Entry<String, String> param : queryParams.entrySet()) {
             String paramName = param.getKey();
             String paramNameLower = paramName == null ? "" : paramName.toLowerCase();
@@ -156,6 +158,7 @@ public class ApiStepDefinitions {
 
     @Given("I set the path parameters:")
     public void i_set_the_path_parameters(Map<String, String> pathParams) {
+        ensureRequestPrepared();
         for (Map.Entry<String, String> param : pathParams.entrySet()) {
             String value = param.getValue();
             if (("loanId".equals(param.getKey()) || "loan_id".equals(param.getKey()))
@@ -182,195 +185,163 @@ public class ApiStepDefinitions {
     }
 
     @When("I send a {string} request to {string}")
-    public void i_send_a_request_to(String httpMethod, String endpoint) {
+public void i_send_a_request_to(String httpMethod, String endpoint) {
 
-        HttpMethod method = HttpMethod.valueOf(httpMethod.toUpperCase());
+    HttpMethod method = HttpMethod.valueOf(httpMethod.toUpperCase());
 
-        if (!headersToRemove.isEmpty()) {
+    rebuildRequestIfHeadersRemoved();
 
-            RequestSpecification baseSpec;
+    String referer = applyRefererHeader(endpoint);
 
-            if (headersToRemove.contains("authenticationtoken")
-                    || headersToRemove.contains("authorization")) {
+    String resolvedEndpoint = LoggingHelper.resolveEndpointWithPathParams(
+            endpoint,
+            storedPathParams.isEmpty() ? null : storedPathParams
+    );
 
-                baseSpec = io.restassured.RestAssured.given()
-                        .baseUri(configReader.getBaseUrl())
-                        .contentType(configReader.getDefaultContentType())
-                        .accept(configReader.getDefaultAcceptType());
+    String fullUrl = configReader.getBaseUrl() + resolvedEndpoint;
 
-            } else {
-                baseSpec = restAssuredBase.getRequestSpec();
-            }
+    LoggingHelper.logRequestDetails(
+            method.name(),
+            configReader.getBaseUrl(),
+            resolvedEndpoint,
+            headersForLogging(referer),
+            storedQueryParams.isEmpty() ? null : new LinkedHashMap<>(storedQueryParams),
+            requestBody
+    );
 
-            request = baseSpec;
-
-            for (Map.Entry<String, String> pathParam : storedPathParams.entrySet()) {
-                request.pathParam(pathParam.getKey(), pathParam.getValue());
-            }
-
-           
-            for (Map.Entry<String, String> queryParam : storedQueryParams.entrySet()) {
-                request.queryParam(queryParam.getKey(), queryParam.getValue());
-            }
-
-         
-            if (requestBody != null && !requestBody.isEmpty()) {
-                request.body(requestBody);
-            }
-
-            logger.info("Rebuilt request specification excluding headers: {}", headersToRemove);
-            headersToRemove.clear();
-        }
-
-        String baseUri = configReader.getBaseUrl();
-        String resolvedEndpoint = endpoint;
-
-        try {
-            String loanId = scenarioTestDataResolver.resolveLoanId();
-            resolvedEndpoint = resolvedEndpoint
-                    .replace("{loanId}", loanId)
-                    .replace("{loan_id}", loanId);
-        } catch (IllegalStateException ignored) {
-           
-        }
-
-        String fullUrl = baseUri + resolvedEndpoint;
-
-        request.header("Referer", fullUrl);
-
-        logger.info("Set Referer header to: {}", fullUrl);
-        logger.info("Sending {} request to endpoint: {}", method, endpoint);
-
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-
-        LocalDateTime requestTime = LocalDateTime.now();
-        long startTime = System.currentTimeMillis();
-
-        StringBuilder apiLogs = new StringBuilder();
-
-        // REQUEST LOGGING
-        apiLogs.append("========== REQUEST ==========\n");
-
-        apiLogs.append("REQUEST TIME: ")
-                .append(requestTime.format(formatter))
-                .append("\n");
-
-        apiLogs.append("METHOD: ")
-                .append(method)
-                .append("\n");
-
-        apiLogs.append("URL: ")
-                .append(fullUrl)
-                .append("\n\n");
-
-        apiLogs.append("PATH PARAMETERS:\n");
-
-        if (storedPathParams.isEmpty()) {
-            apiLogs.append("None\n");
-        } else {
-            for (Map.Entry<String, String> entry : storedPathParams.entrySet()) {
-                apiLogs.append(entry.getKey())
-                        .append(": ")
-                        .append(entry.getValue())
-                        .append("\n");
-            }
-        }
-
-        apiLogs.append("\nQUERY PARAMETERS:\n");
-
-        if (storedQueryParams.isEmpty()) {
-            apiLogs.append("None\n");
-        } else {
-            for (Map.Entry<String, String> entry : storedQueryParams.entrySet()) {
-                apiLogs.append(entry.getKey())
-                        .append(": ")
-                        .append(entry.getValue())
-                        .append("\n");
-            }
-        }
-
-        apiLogs.append("\nHEADERS:\n");
-        apiLogs.append("Referer: ")
-                .append(fullUrl)
-                .append("\n");
-
-        if (requestBody != null && !requestBody.isEmpty()) {
-            apiLogs.append("\nREQUEST BODY:\n");
-            apiLogs.append(requestBody).append("\n");
-        }
-
-        // EXECUTE REQUEST
-        switch (method) {
-
-            case GET:
-                response = request.get(endpoint);
-                break;
-
-            case POST:
-                response = request.post(endpoint);
-                break;
-
-            case PUT:
-                response = request.put(endpoint);
-                break;
-
-            case PATCH:
-                response = request.patch(endpoint);
-                break;
-
-            case DELETE:
-                response = request.delete(endpoint);
-                break;
-
-            default:
-                throw new IllegalArgumentException("Unsupported HTTP method: " + method);
-        }
-
-        LocalDateTime responseTime = LocalDateTime.now();
-        long endTime = System.currentTimeMillis();
-        long duration = endTime - startTime;
-
-        logger.info("Response received with status code: {}", response.getStatusCode());
-
-        // RESPONSE LOGGING
-        apiLogs.append("\n========== RESPONSE ==========\n");
-
-        apiLogs.append("RESPONSE TIME: ")
-                .append(responseTime.format(formatter))
-                .append("\n");
-
-        apiLogs.append("DURATION: ")
-                .append(duration)
-                .append(" ms\n");
-
-        apiLogs.append("STATUS CODE: ")
-                .append(response.getStatusCode())
-                .append("\n");
-
-        apiLogs.append("\nRESPONSE HEADERS:\n");
-
-        for (Header header : response.getHeaders()) {
-            apiLogs.append(header.getName())
-                    .append(": ")
-                    .append(header.getValue())
-                    .append("\n");
-        }
-
-        apiLogs.append("\nRESPONSE BODY:\n");
-        apiLogs.append(response.getBody().asPrettyString());
-
-      
-        testContext.setApiLogs(apiLogs.toString());
-
-        
-        autoValidateResponseSchema(endpoint, response.getStatusCode());
-
-        testContext.setResponse(response);
-
-        logResponseDetails(response);
+    if (requestBody != null && !requestBody.isBlank()) {
+        testContext.setLastRequestBody(requestBody);
     }
 
+    logger.info("Sending {} request to endpoint: {}", method, endpoint);
+
+    DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+
+    LocalDateTime requestTime = LocalDateTime.now();
+    long startTime = System.currentTimeMillis();
+
+    StringBuilder apiLogs = new StringBuilder();
+
+    // REQUEST LOGGING
+    apiLogs.append("========== REQUEST ==========\n");
+
+    apiLogs.append("REQUEST TIME: ")
+            .append(requestTime.format(formatter))
+            .append("\n");
+
+    apiLogs.append("METHOD: ")
+            .append(method)
+            .append("\n");
+
+    apiLogs.append("URL: ")
+            .append(fullUrl)
+            .append("\n\n");
+
+    apiLogs.append("PATH PARAMETERS:\n");
+
+    if (storedPathParams.isEmpty()) {
+        apiLogs.append("None\n");
+    } else {
+        for (Map.Entry<String, String> entry : storedPathParams.entrySet()) {
+            apiLogs.append(entry.getKey())
+                    .append(": ")
+                    .append(entry.getValue())
+                    .append("\n");
+        }
+    }
+
+    apiLogs.append("\nQUERY PARAMETERS:\n");
+
+    if (storedQueryParams.isEmpty()) {
+        apiLogs.append("None\n");
+    } else {
+        for (Map.Entry<String, String> entry : storedQueryParams.entrySet()) {
+            apiLogs.append(entry.getKey())
+                    .append(": ")
+                    .append(entry.getValue())
+                    .append("\n");
+        }
+    }
+
+    apiLogs.append("\nHEADERS:\n");
+    apiLogs.append("Referer: ")
+            .append(fullUrl)
+            .append("\n");
+
+    if (requestBody != null && !requestBody.isEmpty()) {
+        apiLogs.append("\nREQUEST BODY:\n");
+        apiLogs.append(requestBody).append("\n");
+    }
+
+    // EXECUTE REQUEST
+    switch (method) {
+
+        case GET:
+            response = request.get(endpoint);
+            break;
+
+        case POST:
+            response = request.post(endpoint);
+            break;
+
+        case PUT:
+            response = request.put(endpoint);
+            break;
+
+        case PATCH:
+            response = request.patch(endpoint);
+            break;
+
+        case DELETE:
+            response = request.delete(endpoint);
+            break;
+
+        default:
+            throw new IllegalArgumentException("Unsupported HTTP method: " + method);
+    }
+
+    LocalDateTime responseTime = LocalDateTime.now();
+    long endTime = System.currentTimeMillis();
+    long duration = endTime - startTime;
+
+    logger.info("Response received with status code: {}", response.getStatusCode());
+
+    // RESPONSE LOGGING
+    apiLogs.append("\n========== RESPONSE ==========\n");
+
+    apiLogs.append("RESPONSE TIME: ")
+            .append(responseTime.format(formatter))
+            .append("\n");
+
+    apiLogs.append("DURATION: ")
+            .append(duration)
+            .append(" ms\n");
+
+    apiLogs.append("STATUS CODE: ")
+            .append(response.getStatusCode())
+            .append("\n");
+
+    apiLogs.append("\nRESPONSE HEADERS:\n");
+
+    for (Header header : response.getHeaders()) {
+        apiLogs.append(header.getName())
+                .append(": ")
+                .append(header.getValue())
+                .append("\n");
+    }
+
+    apiLogs.append("\nRESPONSE BODY:\n");
+    apiLogs.append(response.getBody().asPrettyString());
+
+    testContext.setApiLogs(apiLogs.toString());
+
+    autoValidateResponseSchema(endpoint, response.getStatusCode());
+
+    testContext.setResponse(response);
+
+    logResponseDetails(response);
+}
     
         private void autoValidateResponseSchema(String endpoint, int statusCode) {
         String schemaPath = null;
@@ -449,7 +420,28 @@ public class ApiStepDefinitions {
 
     @Then("the response message should be {string}")
     public void verifyResponseMessage(String expectedMessage) {
-        activeResponse().then().body("message", equalTo(expectedMessage));
+
+        Response response = activeResponse();
+
+        String responseBody = response.getBody().asString();
+
+        // Handle HTML wrapped JSON response
+        if (responseBody.startsWith("<html>")) {
+            responseBody = responseBody
+                    .replace("<html>", "")
+                    .replace("</html>", "")
+                    .replace("<body>", "")
+                    .replace("</body>", "")
+                    .trim();
+        }
+
+        JsonPath jsonPath = new JsonPath(responseBody);
+
+        Assert.assertEquals(
+                jsonPath.getString("message"),
+                expectedMessage,
+                "Response message mismatch"
+        );
     }
 
     @Then("the response status code should be one of {string}")
@@ -480,6 +472,23 @@ public class ApiStepDefinitions {
     @Then("the response body should not be empty")
     public void the_response_body_should_not_be_empty() {
         ResponseValidator.validateResponseBodyNotEmpty(activeResponse());
+    }
+
+    @Then("the response time should be less than {int} milliseconds")
+    public void the_response_time_should_be_less_than_milliseconds(int maxMillis) {
+        Response active = activeResponse();
+        long elapsed = active.time();
+        org.testng.Assert.assertTrue(
+                elapsed < maxMillis,
+                "Response time " + elapsed + "ms exceeded limit of " + maxMillis + "ms"
+        );
+        logger.info("Response time {}ms is within limit {}ms", elapsed, maxMillis);
+    }
+
+    @Then("the response time should be within configured limit")
+    public void the_response_time_should_be_within_configured_limit() {
+        long maxMillis = configReader.getMaxResponseTimeMs();
+        the_response_time_should_be_less_than_milliseconds((int) maxMillis);
     }
 
     @Then("the response should match json schema {string}")
@@ -565,18 +574,33 @@ public class ApiStepDefinitions {
         headersToRemove.clear();
     }
 
-    private void applyRefererHeader(String endpoint) {
+    private String applyRefererHeader(String endpoint) {
         String baseUri = configReader.getBaseUrl();
         String resolvedEndpoint = endpoint;
         try {
             String loanId = scenarioTestDataResolver.resolveLoanId();
             resolvedEndpoint = resolvedEndpoint.replace("{loanId}", loanId).replace("{loan_id}", loanId);
         } catch (IllegalStateException ignored) {
-            // Referer may not need loan id for all endpoints
+
         }
         String fullUrl = baseUri + resolvedEndpoint;
         request.header("Referer", fullUrl);
         logger.info("Set Referer header to: {}", fullUrl);
+        return fullUrl;
+    }
+
+    private Map<String, String> headersForLogging(String referer) {
+        Map<String, String> headers = new LinkedHashMap<>(storedHeaders);
+        if (referer != null && !referer.isBlank()) {
+            headers.put("Referer", referer);
+        }
+        headers.replaceAll((name, value) -> {
+            if ("authenticationtoken".equalsIgnoreCase(name) && value != null && !value.isBlank()) {
+                return LoggingHelper.maskToken(value);
+            }
+            return value;
+        });
+        return headers;
     }
 
     private Response executeHttp(HttpMethod method, String endpoint) {

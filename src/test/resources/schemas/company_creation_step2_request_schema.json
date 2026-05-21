@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["validation_step", "data"],
+  "properties": {
+    "validation_step": {
+      "type": "integer",
+      "enum": [2]
+    },
+    "data": {
+      "type": "object",
+      "required": ["trademark", "permissions"],
+      "properties": {
+        "trademark": { "type": "string", "minLength": 1 },
+        "permissions": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

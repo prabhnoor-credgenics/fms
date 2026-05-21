@@ -7,11 +7,7 @@ import org.hamcrest.Matchers;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * Reusable Hamcrest assertions used by step definitions.
- *
- * <p>Promotes consistent failure messages and keeps step definition classes lean.
- */
+
 public final class AssertionHelper {
 
     private static final Logger LOGGER = LogManager.getLogger(AssertionHelper.class);
@@ -20,12 +16,7 @@ public final class AssertionHelper {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    /**
-     * Asserts the response status code is one of the supplied codes.
-     *
-     * @param response   Rest Assured response
-     * @param csvCodes   comma-separated allowed status codes, e.g. {@code "200,201"}
-     */
+    
     public static void assertStatusCodeOneOf(Response response, String csvCodes) {
         if (response == null) {
             throw new IllegalArgumentException("response must not be null");
@@ -50,9 +41,7 @@ public final class AssertionHelper {
         LOGGER.info("Status code {} is valid (one of: {})", actual, csvCodes);
     }
 
-    /**
-     * Asserts that a JSON path resolves to a non-null value in the response body.
-     */
+    
     public static void assertFieldExists(Response response, String jsonPath) {
         Object value = response.jsonPath().get(jsonPath);
         assertThat("Field " + jsonPath + " should exist", value, Matchers.notNullValue());

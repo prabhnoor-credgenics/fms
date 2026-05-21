@@ -20,11 +20,13 @@ import io.cucumber.testng.CucumberOptions;
                 "validators"
         },
         plugin = {
+
                 "pretty",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
         monochrome = true,
         tags = "@creator1"
+
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 }

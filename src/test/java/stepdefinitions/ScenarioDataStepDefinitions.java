@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import config.ConfigReader;
 import context.ScenarioTestDataResolver;
 import context.TestContext;
 import helpers.RandomDataHelper;
@@ -13,13 +14,16 @@ public class ScenarioDataStepDefinitions {
     private static final Logger logger = LogManager.getLogger(ScenarioDataStepDefinitions.class);
 
     private final TestContext testContext;
+    private final ConfigReader configReader;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
 
     public ScenarioDataStepDefinitions(
             TestContext testContext,
+            ConfigReader configReader,
             ScenarioTestDataResolver scenarioTestDataResolver
     ) {
         this.testContext = testContext;
+        this.configReader = configReader;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
     }
 
@@ -40,8 +44,20 @@ public class ScenarioDataStepDefinitions {
 
     @Given("scenario company id is {string}")
     public void scenario_company_id_is(String companyId) {
+        testContext.setScenarioCompanyId(scenarioTestDataResolver.replaceScenarioPlaceholders(companyId));
+        logger.info("Scenario company id set to: {}", testContext.getScenarioCompanyId());
+    }
+
+    @Given("scenario company id is from configuration")
+    public void scenario_company_id_is_from_configuration() {
+        String companyId = configReader.getApiKeyGlobalCompanyId();
+        if (companyId == null || companyId.isBlank()) {
+            throw new IllegalStateException(
+                    "Global company id not configured. Set {env}.api.key.global.company.id in environment properties."
+            );
+        }
         testContext.setScenarioCompanyId(companyId);
-        logger.info("Scenario company id set to: {}", companyId);
+        logger.info("Scenario company id set from configuration: {}", companyId);
     }
 
     @Given("scenario allocation month is {string}")

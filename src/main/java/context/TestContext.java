@@ -27,6 +27,8 @@ public class TestContext {
     private String tenantType;
 
     private Response response;
+    private Response savedComparisonResponse;
+    private String lastRequestBody;
 
     /** Request/Response logs for Extent failure reporting */
     private String apiLogs;
@@ -48,6 +50,22 @@ public class TestContext {
 
     public void setResponse(Response response) {
         this.response = response;
+    }
+
+    public Response getSavedComparisonResponse() {
+        return savedComparisonResponse;
+    }
+
+    public void setSavedComparisonResponse(Response savedComparisonResponse) {
+        this.savedComparisonResponse = savedComparisonResponse;
+    }
+
+    public String getLastRequestBody() {
+        return lastRequestBody;
+    }
+
+    public void setLastRequestBody(String lastRequestBody) {
+        this.lastRequestBody = lastRequestBody;
     }
 
     public String getAuthToken() {

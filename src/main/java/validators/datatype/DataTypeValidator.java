@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class DataTypeValidator {
     private static final Logger logger = LogManager.getLogger(DataTypeValidator.class);
     
-    // Regex patterns
+    
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
         "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
     );
@@ -38,14 +38,14 @@ public class DataTypeValidator {
             return false;
         }
         
-        // Trim and check length
+        
         String trimmed = value.trim();
         if (trimmed.length() > maxLength) {
             logger.warn("Text validation failed: exceeds max length of {}", maxLength);
             return false;
         }
         
-        // Check if it's a pure number (should be rejected for text fields)
+        
         if (trimmed.matches("^\\d+$")) {
             logger.warn("Text validation failed: numeric-only value not allowed");
             return false;
@@ -71,7 +71,7 @@ public class DataTypeValidator {
         }
         try {
             int intValue = Integer.parseInt(value.trim());
-            return intValue >= 0; // Allow zero and positive
+            return intValue >= 0; 
         } catch (NumberFormatException e) {
             logger.warn("Integer validation failed: {}", e.getMessage());
             return false;
@@ -101,7 +101,7 @@ public class DataTypeValidator {
             if (decimal.compareTo(BigDecimal.ZERO) < 0) {
                 return false;
             }
-            // Check decimal places
+            
             int scale = decimal.scale();
             if (scale > 2) {
                 return false;
@@ -119,13 +119,13 @@ public class DataTypeValidator {
             return false;
         }
         
-        // Reject scientific notation
+        
         if (value.toUpperCase().contains("E")) {
             logger.warn("Amount validation failed: scientific notation not allowed");
             return false;
         }
         
-        // Reject currency symbols
+        
         if (value.contains("$") || value.contains("₹") || value.contains("€") || value.contains("£")) {
             logger.warn("Amount validation failed: currency symbols not allowed");
             return false;
@@ -163,14 +163,14 @@ public class DataTypeValidator {
         }
         String email = value.trim();
         
-        // Check for multiple '@'
+        
         long atCount = email.chars().filter(ch -> ch == '@').count();
         if (atCount != 1) {
             logger.warn("Email validation failed: multiple '@' symbols");
             return false;
         }
         
-        // Check for consecutive dots
+        
         if (email.contains("..")) {
             logger.warn("Email validation failed: consecutive dots");
             return false;
@@ -207,13 +207,13 @@ public class DataTypeValidator {
         }
         String date = value.trim();
         
-        // Must match YYYY-MM-DD pattern
+        
         if (!DATE_PATTERN.matcher(date).matches()) {
             logger.warn("Date validation failed: must be in YYYY-MM-DD format");
             return false;
         }
         
-        // Basic date validation (year, month, day ranges)
+        
         try {
             String[] parts = date.split("-");
             int year = Integer.parseInt(parts[0]);

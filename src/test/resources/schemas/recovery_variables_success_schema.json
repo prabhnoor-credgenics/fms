@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["output", "message", "message_template", "message_placeholder"],
+  "properties": {
+    "output": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/recoveryVariable"
+      }
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "recoveryVariable": {
+      "type": "object",
+      "required": [
+        "variable_id",
+        "variable_path",
+        "variable_name",
+        "variable_type",
+        "data_type",
+        "active",
+        "is_default_variable",
+        "is_allocation_variable",
+        "is_mandatory",
+        "variable_category"
+      ],
+      "properties": {
+        "variable_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variable_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variable_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variable_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "data_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "is_default_variable": {
+          "type": "boolean"
+        },
+        "is_allocation_variable": {
+          "type": "boolean"
+        },
+        "is_mandatory": {
+          "type": "boolean"
+        },
+        "variable_category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sub_variables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recoveryVariable"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

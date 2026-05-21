@@ -4,10 +4,7 @@ import config.ConfigReader;
 import helpers.RandomDataHelper;
 import utils.TestDataHelper;
 
-/**
- * Resolves loan ID, company ID, and allocation month for the current scenario.
- * Scenario-level values override {@code global.properties} / {@code <env>.properties}; unique loan IDs are generated when enabled.
- */
+
 public class ScenarioTestDataResolver {
 
     private final TestContext testContext;
@@ -59,7 +56,14 @@ public class ScenarioTestDataResolver {
         if (fromConfig != null && !fromConfig.isBlank()) {
             return fromConfig;
         }
-        throw new IllegalStateException("Company ID is not initialized for this scenario");
+        String globalCompanyId = configReader.getApiKeyGlobalCompanyId();
+        if (globalCompanyId != null && !globalCompanyId.isBlank()) {
+            return globalCompanyId;
+        }
+        throw new IllegalStateException(
+                "Company ID is not initialized. Use 'Given scenario company id is ...', "
+                        + "set company.id in properties, or configure {env}.api.key.global.company.id"
+        );
     }
 
     public String resolveAllocationMonth() {

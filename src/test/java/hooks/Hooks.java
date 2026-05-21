@@ -11,6 +11,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import helpers.LoggingHelper;
 import utils.DbClient;
 import utils.LoggingContext;
 
@@ -54,9 +55,15 @@ public class Hooks {
         testContext.clearRandomStringCache();
         scenarioTestDataResolver.ensureUniqueLoanIdIfEnabled();
 
-        UserRole role = scenario.getSourceTagNames().contains("@approver")
-                ? UserRole.APPROVER
-                : UserRole.CREATOR;
+        UserRole role;
+
+        if (scenario.getSourceTagNames().contains("@chief-admin")) {
+            role = UserRole.CHIEF_ADMIN;
+        } else if (scenario.getSourceTagNames().contains("@approver")) {
+            role = UserRole.APPROVER;
+        } else {
+            role = UserRole.CREATOR;
+        }
 
         logger.info(
                 "Scenario '{}' | thread '{}' | userSlot {} | role: {}",
@@ -73,7 +80,10 @@ public class Hooks {
     public void tearDown(Scenario scenario) {
 
         try {
+
             if (scenario.isFailed()) {
+
+                LoggingHelper.logScenarioFailure(scenario.getName());
 
                 String apiLogs = testContext.getApiLogs();
 
@@ -100,6 +110,7 @@ public class Hooks {
             );
 
         } finally {
+
             testContext.clearApiLogs();
             LoggingContext.clear();
         }

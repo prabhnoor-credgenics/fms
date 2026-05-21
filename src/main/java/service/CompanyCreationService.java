@@ -9,11 +9,12 @@ import org.apache.logging.log4j.Logger;
 import payload.CompanyCreationPayloadBuilder;
 import helpers.LoggingHelper;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static constants.FrameworkConstants.ENDPOINT_RECOVERY_COMPANY;
 import static constants.FrameworkConstants.ENDPOINT_USER_COMPANY;
-import static io.restassured.RestAssured.given;
 
 
 public class CompanyCreationService {
@@ -41,12 +42,28 @@ public class CompanyCreationService {
         return postCompanyPayload(payloadBuilder.buildStep1Payload(), 1);
     }
 
+    public Response createCompanyStep1WithoutMandatoryField(String fieldName) {
+        return postCompanyPayload(payloadBuilder.buildStep1PayloadWithoutMandatoryField(fieldName), 1);
+    }
+
     public Response createCompanyStep2() {
         return postCompanyPayload(payloadBuilder.buildStep2Payload(), 2);
     }
 
     public Response createCompanyStep3() {
         return postCompanyPayload(payloadBuilder.buildStep3Payload(), 3);
+    }
+
+    public Response createCompanyStep3WithoutAdminField(String adminFieldName) {
+        return postCompanyPayload(payloadBuilder.buildStep3PayloadWithoutAdminField(adminFieldName), 3);
+    }
+
+    public Response createCompanyStep3WithoutEmailOnly() {
+        return postCompanyPayload(payloadBuilder.buildStep3PayloadWithoutEmailOnly(), 3);
+    }
+
+    public Response createCompanyStep3WithoutEmailAndMobile() {
+        return postCompanyPayload(payloadBuilder.buildStep3PayloadWithoutEmailAndMobile(), 3);
     }
 
     public Response createCompanyStep4() {
@@ -56,7 +73,16 @@ public class CompanyCreationService {
 
     public Response getUserCompanyDetails() {
         requireCompanyId();
-        logger.info("Fetching user company details for company_id={}", testContext.getCompanyId());
+        Map<String, String> queryParams = new LinkedHashMap<>();
+        queryParams.put("company_id", testContext.getCompanyId());
+        LoggingHelper.logRequestDetails(
+                "GET",
+                configReader.getBaseUrl(),
+                ENDPOINT_USER_COMPANY,
+                null,
+                queryParams,
+                null
+        );
         Response response = authorizedRequest()
                 .queryParam("company_id", testContext.getCompanyId())
                 .when()
@@ -71,10 +97,16 @@ public class CompanyCreationService {
 
     public Response getRecoveryCompanyDetails(boolean bifurcationPrefix) {
         requireCompanyId();
-        logger.info(
-                "Fetching recovery company details for company_id={}, bifurcation_prefix={}",
-                testContext.getCompanyId(),
-                bifurcationPrefix
+        Map<String, String> queryParams = new LinkedHashMap<>();
+        queryParams.put("company_id", testContext.getCompanyId());
+        queryParams.put("bifurcation_prefix", String.valueOf(bifurcationPrefix));
+        LoggingHelper.logRequestDetails(
+                "GET",
+                configReader.getBaseUrl(),
+                ENDPOINT_RECOVERY_COMPANY,
+                null,
+                queryParams,
+                null
         );
         Response response = authorizedRequest()
                 .queryParam("company_id", testContext.getCompanyId())
@@ -94,8 +126,20 @@ public class CompanyCreationService {
             throw new IllegalArgumentException("Request body must not be blank for step " + step);
         }
         requireAuthToken();
-        logger.info("POST {} validation_step={}", ENDPOINT_USER_COMPANY, step);
-        logger.debug("Request body (step {}): {}", step, body);
+        testContext.setLastRequestBody(body);
+        Map<String, String> headers = new LinkedHashMap<>();
+        headers.put("authenticationtoken", LoggingHelper.maskToken(testContext.getAuthToken()));
+        headers.put("accept", "application/json, text/plain, */*");
+        headers.put("origin", uiOrigin());
+        headers.put("referer", uiCreateCompanyReferer());
+        LoggingHelper.logRequestDetails(
+                "POST",
+                configReader.getBaseUrl(),
+                ENDPOINT_USER_COMPANY,
+                headers,
+                null,
+                body
+        );
 
         Response response = authorizedRequest()
                 .header("origin", uiOrigin())
@@ -156,10 +200,7 @@ public class CompanyCreationService {
         }
         testContext.setResponse(response);
         logger.info("{} completed with status {}", operation, response.getStatusCode());
-        logResponseBody(response);
+        LoggingHelper.logResponseDetails(response);
     }
 
-    private void logResponseBody(Response response) {
-        LoggingHelper.logResponseBody(response);
-    }
 }

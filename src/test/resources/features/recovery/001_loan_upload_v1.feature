@@ -6,6 +6,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
+    And I set the query parameters:
+      | replace_previous_data | false |
+      | replace_given_data    | false |
 
 
   @api-validation @negative @approver
@@ -74,7 +77,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And the validation error should contain
       | detail | Id provided in parameter & payload are different. |
 
-  # (String Datatype)
 
 
   @datatype-validation @text @special-characters @positive @creator
@@ -346,9 +348,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
 
 
-  # ===================================================================
-  # BOOLEAN FIELD VALIDATION
-  # ===================================================================
 
   @datatype-validation @boolean @negative @creator
   Scenario Outline: Boolean field should reject invalid boolean values
@@ -372,9 +371,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | backed_by_security| 1             |
       | backed_by_security| 0              |
 
-  # ===================================================================
-  # INTEGER FIELD VALIDATION
-  # ===================================================================
 
   @datatype-validation @integer @negative @creator
   Scenario Outline: Integer field should reject decimal values
@@ -439,9 +435,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "400,422"
 
-  # ===================================================================
-  # DECIMAL/AMOUNT FIELD VALIDATION
-  # ===================================================================
 
   @datatype-validation @amount @negative @creator
   Scenario Outline: Amount field should reject negative values
@@ -519,9 +512,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "400,422"
 
-  # ===================================================================
-  # MOBILE NUMBER VALIDATION
-  # ===================================================================
 
   @datatype-validation @mobile @negative
   Scenario Outline: Mobile number should reject invalid formats
@@ -544,9 +534,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | applicant_contact_number      | 9988776655         |
       | applicant_contact_number      | +919988776655      |
 
-  # ===================================================================
-  # EMAIL VALIDATION
-  # ===================================================================
 
   @datatype-validation @email @negative
   Scenario Outline: Email should reject invalid email formats
@@ -568,9 +555,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | applicant_email   | user..name@domain.com      |
       | applicant_email   | @domain.com                |
 
-  # ===================================================================
-  # PINCODE VALIDATION
-  # ===================================================================
 
   @datatype-validation @pincode @negative
   Scenario Outline: Pincode should reject invalid formats
@@ -592,9 +576,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | 12345         |
       | ABC123        |
 
-  # ===================================================================
-  # URL/LINK VALIDATION
-  # ===================================================================
 
   @datatype-validation @url @negative
   Scenario: URL should reject values not starting with http:// or https://
@@ -622,9 +603,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "400,422"
 
-  # ===================================================================
-  # DATE VALIDATION
-  # ===================================================================
 
   @datatype-validation @date @negative
   Scenario Outline: Date should reject invalid date formats
@@ -659,9 +637,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "400,422"
 
-  # ===================================================================
-  # POSITIVE VALIDATION - Valid Datatype Values
-  # ===================================================================
 
   @datatype-validation @positive @smoke
   Scenario: API should accept request with all valid datatypes
@@ -822,7 +797,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | co_applicant_address_type                 |
 
 
-#    //hello
   @api @db-validation @loan-recovery @datatype-validation
   Scenario Outline: Persisted loan recovery fields should have correct datatype in DB
     Given I set the query parameters:

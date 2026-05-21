@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "data",
+    "message",
+    "success"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "exports",
+        "total_count"
+      ],
+      "properties": {
+        "exports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "allocation_month",
+              "created",
+              "duration",
+              "export_category",
+              "id",
+              "record_count",
+              "requester",
+              "status"
+            ],
+            "properties": {
+              "allocation_month": {
+                "type": "string",
+                "minLength": 1
+              },
+              "created": {
+                "type": "string",
+                "minLength": 1
+              },
+              "duration": {
+                "type": "string",
+                "minLength": 1
+              },
+              "export_category": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "integer"
+              },
+              "record_count": {
+                "type": "integer"
+              },
+              "requester": {
+                "type": "object",
+                "required": [
+                  "full_name",
+                  "user_id",
+                  "username"
+                ],
+                "properties": {
+                  "full_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "username": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": true
+              },
+              "status": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "total_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": true
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "success": {
+      "type": "boolean"
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

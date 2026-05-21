@@ -3,8 +3,10 @@
   "type": "object",
   "required": ["success", "message", "data"],
   "properties": {
-    "success": { "type": "boolean" },
-    "message": { "type": "string" },
+    "success": { "type": "boolean", "const": true },
+    "message": { "type": "string", "minLength": 1 },
+    "message_template": { "type": "string" },
+    "message_placeholder": { "type": "object" },
     "data": {
       "type": "object",
       "required": ["company_id", "company_admin_result", "setup_statuses_result"],
@@ -16,7 +18,9 @@
           "properties": {
             "profile_id": { "type": "string", "minLength": 1 },
             "user_id": { "type": "string", "minLength": 1 },
-            "calling_user_result": { "type": "string" }
+            "calling_user_result": {
+              "type": ["string", "null"]
+            }
           },
           "additionalProperties": true
         },
@@ -24,7 +28,7 @@
           "type": "object",
           "required": ["success"],
           "properties": {
-            "success": { "type": "boolean" }
+            "success": { "type": "boolean", "const": true }
           },
           "additionalProperties": true
         },

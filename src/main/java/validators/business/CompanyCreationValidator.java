@@ -32,7 +32,7 @@ public class CompanyCreationValidator {
     }
 
     public void validateHttpOk(Response response) {
-        ResponseValidator.validateStatusCode(response, 200);
+        ResponseValidator.validateStatusCode(response, 201);
     }
 
     public void validateSuccessFlag(Response response) {
@@ -110,9 +110,7 @@ public class CompanyCreationValidator {
         );
     }
 
-    /**
-     * Validates GET response fields against values stored during company creation.
-     */
+    
     public void validateCreatedCompanyMatchesContext(Response response) {
         validateHttpOk(response);
 

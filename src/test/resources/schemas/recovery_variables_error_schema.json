@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "success": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object"
+    },
+    "output": {
+      "type": "array"
+    },
+    "error": {
+      "type": ["object", "array", "string", "null"]
+    },
+    "detail": {
+      "type": ["string", "null"]
+    }
+  },
+  "anyOf": [
+    { "required": ["message"] },
+    { "required": ["error"] }
+  ],
+  "additionalProperties": true
+}

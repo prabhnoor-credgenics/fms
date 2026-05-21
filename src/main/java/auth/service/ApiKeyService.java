@@ -3,7 +3,10 @@ package auth.service;
 import config.ConfigReader;
 import context.TestContext;
 import enums.Environment;
+import helpers.LoggingHelper;
 import io.restassured.response.Response;
+
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -21,23 +24,37 @@ public class ApiKeyService {
         String clientId = configReader.getProperty("prod.client.id");
         String clientSecret = configReader.getProperty("prod.client.secret");
         String baseUrl = configReader.getBaseUrl();
+        String requestBody = """
+                {
+                  "client_id":"%s",
+                  "client_secret":"%s",
+                  "token_expiry_duration":86400
+                }
+                """.formatted(clientId, clientSecret);
+        String logBody = requestBody.replace(clientSecret, "***");
+
+        LoggingHelper.logRequestDetails(
+                "POST",
+                baseUrl,
+                "/user/public/access-token",
+                Map.of("Content-Type", "application/json"),
+                null,
+                logBody,
+                requestBody
+        );
 
         Response response = given()
                 .baseUri(baseUrl)
                 .contentType("application/json")
-                .body("""
-                        {
-                          "client_id":"%s",
-                          "client_secret":"%s",
-                          "token_expiry_duration":86400
-                        }
-                        """.formatted(clientId, clientSecret))
+                .body(requestBody)
                 .when()
                 .post("/user/public/access-token")
                 .then()
                 .statusCode(200)
                 .extract()
                 .response();
+
+        LoggingHelper.logResponseDetails(response);
 
         String apiKey = response.jsonPath().getString("data.api_key");
         testContext.setAuthToken(apiKey);

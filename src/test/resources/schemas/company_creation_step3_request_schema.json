@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["validation_step", "data"],
+  "properties": {
+    "validation_step": {
+      "type": "integer",
+      "enum": [3]
+    },
+    "data": {
+      "type": "object",
+      "required": ["trademark", "company_admin_details"],
+      "properties": {
+        "trademark": { "type": "string", "minLength": 1 },
+        "company_admin_details": {
+          "type": "object",
+          "required": ["first_name"],
+          "properties": {
+            "country_isd_code": { "type": "string", "minLength": 1 },
+            "first_name": { "type": "string", "minLength": 1 },
+            "last_name": { "type": "string", "minLength": 1 },
+            "email": { "type": "string", "minLength": 1 },
+            "mobile": { "type": "string", "minLength": 1 }
+          },
+          "anyOf": [
+            { "required": ["email"] },
+            { "required": ["mobile"] }
+          ],
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

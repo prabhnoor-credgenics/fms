@@ -2,9 +2,7 @@ package helpers;
 
 import utils.JsonUtils;
 
-/**
- * JSON read/update facade — delegates to {@link JsonUtils} for a single implementation.
- */
+
 public final class JsonHelper {
 
     private JsonHelper() {
@@ -17,6 +15,10 @@ public final class JsonHelper {
 
     public static String updateField(String json, String jsonPath, Object value) {
         return JsonUtils.updateJsonField(json, jsonPath, value);
+    }
+
+    public static String removeField(String json, String jsonPath) {
+        return JsonUtils.removeJsonField(json, jsonPath);
     }
 
     public static String prettyPrint(String json) {

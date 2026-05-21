@@ -2,6 +2,7 @@ package enums;
 
 public enum UserRole {
     CREATOR,
-    APPROVER
+    APPROVER,
+    CHIEF_ADMIN
 }
 
