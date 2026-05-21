@@ -5,7 +5,9 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Per-scenario state holder. Created once per Cucumber scenario by PicoContainer.
+ */
 public class TestContext {
 
     private String authToken;
@@ -23,16 +25,21 @@ public class TestContext {
     private String clientType;
     private String companySubType;
     private String tenantType;
+
     private Response response;
     private Response savedComparisonResponse;
     private String lastRequestBody;
 
+    /** Request/Response logs for Extent failure reporting */
+    private String apiLogs;
 
+    /** Scenario-specific overrides */
     private String scenarioLoanId;
     private String scenarioCompanyId;
     private String scenarioAllocationMonth;
     private String scenarioName;
 
+    /** Parallel user pool slot */
     private int userSlot;
 
     private final Map<String, String> randomStringCache = new HashMap<>();
@@ -179,6 +186,18 @@ public class TestContext {
 
     public void setTenantType(String tenantType) {
         this.tenantType = tenantType;
+    }
+
+    public String getApiLogs() {
+        return apiLogs;
+    }
+
+    public void setApiLogs(String apiLogs) {
+        this.apiLogs = apiLogs;
+    }
+
+    public void clearApiLogs() {
+        this.apiLogs = null;
     }
 
     public String getScenarioLoanId() {

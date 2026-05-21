@@ -1,7 +1,8 @@
 package hooks;
 
-import auth.allocator.ParallelUserAllocator;
 import auth.manager.AuthManager;
+import auth.allocator.ParallelUserAllocator;
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import context.ScenarioTestDataResolver;
 import context.TestContext;
 import enums.UserRole;
@@ -15,6 +16,7 @@ import utils.DbClient;
 import utils.LoggingContext;
 
 public class Hooks {
+
     private static final Logger logger = LogManager.getLogger(Hooks.class);
 
     private final TestContext testContext;
@@ -39,13 +41,22 @@ public class Hooks {
 
     @Before(order = 0)
     public void setUpScenario(Scenario scenario) {
+
+        testContext.clearApiLogs();
         testContext.setScenarioName(scenario.getName());
+
         parallelUserAllocator.allocateForCurrentThread(testContext);
-        LoggingContext.bind(scenario.getName(), testContext.getUserSlot());
+
+        LoggingContext.bind(
+                scenario.getName(),
+                testContext.getUserSlot()
+        );
+
         testContext.clearRandomStringCache();
         scenarioTestDataResolver.ensureUniqueLoanIdIfEnabled();
 
         UserRole role;
+
         if (scenario.getSourceTagNames().contains("@chief-admin")) {
             role = UserRole.CHIEF_ADMIN;
         } else if (scenario.getSourceTagNames().contains("@approver")) {
@@ -54,18 +65,54 @@ public class Hooks {
             role = UserRole.CREATOR;
         }
 
-        logger.debug("Scenario '{}' | thread '{}' | userSlot {} | role: {}",
-                scenario.getName(), Thread.currentThread().getName(), testContext.getUserSlot(), role);
+        logger.info(
+                "Scenario '{}' | thread '{}' | userSlot {} | role: {}",
+                scenario.getName(),
+                Thread.currentThread().getName(),
+                testContext.getUserSlot(),
+                role
+        );
+
         authManager.initializeAuthentication(role);
     }
 
     @After
     public void tearDown(Scenario scenario) {
-        if (scenario.isFailed()) {
-            LoggingHelper.logScenarioFailure(scenario.getName());
+
+        try {
+
+            if (scenario.isFailed()) {
+
+                LoggingHelper.logScenarioFailure(scenario.getName());
+
+                String apiLogs = testContext.getApiLogs();
+
+                if (apiLogs != null && !apiLogs.isBlank()) {
+
+                    ExtentCucumberAdapter.getCurrentStep().fail(
+                            "<details>" +
+                            "<summary><b>API Request / Response Logs</b></summary>" +
+                            "<pre style='white-space: pre-wrap; font-family: monospace;'>" +
+                            apiLogs +
+                            "</pre>" +
+                            "</details>"
+                    );
+                }
+            }
+
+            if (dbClient != null) {
+                dbClient.close();
+            }
+
+            logger.info(
+                    "Scenario teardown completed (user slot {})",
+                    testContext.getUserSlot()
+            );
+
+        } finally {
+
+            testContext.clearApiLogs();
+            LoggingContext.clear();
         }
-        dbClient.close();
-        LoggingContext.clear();
-        logger.debug("Scenario teardown completed (user slot {})", testContext.getUserSlot());
     }
 }

@@ -20,13 +20,13 @@ import io.cucumber.testng.CucumberOptions;
                 "validators"
         },
         plugin = {
-                "hooks.CucumberStepTracker",
-                "html:target/cucumber-reports/cucumber.html",
-                "json:target/cucumber-reports/cucumber.json",
-                "junit:target/cucumber-reports/cucumber.xml",
-                "timeline:target/cucumber-reports/timeline"
+
+                "pretty",
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
-        tags = "not @loan-recovery"
+        monochrome = true,
+        tags = "@creator1"
+
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 }
