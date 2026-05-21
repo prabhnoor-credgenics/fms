@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DispositionsResponse",
+  "type": "object",
+  "required": ["data"],
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/disposition"
+      }
+    }
+  },
+  "$defs": {
+    "disposition": {
+      "type": "object",
+      "required": [
+        "id",
+        "company_id",
+        "name",
+        "key",
+        "is_committed_amount_required",
+        "is_remark_required",
+        "is_reminder_required",
+        "is_calling_enabled",
+        "active",
+        "is_default",
+        "is_settlement_enabled",
+        "is_communication_enabled",
+        "is_system_used",
+        "product_type",
+        "is_repossession_enabled",
+        "is_recovery_enabled",
+        "is_fos_enabled",
+        "is_fos_collections_enabled",
+        "is_legal_enabled",
+        "is_sub_disposition_required",
+        "is_deleted",
+        "sentiment",
+        "is_repossession_requests_enabled",
+        "is_voicebot_enabled"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "company_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "is_committed_amount_required": {
+          "type": "boolean"
+        },
+        "is_remark_required": {
+          "type": "boolean"
+        },
+        "is_reminder_required": {
+          "type": "boolean"
+        },
+        "is_calling_enabled": {
+          "type": "boolean"
+        },
+        "is_fos_enabled": {
+          "type": "boolean"
+        },
+        "max_reminder_interval": {
+          "type": ["integer", "null"]
+        },
+        "sub_dispositions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/subDisposition"
+          }
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "is_default": {
+          "type": "boolean"
+        },
+        "global_status_id": {
+          "type": ["integer", "null"]
+        },
+        "global_status_name": {
+          "type": "string"
+        },
+        "is_settlement_enabled": {
+          "type": "boolean"
+        },
+        "is_communication_enabled": {
+          "type": "boolean"
+        },
+        "is_system_used": {
+          "type": "boolean"
+        },
+        "product_type": {
+          "type": "array",
+          "items": {}
+        },
+        "is_repossession_enabled": {
+          "type": "boolean"
+        },
+        "is_recovery_enabled": {
+          "type": "boolean"
+        },
+        "is_fos_collections_enabled": {
+          "type": "boolean"
+        },
+        "is_legal_enabled": {
+          "type": "boolean"
+        },
+        "is_sub_disposition_required": {
+          "type": "boolean"
+        },
+        "is_deleted": {
+          "type": "boolean"
+        },
+        "sentiment": {
+          "type": "string",
+          "enum": ["neutral", "positive", "negative"]
+        },
+        "is_chatr_enabled": {
+          "type": "boolean"
+        },
+        "is_repossession_requests_enabled": {
+          "type": "boolean"
+        },
+        "is_voicebot_enabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "subDisposition": {
+      "type": "object",
+      "required": [
+        "id",
+        "company_id",
+        "name",
+        "key",
+        "is_committed_amount_required",
+        "is_remark_required",
+        "is_reminder_required",
+        "is_calling_enabled",
+        "is_deleted",
+        "sentiment"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "company_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "is_committed_amount_required": {
+          "type": "boolean"
+        },
+        "is_remark_required": {
+          "type": "boolean"
+        },
+        "is_reminder_required": {
+          "type": "boolean"
+        },
+        "is_calling_enabled": {
+          "type": "boolean"
+        },
+        "is_fos_enabled": {
+          "type": "boolean"
+        },
+        "disposition_level_one_id": {
+          "type": "integer"
+        },
+        "disposition_level_two_id": {
+          "type": "integer"
+        },
+        "sub_dispositions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/subDisposition"
+          }
+        },
+        "is_recovery_enabled": {
+          "type": "boolean"
+        },
+        "is_fos_collections_enabled": {
+          "type": "boolean"
+        },
+        "is_legal_enabled": {
+          "type": "boolean"
+        },
+        "is_sub_disposition_required": {
+          "type": "boolean"
+        },
+        "is_deleted": {
+          "type": "boolean"
+        },
+        "sentiment": {
+          "type": "string"
+        },
+        "is_chatr_enabled": {
+          "type": "boolean"
+        },
+        "is_repossession_requests_enabled": {
+          "type": "boolean"
+        },
+        "is_voicebot_enabled": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

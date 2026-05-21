@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GetFilterResponseSchema",
+  "type": "object",
+  "required": [
+    "output",
+    "message",
+    "message_template",
+    "message_placeholder"
+  ],
+  "properties": {
+    "output": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "filter_name",
+          "filters",
+          "created_by"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "filter_name": {
+            "type": "string"
+          },
+          "filters": {
+            "type": "object",
+            "required": [
+              "loan_type",
+              "product_type"
+            ],
+            "properties": {
+              "loan_type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "product_type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          },
+          "created_by": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "message": {
+      "type": "string",
+      "const": "success"
+    },
+    "message_template": {
+      "type": "string",
+      "const": "success"
+    },
+    "message_placeholder": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
