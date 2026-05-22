@@ -25,7 +25,7 @@ import io.cucumber.testng.CucumberOptions;
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
         monochrome = true,
-        tags = "@creator1"
+        tags = "@recovery-company"
 
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
