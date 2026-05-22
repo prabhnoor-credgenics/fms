@@ -56,7 +56,7 @@ Feature: Global Status API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/global-status"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be one of "401"
     And the response should match json schema "schemas/global_status_error_schema.json"
 
   @negative @creator
@@ -66,7 +66,7 @@ Feature: Global Status API
       | authenticationtoken  | {AUTH_TOKEN}                      |
       | x-company-id         | {COMPANY_ID}                      |
     When I send a "GET" request to "/recovery/global-status"
-    Then the response status code should be one of "400,401,403,422"
+    Then the response status code should be one of "403"
     And the response should match json schema "schemas/global_status_error_schema.json"
 
   @negative @creator
@@ -78,7 +78,7 @@ Feature: Global Status API
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/global-status"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be one of "403"
     And the response should match json schema "schemas/global_status_error_schema.json"
 
   @negative @creator
@@ -90,6 +90,6 @@ Feature: Global Status API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/global-status"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be one of "403"
     And the response should match json schema "schemas/global_status_error_schema.json"
 
