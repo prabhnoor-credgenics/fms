@@ -11,6 +11,7 @@ public final class ContextKeys {
     public static final String EMAIL = "{EMAIL}";
     public static final String TIMESTAMP = "{TIMESTAMP}";
     public static final String RANDOM_NAME = "{RANDOM_NAME}";
+    public static final String VARIABLE_ID = "{VARIABLE_ID}";
 
     private ContextKeys() {
         throw new UnsupportedOperationException("Constants class");

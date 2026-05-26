@@ -252,6 +252,40 @@ public class RecoveryVariablesValidator {
         );
     }
 
+    public void validateCreateVariableResponse(Response response) {
+        JsonPath jp = response.jsonPath();
+        SoftAssert softAssert = new SoftAssert();
+
+        String message = jp.getString("message");
+        softAssert.assertNotNull(message, "message must be present in create response");
+        softAssert.assertTrue(message != null && !message.isBlank(), "message must not be blank in create response");
+
+        softAssert.assertAll();
+        logger.info("Variable create response validated");
+    }
+
+    public void validateUpdateVariableResponse(Response response) {
+        JsonPath jp = response.jsonPath();
+        SoftAssert softAssert = new SoftAssert();
+
+        String message = jp.getString("message");
+        softAssert.assertNotNull(message, "message must be present in update response");
+        softAssert.assertTrue(message != null && !message.isBlank(), "message must not be blank in update response");
+
+        softAssert.assertAll();
+        logger.info("Variable update response validated");
+    }
+
+    public void validateDeleteVariableResponse(Response response) {
+        JsonPath jp = response.jsonPath();
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertNotNull(jp.getString("message"), "message must be present in delete response");
+
+        softAssert.assertAll();
+        logger.info("Variable delete response validated");
+    }
+
     private void validateVariableList(
             List<Map<String, Object>> variables,
             String pathPrefix,

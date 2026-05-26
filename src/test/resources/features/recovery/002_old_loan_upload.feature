@@ -21,7 +21,7 @@ Feature: Loan Recovery Old Loan Upload API
     And I set the request body from file "test-data/loan_recovery_request.json"
     And the request body should match json schema "schemas/loan_upload_request_schema.json"
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "200,201"
+    Then the response status code should be 201
     And the response content type should be "application/json"
     And the response body should not be empty
     And the response should match json schema "schemas/loan_recovery_success_schema.json"
@@ -34,7 +34,7 @@ Feature: Loan Recovery Old Loan Upload API
       | loanId | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "200,201"
+    Then the response status code should be 201
     And the response body should contain field "loan_id"
     And the response body should contain field "client_customer_id"
 
@@ -47,7 +47,7 @@ Feature: Loan Recovery Old Loan Upload API
     And I remove header "authenticationtoken"
     And I set the request body from file "test-data/loan_recovery_request.json"
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 401
 
   @negative @validation
   Scenario: Create loan recovery record without company_id query parameter
@@ -55,7 +55,7 @@ Feature: Loan Recovery Old Loan Upload API
       | loanId | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be 403
 
   @negative @validation
   Scenario: Create loan recovery record with missing required fields - loan_id
@@ -72,7 +72,7 @@ Feature: Loan Recovery Old Loan Upload API
       }
       """
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be 400
 
   @negative @validation
   Scenario: Create loan recovery record with invalid email format
@@ -91,7 +91,7 @@ Feature: Loan Recovery Old Loan Upload API
       }
       """
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be 201
 
   @negative @validation
   Scenario: Create loan recovery record with invalid phone number
@@ -110,7 +110,7 @@ Feature: Loan Recovery Old Loan Upload API
       }
       """
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be 201
 
   @negative @validation
   Scenario: Create loan recovery record with invalid DOB format
@@ -129,7 +129,7 @@ Feature: Loan Recovery Old Loan Upload API
       }
       """
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be 400
 
   @negative @validation
   Scenario: Create loan recovery record with negative loan amount
@@ -148,7 +148,7 @@ Feature: Loan Recovery Old Loan Upload API
       }
       """
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be 201
 
   @negative @validation
   Scenario: Create loan recovery record with invalid CIBIL score range
@@ -167,7 +167,7 @@ Feature: Loan Recovery Old Loan Upload API
       }
       """
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be 201
 
   @edge-case
   Scenario: Create loan recovery record with empty document_details array
@@ -178,7 +178,7 @@ Feature: Loan Recovery Old Loan Upload API
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "document_details" to "[]"
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "200,201,400"
+    Then the response status code should be 400
 
   @edge-case
   Scenario: Create loan recovery record with special characters in loan ID
@@ -189,7 +189,7 @@ Feature: Loan Recovery Old Loan Upload API
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "loan_id" to "loan-test-123!@#"
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "200,201,400"
+    Then the response status code should be 400
 
   @edge-case
   Scenario: Create loan recovery record with very long transaction ID
@@ -200,7 +200,7 @@ Feature: Loan Recovery Old Loan Upload API
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "loan_id" to "{RANDOM_STRING:500}"
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "200,201,400"
+    Then the response status code should be 400
 
   @edge-case
   Scenario: Create loan recovery record with multiple defaults
@@ -210,5 +210,5 @@ Feature: Loan Recovery Old Loan Upload API
       | loanId | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     When I send a "POST" request to "/recovery/loan/{loanId}"
-    Then the response status code should be one of "200,201"
+    Then the response status code should be 201
     And the response body should contain field "defaults"

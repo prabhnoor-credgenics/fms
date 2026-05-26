@@ -75,6 +75,11 @@ public class ApiStepDefinitions {
     @Given("I prepare a request")
     public void i_prepare_a_request() {
         request = restAssuredBase.getRequestSpec();
+        storedHeaders.clear();
+        storedQueryParams.clear();
+        storedPathParams.clear();
+        requestBody = null;
+        headersToRemove.clear();
         logger.info("Request specification prepared");
     }
 
@@ -336,14 +341,14 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
     testContext.setApiLogs(apiLogs.toString());
 
-    autoValidateResponseSchema(endpoint, response.getStatusCode());
+    autoValidateResponseSchema(httpMethod, endpoint, response.getStatusCode());
 
     testContext.setResponse(response);
 
     logResponseDetails(response);
 }
     
-        private void autoValidateResponseSchema(String endpoint, int statusCode) {
+        private void autoValidateResponseSchema(String httpMethod, String endpoint, int statusCode) {
         String schemaPath = null;
         boolean isSuccess = statusCode >= 200 && statusCode < 300;
 
@@ -351,10 +356,13 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
             if (isSuccess) {
                 schemaPath = "schemas/loan_recovery_success_schema.json";
             }
-            
+
         } else if (endpoint != null && endpoint.contains("/recovery/company")) {
             if (isSuccess) {
-                schemaPath = "schemas/recovery_company_success_schema.json";
+                boolean isWrite = "PUT".equalsIgnoreCase(httpMethod) || "PATCH".equalsIgnoreCase(httpMethod) || "POST".equalsIgnoreCase(httpMethod);
+                schemaPath = isWrite
+                        ? "schemas/recovery_company_put_success_schema.json"
+                        : "schemas/recovery_company_filtered_success_schema.json";
             }
         }
 
@@ -594,12 +602,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         if (referer != null && !referer.isBlank()) {
             headers.put("Referer", referer);
         }
-        headers.replaceAll((name, value) -> {
-            if ("authenticationtoken".equalsIgnoreCase(name) && value != null && !value.isBlank()) {
-                return LoggingHelper.maskToken(value);
-            }
-            return value;
-        });
         return headers;
     }
 

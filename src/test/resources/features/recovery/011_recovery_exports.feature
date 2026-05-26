@@ -54,7 +54,7 @@ Feature: Recovery Exports API
       | page_size        | 10                                                |
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery_exports_error_schema.json"
 
   @negative @auth @creator
@@ -69,7 +69,7 @@ Feature: Recovery Exports API
       | page_size        | 10                                                |
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery_exports_error_schema.json"
 
   @negative @creator
@@ -83,7 +83,7 @@ Feature: Recovery Exports API
       | page_size        | 10                                                |
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
-    Then the response status code should be one of "400,401,403,422"
+    Then the response status code should be 403
     And the response should match json schema "schemas/recovery_exports_error_schema.json"
 
   @negative @creator
@@ -98,7 +98,7 @@ Feature: Recovery Exports API
       | page_size        | 10                                                |
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery_exports_error_schema.json"
 
   @negative @creator
@@ -113,5 +113,5 @@ Feature: Recovery Exports API
       | page_size        | 10                                                |
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be 403
     And the response should match json schema "schemas/recovery_exports_error_schema.json"
