@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 
 
 @CucumberOptions(
-        features = "src/test/resources/features/recovery",
+        features = "src/test/resources/features/recovery/007_bulk_tasks.feature",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -24,6 +24,7 @@ import io.cucumber.testng.CucumberOptions;
                 "pretty",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
+
         monochrome = true,
         tags = "@dbvalidationrecovery"
 
