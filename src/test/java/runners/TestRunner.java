@@ -25,7 +25,7 @@ import io.cucumber.testng.CucumberOptions;
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
         },
         monochrome = true,
-        tags = "not @loan-recovery"
+        tags = "@dbvalidationrecovery"
 
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

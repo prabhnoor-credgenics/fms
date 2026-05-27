@@ -11,7 +11,7 @@ Feature: Saved Filter API
     When I send a "GET" request to "/recovery/saved/filters"
     Then the response status code should be 200
     And the response message should be "success"
-    And the response should match json schema "schemas/recovery_saved_filter_api_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_saved_filter_success_schema.json"
  And the response body should contain field "output"
 And the response body should contain field "message"
 And the response body should contain field "message_template"

@@ -11,7 +11,7 @@ Feature: Disposition API
     When I send a "GET" request to "/recovery/disposition"
     Then the response status code should be 200
     And the response message should be "Dispositions Fetched"
-    And the response should match json schema "schemas/recovery_get_disposition_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_get_disposition_success_schema.json"
     And the response body should contain field "data"
     And the response body should contain field "data[0].id"
     And the response body should contain field "data[0].company_id"

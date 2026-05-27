@@ -1,5 +1,6 @@
 package context;
 
+import enums.UserRole;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
@@ -42,6 +43,9 @@ public class TestContext {
 
     /** Parallel user pool slot */
     private int userSlot;
+
+    /** Role used for authentication in the current scenario */
+    private UserRole userRole;
 
     private final Map<String, String> randomStringCache = new HashMap<>();
 
@@ -247,6 +251,14 @@ public class TestContext {
 
     public void setUserSlot(int userSlot) {
         this.userSlot = userSlot;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public Map<String, String> getRandomStringCache() {

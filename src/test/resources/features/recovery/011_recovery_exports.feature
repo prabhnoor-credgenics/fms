@@ -19,7 +19,7 @@ Feature: Recovery Exports API
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     And the response content type should be "application/json"
-    And the response should match json schema "schemas/recovery_exports_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_exports_success_schema.json"
     And the response body should contain field "data"
     And the response body should contain field "message"
     And the response body should contain field "success"
@@ -55,7 +55,7 @@ Feature: Recovery Exports API
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_exports_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
 
   @negative @auth @creator
   Scenario: API should fail with invalid authentication token
@@ -70,7 +70,7 @@ Feature: Recovery Exports API
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_exports_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
@@ -84,7 +84,7 @@ Feature: Recovery Exports API
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 403
-    And the response should match json schema "schemas/recovery_exports_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
@@ -99,7 +99,7 @@ Feature: Recovery Exports API
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_exports_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
 
   @negative @creator
   Scenario: API should fail when company_id does not exist
@@ -114,4 +114,4 @@ Feature: Recovery Exports API
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 403
-    And the response should match json schema "schemas/recovery_exports_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"

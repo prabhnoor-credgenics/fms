@@ -12,26 +12,26 @@ Feature: Recovery Company API and Company Creation Flow
     Then company creation step 1 request should match json schema
     And the response status code should be 201
     And the response body should contain field "message"
-    And the response should match json schema "schemas/company_creation_step1_success_schema.json"
+    And the response should match json schema "schemas/company_creation/success/company_creation_step1_success_schema.json"
     Then company creation step 1 should be successful
     And company creation stored identifiers should be present
     When I create company with validation step 2
     Then company creation step 2 request should match json schema
     And the response status code should be 201
     And the response message should be "Permissions validated and saved."
-    And the response should match json schema "schemas/company_creation_step2_success_schema.json"
+    And the response should match json schema "schemas/company_creation/success/company_creation_step2_success_schema.json"
     Then company creation step 2 should be successful
     When I create company with validation step 3
     Then company creation step 3 request should match json schema
     And the response status code should be 201
     And the response message should be "Admin details validated and saved."
-    And the response should match json schema "schemas/company_creation_step3_success_schema.json"
+    And the response should match json schema "schemas/company_creation/success/company_creation_step3_success_schema.json"
     Then company creation step 3 should be successful
     When I create company with validation step 4
     Then company creation step 4 request should match json schema
     And the response status code should be 201
     And the response message should be "company created successfully"
-    And the response should match json schema "schemas/company_creation_step4_success_schema.json"
+    And the response should match json schema "schemas/company_creation/success/company_creation_step4_success_schema.json"
     Then company creation step 4 should be successful
 
   @negative @company-creation-step1 @chief-admin
@@ -39,7 +39,7 @@ Feature: Recovery Company API and Company Creation Flow
     Given company creation test data is prepared
     When I create company with validation step 1 without mandatory field "<field_name>"
     Then the response status code should be 400
-    And the response should match json schema "schemas/company_creation_error_schema.json"
+    And the response should match json schema "schemas/company_creation/error/company_creation_error_schema.json"
 
     Examples:
       | field_name                        |
@@ -57,7 +57,7 @@ Feature: Recovery Company API and Company Creation Flow
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3 without mandatory admin field "<field_name>"
     Then the response status code should be 400
-    And the response should match json schema "schemas/company_creation_error_schema.json"
+    And the response should match json schema "schemas/company_creation/error/company_creation_error_schema.json"
 
     Examples:
       | field_name  |
@@ -68,18 +68,16 @@ Feature: Recovery Company API and Company Creation Flow
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3 without email only
     Then the response status code should be 400
-    And the response should match json schema "schemas/company_creation_error_schema.json"
+    And the response should match json schema "schemas/company_creation/error/company_creation_error_schema.json"
 
   @negative @company-creation-step3 @chief-admin @requires-clean-state
   Scenario: Step 3 should fail when both email and mobile are missing
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3 without email and mobile
     Then the response status code should be 400
-    And the response should match json schema "schemas/company_creation_error_schema.json"
+    And the response should match json schema "schemas/company_creation/error/company_creation_error_schema.json"
 
-  # ---------------------------------------------------------------------------
-  # GET /recovery/company - Positive scenarios
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator @get-company
   Scenario: Get full company details with bifurcation prefix true
@@ -93,7 +91,7 @@ Feature: Recovery Company API and Company Creation Flow
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response message should be "success"
-    And the response should match json schema "schemas/recovery_company_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_success_schema.json"
     And the response body should contain field "company_details.custom_dpd_bucket"
     And the response body should contain field "company_details.show_balance_claim_amount"
 
@@ -109,7 +107,7 @@ Feature: Recovery Company API and Company Creation Flow
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response message should be "success"
-    And the response should match json schema "schemas/recovery_company_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_success_schema.json"
 
   @positive @creator @get-company
   Scenario: Get company details with specific company_key is_amount_bifurcation_enabled
@@ -122,7 +120,7 @@ Feature: Recovery Company API and Company Creation Flow
       | company_keys  | is_amount_bifurcation_enabled |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_filtered_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
     And the response body should contain field "company_details.is_amount_bifurcation_enabled"
 
   @positive @creator @get-company
@@ -137,7 +135,7 @@ Feature: Recovery Company API and Company Creation Flow
       | bifurcation_prefix | false                    |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_filtered_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
     And the response body should contain field "company_details.is_amount_bifurcation_enabled"
 
   @positive @creator @get-company
@@ -151,7 +149,7 @@ Feature: Recovery Company API and Company Creation Flow
       | module_name  | payment      |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_filtered_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
 
   @positive @creator @get-company
   Scenario: Get company details filtered by module_name fos
@@ -164,7 +162,7 @@ Feature: Recovery Company API and Company Creation Flow
       | module_name  | fos          |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_filtered_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
 
   @positive @creator @get-company
   Scenario: Get company details filtered by module_name settlement
@@ -177,7 +175,7 @@ Feature: Recovery Company API and Company Creation Flow
       | module_name  | settlement   |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_filtered_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
 
   @positive @creator @get-company
   Scenario: Get company details with company_key and bifurcation_prefix combined
@@ -191,11 +189,9 @@ Feature: Recovery Company API and Company Creation Flow
       | bifurcation_prefix  | true                      |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_filtered_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
 
-  # ---------------------------------------------------------------------------
-  # GET /recovery/company - Negative scenarios
-  # ---------------------------------------------------------------------------
+
 
   @negative @auth @get-company
   Scenario: GET should fail with invalid authentication token
@@ -208,7 +204,7 @@ Feature: Recovery Company API and Company Creation Flow
       | bifurcation_prefix  | true         |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_company_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @get-company @creator
   Scenario: GET should fail when company_id is missing
@@ -220,7 +216,7 @@ Feature: Recovery Company API and Company Creation Flow
       | bifurcation_prefix  | true |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 403
-    And the response should match json schema "schemas/recovery_company_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @get-company @creator
   Scenario: GET should fail when company_id is invalid UUID format
@@ -233,7 +229,7 @@ Feature: Recovery Company API and Company Creation Flow
       | bifurcation_prefix  | true               |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_company_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @get-company @creator
   Scenario: GET should fail when company_id does not exist
@@ -246,7 +242,7 @@ Feature: Recovery Company API and Company Creation Flow
       | bifurcation_prefix  | true                                 |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 403
-    And the response should match json schema "schemas/recovery_company_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @get-company @creator
   Scenario: GET should fail with invalid company_keys value
@@ -305,9 +301,7 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # PUT /recovery/company - Positive scenarios
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator @put-company
   Scenario: Update company enable_auto_calculation to true
@@ -324,7 +318,7 @@ Feature: Recovery Company API and Company Creation Flow
       """
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_put_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_put_success_schema.json"
     And the response body should contain field "message"
 
   @positive @creator @put-company
@@ -342,7 +336,7 @@ Feature: Recovery Company API and Company Creation Flow
       """
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_put_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_put_success_schema.json"
 
   @positive @creator @put-company
   Scenario: Update company show_balance_claim_amount flag
@@ -359,7 +353,7 @@ Feature: Recovery Company API and Company Creation Flow
       """
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_put_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_put_success_schema.json"
 
   @positive @creator @put-company
   Scenario: Update company payment_allocation_month
@@ -376,7 +370,7 @@ Feature: Recovery Company API and Company Creation Flow
       """
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_put_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_put_success_schema.json"
 
   @positive @creator @put-company
   Scenario: Enable amount bifurcation with payment module
@@ -449,11 +443,9 @@ Feature: Recovery Company API and Company Creation Flow
       """
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_company_put_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_company_put_success_schema.json"
 
-  # ---------------------------------------------------------------------------
-  # PUT /recovery/company - Negative scenarios
-  # ---------------------------------------------------------------------------
+
 
   @negative @put-company @creator
   Scenario: PUT should fail when company_id is missing from body
@@ -469,7 +461,7 @@ Feature: Recovery Company API and Company Creation Flow
       """
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 403
-    And the response should match json schema "schemas/recovery_company_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @put-company @creator
   Scenario: PUT should fail when company_id is invalid UUID
@@ -486,7 +478,7 @@ Feature: Recovery Company API and Company Creation Flow
       """
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_company_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @put-company @creator
   Scenario: PUT should fail or error when amount_bifurcation_modules has invalid module_name
@@ -525,7 +517,7 @@ Feature: Recovery Company API and Company Creation Flow
       """
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_company_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @auth @put-company
   Scenario: PUT should fail with invalid authentication token
@@ -542,4 +534,4 @@ Feature: Recovery Company API and Company Creation Flow
       """
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_company_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"

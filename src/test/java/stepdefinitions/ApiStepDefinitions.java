@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import auth.manager.AuthManager;
 import base.RestAssuredBase;
 import config.ConfigReader;
 import context.ContextKeys;
@@ -51,6 +52,7 @@ public class ApiStepDefinitions {
     private final ConfigReader configReader;
     private final RestAssuredBase restAssuredBase;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
+    private final AuthManager authManager;
 
     private RequestSpecification request;
     private Response response;
@@ -64,12 +66,14 @@ public class ApiStepDefinitions {
             TestContext testContext,
             ConfigReader configReader,
             RestAssuredBase restAssuredBase,
-            ScenarioTestDataResolver scenarioTestDataResolver
+            ScenarioTestDataResolver scenarioTestDataResolver,
+            AuthManager authManager
     ) {
         this.testContext = testContext;
         this.configReader = configReader;
         this.restAssuredBase = restAssuredBase;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
+        this.authManager = authManager;
     }
 
     @Given("I prepare a request")
@@ -306,6 +310,15 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
             throw new IllegalArgumentException("Unsupported HTTP method: " + method);
     }
 
+    if (response.getStatusCode() == 401 && testContext.getUserRole() != null && usedRealAuthToken()) {
+        logger.warn("Got 401 for '{}' - session expired. Re-authenticating and retrying once.", endpoint);
+        authManager.reAuthenticate(testContext.getUserRole());
+        rebuildRequestWithFreshAuth();
+        applyRefererHeader(endpoint);
+        response = executeHttp(method, endpoint);
+        logger.info("Retry response status: {}", response.getStatusCode());
+    }
+
     LocalDateTime responseTime = LocalDateTime.now();
     long endTime = System.currentTimeMillis();
     long duration = endTime - startTime;
@@ -354,15 +367,15 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
         if (endpoint != null && endpoint.contains("/recovery/v1/loan")) {
             if (isSuccess) {
-                schemaPath = "schemas/loan_recovery_success_schema.json";
+                schemaPath = "schemas/recovery/success/loan_recovery_success_schema.json";
             }
 
         } else if (endpoint != null && endpoint.contains("/recovery/company")) {
             if (isSuccess) {
                 boolean isWrite = "PUT".equalsIgnoreCase(httpMethod) || "PATCH".equalsIgnoreCase(httpMethod) || "POST".equalsIgnoreCase(httpMethod);
                 schemaPath = isWrite
-                        ? "schemas/recovery_company_put_success_schema.json"
-                        : "schemas/recovery_company_filtered_success_schema.json";
+                        ? "schemas/recovery/success/recovery_company_put_success_schema.json"
+                        : "schemas/recovery/success/recovery_company_filtered_success_schema.json";
             }
         }
 
@@ -561,6 +574,28 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         this.requestBody = updatedBody;
         request.body(updatedBody);
         logger.info("Updated JSON field '{}' to '{}'", jsonPath, processedValue);
+    }
+
+    private boolean usedRealAuthToken() {
+        String realToken = testContext.getAuthToken();
+        if (realToken == null) return false;
+        return storedHeaders.entrySet().stream()
+                .filter(e -> "authenticationtoken".equalsIgnoreCase(e.getKey()))
+                .map(Map.Entry::getValue)
+                .anyMatch(realToken::equals);
+    }
+
+    private void rebuildRequestWithFreshAuth() {
+        String freshToken = testContext.getAuthToken();
+        request = restAssuredBase.getRequestSpec();
+        storedHeaders.replaceAll((k, v) -> "authenticationtoken".equalsIgnoreCase(k) ? freshToken : v);
+        storedHeaders.forEach((k, v) -> request.header(k, v));
+        storedPathParams.forEach((k, v) -> request.pathParam(k, v));
+        storedQueryParams.forEach((k, v) -> request.queryParam(k, v));
+        if (requestBody != null && !requestBody.isBlank()) {
+            request.body(requestBody);
+        }
+        logger.info("Rebuilt request with fresh auth token after 401");
     }
 
     private void rebuildRequestIfHeadersRemoved() {

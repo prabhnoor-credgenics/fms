@@ -11,7 +11,7 @@ Feature: Payment Control
     When I send a "GET" request to "recovery/payment-controls"
     Then the response status code should be 200
 And the response message should be "restriction details fetched"
-And the response should match json schema "schemas/recovery_payment_controls_success_schema.json"
+And the response should match json schema "schemas/recovery/success/recovery_payment_controls_success_schema.json"
 And the response body should contain field "success"
 And the response body should contain field "message"
 And the response body should contain field "message_template"

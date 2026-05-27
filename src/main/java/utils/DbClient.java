@@ -62,6 +62,39 @@ public class DbClient {
         }
     }
 
+    public DbRow fetchSingleColumn(
+            String tableName,
+            String columnName,
+            String whereColumn,
+            String whereValue,
+            String companyId
+    ) {
+        validateSqlIdentifier(tableName, "table");
+        validateSqlIdentifier(columnName, "column");
+        validateSqlIdentifier(whereColumn, "where column");
+
+        String sql = "SELECT " + columnName + " FROM " + tableName
+                + " WHERE " + whereColumn + " = ? AND company_id = ?::uuid";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, whereValue);
+            stmt.setString(2, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (!rs.next()) {
+                    throw new IllegalStateException(
+                            "No DB row in " + tableName + " where " + whereColumn + " = " + whereValue
+                                    + " and company_id = " + companyId
+                    );
+                }
+                Object value = rs.getObject(columnName);
+                int sqlType = rs.getMetaData().getColumnType(1);
+                return new DbRow(value, sqlType);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Query execution failed: " + sql, e);
+        }
+    }
+
     public String getSingleValue(String tableName, String columnName, String whereColumn, String whereValue) {
         DbRow row = fetchSingleColumn(tableName, columnName, whereColumn, whereValue);
         return row.value() == null ? null : row.value().toString();

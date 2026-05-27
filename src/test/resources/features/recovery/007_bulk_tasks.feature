@@ -16,7 +16,7 @@ Feature: Bulk tasks API
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 200
     And the response message should be "success"
-    And the response should match json schema "schemas/recovery_bulk_tasks_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_bulk_tasks_success_schema.json"
     And the response body should contain field "success"
     And the response body should contain field "output"
     And the response body should contain field "output[0].status"

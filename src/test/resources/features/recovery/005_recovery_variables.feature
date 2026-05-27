@@ -18,7 +18,7 @@ Feature: Recovery Variables API
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response content type should be "text/html; charset=utf-8"
-    And the response should match json schema "schemas/recovery_variables_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "message"
    # And recovery variables response mandatory fields should be valid
@@ -40,7 +40,7 @@ Feature: Recovery Variables API
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response content type should be "text/html; charset=utf-8"
-    And the response should match json schema "schemas/recovery_variables_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "message"
     And recovery variables response mandatory fields should be valid
@@ -88,7 +88,7 @@ Feature: Recovery Variables API
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response content type should be "text/html; charset=utf-8"
-    And the response should match json schema "schemas/recovery_variables_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "message"
     And recovery variables response mandatory fields should be valid
@@ -139,7 +139,7 @@ Feature: Recovery Variables API
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response content type should be "text/html; charset=utf-8"
-    And the response should match json schema "schemas/recovery_variables_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "message"
     And recovery variables response mandatory fields should be valid
@@ -199,7 +199,7 @@ Feature: Recovery Variables API
       | include_meta_data            | true         |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @creator
   Scenario: API should fail with invalid authentication token
@@ -213,7 +213,7 @@ Feature: Recovery Variables API
       | include_meta_data            | true         |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
@@ -226,7 +226,7 @@ Feature: Recovery Variables API
       | include_meta_data            | true |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
@@ -240,7 +240,7 @@ Feature: Recovery Variables API
       | include_meta_data            | true               |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
   Scenario: API should fail when company_id does not exist
@@ -254,13 +254,11 @@ Feature: Recovery Variables API
       | include_meta_data            | true                                 |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 403
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
 
-  # =====================================================================
-  # POST /variables - Create Variable
-  # =====================================================================
+
 
   @positive @smoke @create @creator
   Scenario: Create a new text variable with minimum required fields
@@ -280,7 +278,7 @@ Feature: Recovery Variables API
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 201
     And the response content type should be "text/html; charset=utf-8"
-    And the response should match json schema "schemas/recovery_variables_write_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And the response body should contain field "message_template"
     And the response body should contain field "message"
     And recovery variables create response should be valid
@@ -305,7 +303,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 201
-    And the response should match json schema "schemas/recovery_variables_write_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And recovery variables create response should be valid
 
   @positive @create @creator
@@ -327,7 +325,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 201
-    And the response should match json schema "schemas/recovery_variables_write_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And recovery variables create response should be valid
 
   @positive @create @creator
@@ -349,8 +347,38 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 201
-    And the response should match json schema "schemas/recovery_variables_write_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And recovery variables create response should be valid
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | false        |
+      | include_meta_data          | false        |
+    When I send a "GET" request to "/recovery/variables"
+    Then the response status code should be 200
+    And I find and store variable id for name "autonumber{RANDOM_STRING:6}" from variables response
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_id": "{VARIABLE_ID}",
+        "is_mandatory": false
+      }
+      """
+    When I send a "PATCH" request to "/recovery/variables"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
+    And recovery variables update response should be valid
 
   @negative @create @creator
   Scenario: POST should fail when variable_name is missing
@@ -368,7 +396,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @create @creator
   Scenario: POST should fail when variable_type is missing
@@ -386,7 +414,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @create @creator
   Scenario: POST should fail when variable_name starts with a digit
@@ -405,7 +433,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @create @creator
   Scenario: POST should fail when variable_name contains spaces
@@ -424,7 +452,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @create @creator
   Scenario: POST should fail when variable_type is invalid
@@ -443,7 +471,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @create @creator
   Scenario: POST should fail when is_dropdown is true but dropdown_values is empty
@@ -464,7 +492,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @create @creator
   Scenario: POST should fail when is_derivable is true but calculation_formula is absent
@@ -484,7 +512,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @create @creator
   Scenario: POST should fail when authentication token is missing
@@ -502,7 +530,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @create @creator
   Scenario: POST should fail with invalid authentication token
@@ -521,7 +549,7 @@ Feature: Recovery Variables API
       """
     When I send a "POST" request to "/recovery/variables"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   # =====================================================================
   # PATCH /variables - Update Variable
@@ -573,7 +601,7 @@ Feature: Recovery Variables API
       """
     When I send a "PATCH" request to "/recovery/variables"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_variables_write_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And the response body should contain field "message"
     And recovery variables update response should be valid
 
@@ -623,7 +651,25 @@ Feature: Recovery Variables API
       """
     When I send a "PATCH" request to "/recovery/variables"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_variables_write_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
+    And recovery variables update response should be valid
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_id": "{VARIABLE_ID}",
+        "is_mandatory": false
+      }
+      """
+    When I send a "PATCH" request to "/recovery/variables"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And recovery variables update response should be valid
 
   @positive @update @creator
@@ -673,7 +719,7 @@ Feature: Recovery Variables API
       """
     When I send a "PATCH" request to "/recovery/variables"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery_variables_write_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And recovery variables update response should be valid
 
   @negative @update @creator
@@ -692,7 +738,7 @@ Feature: Recovery Variables API
       """
     When I send a "PATCH" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
     And the response message should be "Data validation failed"
 
   @negative @update @creator
@@ -741,7 +787,7 @@ Feature: Recovery Variables API
       """
     When I send a "PATCH" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @update @creator
   Scenario: PATCH should fail when trying to set calculation_formula
@@ -788,7 +834,7 @@ Feature: Recovery Variables API
       """
     When I send a "PATCH" request to "/recovery/variables"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @update @creator
   Scenario: PATCH should fail when authentication token is missing
@@ -806,7 +852,7 @@ Feature: Recovery Variables API
       """
     When I send a "PATCH" request to "/recovery/variables"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @update @creator
   Scenario: PATCH should fail with invalid authentication token
@@ -825,7 +871,7 @@ Feature: Recovery Variables API
       """
     When I send a "PATCH" request to "/recovery/variables"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   # =====================================================================
   # DELETE /variables/<variable_id> - Delete Variable
@@ -885,7 +931,7 @@ Feature: Recovery Variables API
       | variable_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "DELETE" request to "/recovery/variables/{variable_id}"
     Then the response status code should be 400
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @delete @creator
   Scenario: DELETE should fail when authentication token is missing
@@ -898,4 +944,96 @@ Feature: Recovery Variables API
       | variable_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "DELETE" request to "/recovery/variables/{variable_id}"
     Then the response status code should be 401
-    And the response should match json schema "schemas/recovery_variables_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
+
+  # =====================================================================
+  # GET /variables/categorisation - Variable Categorisation
+  # =====================================================================
+
+  @positive @smoke @categorisation @creator
+  Scenario: Get variable categorisation for configured company_id
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    When I send a "GET" request to "/recovery/variables/categorisation"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/variables_categorisation_success_schema.json"
+    And the response body should contain field "output"
+    And the response body should contain field "message"
+
+  @positive @categorisation @creator
+  Scenario: Get variable categorisation with transaction target
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+      | target     | transaction  |
+    When I send a "GET" request to "/recovery/variables/categorisation"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/variables_categorisation_success_schema.json"
+    And the response body should contain field "output"
+
+  @positive @categorisation @creator
+  Scenario: Get variable categorisation with include_computed_variables true
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+    When I send a "GET" request to "/recovery/variables/categorisation"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/variables_categorisation_success_schema.json"
+
+  @positive @categorisation @creator
+  Scenario: Get variable categorisation with include_all_variables and include_derivable_variables
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id                  | {COMPANY_ID} |
+      | include_all_variables       | true         |
+      | include_derivable_variables | true         |
+    When I send a "GET" request to "/recovery/variables/categorisation"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/variables_categorisation_success_schema.json"
+
+  @negative @auth @categorisation @creator
+  Scenario: Variable categorisation should fail when authentication token is missing
+    And I set the request headers:
+      | accept       | application/json, text/plain, */* |
+      | x-company-id | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    When I send a "GET" request to "/recovery/variables/categorisation"
+    Then the response status code should be 401
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
+
+  @negative @categorisation @creator
+  Scenario: Variable categorisation should fail when company_id is missing
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    When I send a "GET" request to "/recovery/variables/categorisation"
+    Then the response status code should be 400
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
+
+  @negative @categorisation @creator
+  Scenario: Variable categorisation should fail when company_id does not exist
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | 00000000-0000-0000-0000-000000000000 |
+    And I set the query parameters:
+      | company_id | 00000000-0000-0000-0000-000000000000 |
+    When I send a "GET" request to "/recovery/variables/categorisation"
+    Then the response status code should be 403
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"

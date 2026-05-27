@@ -73,6 +73,7 @@ public class Hooks {
                 role
         );
 
+        testContext.setUserRole(role);
         authManager.initializeAuthentication(role);
     }
 
