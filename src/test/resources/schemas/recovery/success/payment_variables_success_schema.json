@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["variable_id", "variable_name", "variable_type", "data_type", "is_mandatory"],
+        "properties": {
+          "variable_id": { "type": "string", "minLength": 1 },
+          "variable_name": { "type": "string", "minLength": 1 },
+          "description": { "type": "string" },
+          "is_mandatory": { "type": "boolean" },
+          "is_mandatory_field_editable": { "type": "boolean" },
+          "is_allocation_variable": { "type": "boolean" },
+          "is_transaction_variable": { "type": "boolean" },
+          "variable_type": { "type": "string", "minLength": 1 },
+          "data_type": { "type": "string", "minLength": 1 },
+          "is_editable": { "type": "boolean" },
+          "allow_negative": { "type": "boolean" },
+          "allowed_values": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "exclude_during_add_payment": { "type": "boolean" },
+          "length_constr": { "type": "integer" },
+          "is_trackable": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "message": { "type": "string", "minLength": 1 },
+    "message_template": { "type": "string" },
+    "message_placeholder": { "type": "object" }
+  },
+  "additionalProperties": true
+}

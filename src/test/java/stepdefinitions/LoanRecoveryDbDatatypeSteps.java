@@ -24,21 +24,23 @@ public class LoanRecoveryDbDatatypeSteps {
 
     @Then(
             "DB column {string} in table {string} should have datatype {string} " +
-                    "and match API field {string} for loan {string}"
+                    "and match API field {string} for loan {string} and company {string}"
     )
     public void validateDbDatatypeAndValue(
             String dbColumn,
             String tableName,
             String expectedDbType,
             String jsonPath,
-            String loanId
+            String loanId,
+            String companyId
     ) {
         Response response = testContext.getResponse();
         if (response == null) {
             throw new IllegalStateException("No API response available. Send a request before DB validation.");
         }
 
-        DbClient.DbRow dbRow = dbClient.fetchSingleColumn(tableName, dbColumn, "loan_id", loanId);
+
+        DbClient.DbRow dbRow = dbClient.fetchSingleColumn(tableName, dbColumn, "loan_id", loanId, companyId);
 
         assertEquals(
                 sqlTypeToString(dbRow.sqlType()),

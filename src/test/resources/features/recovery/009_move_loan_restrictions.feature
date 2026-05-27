@@ -11,7 +11,7 @@ Feature: Move Loan Restriction
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 200
     And the response message should be "data fetched successfully"
-    And the response should match json schema "schemas/recovery_move_loan_restriction_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_move_loan_restriction_success_schema.json"
     And the response body should contain field "success"
     And the response body should contain field "message"
     And the response body should contain field "data"

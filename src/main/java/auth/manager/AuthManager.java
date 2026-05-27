@@ -7,9 +7,13 @@ import config.ConfigReader;
 import context.TestContext;
 import enums.Environment;
 import enums.UserRole;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class AuthManager {
+
+    private static final Logger logger = LogManager.getLogger(AuthManager.class);
 
     private final ConfigReader configReader;
     private final TestContext testContext;
@@ -62,5 +66,14 @@ public class AuthManager {
                 testContext.getAuthToken(),
                 testContext.getCompanyId()
         );
+    }
+
+    public void reAuthenticate(UserRole role) {
+        Environment env = configReader.getEnvironment();
+        String userType = configReader.getProperty("user_type");
+        int userSlot = testContext.getUserSlot();
+        logger.warn("Session expired for role={}, slot={}. Invalidating cache and re-authenticating.", role, userSlot);
+        authTokenCache.invalidate(env, role, userType, userSlot);
+        initializeAuthentication(role);
     }
 }

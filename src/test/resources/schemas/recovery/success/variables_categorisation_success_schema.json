@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/variableCategory"
+      }
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "variableCategory": {
+      "type": "object",
+      "properties": {
+        "loan_level": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/categoryVariable"
+          }
+        },
+        "allocation_level": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/categoryVariable"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "categoryVariable": {
+      "type": "object",
+      "required": [
+        "variable_id",
+        "variable_name",
+        "variable_type",
+        "data_type",
+        "active",
+        "is_default_variable",
+        "is_allocation_variable",
+        "is_mandatory",
+        "variable_category"
+      ],
+      "properties": {
+        "variable_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variable_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variable_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "data_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "is_default_variable": {
+          "type": "boolean"
+        },
+        "is_allocation_variable": {
+          "type": "boolean"
+        },
+        "is_mandatory": {
+          "type": "boolean"
+        },
+        "variable_category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variable_priority": {
+          "type": ["integer", "null"]
+        },
+        "is_dropdown": {
+          "type": "boolean"
+        },
+        "dropdown_values": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "string"
+          }
+        },
+        "calculation_formula": {
+          "type": ["string", "null"]
+        },
+        "sub_variables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/categoryVariable"
+          }
+        },
+        "is_top_level": {
+          "type": "boolean"
+        },
+        "created": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -73,6 +73,15 @@ public class ScenarioTestDataResolver {
         return configReader.getAllocationMonth();
     }
 
+    public String resolveVariableId() {
+        if (testContext.getScenarioVariableId() != null && !testContext.getScenarioVariableId().isBlank()) {
+            return testContext.getScenarioVariableId();
+        }
+        throw new IllegalStateException(
+                "Variable ID is not set. Use 'I store the created variable id from response' after a POST first."
+        );
+    }
+
     public String replaceScenarioPlaceholders(String text) {
         if (text == null) {
             return null;
@@ -83,6 +92,9 @@ public class ScenarioTestDataResolver {
         String allocationMonth = resolveAllocationMonth();
         if (allocationMonth != null && !allocationMonth.isBlank()) {
             result = result.replace(ContextKeys.ALLOCATION_MONTH, allocationMonth);
+        }
+        if (result.contains(ContextKeys.VARIABLE_ID)) {
+            result = result.replace(ContextKeys.VARIABLE_ID, resolveVariableId());
         }
         return result;
     }

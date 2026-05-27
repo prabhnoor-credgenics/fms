@@ -18,26 +18,26 @@ public final class SchemaHelper {
     private static final Map<String, String> REQUEST_BODY_MAPPINGS = new LinkedHashMap<>();
 
     static {
-        DEFAULT_MAPPINGS.put("/recovery/v1/loan", "schemas/loan_recovery_success_schema.json");
-        DEFAULT_MAPPINGS.put("/recovery/company", "schemas/recovery_company_success_schema.json");
-        DEFAULT_MAPPINGS.put("/recovery/global-status", "schemas/global_status_success_schema.json");
-        DEFAULT_MAPPINGS.put("/recovery/variables", "schemas/recovery_variables_success_schema.json");
-        DEFAULT_MAPPINGS.put("/recovery/loan-stage/config", "schemas/loan_stage_config_success_schema.json");
-        DEFAULT_MAPPINGS.put("/recovery/exports", "schemas/recovery_exports_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/v1/loan", "schemas/recovery/success/loan_recovery_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/company", "schemas/recovery/success/recovery_company_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/global-status", "schemas/global_status/success/global_status_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/variables", "schemas/recovery/success/recovery_variables_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/loan-stage/config", "schemas/recovery/success/loan_stage_config_success_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/exports", "schemas/recovery/success/recovery_exports_success_schema.json");
 
         
         
         
         
         REQUEST_BODY_MAPPINGS.put("test-data/loan_recovery_request.json",
-                "schemas/loan_upload_request_schema.json");
+                "schemas/request/loan_upload_request_schema.json");
         REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step1.json",
-                "schemas/company_creation_step1_request_schema.json");
+                "schemas/request/company_creation_step1_request_schema.json");
         REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step2.json",
-                "schemas/company_creation_step2_request_schema.json");
+                "schemas/request/company_creation_step2_request_schema.json");
         REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step3.json",
-                "schemas/company_creation_step3_request_schema.json");
-        DEFAULT_MAPPINGS.put("/recovery/loan/", "schemas/loan_recovery_success_schema.json");
+                "schemas/request/company_creation_step3_request_schema.json");
+        DEFAULT_MAPPINGS.put("/recovery/loan/", "schemas/recovery/success/loan_recovery_success_schema.json");
     }
 
     private SchemaHelper() {

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["company_details", "message"],
+  "properties": {
+    "company_details": {
+      "type": "object"
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

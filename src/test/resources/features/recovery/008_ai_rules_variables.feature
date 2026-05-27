@@ -14,6 +14,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 200
     And the response message should be "success"
+
     And the response should match json schema "schemas/recovery_ai_rules_variables_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "output[0].variable"
@@ -123,3 +124,4 @@ Feature: AI Rules Variables
     Then the response status code should be one of "400,401,403,404,422"
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "Session expired, please login again"
+
