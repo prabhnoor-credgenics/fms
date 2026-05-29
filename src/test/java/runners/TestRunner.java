@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 
 
 @CucumberOptions(
-        features = "src/test/resources/features/recovery/007_bulk_tasks.feature",
+        features = "src/test/resources/features/recovery/",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -26,7 +26,7 @@ import io.cucumber.testng.CucumberOptions;
         },
 
         monochrome = true,
-        tags = "@dbvalidationrecovery"
+        tags = "@api"
 
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

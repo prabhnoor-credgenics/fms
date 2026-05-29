@@ -114,7 +114,7 @@ Feature: Recovery Exports API
       | export_category  | loan,portfolio_data,portfolio_allocated_users     |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be one of "400,401,403,404,422"
-    And the response should match json schema "schemas/recovery_exports_error_schema.json"
+    And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
 
     
     

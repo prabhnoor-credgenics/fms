@@ -968,5 +968,5 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | lending_loan_details   | applicant_cibil_score   | INTEGER   | applicant_cibil_score         |
       | lending_loan_details   | tenure_finished         | BOOLEAN   | tenure_finished               |
       | lending_loan_details   | interest_on_loan        | NUMERIC   | interest_on_loan              |
-      | lending_loan_details   | applicant_email         | VARCHAR   | applicant_email               |
+      | lending_loan_details   | applicant_email         | VARCHAR   | applicant_email_details[0].applicant_email |
 
