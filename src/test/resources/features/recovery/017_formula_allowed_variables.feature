@@ -21,10 +21,10 @@ Feature: Formula Allowed Variables API
     When I send a "GET" request to "/recovery/formula/allowed-variables"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/formula_allowed_variables_success_schema.json"
-    And the response body should contain field "output"
+    And the response body should contain field "data"
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @chief-admin
   Scenario: Get formula allowed variables for number variable type
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -36,9 +36,9 @@ Feature: Formula Allowed Variables API
     When I send a "GET" request to "/recovery/formula/allowed-variables"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/formula_allowed_variables_success_schema.json"
-    And the response body should contain field "output"
+    And the response body should contain field "data"
 
-  @positive @creator
+  @positive @chief-admin
   Scenario: Get formula allowed variables with variable_level loan
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -51,9 +51,9 @@ Feature: Formula Allowed Variables API
     When I send a "GET" request to "/recovery/formula/allowed-variables"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/formula_allowed_variables_success_schema.json"
-    And the response body should contain field "output"
+    And the response body should contain field "data"
 
-  @positive @creator
+  @positive @chief-admin
   Scenario: Get formula allowed variables for date variable type
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -65,9 +65,9 @@ Feature: Formula Allowed Variables API
     When I send a "GET" request to "/recovery/formula/allowed-variables"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/formula_allowed_variables_success_schema.json"
-    And the response body should contain field "output"
+    And the response body should contain field "data"
 
-  @positive @performance @creator
+  @positive @performance @chief-admin
   Scenario: Formula allowed variables GET response time should be within threshold
     And I set the request headers:
       | accept               | application/json, text/plain, */* |

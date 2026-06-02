@@ -5,7 +5,7 @@ Feature: Loan Stage Config API
     Given scenario company id is from configuration
     And I prepare a request
 
-  @positive @smoke @creator
+  @positive @smoke @chief-admin
   Scenario: Get loan stage config for configured company_id
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -25,7 +25,7 @@ Feature: Loan Stage Config API
    # And loan stage config company_id should match requested company
     And the response time should be within configured limit
 
-  @positive @performance @creator
+  @positive @performance @chief-admin
   Scenario: Loan stage config API response time should be within threshold
     And I set the request headers:
       | accept               | application/json, text/plain, */* |

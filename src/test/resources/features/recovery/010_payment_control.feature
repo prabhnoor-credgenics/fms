@@ -1,3 +1,4 @@
+@api @payment-control @recovery
 Feature: Payment Control
 
   Scenario: Verify get payment control request

@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 
 
 @CucumberOptions(
-        features = "src/test/resources/features/recovery/007_bulk_tasks.feature",
+        features = "src/test/resources/features/recovery/",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -20,13 +20,14 @@ import io.cucumber.testng.CucumberOptions;
                 "validators"
         },
         plugin = {
-
                 "pretty",
-                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+                "hooks.ThreadStatsListener",
+                "rerun:rerun/failedrerun.txt"
         },
 
         monochrome = true,
-        tags = "@dbvalidationrecovery"
+        tags = "@testyop"
 
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

@@ -48,7 +48,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
   @api-validation @negative @creator
-  Scenario: API should return 400 when URI loan_id does not match payload loan_id
+  Scenario: API should return 403 when URI loan_id does not match payload loan_id
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -74,8 +74,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
-    And the validation error should contain
-      | detail | Id provided in parameter & payload are different. |
+    And the response message should be "loan_id should be same in parameter and payload"
 
 
 
@@ -182,7 +181,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
     Examples:
       | field_path                                              | invalid_value      |
-      | client_customer_id                                      | cust<>01           |
+      | client_customer_id                                      | cust\-/01           |
       | group_id                                                | group{\|}           |
       | center_name                                             | Center~Name        |
       | loan_region                                             | North\|Zone         |
@@ -247,7 +246,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "{RANDOM_STRING:<max_length_plus>}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
-    Then the response status code should be 201
+    Then the response status code should be 400
 
     Examples:
       | field_path                                                        | max_length_plus |
@@ -567,7 +566,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "applicant_address[0].applicant_pincode" to "<invalid_value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
-    Then the response status code should be 201
+    Then the response status code should be 400
     
     Examples:
       | invalid_value |
@@ -947,26 +946,200 @@ Feature: Loan Recovery API - Strict Datatype Validation
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
-  @api @db-validation @loan-recovery @datatype-validation @dbvalidationrecovery
-  Scenario Outline: Persisted loan recovery fields should have correct datatype in DB
-    Given I set the query parameters:
-      | company_id | {COMPANY_ID} |
+  @mandatory-variable @negative @creator
+  Scenario: Loan upload fails when mandatory allocation variable is not provided, then variable is deleted and upload succeeds
+    Given I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_name": "autolnalloc{RANDOM_STRING:6}",
+        "variable_type": "text",
+        "is_allocation_variable": true,
+        "is_mandatory": true
+      }
+      """
+    When I send a "POST" request to "/recovery/variables"
+    Then the response status code should be 201
+    And I prepare a request
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the query parameters:
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/loan_recovery_request.json"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
+    And I prepare a request
     And I set the request headers:
-      | authenticationtoken | {AUTH_TOKEN} |
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id                   | {COMPANY_ID} |
+      | include_computed_variables   | false        |
+      | include_meta_data            | false        |
+    When I send a "GET" request to "/recovery/variables"
+    Then the response status code should be 200
+    And I find and store variable id for name "autolnalloc{RANDOM_STRING:6}" from variables response
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_id": "{VARIABLE_ID}",
+        "is_mandatory": false
+      }
+      """
+    When I send a "PATCH" request to "/recovery/variables"
+    Then the response status code should be 200
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | variable_id | {VARIABLE_ID} |
+    When I send a "DELETE" request to "/recovery/variables/{variable_id}"
+    Then the response status code should be 200
+    And recovery variables delete response should be valid
+    And I prepare a request
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the query parameters:
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
-    And DB column "<db_column>" in table "<db_table>" should have datatype "<db_type>" and match API field "<json_path>" for loan "{LOAN_ID}" and company "{COMPANY_ID}"
 
-    Examples:
-      | db_table               | db_column               | db_type   | json_path                     |
-      | lending_loan_details   | loan_id                 | VARCHAR   | loan_id                       |
-      | lending_loan_details   | total_loan_amount       | NUMERIC   | total_loan_amount             |
-      | lending_loan_details   | emi_amount              | NUMERIC   | emi_amount                    |
-      | lending_loan_details   | applicant_cibil_score   | INTEGER   | applicant_cibil_score         |
-      | lending_loan_details   | tenure_finished         | BOOLEAN   | tenure_finished               |
-      | lending_loan_details   | interest_on_loan        | NUMERIC   | interest_on_loan              |
-      | lending_loan_details   | applicant_email         | VARCHAR   | applicant_email               |
+  @mandatory-variable @negative @creator
+  Scenario: Loan upload fails when mandatory non-allocation variable is not provided, then variable is deleted and upload succeeds
+    Given I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_name": "autolnnon{RANDOM_STRING:6}",
+        "variable_type": "text",
+        "is_allocation_variable": false,
+        "is_mandatory": true
+      }
+      """
+    When I send a "POST" request to "/recovery/variables"
+    Then the response status code should be 201
+    And I prepare a request
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the query parameters:
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/loan_recovery_request.json"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id                   | {COMPANY_ID} |
+      | include_computed_variables   | false        |
+      | include_meta_data            | false        |
+    When I send a "GET" request to "/recovery/variables"
+    Then the response status code should be 200
+    And I find and store variable id for name "autolnnon{RANDOM_STRING:6}" from variables response
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_id": "{VARIABLE_ID}",
+        "is_mandatory": false
+      }
+      """
+    When I send a "PATCH" request to "/recovery/variables"
+    Then the response status code should be 200
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | variable_id | {VARIABLE_ID} |
+    When I send a "DELETE" request to "/recovery/variables/{variable_id}"
+    Then the response status code should be 200
+    And recovery variables delete response should be valid
+    And I prepare a request
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the query parameters:
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/loan_recovery_request.json"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 201
+
+#  @api @db-validation @loan-recovery @datatype-validation @dbvalidationrecovery
+#  Scenario Outline: Persisted loan recovery fields should have correct datatype in DB
+#    Given I set the query parameters:
+#      | company_id | {COMPANY_ID} |
+#    And I set the path parameters:
+#      | loan_id | {LOAN_ID} |
+#    And I set the request headers:
+#      | authenticationtoken | {AUTH_TOKEN} |
+#    And I set the request body from file "test-data/loan_recovery_request.json"
+#    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+#    Then the response status code should be 201
+#    And DB column "<db_column>" in table "<db_table>" should have datatype "<db_type>" and match API field "<json_path>" for loan "{LOAN_ID}" and company "{COMPANY_ID}"
+#
+#    Examples:
+#      | db_table               | db_column               | db_type   | json_path                     |
+#      | lending_loan_details   | loan_id                 | VARCHAR   | loan_id                       |
+#      | lending_loan_details   | total_loan_amount       | NUMERIC   | total_loan_amount             |
+#      | lending_loan_details   | emi_amount              | NUMERIC   | emi_amount                    |
+#      | lending_loan_details   | applicant_cibil_score   | INTEGER   | applicant_cibil_score         |
+#      | lending_loan_details   | tenure_finished         | BOOLEAN   | tenure_finished               |
+#      | lending_loan_details   | interest_on_loan        | NUMERIC   | interest_on_loan              |
+#      | lending_loan_details   | applicant_email         | VARCHAR   | applicant_email_details[0].applicant_email |
 

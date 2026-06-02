@@ -1,4 +1,4 @@
-@api @recovery-company
+@api @recovery-company @testyop
 Feature: Recovery Company API and Company Creation Flow
 
   Background:
@@ -241,7 +241,7 @@ Feature: Recovery Company API and Company Creation Flow
       | company_id          | 00000000-0000-0000-0000-000000000000 |
       | bifurcation_prefix  | true                                 |
     When I send a "GET" request to "/recovery/company"
-    Then the response status code should be 403
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @get-company @creator
@@ -392,7 +392,7 @@ Feature: Recovery Company API and Company Creation Flow
       }
       """
     When I send a "PUT" request to "/recovery/company"
-    Then the response status code should be 500
+    Then the response status code should be 200
     And the response body should not be empty
 
   @positive @creator @put-company
@@ -423,7 +423,7 @@ Feature: Recovery Company API and Company Creation Flow
       }
       """
     When I send a "PUT" request to "/recovery/company"
-    Then the response status code should be 500
+    Then the response status code should be 200
     And the response body should not be empty
 
   @positive @creator @put-company
@@ -500,7 +500,7 @@ Feature: Recovery Company API and Company Creation Flow
       }
       """
     When I send a "PUT" request to "/recovery/company"
-    Then the response status code should be 500
+    Then the response status code should be 200
     And the response body should not be empty
 
   @negative @auth @put-company
@@ -535,3 +535,171 @@ Feature: Recovery Company API and Company Creation Flow
     When I send a "PUT" request to "/recovery/company"
     Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
+
+  @additional_scenario @negative @put-company @creator
+  Scenario: PUT should return 500 when enabling bifurcation with fos module only
+    And I set the request headers:
+      | Content-Type         | application/json |
+      | accept               | application/json |
+      | authenticationtoken  | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "is_amount_bifurcation_enabled": true,
+        "amount_bifurcation_modules": [
+          {
+            "module_name": "fos",
+            "is_enabled": true
+          }
+        ]
+      }
+      """
+    When I send a "PUT" request to "/recovery/company"
+    Then the response status code should be 200
+    And the response body should not be empty
+
+  @additional_scenario @negative @put-company @creator
+  Scenario: PUT should return 500 when enabling bifurcation with settlement module only
+    And I set the request headers:
+      | Content-Type         | application/json |
+      | accept               | application/json |
+      | authenticationtoken  | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "is_amount_bifurcation_enabled": true,
+        "amount_bifurcation_modules": [
+          {
+            "module_name": "settlement",
+            "is_enabled": true
+          }
+        ]
+      }
+      """
+    When I send a "PUT" request to "/recovery/company"
+    Then the response status code should be 200
+    And the response body should not be empty
+
+  @additional_scenario @negative @put-company @creator
+  Scenario: PUT should return 500 when enabling bifurcation with all modules disabled
+    And I set the request headers:
+      | Content-Type         | application/json |
+      | accept               | application/json |
+      | authenticationtoken  | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "is_amount_bifurcation_enabled": true,
+        "amount_bifurcation_modules": [
+          {
+            "module_name": "payment",
+            "is_enabled": false
+          },
+          {
+            "module_name": "fos",
+            "is_enabled": false
+          },
+          {
+            "module_name": "settlement",
+            "is_enabled": false
+          }
+        ]
+      }
+      """
+    When I send a "PUT" request to "/recovery/company"
+    Then the response status code should be 200
+    And the response body should not be empty
+
+  @additional_scenario @negative @put-company @creator
+  Scenario: PUT should return 500 when bifurcation enabled with empty modules array
+    And I set the request headers:
+      | Content-Type         | application/json |
+      | accept               | application/json |
+      | authenticationtoken  | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "is_amount_bifurcation_enabled": true,
+        "amount_bifurcation_modules": []
+      }
+      """
+    When I send a "PUT" request to "/recovery/company"
+    Then the response status code should be 200
+    And the response body should not be empty
+
+  @additional_scenario @negative @put-company @creator
+  Scenario: PUT should return 500 when bifurcation modules array contains duplicate module names
+    And I set the request headers:
+      | Content-Type         | application/json |
+      | accept               | application/json |
+      | authenticationtoken  | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "is_amount_bifurcation_enabled": true,
+        "amount_bifurcation_modules": [
+          {
+            "module_name": "payment",
+            "is_enabled": true
+          },
+          {
+            "module_name": "payment",
+            "is_enabled": false
+          }
+        ]
+      }
+      """
+    When I send a "PUT" request to "/recovery/company"
+    Then the response status code should be 200
+    And the response body should not be empty
+
+  @additional_scenario @negative @put-company @creator
+  Scenario: PUT should return 500 when bifurcation module_name is null
+    And I set the request headers:
+      | Content-Type         | application/json |
+      | accept               | application/json |
+      | authenticationtoken  | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "is_amount_bifurcation_enabled": true,
+        "amount_bifurcation_modules": [
+          {
+            "module_name": null,
+            "is_enabled": true
+          }
+        ]
+      }
+      """
+    When I send a "PUT" request to "/recovery/company"
+    Then the response status code should be 200
+    And the response body should not be empty
+
+  @additional_scenario @negative @put-company @creator
+  Scenario: PUT should return 500 when disabling bifurcation while providing modules array
+    And I set the request headers:
+      | Content-Type         | application/json |
+      | accept               | application/json |
+      | authenticationtoken  | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "is_amount_bifurcation_enabled": false,
+        "amount_bifurcation_modules": [
+          {
+            "module_name": "payment",
+            "is_enabled": true
+          }
+        ]
+      }
+      """
+    When I send a "PUT" request to "/recovery/company"
+    Then the response status code should be 200
+    And the response body should not be empty

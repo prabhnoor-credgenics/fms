@@ -21,6 +21,12 @@ public class ParallelUserAllocator {
 
 
     public void allocateForCurrentThread(TestContext testContext) {
+        if (configReader.isSingleUserMode()) {
+            testContext.setUserSlot(0);
+            logger.info("Thread '{}' using shared single-user slot (single-user mode)",
+                    Thread.currentThread().getName());
+            return;
+        }
         int poolSize = configReader.getParallelUserPoolSize();
         int slot = resolveSlotForCurrentThread(poolSize);
         testContext.setUserSlot(slot);

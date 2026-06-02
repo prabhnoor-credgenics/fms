@@ -1,3 +1,4 @@
+@api @move-loan-restrictions @recovery
 Feature: Move Loan Restriction
 
   Scenario: Verify get move loan restriction variables request

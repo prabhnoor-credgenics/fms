@@ -41,19 +41,14 @@ public class UserCredentialsResolver {
                 password = configReader.getProperty(envKey(env, "approver.user." + slot + ".password"));
             }
         } else {
-            if (slot == 0) {
-                email = firstNonBlank(
-                        configReader.getProperty(envKey(env, "email")),
-                        configReader.getProperty(envKey(env, "user.0.email"))
-                );
-                password = firstNonBlank(
-                        configReader.getProperty(envKey(env, "password")),
-                        configReader.getProperty(envKey(env, "user.0.password"))
-                );
-            } else {
-                email = configReader.getProperty(envKey(env, "user." + slot + ".email"));
-                password = configReader.getProperty(envKey(env, "user." + slot + ".password"));
-            }
+            email = firstNonBlank(
+                    configReader.getProperty(envKey(env, "user.email")),
+                    configReader.getProperty(envKey(env, "email"))
+            );
+            password = firstNonBlank(
+                    configReader.getProperty(envKey(env, "user.password")),
+                    configReader.getProperty(envKey(env, "password"))
+            );
         }
 
         validatePresent(email, password, env, role, slot);
@@ -79,16 +74,9 @@ public class UserCredentialsResolver {
         if (email == null || email.isBlank() || password == null || password.isBlank()) {
             String hint = credentialPropertyHint(env, role, slot);
             String envFile = env.name().toLowerCase() + ".properties";
-            int poolSize = configReader.getParallelUserPoolSize();
-            int threadCount = configReader.getParallelThreadCount();
             throw new IllegalStateException(
-                    "Missing parallel user credentials for slot " + slot + ". "
-                            + "Configure " + hint + " in src/main/resources/" + envFile + ". "
-                            + "parallel.user.pool.size=" + poolSize
-                            + " requires " + poolSize + " distinct user(s) for slots 0.."
-                            + (poolSize - 1) + ". "
-                            + "testng-parallel.xml thread-count is " + threadCount
-                            + " — keep pool size and thread-count equal."
+                    "Missing credentials for env=" + env + ", role=" + role + ". "
+                            + "Configure " + hint + " in src/main/resources/" + envFile + "."
             );
         }
     }
@@ -105,11 +93,7 @@ public class UserCredentialsResolver {
             }
             return envPrefix + ".approver.user." + slot + ".email / " + envPrefix + ".approver.user." + slot + ".password";
         }
-        if (slot == 0) {
-            return envPrefix + ".email / " + envPrefix + ".password "
-                    + "(or " + envPrefix + ".user.0.email)";
-        }
-        return envPrefix + ".user." + slot + ".email / " + envPrefix + ".user." + slot + ".password";
+        return envPrefix + ".user.email / " + envPrefix + ".user.password";
     }
 
     private static String maskEmail(String email) {
