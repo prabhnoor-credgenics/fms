@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LinkedLoansSuccessResponse",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "const": "success"
+    },
+    "output": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["linked_loan_id", "loan_ids"],
+        "properties": {
+          "linked_loan_id": {
+            "type": "string"
+          },
+          "loan_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
