@@ -10,10 +10,15 @@ import enums.UserRole;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.concurrent.ConcurrentHashMap;
 
 public class AuthManager {
 
     private static final Logger logger = LogManager.getLogger(AuthManager.class);
+
+    // Per-(env,role,userType,slot) lock prevents concurrent logins with the same credentials,
+    // which would cause the server to invalidate the earlier session token.
+    private static final ConcurrentHashMap<String, Object> LOGIN_LOCKS = new ConcurrentHashMap<>();
 
     private final ConfigReader configReader;
     private final TestContext testContext;
@@ -40,6 +45,7 @@ public class AuthManager {
         Environment env = configReader.getEnvironment();
         int userSlot = testContext.getUserSlot();
 
+        // Fast path: cached token available
         AuthTokenCache.CachedSession cached = authTokenCache.getIfValid(env, role, userType, userSlot);
         if (cached != null) {
             testContext.setAuthToken(cached.authToken());
@@ -49,23 +55,31 @@ public class AuthManager {
             return;
         }
 
-        switch (userType.toLowerCase()) {
-            case "user" -> userLoginService.performUserLogin(env, role, userSlot);
-            case "api_key_single_company" -> apiKeyService.generateSingleCompanyApiKey(env);
-            case "api_key_multiple_companies" -> apiKeyService.loadMultiCompanyApiKey(env);
-            default -> throw new RuntimeException(
-                    "Invalid user_type in global.properties (expected: user | api_key_single_company | api_key_multiple_companies)"
-            );
-        }
+        // Slow path: serialize logins for the same key so that only one thread logs in
+        // while others wait and then read from the cache (double-checked locking).
+        String lockKey = env + ":" + role + ":" + userType + ":" + userSlot;
+        Object lock = LOGIN_LOCKS.computeIfAbsent(lockKey, k -> new Object());
+        synchronized (lock) {
+            cached = authTokenCache.getIfValid(env, role, userType, userSlot);
+            if (cached != null) {
+                testContext.setAuthToken(cached.authToken());
+                if (cached.companyId() != null) {
+                    testContext.setCompanyId(cached.companyId());
+                }
+                return;
+            }
 
-        authTokenCache.put(
-                env,
-                role,
-                userType,
-                userSlot,
-                testContext.getAuthToken(),
-                testContext.getCompanyId()
-        );
+            switch (userType.toLowerCase()) {
+                case "user" -> userLoginService.performUserLogin(env, role, userSlot);
+                case "api_key_single_company" -> apiKeyService.generateSingleCompanyApiKey(env);
+                case "api_key_multiple_companies" -> apiKeyService.loadMultiCompanyApiKey(env);
+                default -> throw new RuntimeException(
+                        "Invalid user_type in global.properties (expected: user | api_key_single_company | api_key_multiple_companies)"
+                );
+            }
+
+            authTokenCache.put(env, role, userType, userSlot, testContext.getAuthToken(), testContext.getCompanyId());
+        }
     }
 
     public void reAuthenticate(UserRole role) {

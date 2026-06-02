@@ -4,8 +4,6 @@ import java.security.SecureRandom;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public final class RandomDataHelper {
@@ -37,19 +35,9 @@ public final class RandomDataHelper {
             "Roy", "Saxena", "Chatterjee", "Banerjee"
     };
 
-    private static final AtomicInteger COUNTER = new AtomicInteger(100000);
-
     public static String generateRandomEmail() {
-
-        // Pick random first name
-        String firstName =
-                FIRST_NAMES[RANDOM.nextInt(FIRST_NAMES.length)].toLowerCase();
-
-        // Increasing number
-        int number = COUNTER.getAndIncrement();
-
-        // Create email
-        return firstName + number + "@yopmail.com";
+        String firstName = FIRST_NAMES[RANDOM.nextInt(FIRST_NAMES.length)].toLowerCase();
+        return firstName + shortUuid() + "@yopmail.com";
     }
 
     private RandomDataHelper() {

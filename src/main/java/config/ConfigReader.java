@@ -296,6 +296,10 @@ public class ConfigReader {
         return Boolean.parseBoolean(getProperty("parallel.execution.enabled", "false"));
     }
 
+    public boolean isSingleUserMode() {
+        return Boolean.parseBoolean(getProperty("auth.single.user.mode", "false"));
+    }
+
 
     public boolean isCiMode() {
         return Boolean.parseBoolean(System.getProperty("ci.mode", getProperty("ci.mode", "false")));

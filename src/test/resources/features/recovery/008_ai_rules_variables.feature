@@ -1,3 +1,4 @@
+@api @ai-rules-variables @recovery
 Feature: AI Rules Variables
 
   @positive1

@@ -9,7 +9,7 @@ Feature: Company Amount Bifurcation Variables API
   # GET /company/amount-bifurcation
   # =====================================================================
 
-  @positive @smoke @creator
+  @positive @smoke @chief-admin
   Scenario: Get amount bifurcation variables for configured company_id
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -22,7 +22,7 @@ Feature: Company Amount Bifurcation Variables API
     And the response should match json schema "schemas/recovery/success/amount_bifurcation_success_schema.json"
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @chief-admin
   Scenario: Get amount bifurcation variables with bifurcation_prefix true
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -35,7 +35,7 @@ Feature: Company Amount Bifurcation Variables API
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/amount_bifurcation_success_schema.json"
 
-  @positive @creator
+  @positive @chief-admin
   Scenario: Get amount bifurcation variables with include_deleted true
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -48,7 +48,7 @@ Feature: Company Amount Bifurcation Variables API
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/amount_bifurcation_success_schema.json"
 
-  @positive @performance @creator
+  @positive @performance @chief-admin
   Scenario: Amount bifurcation GET response time should be within threshold
     And I set the request headers:
       | accept               | application/json, text/plain, */* |

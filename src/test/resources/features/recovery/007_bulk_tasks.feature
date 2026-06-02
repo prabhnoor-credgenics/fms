@@ -1,3 +1,4 @@
+@api @bulk-tasks @recovery
 Feature: Bulk tasks API
 
   @chief-admin

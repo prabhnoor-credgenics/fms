@@ -1,3 +1,4 @@
+@api @saved-filters @recovery
 Feature: Saved Filter API
 
   @positive1

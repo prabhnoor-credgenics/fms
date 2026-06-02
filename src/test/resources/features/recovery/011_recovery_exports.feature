@@ -5,7 +5,7 @@ Feature: Recovery Exports API
     Given scenario company id is from configuration
     And I prepare a request
 
-  @positive @smoke @creator
+  @positive @smoke @chief-admin
   Scenario: List recovery exports for configured company_id
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -28,7 +28,7 @@ Feature: Recovery Exports API
    # And recovery exports page should respect page size 10
     And the response time should be within configured limit
 
-  @positive @performance @creator
+  @positive @performance @chief-admin
   Scenario: Recovery exports API response time should be within threshold
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -116,9 +116,7 @@ Feature: Recovery Exports API
     Then the response status code should be one of "400,401,403,404,422"
     And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
 
-    
-    
- @negative @creator
+  @negative @creator
   Scenario: API should fail when company_id query parameter is missing
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -151,5 +149,4 @@ Feature: Recovery Exports API
     When I send a "GET" request to "/recovery/global-status"
     Then the response status code should be one of "400,401,403,404,422"
     And the response should match json schema "schemas/invalid_schema.json"
- And the response body should contain field "message" with value "Session expired, please login again"
-    
+    And the response body should contain field "message" with value "Session expired, please login again"

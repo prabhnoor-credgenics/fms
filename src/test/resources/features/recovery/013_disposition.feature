@@ -1,3 +1,4 @@
+@api @disposition @recovery
 Feature: Disposition API
   @positive1
   Scenario: Verify get disposition request

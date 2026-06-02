@@ -186,6 +186,8 @@ public class ApiStepDefinitions {
     @Given("I update JSON field {string} to {string}")
     public void i_update_json_field_to(String jsonPath, String value) {
         updateJsonFieldInternal(jsonPath, value);
+        logger.info(jsonPath);
+        logger.info(value);
     }
 
     @Given("I update JSON field {string} to null")
@@ -425,12 +427,14 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         Map<String, String> actual = activeResponse().jsonPath().getMap("error");
 
         softAssert.assertNotNull(actual, "Error data is null in response");
-        expected.forEach((key, value) -> {
-            softAssert.assertTrue(actual.containsKey(key), "Missing error key: " + key);
-            if (actual.containsKey(key)) {
-                softAssert.assertEquals(actual.get(key), value, "Mismatch for error key: " + key);
-            }
-        });
+        if (actual != null) {
+            expected.forEach((key, value) -> {
+                softAssert.assertTrue(actual.containsKey(key), "Missing error key: " + key);
+                if (actual.containsKey(key)) {
+                    softAssert.assertEquals(actual.get(key), value, "Mismatch for error key: " + key);
+                }
+            });
+        }
         softAssert.assertAll();
     }
 
@@ -468,6 +472,17 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
     @Then("the response status code should be one of {string}")
     public void the_response_status_code_should_be_one_of(String statusCodes) {
         AssertionHelper.assertStatusCodeOneOf(activeResponse(), statusCodes);
+    }
+
+    @Then("the response status code should be in 2xx or 4xx range")
+    public void the_response_status_code_should_be_in_2xx_or_4xx_range() {
+        int statusCode = activeResponse().getStatusCode();
+        boolean isAcceptable = (statusCode >= 200 && statusCode < 300) || (statusCode >= 400 && statusCode < 500);
+        org.hamcrest.MatcherAssert.assertThat(
+            "Expected 2xx or 4xx status code but got " + statusCode + " — API returned a 5xx error which indicates a server-side failure",
+            isAcceptable,
+            org.hamcrest.Matchers.is(true)
+        );
     }
 
     @Then("the response body should contain field {string} with value {string}")

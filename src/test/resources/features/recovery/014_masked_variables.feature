@@ -34,7 +34,7 @@ Feature: Masked Variables API
       | return_variable_names | true         |
     When I send a "GET" request to "/recovery/masked-variables"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/masked_variables_success_schema.json"
+    And the response should match json schema "schemas/recovery/success/masked_variables_with_names_success_schema.json"
     And the response body should contain field "output"
 
   @positive @performance @creator

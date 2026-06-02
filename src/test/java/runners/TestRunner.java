@@ -20,13 +20,14 @@ import io.cucumber.testng.CucumberOptions;
                 "validators"
         },
         plugin = {
-
                 "pretty",
-                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+                "hooks.ThreadStatsListener",
+                "rerun:rerun/failedrerun.txt"
         },
 
         monochrome = true,
-        tags = "@api"
+        tags = "@testyop"
 
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

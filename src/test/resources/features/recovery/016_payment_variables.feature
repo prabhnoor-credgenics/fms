@@ -9,7 +9,7 @@ Feature: Payment Variables API
   # GET /payment/variables
   # =====================================================================
 
-  @positive @smoke @creator
+  @positive @smoke @chief-admin
   Scenario: Get payment variables configuration for configured company_id
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -20,10 +20,10 @@ Feature: Payment Variables API
     When I send a "GET" request to "/recovery/payment/variables"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/payment_variables_success_schema.json"
-    And the response body should contain field "output"
+    And the response body should contain field "data"
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @chief-admin
   Scenario: Get payment variables with variables_required true
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -35,9 +35,9 @@ Feature: Payment Variables API
     When I send a "GET" request to "/recovery/payment/variables"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/payment_variables_success_schema.json"
-    And the response body should contain field "output"
+    And the response body should contain field "data"
 
-  @positive @performance @creator
+  @positive @performance @chief-admin
   Scenario: Payment variables GET response time should be within threshold
     And I set the request headers:
       | accept               | application/json, text/plain, */* |

@@ -65,7 +65,10 @@ public class CompanyCreationStepDefinitions {
 
     @Given("company creation steps 1 and 2 are completed")
     public void company_creation_steps_1_and_2_are_completed() {
-        company_creation_step_1_is_completed();
+        company_creation_test_data_is_prepared();
+        Response step1 = companyCreationService.createCompanyStep1();
+        companyCreationValidator.validateSchema(step1, SCHEMA_COMPANY_STEP1_SUCCESS);
+        companyCreationValidator.extractAndStoreStep1(step1);
         Response step2 = companyCreationService.createCompanyStep2();
         companyCreationValidator.validateSchema(step2, SCHEMA_COMPANY_STEP2_SUCCESS);
         companyCreationValidator.validateStep2(step2);
