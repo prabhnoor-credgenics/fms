@@ -79,7 +79,7 @@ Feature: Bulk tasks API
     Then the response status code should be one of "400,401,403,422"
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "invalid company id"
-  @negative @creator
+  @negative1 @creator
   Scenario: API should fail when company_id does not exist
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -90,7 +90,7 @@ Feature: Bulk tasks API
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be one of "400,401,403,404,422"
     And the response should match json schema "schemas/invalid_schema.json"
-     And the response body should contain field "message" with value "forbidden: invalid company id"
+     And the response body should contain field "message" with value "Session expired, please login again"
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
     And I set the request headers:

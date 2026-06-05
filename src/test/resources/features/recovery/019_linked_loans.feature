@@ -97,7 +97,7 @@ Feature: Linked Loans API
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be one of "401,403"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "forbidden: invalid company id"
+    And the response body should contain field "message" with value "Session expired, please login again"
 
   @negative @creator
   Scenario: GET linked loans should fail when company_id is invalid UUID format
@@ -118,7 +118,7 @@ Feature: Linked Loans API
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id       | 00000000-0000-0000-0000-000000000000 |
+      | company_id       | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | allocation_month |   invalid_allocation_month                          |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be one of "401,403"

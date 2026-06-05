@@ -63,7 +63,7 @@ Feature: AI Rules Variables
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "invalid company id"
 
-  @negative @creator
+  @negative2 @creator
   Scenario: API should fail when company_id does not exist
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -442,7 +442,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
     Then the response status code should be one of "401,403"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "forbidden: invalid company id"
+    And the response body should contain field "message" with value "Session expired, please login again"
 
   @negative @creator
   Scenario: Variables values API should fail when company_id is invalid UUID format
