@@ -37,7 +37,7 @@ Feature: AI Rules Variables
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/ai-rules/variables"
-    Then the response status code should be one of "401"
+    Then the response status code should be 400
     And the response body should contain field "message" with value "Session expired, please login again"
 
   @negative @auth @creator
@@ -49,7 +49,7 @@ Feature: AI Rules Variables
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/ai-rules/variables"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
 
   @negative @creator
@@ -59,7 +59,7 @@ Feature: AI Rules Variables
       | authenticationtoken | {AUTH_TOKEN}                      |
       | x-company-id        | {COMPANY_ID}                      |
     When I send a "GET" request to "/recovery/ai-rules/variables"
-    Then the response status code should be one of "400,401,403,422"
+    Then the response status code should be 403
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "invalid company id"
 
@@ -72,7 +72,7 @@ Feature: AI Rules Variables
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/ai-rules/variables"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be 401
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "forbidden: invalid company id"
 
@@ -85,7 +85,7 @@ Feature: AI Rules Variables
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/ai-rules/variables"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be 401
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "Session expired, please login again"
 
@@ -96,7 +96,7 @@ Feature: AI Rules Variables
       | authenticationtoken | {AUTH_TOKEN}                      |
       | x-company-id        | {COMPANY_ID}                      |
     When I send a "GET" request to "/recovery/ai-rules/variables"
-    Then the response status code should be one of "400,401,403,422"
+    Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "invalid company id"
 
@@ -109,7 +109,7 @@ Feature: AI Rules Variables
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/ai-rules/variables"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "forbidden: invalid company id"
 
@@ -122,7 +122,7 @@ Feature: AI Rules Variables
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/ai-rules/variables"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "Session expired, please login again"
 
@@ -392,7 +392,7 @@ Feature: AI Rules Variables
       | company_id | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | key        | recovery_status                      |
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
-    Then the response status code should be one of "401"
+    Then the response status code should be 400
     And the response body should contain field "message" with value "Session expired, please login again"
 
   @negative @auth @creator
@@ -404,7 +404,7 @@ Feature: AI Rules Variables
       | company_id | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | key        | recovery_status                      |
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
 
   @negative @creator
@@ -415,7 +415,7 @@ Feature: AI Rules Variables
     And I set the query parameters:
       | key | recovery_status |
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
-    Then the response status code should be one of "400,401,403"
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "field is required"
 
@@ -427,7 +427,7 @@ Feature: AI Rules Variables
     And I set the query parameters:
       | company_id | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "field is required"
 
@@ -440,7 +440,7 @@ Feature: AI Rules Variables
       | company_id | 00000000-0000-0000-0000-000000000000 |
       | key        | recovery_status                      |
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "Session expired, please login again"
 
@@ -453,7 +453,7 @@ Feature: AI Rules Variables
       | company_id | invalid-company-id |
       | key        | recovery_status    |
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
-    Then the response status code should be one of "400,401,403"
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "Session expired, please login again"
 
@@ -481,6 +481,6 @@ Feature: AI Rules Variables
       | key          | recovery_status                      |
       | company_type | invalid_type                         |
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
-    Then the response status code should be one of "400"
+    Then the response status code should be 400
     
       

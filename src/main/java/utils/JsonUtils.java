@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 
@@ -14,19 +16,18 @@ public class JsonUtils {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
 
+    private static final String TEST_RESOURCES_PATH = "src/test/resources/";
+
     public static String readJsonFromFile(String filePath) {
-        try (InputStream inputStream = JsonUtils.class.getClassLoader().getResourceAsStream(filePath)) {
-            if (inputStream == null) {
-                logger.error("JSON file '{}' not found in resources", filePath);
-                throw new RuntimeException("JSON file not found: " + filePath);
-            }
+        File file = new File(TEST_RESOURCES_PATH + filePath);
+        try (InputStream inputStream = new FileInputStream(file)) {
             byte[] bytes = inputStream.readAllBytes();
             String jsonContent = new String(bytes);
-            logger.info("Successfully loaded JSON from file: {}", filePath);
+            logger.info("Successfully loaded JSON from file: {}", file.getPath());
             return jsonContent;
         } catch (Exception e) {
-            logger.error("Error reading JSON file '{}': {}", filePath, e.getMessage(), e);
-            throw new RuntimeException("Failed to read JSON file: " + filePath, e);
+            logger.error("Error reading JSON file '{}': {}", file.getPath(), e.getMessage(), e);
+            throw new RuntimeException("Failed to read JSON file: " + file.getPath(), e);
         }
     }
 

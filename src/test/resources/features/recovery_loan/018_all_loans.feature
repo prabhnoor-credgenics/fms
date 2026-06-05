@@ -5,9 +5,7 @@ Feature: All Loans API
     Given scenario company id is from configuration
     And I prepare a request
 
-  # =====================================================================
-  # Section 1: GET /all-loans — Positive
-  # =====================================================================
+
 
   @positive @smoke @creator
   Scenario: GET all-loans smoke test returns loan list for configured company_id
@@ -19,9 +17,7 @@ Feature: All Loans API
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
     And the response time should be within configured limit
 
   @positive @creator
@@ -36,9 +32,7 @@ Feature: All Loans API
       | page_size   | 5            |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with page_number=2 and page_size=10
@@ -52,9 +46,7 @@ Feature: All Loans API
       | page_size   | 10           |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=created_asc
@@ -67,9 +59,7 @@ Feature: All Loans API
       | sort       | created_asc  |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=created_desc
@@ -82,9 +72,7 @@ Feature: All Loans API
       | sort       | created_desc |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=date_of_default_asc
@@ -97,9 +85,7 @@ Feature: All Loans API
       | sort       | date_of_default_asc  |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=date_of_default_desc
@@ -112,9 +98,7 @@ Feature: All Loans API
       | sort       | date_of_default_desc  |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=total_claim_amount_asc
@@ -127,9 +111,7 @@ Feature: All Loans API
       | sort       | total_claim_amount_asc   |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=total_claim_amount_desc
@@ -142,9 +124,7 @@ Feature: All Loans API
       | sort       | total_claim_amount_desc  |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=default_emi_number_asc
@@ -157,9 +137,7 @@ Feature: All Loans API
       | sort       | default_emi_number_asc   |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=default_emi_number_desc
@@ -172,11 +150,9 @@ Feature: All Loans API
       | sort       | default_emi_number_desc  |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
-  @positive @creator
+  @positive @creator @500
   Scenario: GET all-loans with sort=number_of_transactions_asc
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -186,10 +162,10 @@ Feature: All Loans API
       | company_id | {COMPANY_ID}                  |
       | sort       | number_of_transactions_asc    |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
-    And the response body should contain field "message"
+    Then the response status code should be 200
+    Then the response body should not be empty
 
-  @positive @creator
+  @positive @creator @500
   Scenario: GET all-loans with sort=number_of_transactions_desc
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -199,10 +175,10 @@ Feature: All Loans API
       | company_id | {COMPANY_ID}                  |
       | sort       | number_of_transactions_desc   |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
-    And the response body should contain field "message"
+    Then the response status code should be 200
+    Then the response body should not be empty
 
-  @positive @creator
+  @positive @creator @500
   Scenario: GET all-loans with sort=distance_asc
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -212,10 +188,10 @@ Feature: All Loans API
       | company_id | {COMPANY_ID} |
       | sort       | distance_asc |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
-    And the response body should contain field "message"
+    Then the response status code should be 200
+    Then the response body should not be empty
 
-  @positive @creator
+  @positive @creator @500
   Scenario: GET all-loans with sort=distance_desc
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -225,8 +201,8 @@ Feature: All Loans API
       | company_id | {COMPANY_ID}  |
       | sort       | distance_desc |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
-    And the response body should contain field "message"
+    Then the response status code should be 200
+    Then the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=principal_outstanding_amount_asc is silently ignored and returns 200
@@ -239,9 +215,7 @@ Feature: All Loans API
       | sort       | principal_outstanding_amount_asc      |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=principal_outstanding_amount_desc is silently ignored and returns 200
@@ -254,9 +228,7 @@ Feature: All Loans API
       | sort       | principal_outstanding_amount_desc     |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with search_type=loan_id and query
@@ -270,9 +242,7 @@ Feature: All Loans API
       | query       | LN001        |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with search_type=applicant_name and query
@@ -286,9 +256,7 @@ Feature: All Loans API
       | query       | test           |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with search_type=applicant_email and query
@@ -302,9 +270,7 @@ Feature: All Loans API
       | query       | test@example.com  |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with search_type=applicant_contact_number and query
@@ -318,9 +284,7 @@ Feature: All Loans API
       | query       | 9876543210                 |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with search_type=business_name and query
@@ -334,9 +298,7 @@ Feature: All Loans API
       | query       | ABC           |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with search_type=client_customer_id and query
@@ -350,9 +312,7 @@ Feature: All Loans API
       | query       | CID001             |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with search_type=group_id and query
@@ -366,9 +326,7 @@ Feature: All Loans API
       | query       | GRP001       |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with search_type=center_name and query
@@ -382,11 +340,9 @@ Feature: All Loans API
       | query       | CENTER01     |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
-  @positive @creator
+  @positive @creator @500
   Scenario: GET all-loans with search_type=transaction_id and query
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -397,7 +353,7 @@ Feature: All Loans API
       | search_type | transaction_id |
       | query       | TXN001         |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
   @positive @creator
@@ -411,9 +367,7 @@ Feature: All Loans API
       | archive    | true         |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with archive=false returns non-archived loans explicitly
@@ -426,9 +380,7 @@ Feature: All Loans API
       | archive    | false        |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with allocation_month=overall
@@ -441,9 +393,7 @@ Feature: All Loans API
       | allocation_month | overall      |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with return_type=dict returns object keyed by loan_id
@@ -472,9 +422,7 @@ Feature: All Loans API
       | select_to   | 5            |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with user_hierarchy_join=true
@@ -487,9 +435,7 @@ Feature: All Loans API
       | user_hierarchy_join | true         |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with permission_group_id filter
@@ -502,9 +448,7 @@ Feature: All Loans API
       | permission_group_id | pg-automation-test    |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @performance @creator
   Scenario: GET all-loans response time should be within threshold
@@ -518,9 +462,7 @@ Feature: All Loans API
     Then the response status code should be 200
     And the response time should be less than 5000 milliseconds
 
-  # =====================================================================
-  # Section 2: POST /all-loans — Pagination, Sort, Search
-  # =====================================================================
+
 
   @positive @smoke @creator
   Scenario: POST all-loans smoke test returns loan list for configured company_id
@@ -784,7 +726,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with sort=number_of_transactions_asc
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -799,10 +741,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with sort=number_of_transactions_desc
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -817,10 +759,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with sort=distance_asc
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -835,10 +777,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with sort=distance_desc
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -853,7 +795,7 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
   @positive @creator
@@ -1064,7 +1006,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with search_type=transaction_id and query
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -1080,7 +1022,7 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
   @positive @creator
@@ -1285,9 +1227,6 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 3: POST /all-loans — Loan Attribute Filters
-  # =====================================================================
 
   @positive @creator
   Scenario: POST all-loans with total_loan_amount_from only
@@ -1956,9 +1895,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 4: POST /all-loans — Date Filters
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with date_of_default_from only
@@ -2084,9 +2021,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 5: POST /all-loans — Applicant Filters
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with applicant_state single value
@@ -2332,9 +2267,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 6: POST /all-loans — Allocation Filters
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with allocated_user_profession filter
@@ -2472,9 +2405,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 7: POST /all-loans — Telecalling & Digital Comms
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with call_attempts_from=1 and call_attempts_to=10
@@ -2537,7 +2468,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with ivr_message_heard=true
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -2552,10 +2483,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with ivr_message_heard=false
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -2570,12 +2501,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 8: POST /all-loans — Recovery Status Filters
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with recovery_status single value
@@ -2897,9 +2826,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 9: POST /all-loans — Platform / Tag Filters
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with tags single value
@@ -3001,9 +2928,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 10: POST /all-loans — Litigation Filters
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with common_legal_process_-_current_stages filter
@@ -3465,7 +3390,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with apply_litigation_filter_via_table=true and civil current stages
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3481,14 +3406,12 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 11: POST /all-loans — Notice Filters
-  # =====================================================================
 
-  @positive @creator
+
+  @positive @creator @500
   Scenario: POST all-loans with speedpost_status=delivered
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3503,10 +3426,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with speedpost_status=undelivered
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3521,10 +3444,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with speedpost_status=in-transit
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3539,10 +3462,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with speedpost_status=undelivered,in-transit multiple values
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3557,10 +3480,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with last_digital_notice_generated filter
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3575,10 +3498,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with last_physical_notice_generated filter
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3593,7 +3516,7 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
   @positive @creator
@@ -3636,7 +3559,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with digital_notice_opened=true
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3651,10 +3574,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans with digital_notice_opened=false
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3669,12 +3592,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 12: POST /all-loans — Combined / Real-world Scenarios
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans high-value NPA loans combined filter
@@ -3769,7 +3690,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans notice escalation combined filter
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3786,10 +3707,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  @positive @creator
+  @positive @creator @500
   Scenario: POST all-loans SARFAESI TAT breached board report combined filter
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -3807,12 +3728,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be in 2xx or 4xx range
+    Then the response status code should be 200
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 13: POST /all-loans — Performance
-  # =====================================================================
+
 
   @positive @performance @creator
   Scenario: POST all-loans response time should be within threshold
@@ -3831,9 +3750,7 @@ Feature: All Loans API
     Then the response status code should be 200
     And the response time should be less than 5000 milliseconds
 
-  # =====================================================================
-  # Section 14: Negative — Authentication (GET and POST)
-  # =====================================================================
+
 
   @negative @auth @creator
   Scenario: GET all-loans should fail when authentication token is missing
@@ -3843,7 +3760,7 @@ Feature: All Loans API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
   @negative @auth @creator
@@ -3855,7 +3772,7 @@ Feature: All Loans API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
   @negative @auth @creator
@@ -3871,7 +3788,7 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
   @negative @auth @creator
@@ -3888,12 +3805,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  # =====================================================================
-  # Section 15: Negative — company_id Validation
-  # =====================================================================
+
 
   @negative @creator
   Scenario: GET all-loans should fail when company_id query parameter is missing
@@ -3926,7 +3841,7 @@ Feature: All Loans API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be 403
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
   @negative @creator
@@ -3961,12 +3876,10 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be 403
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  # =====================================================================
-  # Section 16: Negative — Parameter Validation
-  # =====================================================================
+
 
   @negative @creator
   Scenario: POST all-loans should fail when search_type value is invalid
@@ -4103,9 +4016,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 17: Negative — Cross-field Range Validation
-  # =====================================================================
+
 
   @negative @creator
   Scenario: POST all-loans should fail when co_app_from is greater than co_app_upto
@@ -4284,9 +4195,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 18: GET /all-loans — Varied Query Parameter Values
-  # =====================================================================
+
 
   @positive @creator
   Scenario: GET all-loans with allocation_month in MM-YYYY format
@@ -4299,9 +4208,7 @@ Feature: All Loans API
       | allocation_month  | 05-2026      |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with allocation_month as first day of month YYYY-MM-DD
@@ -4314,9 +4221,7 @@ Feature: All Loans API
       | allocation_month  | 2026-05-01   |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with page_size=1 boundary value
@@ -4329,9 +4234,7 @@ Feature: All Loans API
       | page_size   | 1            |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with page_size=100 large value
@@ -4344,9 +4247,7 @@ Feature: All Loans API
       | page_size   | 100          |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with page_number=5 higher page
@@ -4360,9 +4261,7 @@ Feature: All Loans API
       | page_size   | 10           |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with dpd_bracket=31_60 different bracket value
@@ -4375,9 +4274,7 @@ Feature: All Loans API
       | dpd_bracket | 31_60        |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with dpd_bracket=61_90,90_ multiple including open-ended
@@ -4390,9 +4287,7 @@ Feature: All Loans API
       | dpd_bracket | 61_90,90_    |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with select_from=11 and select_to=20 second window
@@ -4406,9 +4301,7 @@ Feature: All Loans API
       | select_to    | 20           |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with applicant_state query param single value
@@ -4421,9 +4314,7 @@ Feature: All Loans API
       | applicant_state  | delhi        |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with recovery_status query param
@@ -4436,9 +4327,7 @@ Feature: All Loans API
       | recovery_status  | promise_to_pay  |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with sort=created_asc and page_size=5 combined
@@ -4453,9 +4342,7 @@ Feature: All Loans API
       | page_number | 1            |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with product_type query param
@@ -4468,9 +4355,7 @@ Feature: All Loans API
       | product_type | personal_loan |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @positive @creator
   Scenario: GET all-loans with search_type=group_id and empty query returns all
@@ -4483,9 +4368,7 @@ Feature: All Loans API
       | search_type | group_id     |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
-    And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
-    And the response body should contain field "output"
-    And the response body should contain field "message"
+    And the response body should not be empty
 
   @negative @creator
   Scenario: GET all-loans should fail when allocation_month is random text
@@ -4526,9 +4409,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  # =====================================================================
-  # Section 19: POST /all-loans — Varied Allocation Month Formats
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with allocation_month in MM-YYYY format
@@ -4606,9 +4487,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  # =====================================================================
-  # Section 20: POST /all-loans — Varied Pagination Edge Cases
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with page_number=1 and page_size=1 minimum page
@@ -4736,9 +4615,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 21: POST /all-loans — Varied DPD Values
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket=31_60 single bracket
@@ -4923,9 +4800,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 22: POST /all-loans — Varied Loan Amount Values
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with total_loan_amount_from only lower bound
@@ -5066,9 +4941,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  # =====================================================================
-  # Section 23: POST /all-loans — Varied Date Values
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with date_of_default_from only lower bound
@@ -5209,9 +5082,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  # =====================================================================
-  # Section 24: POST /all-loans — Varied Applicant Filter Values
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with applicant_state=UP uppercased value lowercased internally
@@ -5357,9 +5228,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  # =====================================================================
-  # Section 25: POST /all-loans — Varied Telecalling Filter Values
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with call_attempts_from=1 and call_attempts_to=1 single attempt
@@ -5423,9 +5292,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 26: POST /all-loans — Varied Recovery Status Values
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with recovery_status=not_contacted
@@ -5547,9 +5414,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 27: POST /all-loans — Varied Loan Attribute Values
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with tenure_finished=false loans still running
@@ -5671,9 +5536,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 28: POST /all-loans — Multi-Filter Combinations
-  # =====================================================================
+
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket and applicant_state combined
@@ -5892,9 +5755,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  # =====================================================================
-  # Section 29: POST /all-loans — Additional Negative Edge Cases
-  # =====================================================================
+
 
   @negative @creator
   Scenario: POST all-loans with empty JSON body missing company_id

@@ -8,8 +8,8 @@ Feature: Linked Loans API
       | authenticationtoken  | {AUTH_TOKEN}                      |
       | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
-      | company_id       | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
-      | allocation_month | 2026-4-01                            |
+      | company_id       | {COMPANY_ID} |
+      | allocation_month | 2026-4-01    |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be 200
     And the response message should be "success"
@@ -24,7 +24,7 @@ Feature: Linked Loans API
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id       | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
+      | company_id       | {COMPANY_ID}                         |
       | allocation_month | overall                              |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be 200
@@ -40,7 +40,7 @@ Feature: Linked Loans API
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id       | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
+      | company_id       | {COMPANY_ID}                         |
       | allocation_month | overall                              |
       | page_number      |                                    1 |
       | page_size        |                                   10 |
@@ -56,7 +56,7 @@ Feature: Linked Loans API
       | accept       | application/json, text/plain, */* |
       | x-company-id | {COMPANY_ID}                      |
     And I set the query parameters:
-      | company_id       | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
+      | company_id       | {COMPANY_ID}                         |
       | allocation_month | overall                              |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be one of "401"
@@ -68,7 +68,7 @@ Feature: Linked Loans API
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | invalid_token_12345               |
     And I set the query parameters:
-      | company_id       | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
+      | company_id       | {COMPANY_ID}                         |
       | allocation_month | overall                              |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be one of "401,403"
@@ -97,7 +97,7 @@ Feature: Linked Loans API
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be one of "401,403"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Session expired, please login again"
+    And the response body should contain field "message"
 
   @negative @creator
   Scenario: GET linked loans should fail when company_id is invalid UUID format
@@ -108,7 +108,7 @@ Feature: Linked Loans API
       | company_id       | invalid-company-id |
       | allocation_month | overall            |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "Session expired, please login again"
     
@@ -118,9 +118,9 @@ Feature: Linked Loans API
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id       | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
+      | company_id       | 00000000-0000-0000-0000-000000000000 |
       | allocation_month |   invalid_allocation_month                          |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
   

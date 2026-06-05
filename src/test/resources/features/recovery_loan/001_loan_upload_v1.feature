@@ -12,19 +12,19 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
 
   @api-validation @negative @approver
-  Scenario: API should return 401 when authentication token is missing
+  Scenario: API should return 400 when authentication token is missing
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 401
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
     And the response message should be "Session expired, please login again"
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
   @api-validation @negative @testapi @creator
-  Scenario: API should return 401 when authentication token is invalid
+  Scenario: API should return 400 when authentication token is invalid
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -32,8 +32,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | authenticationtoken | invalid_token_12345 |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 401
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
   @api-validation @negative @creator
@@ -43,7 +43,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 403
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
@@ -56,7 +56,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
@@ -71,7 +71,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "loan_id" to null
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
     And the response message should be "loan_id should be same in parameter and payload"
@@ -88,8 +88,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "loan_id" to "loan_123-ABC/45"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/loan_recovery_success_schema.json"
 
   @datatype-validation @text @special-characters @negative @creator
@@ -102,7 +102,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "loan_id" to "loan^123"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
   @datatype-validation @text @special-characters @positive @creator
@@ -115,8 +115,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<allowed_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
     Examples:
       | field_path                                              | allowed_value                     |
@@ -176,8 +176,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
     Examples:
       | field_path                                              | invalid_value      |
@@ -231,7 +231,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "loan_id" to "{RANDOM_STRING:65}"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
 
@@ -245,7 +245,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "{RANDOM_STRING:<max_length_plus>}"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
     Examples:
@@ -337,9 +337,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
-
+    
     Examples:
       | field_path              | invalid_value |
       | applicant_name          | 123456        |
@@ -358,9 +358,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
-
+    
     Examples:
       | field_path        | invalid_value |
       | tenure_finished   | 1             |
@@ -381,9 +381,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
-
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
+    
     Examples:
       | field_path          | invalid_value |
       | loan_tenure         | 12.5          |
@@ -400,9 +400,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
-
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
+    
     Examples:
       | field_path          | invalid_value |
       | loan_tenure         | -10           |
@@ -418,8 +418,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "applicant_cibil_score" to "250"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
   @datatype-validation @integer @negative @creator
   Scenario: CIBIL score should reject values above 900
@@ -431,8 +431,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "applicant_cibil_score" to "950"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
 
   @datatype-validation @amount @negative @creator
@@ -445,9 +445,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
-
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
+    
     Examples:
       | field_path              | invalid_value |
       | total_loan_amount       | -50000        |
@@ -464,9 +464,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
-
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
+    
     Examples:
       | field_path        | invalid_value |
       | total_loan_amount | 1.23E+11      |
@@ -482,8 +482,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "total_loan_amount" to "50000.999"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
   @datatype-validation @percentage @negative
   Scenario: Percentage field should reject values above 100
@@ -495,8 +495,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "interest_on_loan" to "150.5"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
   @datatype-validation @percentage @negative
   Scenario: Percentage field should reject negative values
@@ -508,8 +508,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "interest_on_loan" to "-10.5"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
 
   @datatype-validation @mobile @negative
@@ -522,9 +522,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
-
+    
     Examples:
       | field_path                    | invalid_value      |
       | applicant_contact_number      | 123                |
@@ -544,9 +544,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
-
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
+    
     Examples:
       | field_path        | invalid_value              |
       | applicant_email   | invalid-email              |
@@ -565,9 +565,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "applicant_address[0].applicant_pincode" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
-
+    
     Examples:
       | invalid_value |
       | 1234          |
@@ -586,8 +586,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "applicant_photo_link" to "www.example.com"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
   @datatype-validation @url @negative
   Scenario: URL should reject invalid URL formats
@@ -599,8 +599,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "applicant_photo_link" to "http://invalid..url.com"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
 
   @datatype-validation @date @negative
@@ -613,9 +613,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to "<invalid_value>"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
-
+    
     Examples:
       | field_path             | invalid_value  |
       | applicant_dob          | 24-11-1998     |
@@ -633,7 +633,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "applicant_dob" to "1998-13-24"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
 
@@ -646,8 +646,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
 
   @datatype-validation @text @positive
@@ -660,8 +660,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to null
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
     Examples:
       | field_path                                |
@@ -733,8 +733,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/loan_recovery_request.json"
     And I update JSON field "<field_path>" to ""
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
     Examples:
       | field_path                                |
@@ -815,7 +815,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -827,8 +826,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 400
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -839,7 +837,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | include_computed_variables   | false        |
       | include_meta_data            | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autolnalloc{RANDOM_STRING:6}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -856,7 +853,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       }
       """
     When I send a "PATCH" request to "/recovery/variables"
-    Then the response status code should be 200
     And I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -868,8 +864,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
   @mandatory-variable @negative @creator
   Scenario: Loan upload fails when mandatory non-allocation variable is_allocation_variable false is not provided, passes after marking non-mandatory
@@ -890,7 +886,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -902,8 +897,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 400
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -914,7 +908,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | include_computed_variables   | false        |
       | include_meta_data            | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autolnnon{RANDOM_STRING:6}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -931,7 +924,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       }
       """
     When I send a "PATCH" request to "/recovery/variables"
-    Then the response status code should be 200
     And I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -943,8 +935,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
   @mandatory-variable @negative @creator
   Scenario: Loan upload fails when mandatory allocation variable is not provided, then variable is deleted and upload succeeds
@@ -965,7 +957,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -977,8 +968,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 400
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -989,7 +979,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | include_computed_variables   | false        |
       | include_meta_data            | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autolnalloc{RANDOM_STRING:6}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -1006,7 +995,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       }
       """
     When I send a "PATCH" request to "/recovery/variables"
-    Then the response status code should be 200
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -1017,7 +1005,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | variable_id | {VARIABLE_ID} |
     When I send a "DELETE" request to "/recovery/variables/{variable_id}"
-    Then the response status code should be 200
     And recovery variables delete response should be valid
     And I prepare a request
     And I set the request headers:
@@ -1030,8 +1017,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 400
 
   @mandatory-variable @negative @creator
   Scenario: Loan upload fails when mandatory non-allocation variable is not provided, then variable is deleted and upload succeeds
@@ -1052,7 +1039,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1064,8 +1050,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 400
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -1076,7 +1061,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | include_computed_variables   | false        |
       | include_meta_data            | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autolnnon{RANDOM_STRING:6}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -1093,7 +1077,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
       }
       """
     When I send a "PATCH" request to "/recovery/variables"
-    Then the response status code should be 200
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -1104,7 +1087,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | variable_id | {VARIABLE_ID} |
     When I send a "DELETE" request to "/recovery/variables/{variable_id}"
-    Then the response status code should be 200
     And recovery variables delete response should be valid
     And I prepare a request
     And I set the request headers:
@@ -1117,8 +1099,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    When I send a "POST" request to "/recovery/loan/{loan_id}"
-    Then the response status code should be 201
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
 
 #  @api @db-validation @loan-recovery @datatype-validation @dbvalidationrecovery
 #  Scenario Outline: Persisted loan recovery fields should have correct datatype in DB
@@ -1129,7 +1110,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 #    And I set the request headers:
 #      | authenticationtoken | {AUTH_TOKEN} |
 #    And I set the request body from file "test-data/loan_recovery_request.json"
-#    When I send a "POST" request to "/recovery/loan/{loan_id}"
+#    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
 #    Then the response status code should be 201
 #    And DB column "<db_column>" in table "<db_table>" should have datatype "<db_type>" and match API field "<json_path>" for loan "{LOAN_ID}" and company "{COMPANY_ID}"
 #

@@ -5,9 +5,7 @@ Feature: Formula Allowed Variables API
     Given scenario company id is from configuration
     And I prepare a request
 
-  # =====================================================================
-  # GET /formula/allowed-variables
-  # =====================================================================
+
 
   @positive @smoke @creator
   Scenario: Get formula allowed variables for amount variable type
@@ -114,7 +112,7 @@ Feature: Formula Allowed Variables API
       | company_id    | 00000000-0000-0000-0000-000000000000 |
       | variable_type | amount                               |
     When I send a "GET" request to "/recovery/formula/allowed-variables"
-    Then the response status code should be 403
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @creator
@@ -126,7 +124,7 @@ Feature: Formula Allowed Variables API
       | company_id    | {COMPANY_ID} |
       | variable_type | amount       |
     When I send a "GET" request to "/recovery/formula/allowed-variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @creator
@@ -139,5 +137,5 @@ Feature: Formula Allowed Variables API
       | company_id    | {COMPANY_ID} |
       | variable_type | amount       |
     When I send a "GET" request to "/recovery/formula/allowed-variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"

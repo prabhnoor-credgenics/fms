@@ -22,7 +22,7 @@ import java.util.Map;
  * data-provider-thread-count in testng-parallel.xml.
  */
 @CucumberOptions(
-        features = "src/test/resources/features/recovery/",
+        features = "src/test/resources/features/recovery_loan/",
         glue = {
                 "stepdefinitions",
                 "hooks",

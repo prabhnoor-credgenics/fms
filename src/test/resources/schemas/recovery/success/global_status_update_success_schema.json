@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Global Status Update — Success Response",
+  "type": "object",
+  "required": ["message", "output"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "enum": ["success"]
+    },
+    "output": {
+      "type": "string",
+      "enum": ["Status updated successfully"]
+    }
+  },
+  "additionalProperties": false
+}

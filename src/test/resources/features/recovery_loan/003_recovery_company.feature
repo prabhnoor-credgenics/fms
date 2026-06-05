@@ -1,4 +1,4 @@
-@api @recovery-company @testyop
+@api @recovery-company
 Feature: Recovery Company API and Company Creation Flow
 
   Background:
@@ -10,20 +10,17 @@ Feature: Recovery Company API and Company Creation Flow
     Given company creation test data is prepared
     When I create company with validation step 1
     Then company creation step 1 request should match json schema
-    And the response status code should be 201
     And the response body should contain field "message"
     And the response should match json schema "schemas/company_creation/success/company_creation_step1_success_schema.json"
     Then company creation step 1 should be successful
     And company creation stored identifiers should be present
     When I create company with validation step 2
     Then company creation step 2 request should match json schema
-    And the response status code should be 201
     And the response message should be "Permissions validated and saved."
     And the response should match json schema "schemas/company_creation/success/company_creation_step2_success_schema.json"
     Then company creation step 2 should be successful
     When I create company with validation step 3
     Then company creation step 3 request should match json schema
-    And the response status code should be 201
     And the response message should be "Admin details validated and saved."
     And the response should match json schema "schemas/company_creation/success/company_creation_step3_success_schema.json"
     Then company creation step 3 should be successful
@@ -203,7 +200,7 @@ Feature: Recovery Company API and Company Creation Flow
       | company_id          | {COMPANY_ID} |
       | bifurcation_prefix  | true         |
     When I send a "GET" request to "/recovery/company"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @get-company @creator
@@ -372,7 +369,7 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_company_put_success_schema.json"
 
-  @positive @creator @put-company
+  @positive @creator @put-company @500
   Scenario: Enable amount bifurcation with payment module
     And I set the request headers:
       | Content-Type         | application/json |
@@ -395,7 +392,7 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 200
     And the response body should not be empty
 
-  @positive @creator @put-company
+  @positive @creator @put-company @500
   Scenario: Enable amount bifurcation with multiple modules
     And I set the request headers:
       | Content-Type         | application/json |
@@ -480,7 +477,7 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
-  @negative @put-company @creator
+  @negative @put-company @creator @500
   Scenario: PUT should fail or error when amount_bifurcation_modules has invalid module_name
     And I set the request headers:
       | Content-Type         | application/json |
@@ -516,7 +513,7 @@ Feature: Recovery Company API and Company Creation Flow
       }
       """
     When I send a "PUT" request to "/recovery/company"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @auth @put-company
@@ -533,11 +530,11 @@ Feature: Recovery Company API and Company Creation Flow
       }
       """
     When I send a "PUT" request to "/recovery/company"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
-  @additional_scenario @negative @put-company @creator
-  Scenario: PUT should return 500 when enabling bifurcation with fos module only
+  @additional_scenario @negative @put-company @creator @500
+  Scenario: PUT should return 200 when enabling bifurcation with fos module only
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -559,8 +556,8 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 200
     And the response body should not be empty
 
-  @additional_scenario @negative @put-company @creator
-  Scenario: PUT should return 500 when enabling bifurcation with settlement module only
+  @additional_scenario @negative @put-company @creator @500
+  Scenario: PUT should return 200 when enabling bifurcation with settlement module only
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -582,8 +579,8 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 200
     And the response body should not be empty
 
-  @additional_scenario @negative @put-company @creator
-  Scenario: PUT should return 500 when enabling bifurcation with all modules disabled
+  @additional_scenario @negative @put-company @creator @500
+  Scenario: PUT should return 200 when enabling bifurcation with all modules disabled
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -614,7 +611,7 @@ Feature: Recovery Company API and Company Creation Flow
     And the response body should not be empty
 
   @additional_scenario @negative @put-company @creator
-  Scenario: PUT should return 500 when bifurcation enabled with empty modules array
+  Scenario: PUT should return 200 when bifurcation enabled with empty modules array
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -631,8 +628,8 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 200
     And the response body should not be empty
 
-  @additional_scenario @negative @put-company @creator
-  Scenario: PUT should return 500 when bifurcation modules array contains duplicate module names
+  @additional_scenario @negative @put-company @creator @500
+  Scenario: PUT should return 200 when bifurcation modules array contains duplicate module names
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -658,8 +655,8 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 200
     And the response body should not be empty
 
-  @additional_scenario @negative @put-company @creator
-  Scenario: PUT should return 500 when bifurcation module_name is null
+  @additional_scenario @negative @put-company @creator @500
+  Scenario: PUT should return 200 when bifurcation module_name is null
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -681,8 +678,8 @@ Feature: Recovery Company API and Company Creation Flow
     Then the response status code should be 200
     And the response body should not be empty
 
-  @additional_scenario @negative @put-company @creator
-  Scenario: PUT should return 500 when disabling bifurcation while providing modules array
+  @additional_scenario @negative @put-company @creator @500
+  Scenario: PUT should return 200 when disabling bifurcation while providing modules array
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |

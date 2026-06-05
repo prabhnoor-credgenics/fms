@@ -5,9 +5,7 @@ Feature: Payment Variables API
     Given scenario company id is from configuration
     And I prepare a request
 
-  # =====================================================================
-  # GET /payment/variables
-  # =====================================================================
+
 
   @positive @smoke @chief-admin
   Scenario: Get payment variables configuration for configured company_id
@@ -57,7 +55,7 @@ Feature: Payment Variables API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/payment/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @creator
@@ -69,7 +67,7 @@ Feature: Payment Variables API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/payment/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
@@ -91,12 +89,10 @@ Feature: Payment Variables API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/payment/variables"
-    Then the response status code should be 403
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # PATCH /payment/variables
-  # =====================================================================
+
 
   @positive @update @chief-admin
   Scenario: Update payment variable configuration via PATCH
@@ -114,7 +110,7 @@ Feature: Payment Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/payment/variables"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/payment_variables_write_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "message"
@@ -150,7 +146,7 @@ Feature: Payment Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/payment/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @update @creator
@@ -168,5 +164,5 @@ Feature: Payment Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/payment/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"

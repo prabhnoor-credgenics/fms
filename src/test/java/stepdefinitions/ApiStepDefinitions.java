@@ -36,7 +36,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import java.io.File;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import io.restassured.path.json.JsonPath;
@@ -382,7 +383,7 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         }
 
         if (schemaPath != null) {
-            response.then().assertThat().body(matchesJsonSchemaInClasspath(schemaPath));
+            response.then().assertThat().body(matchesJsonSchema(new File("src/test/resources/" + schemaPath)));
             logger.info("Auto schema validation passed for endpoint '{}' using '{}'", endpoint, schemaPath);
         } else {
             logger.info("No auto schema mapping configured for endpoint '{}'", endpoint);
@@ -529,7 +530,7 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
     @Then("the response should match json schema {string}")
     public void the_response_should_match_json_schema(String schemaPath) {
-        activeResponse().then().assertThat().body(matchesJsonSchemaInClasspath(schemaPath));
+        activeResponse().then().assertThat().body(matchesJsonSchema(new File("src/test/resources/" + schemaPath)));
         logger.info("Response schema validation passed for: {}", schemaPath);
     }
 
@@ -542,7 +543,7 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
             );
         }
         assertThat("Request body failed schema validation against " + schemaPath,
-                requestBody, matchesJsonSchemaInClasspath(schemaPath));
+                requestBody, matchesJsonSchema(new File("src/test/resources/" + schemaPath)));
         logger.info("Request body schema validation passed for: {}", schemaPath);
     }
 

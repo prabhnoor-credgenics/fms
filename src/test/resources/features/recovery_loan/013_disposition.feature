@@ -28,7 +28,7 @@ Feature: Disposition API
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
     When I send a "GET" request to "/recovery/disposition"
-    Then the response status code should be one of "400"
+    Then the response status code should be 403
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "invalid company id"
 
@@ -40,7 +40,7 @@ Feature: Disposition API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/disposition"
-    Then the response status code should be one of "401"
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "forbidden: invalid company id"
 
@@ -52,7 +52,7 @@ Feature: Disposition API
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/disposition"
-    Then the response status code should be one of "401"
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "Session expired, please login again"
 
@@ -121,7 +121,7 @@ Feature: Disposition API
       | company_id   | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | service_type | invalid-service-type                 |
     When I send a "GET" request to "/recovery/disposition"
-    Then the response status code should be one of "400"
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "Invalid service_type provided"
 
@@ -134,7 +134,7 @@ Feature: Disposition API
       | company_id   | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | product_type | invalid-product_type                 |
     When I send a "GET" request to "/recovery/disposition"
-    Then the response status code should be one of "200"
+    Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_get_disposition_success_schema.json"
     And the response body should contain field "data" with value "empty"
 
@@ -148,6 +148,6 @@ Feature: Disposition API
       | service_type | invalid-service-type                 |
       | product_type | invalid-product_type                 |
     When I send a "GET" request to "/recovery/disposition"
-    Then the response status code should be one of "400"
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "Invalid service_type provided"

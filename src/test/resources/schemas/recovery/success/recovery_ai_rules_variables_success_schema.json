@@ -60,11 +60,11 @@
     },
     "message": {
       "type": "string",
-      "const": "success"
+      "enum": ["success"]
     },
     "message_template": {
       "type": "string",
-      "const": "success"
+      "enum": ["success"]
     },
     "message_placeholder": {
       "type": "object",

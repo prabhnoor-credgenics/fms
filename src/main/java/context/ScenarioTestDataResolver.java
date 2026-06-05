@@ -96,6 +96,18 @@ public class ScenarioTestDataResolver {
         if (result.contains(ContextKeys.VARIABLE_ID)) {
             result = result.replace(ContextKeys.VARIABLE_ID, resolveVariableId());
         }
+        if (result.contains(ContextKeys.MAPPING_ID)) {
+            result = result.replace(ContextKeys.MAPPING_ID, resolveMappingId());
+        }
         return result;
+    }
+
+    public String resolveMappingId() {
+        if (testContext.getScenarioMappingId() != null && !testContext.getScenarioMappingId().isBlank()) {
+            return testContext.getScenarioMappingId();
+        }
+        throw new IllegalStateException(
+                "Mapping ID is not set. Use 'I store the created mapping id from response' after a POST first."
+        );
     }
 }

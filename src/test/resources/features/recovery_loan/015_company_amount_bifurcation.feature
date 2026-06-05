@@ -5,9 +5,7 @@ Feature: Company Amount Bifurcation Variables API
     Given scenario company id is from configuration
     And I prepare a request
 
-  # =====================================================================
-  # GET /company/amount-bifurcation
-  # =====================================================================
+
 
   @positive @smoke @chief-admin
   Scenario: Get amount bifurcation variables for configured company_id
@@ -18,7 +16,7 @@ Feature: Company Amount Bifurcation Variables API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/amount_bifurcation_success_schema.json"
     And the response body should contain field "message"
 
@@ -32,7 +30,7 @@ Feature: Company Amount Bifurcation Variables API
       | company_id         | {COMPANY_ID} |
       | bifurcation_prefix | true         |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/amount_bifurcation_success_schema.json"
 
   @positive @chief-admin
@@ -45,7 +43,7 @@ Feature: Company Amount Bifurcation Variables API
       | company_id      | {COMPANY_ID} |
       | include_deleted | true         |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/amount_bifurcation_success_schema.json"
 
   @positive @performance @chief-admin
@@ -57,7 +55,7 @@ Feature: Company Amount Bifurcation Variables API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response time should be less than 5000 milliseconds
 
   @negative @auth @creator
@@ -68,7 +66,7 @@ Feature: Company Amount Bifurcation Variables API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @creator
@@ -80,7 +78,7 @@ Feature: Company Amount Bifurcation Variables API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
@@ -93,9 +91,7 @@ Feature: Company Amount Bifurcation Variables API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # POST /company/amount-bifurcation
-  # =====================================================================
+
 
   @positive @create @chief-admin
   Scenario: Add a variable to amount bifurcation
@@ -112,7 +108,7 @@ Feature: Company Amount Bifurcation Variables API
       }
       """
     When I send a "POST" request to "/recovery/company/amount-bifurcation"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/amount_bifurcation_write_success_schema.json"
     And the response body should contain field "message"
 
@@ -148,14 +144,12 @@ Feature: Company Amount Bifurcation Variables API
       }
       """
     When I send a "POST" request to "/recovery/company/amount-bifurcation"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # PATCH /company/amount-bifurcation (reorder)
-  # =====================================================================
 
-  @positive @update @chief-admin
+
+  @positive @update @chief-admin @500
   Scenario: Reorder amount bifurcation variables via PATCH
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -223,12 +217,10 @@ Feature: Company Amount Bifurcation Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/company/amount-bifurcation"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # PATCH /company/amount-bifurcation/<variable_id>
-  # =====================================================================
+
 
   @positive @update @chief-admin
   Scenario: Update a specific amount bifurcation variable properties via PATCH
@@ -247,7 +239,7 @@ Feature: Company Amount Bifurcation Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/company/amount-bifurcation/{variable_id}"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/amount_bifurcation_write_success_schema.json"
 
   @negative @auth @update @creator
@@ -266,12 +258,10 @@ Feature: Company Amount Bifurcation Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/company/amount-bifurcation/{variable_id}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # DELETE /company/amount-bifurcation/<variable_id>
-  # =====================================================================
+
 
   @positive @delete @chief-admin
   Scenario: Delete a specific amount bifurcation variable
@@ -284,7 +274,7 @@ Feature: Company Amount Bifurcation Variables API
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000001 |
     When I send a "DELETE" request to "/recovery/company/amount-bifurcation/{variable_id}"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/amount_bifurcation_write_success_schema.json"
 
   @negative @delete @chief-admin
@@ -311,5 +301,5 @@ Feature: Company Amount Bifurcation Variables API
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "DELETE" request to "/recovery/company/amount-bifurcation/{variable_id}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"

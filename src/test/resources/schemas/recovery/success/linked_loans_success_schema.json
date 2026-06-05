@@ -6,7 +6,7 @@
   "properties": {
     "message": {
       "type": "string",
-      "const": "success"
+      "enum": ["success"]
     },
     "output": {
       "type": "array",

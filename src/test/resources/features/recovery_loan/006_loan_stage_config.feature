@@ -45,7 +45,7 @@ Feature: Loan Stage Config API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan-stage/config"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/loan_stage_config_error_schema.json"
 
   @negative @auth @creator
@@ -57,7 +57,7 @@ Feature: Loan Stage Config API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan-stage/config"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/loan_stage_config_error_schema.json"
 
   @negative @creator

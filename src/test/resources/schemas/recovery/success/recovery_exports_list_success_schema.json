@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Exports List — GET /exports Success Response",
+  "type": "object",
+  "required": ["data", "message", "success"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["exports", "total_count"],
+      "properties": {
+        "exports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "export_category", "status", "created"],
+            "properties": {
+              "id":              { "type": "integer" },
+              "requester":      { "type": ["object", "null"] },
+              "allocation_month":  { "type": ["string", "null"] },
+              "export_category":   { "type": "string" },
+              "record_count":      { "type": ["integer", "null"] },
+              "status":            { "type": "string" },
+              "duration":          { "type": ["string", "null"] },
+              "created":           { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "total_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "message": {
+      "type": "string",
+      "enum": ["success"]
+    },
+    "success": {
+      "type": "boolean",
+      "enum": [true]
+    }
+  },
+  "additionalProperties": false
+}

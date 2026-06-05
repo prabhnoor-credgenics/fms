@@ -19,11 +19,11 @@
     },
     "message": {
       "type": "string",
-      "const": "restriction details fetched"
+      "enum": ["restriction details fetched"]
     },
     "message_template": {
       "type": "string",
-      "const": "restriction details fetched"
+      "enum": ["restriction details fetched"]
     },
     "message_placeholder": {
       "type": "object",

@@ -4,6 +4,8 @@ import enums.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -15,6 +17,8 @@ public class ConfigReader {
     private static final String ENVIRONMENT_KEY = "environment";
 
     
+    private static final String MAIN_RESOURCES_PATH = "src/main/resources/";
+
     private final Properties properties = new Properties();
     private final Properties cryptoProperties = new Properties();
 
@@ -27,35 +31,24 @@ public class ConfigReader {
     }
 
     private void loadCryptoProperties() {
-        try (InputStream inputStream = getClass()
-                .getClassLoader()
-                .getResourceAsStream(CRYPTO_PROPERTIES_FILE)) {
-
-            if (inputStream == null) {
-                logger.error("Crypto properties file '{}' not found", CRYPTO_PROPERTIES_FILE);
-                throw new RuntimeException("Crypto properties file not found: " + CRYPTO_PROPERTIES_FILE);
-            }
-
+        File file = new File(MAIN_RESOURCES_PATH + CRYPTO_PROPERTIES_FILE);
+        try (InputStream inputStream = new FileInputStream(file)) {
             cryptoProperties.load(inputStream);
-            logger.info("Successfully loaded crypto properties");
-
+            logger.info("Successfully loaded crypto properties from {}", file.getPath());
         } catch (IOException e) {
-            logger.error("Error loading crypto properties file", e);
-            throw new RuntimeException("Failed to load crypto properties file", e);
+            logger.error("Error loading crypto properties file '{}': {}", file.getPath(), e.getMessage(), e);
+            throw new RuntimeException("Failed to load crypto properties file: " + file.getPath(), e);
         }
     }
 
     private void loadGlobalProperties() {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(GLOBAL_PROPERTIES_FILE)) {
-            if (inputStream == null) {
-                logger.error("Properties file '{}' not found in classpath", GLOBAL_PROPERTIES_FILE);
-                throw new RuntimeException("Properties file not found: " + GLOBAL_PROPERTIES_FILE);
-            }
+        File file = new File(MAIN_RESOURCES_PATH + GLOBAL_PROPERTIES_FILE);
+        try (InputStream inputStream = new FileInputStream(file)) {
             properties.load(inputStream);
-            logger.info("Successfully loaded properties from {}", GLOBAL_PROPERTIES_FILE);
+            logger.info("Successfully loaded properties from {}", file.getPath());
         } catch (IOException e) {
-            logger.error("Error loading properties file: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to load properties file", e);
+            logger.error("Error loading properties file '{}': {}", file.getPath(), e.getMessage(), e);
+            throw new RuntimeException("Failed to load properties file: " + file.getPath(), e);
         }
     }
 
@@ -77,23 +70,16 @@ public class ConfigReader {
         properties.setProperty(ENVIRONMENT_KEY, activeEnvironment);
 
         String envFile = activeEnvironment + ".properties";
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(envFile)) {
-            if (inputStream == null) {
-                logger.error("Environment properties file '{}' not found in classpath", envFile);
-                throw new RuntimeException(
-                        "Environment properties file not found: " + envFile
-                                + ". Create src/main/resources/" + envFile
-                                + " with env-specific keys (base url, emails, passwords, api key company id, …)."
-                );
-            }
+        File file = new File(MAIN_RESOURCES_PATH + envFile);
+        try (InputStream inputStream = new FileInputStream(file)) {
             Properties envProperties = new Properties();
             envProperties.load(inputStream);
             properties.putAll(envProperties);
             logger.info("Successfully loaded environment properties from {} ({} keys)",
-                    envFile, envProperties.size());
+                    file.getPath(), envProperties.size());
         } catch (IOException e) {
-            logger.error("Error loading environment properties file '{}': {}", envFile, e.getMessage(), e);
-            throw new RuntimeException("Failed to load environment properties file: " + envFile, e);
+            logger.error("Error loading environment properties file '{}': {}", file.getPath(), e.getMessage(), e);
+            throw new RuntimeException("Failed to load environment properties file: " + file.getPath(), e);
         }
     }
 

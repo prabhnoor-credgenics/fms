@@ -4,10 +4,11 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 
 
 public final class SchemaHelper {
@@ -40,6 +41,8 @@ public final class SchemaHelper {
         DEFAULT_MAPPINGS.put("/recovery/loan/", "schemas/recovery/success/loan_recovery_success_schema.json");
     }
 
+    private static final String TEST_RESOURCES_PATH = "src/test/resources/";
+
     private SchemaHelper() {
         throw new UnsupportedOperationException("Utility class");
     }
@@ -68,7 +71,7 @@ public final class SchemaHelper {
         }
         for (Map.Entry<String, String> entry : DEFAULT_MAPPINGS.entrySet()) {
             if (endpoint.contains(entry.getKey())) {
-                response.then().assertThat().body(matchesJsonSchemaInClasspath(entry.getValue()));
+                response.then().assertThat().body(matchesJsonSchema(new File(TEST_RESOURCES_PATH + entry.getValue())));
                 LOGGER.info("Auto schema validation passed for endpoint '{}' using '{}'",
                         endpoint, entry.getValue());
                 return;
@@ -87,7 +90,7 @@ public final class SchemaHelper {
                 org.hamcrest.MatcherAssert.assertThat(
                         "Request body loaded from '" + testDataPath + "' failed schema validation",
                         requestBody,
-                        matchesJsonSchemaInClasspath(entry.getValue())
+                        matchesJsonSchema(new File(TEST_RESOURCES_PATH + entry.getValue()))
                 );
                 LOGGER.info("Auto request schema validation passed for '{}' using '{}'",
                         testDataPath, entry.getValue());
@@ -104,7 +107,7 @@ public final class SchemaHelper {
         org.hamcrest.MatcherAssert.assertThat(
                 "Request body failed schema validation against " + schemaClasspath,
                 requestBody,
-                matchesJsonSchemaInClasspath(schemaClasspath)
+                matchesJsonSchema(new File(TEST_RESOURCES_PATH + schemaClasspath))
         );
         LOGGER.info("Request body schema validation passed for: {}", schemaClasspath);
     }

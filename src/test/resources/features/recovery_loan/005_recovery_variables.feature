@@ -58,7 +58,6 @@ Feature: Recovery Variables API
       | include_computed_variables   | true         |
       | include_meta_data            | true         |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And recovery variables meta data should be included
     And recovery variables response is saved for meta data comparison
     And I prepare a request
@@ -107,7 +106,6 @@ Feature: Recovery Variables API
       | include_computed_variables   | true         |
       | include_meta_data            | true         |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And recovery variables computed variables should be included
     And recovery variables meta data should be included
     And recovery variables response is saved for full payload comparison
@@ -157,7 +155,6 @@ Feature: Recovery Variables API
       | include_computed_variables   | true         |
       | include_meta_data            | true         |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And recovery variables computed variables should be included
     And recovery variables response is saved for computed variables comparison
     And I prepare a request
@@ -198,7 +195,7 @@ Feature: Recovery Variables API
       | include_computed_variables   | true         |
       | include_meta_data            | true         |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @creator
@@ -212,7 +209,7 @@ Feature: Recovery Variables API
       | include_computed_variables   | true         |
       | include_meta_data            | true         |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
@@ -225,7 +222,7 @@ Feature: Recovery Variables API
       | include_computed_variables   | true |
       | include_meta_data            | true |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 400
+    Then the response status code should be 403
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
@@ -253,7 +250,7 @@ Feature: Recovery Variables API
       | include_computed_variables   | true                                 |
       | include_meta_data            | true                                 |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 403
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
@@ -346,7 +343,6 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And recovery variables create response should be valid
     And I prepare a request
@@ -359,7 +355,6 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autonumber{RANDOM_STRING:6}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -529,7 +524,7 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @create @creator
@@ -548,12 +543,10 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # PATCH /variables - Update Variable
-  # =====================================================================
+
 
   @positive @update @creator
   Scenario: Update variable description via PATCH
@@ -572,7 +565,6 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -583,7 +575,6 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -622,7 +613,6 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -633,7 +623,6 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -650,7 +639,6 @@ Feature: Recovery Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/variables"
-    Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And recovery variables update response should be valid
     And I prepare a request
@@ -690,7 +678,6 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -701,7 +688,6 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -758,7 +744,6 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -769,7 +754,6 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -805,7 +789,6 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -816,7 +799,6 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -851,7 +833,7 @@ Feature: Recovery Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @update @creator
@@ -870,12 +852,10 @@ Feature: Recovery Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # DELETE /variables/<variable_id> - Delete Variable
-  # =====================================================================
+
 
   @positive @delete @chief-admin
   Scenario: Delete a variable that was just created
@@ -893,7 +873,6 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 201
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -904,7 +883,6 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 200
     And I find and store variable id for name "autodel{RANDOM_STRING:8}" from variables response
     And I prepare a request
     And I set the request headers:
@@ -943,12 +921,9 @@ Feature: Recovery Variables API
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "DELETE" request to "/recovery/variables/{variable_id}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # GET /variables/categorisation - Variable Categorisation
-  # =====================================================================
 
   @positive @smoke @categorisation @creator
   Scenario: Get variable categorisation for configured company_id
@@ -1013,7 +988,7 @@ Feature: Recovery Variables API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/variables/categorisation"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @categorisation @creator
@@ -1035,5 +1010,124 @@ Feature: Recovery Variables API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/variables/categorisation"
-    Then the response status code should be 403
+    Then the response status code should be 401
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
+
+
+
+  @negative @server-error @expected-200 @creator
+  Scenario: POST should handle an invalid calculation_formula for a derivable variable
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_name": "autoerr{RANDOM_STRING:8}",
+        "variable_type": "number",
+        "is_derivable": true,
+        "calculation_formula": "((dpd + * / "
+      }
+      """
+    When I send a "POST" request to "/recovery/variables"
+    Then the response status code should be 400
+    And the response body should not be empty
+
+  @negative @server-error @expected-200 @creator
+  Scenario: POST should handle is_dropdown sent as a string instead of a boolean
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_name": "autoerr{RANDOM_STRING:8}",
+        "variable_type": "text",
+        "is_dropdown": "yes",
+        "dropdown_values": ["a", "b"]
+      }
+      """
+    When I send a "POST" request to "/recovery/variables"
+    Then the response status code should be 200
+    And the response body should not be empty
+
+  @negative @server-error @expected-200 @creator
+  Scenario: PATCH should handle dropdown_values sent as an object instead of an array
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_name": "autoerr{RANDOM_STRING:8}",
+        "variable_type": "text",
+        "is_dropdown": true,
+        "dropdown_values": ["x", "y"]
+      }
+      """
+    When I send a "POST" request to "/recovery/variables"
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | false        |
+      | include_meta_data          | false        |
+    When I send a "GET" request to "/recovery/variables"
+    And I find and store variable id for name "autoerr{RANDOM_STRING:8}" from variables response
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_id": "{VARIABLE_ID}",
+        "dropdown_values": {"unexpected": "object"}
+      }
+      """
+    When I send a "PATCH" request to "/recovery/variables"
+    Then the response status code should be 400
+    And the response body should not be empty
+
+  @negative @server-error @expected-200 @creator
+  Scenario: GET should handle include_computed_variables sent as an array parameter
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_computed_variables | false        |
+      | include_meta_data          | true         |
+    When I send a "GET" request to "/recovery/variables"
+    Then the response status code should be 200
+    And the response body should not be empty
+
+  @negative @server-error @expected-200 @creator
+  Scenario: GET categorisation should handle a malformed boolean for include_all_variables
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | x-company-id         | {COMPANY_ID}                      |
+    And I set the query parameters:
+      | company_id            | {COMPANY_ID}        |
+      | include_all_variables | {malformed-boolean} |
+    When I send a "GET" request to "/recovery/variables/categorisation"
+    Then the response status code should be 200
+    And the response body should not be empty

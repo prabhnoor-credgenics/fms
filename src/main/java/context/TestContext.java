@@ -40,6 +40,7 @@ public class TestContext {
     private String scenarioAllocationMonth;
     private String scenarioName;
     private String scenarioVariableId;
+    private String scenarioMappingId;
 
     /** Parallel user pool slot */
     private int userSlot;
@@ -243,6 +244,14 @@ public class TestContext {
 
     public void setScenarioVariableId(String scenarioVariableId) {
         this.scenarioVariableId = scenarioVariableId;
+    }
+
+    public String getScenarioMappingId() {
+        return scenarioMappingId;
+    }
+
+    public void setScenarioMappingId(String scenarioMappingId) {
+        this.scenarioMappingId = scenarioMappingId;
     }
 
     public int getUserSlot() {

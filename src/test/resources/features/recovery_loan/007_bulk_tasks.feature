@@ -54,7 +54,7 @@ Feature: Bulk tasks API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/bulk/tasks"
-    Then the response status code should be one of "401"
+    Then the response status code should be 400
     And the response body should contain field "message" with value "Session expired, please login again"
 
   @negative @auth @creator
@@ -66,7 +66,7 @@ Feature: Bulk tasks API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/bulk/tasks"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
 
   @negative @creator
@@ -76,7 +76,7 @@ Feature: Bulk tasks API
       | authenticationtoken | {AUTH_TOKEN}                      |
       | x-company-id        | {COMPANY_ID}                      |
     When I send a "GET" request to "/recovery/bulk/tasks"
-    Then the response status code should be one of "400,401,403,422"
+    Then the response status code should be 403
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "invalid company id"
   @negative1 @creator
@@ -88,7 +88,7 @@ Feature: Bulk tasks API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/bulk/tasks"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be 401
     And the response should match json schema "schemas/invalid_schema.json"
      And the response body should contain field "message" with value "Session expired, please login again"
   @negative @creator
@@ -100,6 +100,6 @@ Feature: Bulk tasks API
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/global-status"
-    Then the response status code should be one of "400,401,403,404,422"
+    Then the response status code should be 401
     And the response should match json schema "schemas/invalid_schema.json"
  And the response body should contain field "message" with value "Session expired, please login again"

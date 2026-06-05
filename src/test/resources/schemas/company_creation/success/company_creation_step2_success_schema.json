@@ -3,7 +3,7 @@
   "type": "object",
   "required": ["success", "message"],
   "properties": {
-    "success": { "type": "boolean", "const": true },
+    "success": { "type": "boolean", "enum": [true] },
     "message": { "type": "string", "minLength": 1 },
     "message_template": { "type": "string" },
     "message_placeholder": { "type": "object" }

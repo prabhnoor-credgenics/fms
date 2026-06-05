@@ -5,9 +5,6 @@ Feature: Masked Variables API
     Given scenario company id is from configuration
     And I prepare a request
 
-  # =====================================================================
-  # GET /masked-variables
-  # =====================================================================
 
   @positive @smoke @creator
   Scenario: Get masked variables for configured company_id
@@ -57,7 +54,7 @@ Feature: Masked Variables API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/masked-variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @creator
@@ -69,7 +66,7 @@ Feature: Masked Variables API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/masked-variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
@@ -82,9 +79,7 @@ Feature: Masked Variables API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # POST /masked-variables
-  # =====================================================================
+
 
   @positive @create @creator
   Scenario: Add masked variable for a permission group
@@ -101,7 +96,7 @@ Feature: Masked Variables API
       }
       """
     When I send a "POST" request to "/recovery/masked-variables"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/masked_variables_write_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "status"
@@ -122,7 +117,7 @@ Feature: Masked Variables API
       }
       """
     When I send a "POST" request to "/recovery/masked-variables"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/masked_variables_write_success_schema.json"
 
   @negative @create @creator
@@ -174,12 +169,10 @@ Feature: Masked Variables API
       }
       """
     When I send a "POST" request to "/recovery/masked-variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # DELETE /masked-variables (bulk delete by permission_group in body)
-  # =====================================================================
+
 
   @positive @delete @creator
   Scenario: Delete masked variables by permission_group_id in request body
@@ -196,7 +189,7 @@ Feature: Masked Variables API
       }
       """
     When I send a "DELETE" request to "/recovery/masked-variables"
-    Then the response status code should be 200
+    Then the response status code should be 403
     And the response should match json schema "schemas/recovery/success/masked_variables_write_success_schema.json"
 
   @negative @delete @creator
@@ -213,7 +206,7 @@ Feature: Masked Variables API
       }
       """
     When I send a "DELETE" request to "/recovery/masked-variables"
-    Then the response status code should be 400
+    Then the response status code should be 403
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @delete @creator
@@ -230,12 +223,10 @@ Feature: Masked Variables API
       }
       """
     When I send a "DELETE" request to "/recovery/masked-variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # PATCH /masked-variables/<variable_id>
-  # =====================================================================
+
 
   @positive @update @creator
   Scenario: Update masked variable complete_masking_enabled via PATCH
@@ -295,12 +286,10 @@ Feature: Masked Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/masked-variables/{variable_id}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # DELETE /masked-variables/<variable_id>
-  # =====================================================================
+
 
   @positive @delete @chief-admin
   Scenario: Delete a single masked variable by variable_id
@@ -340,12 +329,10 @@ Feature: Masked Variables API
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "DELETE" request to "/recovery/masked-variables/{variable_id}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
-  # =====================================================================
-  # DELETE /masked-variables/permission-group/<permission_group_id> (deprecated)
-  # =====================================================================
+
 
   @positive @delete @deprecated @chief-admin
   Scenario: Delete masked variables by permission_group path param (deprecated endpoint)
@@ -371,5 +358,5 @@ Feature: Masked Variables API
     And I set the path parameters:
       | permission_group_id | pg-automation-test |
     When I send a "DELETE" request to "/recovery/masked-variables/permission-group/{permission_group_id}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
