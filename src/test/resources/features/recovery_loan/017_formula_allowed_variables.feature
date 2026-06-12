@@ -12,7 +12,6 @@ Feature: Formula Allowed Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id    | {COMPANY_ID} |
       | variable_type | amount       |
@@ -27,7 +26,6 @@ Feature: Formula Allowed Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id    | {COMPANY_ID} |
       | variable_type | number       |
@@ -41,7 +39,6 @@ Feature: Formula Allowed Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id     | {COMPANY_ID} |
       | variable_type  | amount       |
@@ -56,7 +53,6 @@ Feature: Formula Allowed Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id    | {COMPANY_ID} |
       | variable_type | date         |
@@ -70,7 +66,6 @@ Feature: Formula Allowed Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id    | {COMPANY_ID} |
       | variable_type | amount       |
@@ -83,7 +78,6 @@ Feature: Formula Allowed Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/formula/allowed-variables"
@@ -95,7 +89,6 @@ Feature: Formula Allowed Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | variable_type | amount |
     When I send a "GET" request to "/recovery/formula/allowed-variables"
@@ -107,7 +100,6 @@ Feature: Formula Allowed Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | 00000000-0000-0000-0000-000000000000 |
     And I set the query parameters:
       | company_id    | 00000000-0000-0000-0000-000000000000 |
       | variable_type | amount                               |
@@ -119,7 +111,6 @@ Feature: Formula Allowed Variables API
   Scenario: GET formula allowed variables should fail when authentication token is missing
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
-      | x-company-id | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id    | {COMPANY_ID} |
       | variable_type | amount       |
@@ -132,7 +123,6 @@ Feature: Formula Allowed Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id    | {COMPANY_ID} |
       | variable_type | amount       |

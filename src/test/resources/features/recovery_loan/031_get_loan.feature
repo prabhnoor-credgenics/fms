@@ -82,8 +82,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan/NBFC-LOAN-001"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -96,9 +98,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | loan |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -109,9 +112,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | payment |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -122,9 +126,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | notice |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -135,9 +140,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | communication |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -148,9 +154,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | remark |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -161,9 +168,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | reminders |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -174,9 +182,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | loan_level |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -187,9 +196,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | allocation_level |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -200,9 +210,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | all |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -214,8 +225,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the path parameters:
       | loanId | {LOAN_ID} |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -226,9 +239,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | loan,payment |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -239,9 +253,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | loan,notice,remark |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -252,9 +267,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | loan,bogus_token |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -267,10 +283,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields           | payment  |
       | allocation_month | 2026-1-01 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -281,10 +298,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields           | payment    |
       | allocation_month | 2025-12-01 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @negative @creator
@@ -356,10 +374,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields     | loan,payment |
       | start_date | 1735689600   |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -370,10 +389,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields   | loan,payment |
       | end_date | 1767225600   |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -384,11 +404,12 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields     | all        |
       | start_date | 1735689600 |
       | end_date   | 1767225600 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -399,10 +420,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields     | loan,payment |
       | start_time | 1735689600   |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -413,10 +435,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields   | loan,payment |
       | end_time | 1767225600   |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @negative @creator
@@ -458,8 +481,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the path parameters:
       | loanId | {LOAN_ID} |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -471,9 +496,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | loan |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @negative @creator
@@ -501,9 +527,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | loan |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -581,10 +608,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields     | loan,payment   |
       | start_date | 1735689600.5   |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -595,11 +623,12 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields     | loan,payment |
       | start_date | 1735689600   |
       | start_time | 999999999    |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -610,11 +639,12 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields   | loan,payment |
       | end_date | 1767225600   |
       | end_time | 999999999    |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -625,12 +655,13 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields           | all        |
       | allocation_month | 2026-1-01  |
       | start_date       | 1735689600 |
       | end_date         | 1767225600 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -641,9 +672,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | bogus1,bogus2,unknown |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -654,11 +686,12 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields     | reminders  |
       | start_date | 1735689600 |
       | end_date   | 1767225600 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -671,9 +704,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | loan |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -684,6 +718,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | loan |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response body should not be empty
@@ -695,7 +730,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the query parameters:
       | fields | payment |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -708,10 +743,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields           | payment    |
       | allocation_month | 2026-10-01 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -722,10 +758,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields           | payment   |
       | allocation_month | 2026-9-01 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -736,10 +773,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields     | loan,payment |
       | start_date | 0            |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -750,11 +788,12 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields     | loan,payment |
       | start_date | 1735689600   |
       | end_date   | 1735689600   |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @negative @creator

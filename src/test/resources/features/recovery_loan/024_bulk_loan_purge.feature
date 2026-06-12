@@ -23,7 +23,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | invalid_token_12345               |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
     And I set the request body:
       """
@@ -34,20 +33,13 @@ Feature: Bulk Loan Purge API (data_purging)
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" with value "Session expired, please login again"
 
-  # =====================================================================
-  # EXECUTABLE NOW — ORG RESOLUTION (400 "invalid company id"). [VERIFIED on staging]
-  # For the automation user, @verify_organisation rejects this internal route before the RPC gate,
-  # body validation, or purge. This holds for valid/wrong/absent RPC keys and for valid/bad bodies
-  # alike — proving org resolution precedes all of them. None of these can purge data.
-  # =====================================================================
-
+ 
   @negative @org @creator
   Scenario: DELETE bulk loan with a valid body is rejected at org resolution (400 invalid company id)
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
     And I set the request body:
       """
@@ -64,7 +56,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | wrong-rpc-secret-key             |
     And I set the request body:
@@ -81,7 +72,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
     And I set the request body:
       """
@@ -99,7 +89,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
     And I set the request body:
       """
@@ -124,7 +113,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
     And I set the request body:
       """
@@ -147,7 +135,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
@@ -164,7 +151,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     When I send a "DELETE" request to "/recovery/bulk/loan"
@@ -177,7 +163,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
@@ -194,7 +179,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
@@ -211,7 +195,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
@@ -236,13 +219,11 @@ Feature: Bulk Loan Purge API (data_purging)
 
   @manual @rpc-required @negative @boundary @creator
   Scenario: DELETE bulk loan with 501 loan_ids exceeds the max limit and returns 400
-    # TODO: verify on staging — the client must generate a 501-element loan_ids array (use disposable
-    #       non-existent ids). Inline representation omitted; expected message below.
+   
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body from file "test-data/bulk_loan_purge_501_ids.json"
@@ -250,12 +231,6 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 400
     And the response body should contain field "message" with value "loan_ids length exceeds max allowed limit of 500"
 
-  # =====================================================================
-  # @manual @rpc-required @destructive — SUCCESS / HAPPY PATH (200).
-  # ⚠️ Soft-deletes data. All ids below are disposable & non-existent: a 200 matches 0 rows and
-  # deletes nothing real. Replace with your own throwaway ids only if they are safe to purge.
-  # TODO: verify on staging — needs the RPC secret; confirms the 200 envelope.
-  # =====================================================================
 
   @manual @rpc-required @destructive @positive @creator
   Scenario: DELETE bulk loan with a single disposable id returns 200 (minimal required field)
@@ -263,12 +238,12 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
       """
-      { "loan_ids": ["ZZZ_DISPOSABLE_{RANDOM_STRING:12}"] }
+      {
+        "company_id": "{COMPANY_ID}", "loan_ids": ["ZZZ_DISPOSABLE_{RANDOM_STRING:12}"] }
       """
     When I send a "DELETE" request to "/recovery/bulk/loan"
     Then the response status code should be 200
@@ -281,12 +256,12 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
       """
-      { "loan_ids": ["ZZZ_DISPOSABLE_{RANDOM_STRING:10}", "ZZZ_DISPOSABLE_{RANDOM_STRING:10}", "ZZZ_DISPOSABLE_{RANDOM_STRING:10}"] }
+      {
+        "company_id": "{COMPANY_ID}", "loan_ids": ["ZZZ_DISPOSABLE_{RANDOM_STRING:10}", "ZZZ_DISPOSABLE_{RANDOM_STRING:10}", "ZZZ_DISPOSABLE_{RANDOM_STRING:10}"] }
       """
     When I send a "DELETE" request to "/recovery/bulk/loan"
     Then the response status code should be 200
@@ -299,12 +274,12 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
       """
-      { "loan_ids": ["{UUID}"] }
+      {
+        "company_id": "{COMPANY_ID}", "loan_ids": ["{UUID}"] }
       """
     When I send a "DELETE" request to "/recovery/bulk/loan"
     Then the response status code should be 200
@@ -317,7 +292,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body from file "test-data/bulk_loan_purge_500_ids.json"
@@ -332,7 +306,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
@@ -350,7 +323,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
@@ -363,7 +335,6 @@ Feature: Bulk Loan Purge API (data_purging)
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:
@@ -376,13 +347,10 @@ Feature: Bulk Loan Purge API (data_purging)
 
   @manual @rpc-required @destructive @edge @creator
   Scenario: DELETE bulk loan with an empty-string id element returns 200 (non-empty list passes handler check)
-    # TODO: verify on staging — [""] is a truthy list so it passes the "No loan id provided" check;
-    #       the empty-string id matches no rows.
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                     |
       | Content-Type        | application/json                  |
       | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
     And I set the request body:

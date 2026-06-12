@@ -7,7 +7,6 @@ Feature: Loan Details (Metadata) API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the path parameters:
       | loan_id | Loan047122 |
@@ -33,7 +32,6 @@ Feature: Loan Details (Metadata) API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the path parameters:
       | loan_id | Loan047122 |
@@ -58,7 +56,6 @@ Feature: Loan Details (Metadata) API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the path parameters:
       | loan_id | Loan047122 |
@@ -80,7 +77,6 @@ Feature: Loan Details (Metadata) API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the path parameters:
       | loan_id | undefined |
@@ -103,7 +99,6 @@ Feature: Loan Details (Metadata) API
     Given I prepare a request
     And I set the request headers:
       | accept       | application/json, text/plain, */*    |
-      | x-company-id | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type | application/json                     |
     And I set the path parameters:
       | loan_id |Loan047122 |

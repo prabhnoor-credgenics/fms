@@ -29,7 +29,6 @@ Feature: Payment Limits API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the request body:
       """
@@ -52,7 +51,6 @@ Feature: Payment Limits API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the request body:
       """
@@ -71,7 +69,6 @@ Feature: Payment Limits API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the request body:
       """
@@ -88,7 +85,6 @@ Feature: Payment Limits API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the request body:
       """
@@ -107,7 +103,6 @@ Feature: Payment Limits API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the request body:
       """
@@ -127,7 +122,6 @@ Feature: Payment Limits API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the request body:
       """
@@ -146,7 +140,6 @@ Feature: Payment Limits API
     Given I prepare a request
     And I set the request headers:
       | accept       | application/json, text/plain, */*    |
-      | x-company-id | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type | application/json                     |
     And I set the request body:
       """
@@ -166,7 +159,6 @@ Feature: Payment Limits API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | invalid_token_12345                  |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the request body:
       """
@@ -186,7 +178,6 @@ Feature: Payment Limits API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | Content-Type        | application/json                     |
     And I set the request body:
       """

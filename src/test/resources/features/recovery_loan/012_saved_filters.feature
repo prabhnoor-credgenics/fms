@@ -30,7 +30,6 @@ Feature: Saved Filter API
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | {COMPANY_ID}                      |
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 403
     And the response should match json schema "schemas/invalid_schema.json"
@@ -41,7 +40,6 @@ Feature: Saved Filter API
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
-      | x-company-id        | 00000000-0000-0000-0000-000000000000 |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/move-loan-restriction"
@@ -54,7 +52,6 @@ Feature: Saved Filter API
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | x-company-id        | invalid-company-id                |
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/move-loan-restriction"

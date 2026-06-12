@@ -56,10 +56,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      {}
+      {
+        "company_id": "{COMPANY_ID}"
+      }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -71,12 +73,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -89,12 +92,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "Overall",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -123,13 +127,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "archive": true,
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -142,13 +147,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "archive": false,
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -160,6 +166,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "data",
         "unknown_field": "this is forwarded silently",
@@ -167,7 +174,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -180,12 +187,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": null,
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -216,13 +224,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "customer",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -235,6 +244,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "transaction",
         "include_additional_columns": true,
@@ -245,7 +255,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -258,13 +268,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "allocated_users",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -277,13 +288,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "portfolio_allocated_users",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -296,13 +308,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "portfolio_data",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -315,13 +328,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "portfolio_transaction_data",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -334,13 +348,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "bulk_document_download",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -372,12 +387,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "link"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -390,12 +406,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -427,13 +444,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "sort": "created_desc",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -445,13 +463,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "sort": "principal_outstanding_amount_asc",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -464,13 +483,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "sort": "null",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -483,13 +503,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "sort": null,
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -521,6 +542,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "search_type": "loan_id",
         "query": "{LOAN_ID}",
@@ -528,7 +550,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -540,6 +562,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "search_type": "applicant_name",
         "query": "test",
@@ -547,7 +570,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -560,6 +583,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "search_type": "",
         "query": "{LOAN_ID}",
@@ -567,7 +591,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -598,12 +622,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "selected_loan_ids": ["{LOAN_ID}"],
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -616,12 +641,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "selected_loan_ids": [],
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -634,6 +660,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "selected_loan_ids": ["{LOAN_ID}"],
         "select_from": 0,
@@ -642,7 +669,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -655,12 +682,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "selected_loan_ids": ["NON-EXISTENT-LOAN-{UUID}", "ANOTHER-MISSING-{UUID}"],
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -693,13 +721,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01"
       }
       """
     And I set the query parameters:
       | export_id | 1 |
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -711,12 +740,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -731,6 +761,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "customer",
         "include_fos_users": true,
@@ -746,7 +777,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -759,6 +790,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "number_of_applicant_addresses": 5,
         "number_of_references": 6,
@@ -770,7 +802,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -783,13 +815,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "historical_loan_limit": true,
         "response_type": "link"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -802,6 +835,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "number_of_co_applicants": 0,
         "co_applicant_columns": true,
@@ -809,7 +843,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -824,13 +858,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "dpd_bracket": ["0_30", "30_60"],
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -843,6 +878,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "dpd_from": 30,
         "dpd_to": 90,
@@ -850,7 +886,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -862,13 +898,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "applicant_state": ["maharashtra", "karnataka"],
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -880,13 +917,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "recovery_status": ["promise_to_pay"],
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -898,6 +936,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "date_of_default_from": "2025-01-01",
         "date_of_default_to": "2025-12-31",
@@ -905,7 +944,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -917,6 +956,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "total_loan_amount_from": 50000,
         "total_loan_amount_to": 500000,
@@ -924,7 +964,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -936,6 +976,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "co_applicant_present": true,
         "co_app_from": 1,
@@ -944,7 +985,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -956,6 +997,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "upload_date_from": "2026-01-01",
         "upload_date_to": "2026-01-31",
@@ -963,7 +1005,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -975,13 +1017,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "speedpost_status": ["delivered", "in-transit"],
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -993,6 +1036,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "civil_-_current_stages": ["summons_issued"],
         "civil_-_next_stages": ["hearing_scheduled"],
@@ -1000,7 +1044,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -1014,12 +1058,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "link"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1032,12 +1077,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1050,6 +1096,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "search_type": "loan_id",
         "query": "NON-EXISTENT-LOAN-{UUID}",
@@ -1098,6 +1145,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "select_from": 0,
         "select_to": 1000,
@@ -1105,7 +1153,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1118,6 +1166,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "call_attempts_from": 0,
         "call_attempts_to": 5,
@@ -1125,7 +1174,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1138,6 +1187,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "co_applicant_present": false,
         "co_app_from": 1,
@@ -1146,7 +1196,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1159,6 +1209,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "recovery_status": ["promise_to_pay"],
         "global_status": ["active"],
@@ -1168,7 +1219,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -1180,6 +1231,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "digital_notice_clicked": true,
         "digital_notice_opened": false,
@@ -1188,7 +1240,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1201,6 +1253,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "page_number": 1,
         "page_size": 50,
@@ -1208,7 +1261,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1223,6 +1276,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "customer",
         "response_type": "data",
@@ -1236,7 +1290,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1249,6 +1303,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "customer",
         "response_type": "data",
@@ -1260,7 +1315,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @chief-admin
@@ -1272,6 +1327,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "Overall",
         "archive": true,
         "export_type": "customer",
@@ -1282,7 +1338,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1295,6 +1351,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "customer",
         "response_type": "data",
@@ -1306,7 +1363,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1321,12 +1378,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 403
+    Then the response status code should be 200
     Then the response time should be within configured limit
 
 
@@ -1357,6 +1415,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "co_applicant_present": false,
         "co_app_from": 5,
@@ -1365,7 +1424,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1378,12 +1437,13 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": null
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "message"
 
@@ -1396,6 +1456,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "principal_outstanding_amount_from": 500000,
         "principal_outstanding_amount_to": 10000,
@@ -1403,7 +1464,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @negative @chief-admin

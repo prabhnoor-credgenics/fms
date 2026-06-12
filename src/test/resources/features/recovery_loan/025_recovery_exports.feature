@@ -39,7 +39,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -54,7 +53,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
@@ -66,7 +64,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | |
       | company_id      | {COMPANY_ID} |
@@ -79,7 +76,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | invalid_category |
       | company_id      | {COMPANY_ID} |
@@ -93,7 +89,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | payment |
       | company_id      | {COMPANY_ID} |
@@ -107,7 +102,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan,invalid_cat |
       | company_id      | {COMPANY_ID} |
@@ -123,7 +117,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -138,7 +131,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | transaction |
       | company_id      | {COMPANY_ID} |
@@ -153,7 +145,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | customer |
       | company_id      | {COMPANY_ID} |
@@ -167,7 +158,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | portfolio_allocated_users |
       | company_id      | {COMPANY_ID} |
@@ -181,7 +171,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | portfolio_data |
       | company_id      | {COMPANY_ID} |
@@ -195,7 +184,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | portfolio_transaction_data |
       | company_id      | {COMPANY_ID} |
@@ -209,7 +197,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan,transaction,customer |
       | company_id      | {COMPANY_ID} |
@@ -224,7 +211,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | LOAN |
       | company_id      | {COMPANY_ID} |
@@ -240,7 +226,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -255,7 +240,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -271,7 +255,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -286,7 +269,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -300,7 +282,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -314,7 +295,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan     |
       | company_id      | {COMPANY_ID} |
@@ -330,7 +310,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -346,7 +325,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan  |
       | company_id      | {COMPANY_ID} |
@@ -363,7 +341,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -379,7 +356,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan      |
       | company_id      | {COMPANY_ID} |
@@ -395,7 +371,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan   |
       | company_id      | {COMPANY_ID} |
@@ -410,7 +385,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan                    |
       | company_id      | {COMPANY_ID} |
@@ -425,7 +399,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan      |
       | company_id      | {COMPANY_ID} |
@@ -442,7 +415,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan   |
       | company_id      | {COMPANY_ID} |
@@ -459,7 +431,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan                   |
       | company_id      | {COMPANY_ID} |
@@ -475,7 +446,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -491,7 +461,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -507,7 +476,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -523,7 +491,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -542,7 +509,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -558,7 +524,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -573,7 +538,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -590,7 +554,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan,transaction |
       | company_id      | {COMPANY_ID} |
@@ -611,7 +574,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan              |
       | company_id      | {COMPANY_ID} |
@@ -627,7 +589,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan                                 |
       | company_id      | {COMPANY_ID} |
@@ -642,7 +603,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan                |
       | company_id      | {COMPANY_ID} |
@@ -660,7 +620,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -677,7 +636,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -694,7 +652,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan                   |
       | company_id      | {COMPANY_ID} |
@@ -711,7 +668,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | <category> |
       | company_id      | {COMPANY_ID} |
@@ -737,7 +693,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan          |
       | company_id      | {COMPANY_ID} |
@@ -767,7 +722,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -783,7 +737,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan   |
       | company_id      | {COMPANY_ID} |
@@ -798,7 +751,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan,transaction,customer,portfolio_allocated_users,portfolio_data,portfolio_transaction_data |
       | company_id      | {COMPANY_ID} |
@@ -813,7 +765,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -830,7 +781,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -849,7 +799,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -863,7 +812,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
@@ -877,7 +825,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan       |
       | company_id      | {COMPANY_ID} |
@@ -894,7 +841,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan,  transaction  |
       | company_id      | {COMPANY_ID} |
@@ -908,7 +854,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan,transaction,customer |
       | company_id      | {COMPANY_ID} |
@@ -924,7 +869,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan                 |
       | company_id      | {COMPANY_ID} |
@@ -938,7 +882,6 @@ Feature: Exports API — GET /recovery/exports
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-      | x-company-id        | {COMPANY_ID} |
     And I set the query parameters:
       | export_category | loan                 |
       | company_id      | {COMPANY_ID} |

@@ -802,7 +802,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -831,7 +830,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id                   | {COMPANY_ID} |
       | include_computed_variables   | false        |
@@ -842,7 +840,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -873,7 +870,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -902,7 +898,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id                   | {COMPANY_ID} |
       | include_computed_variables   | false        |
@@ -913,7 +908,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -944,7 +938,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -973,7 +966,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id                   | {COMPANY_ID} |
       | include_computed_variables   | false        |
@@ -984,7 +976,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -999,7 +990,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -1026,7 +1016,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1055,7 +1044,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id                   | {COMPANY_ID} |
       | include_computed_variables   | false        |
@@ -1066,7 +1054,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1081,7 +1068,6 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:

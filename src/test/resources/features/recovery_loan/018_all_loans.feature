@@ -12,7 +12,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/all-loans"
@@ -25,7 +24,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | page_number | 1            |
@@ -39,7 +37,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | page_number | 2            |
@@ -53,7 +50,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | sort       | created_asc  |
@@ -66,7 +62,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | sort       | created_desc |
@@ -79,7 +74,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}         |
       | sort       | date_of_default_asc  |
@@ -92,7 +86,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}          |
       | sort       | date_of_default_desc  |
@@ -105,7 +98,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}             |
       | sort       | total_claim_amount_asc   |
@@ -118,7 +110,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}             |
       | sort       | total_claim_amount_desc  |
@@ -131,7 +122,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}             |
       | sort       | default_emi_number_asc   |
@@ -144,7 +134,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}             |
       | sort       | default_emi_number_desc  |
@@ -157,7 +146,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}                  |
       | sort       | number_of_transactions_asc    |
@@ -170,7 +158,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}                  |
       | sort       | number_of_transactions_desc   |
@@ -183,7 +170,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | sort       | distance_asc |
@@ -196,7 +182,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}  |
       | sort       | distance_desc |
@@ -209,7 +194,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}                          |
       | sort       | principal_outstanding_amount_asc      |
@@ -222,7 +206,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}                          |
       | sort       | principal_outstanding_amount_desc     |
@@ -235,7 +218,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | search_type | loan_id      |
@@ -249,7 +231,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID}   |
       | search_type | applicant_name |
@@ -263,7 +244,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID}      |
       | search_type | applicant_email   |
@@ -277,7 +257,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID}               |
       | search_type | applicant_contact_number   |
@@ -291,7 +270,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID}  |
       | search_type | business_name |
@@ -305,7 +283,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID}       |
       | search_type | client_customer_id |
@@ -319,7 +296,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | search_type | group_id     |
@@ -333,7 +309,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | search_type | center_name  |
@@ -347,7 +322,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID}   |
       | search_type | transaction_id |
@@ -361,7 +335,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | archive    | true         |
@@ -374,7 +347,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | archive    | false        |
@@ -387,7 +359,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id       | {COMPANY_ID} |
       | allocation_month | overall      |
@@ -400,7 +371,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | return_type | dict         |
@@ -415,7 +385,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | select_from | 1            |
@@ -429,7 +398,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id          | {COMPANY_ID} |
       | user_hierarchy_join | true         |
@@ -442,7 +410,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id          | {COMPANY_ID}          |
       | permission_group_id | pg-automation-test    |
@@ -455,7 +422,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/all-loans"
@@ -469,7 +435,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -489,7 +454,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -510,7 +474,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -531,7 +494,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -551,7 +513,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -571,7 +532,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -591,7 +551,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -611,7 +570,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -631,7 +589,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -651,7 +608,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -671,7 +627,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -691,7 +646,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -711,7 +665,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -731,7 +684,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -749,7 +701,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -767,7 +718,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -785,7 +735,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -803,7 +752,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -823,7 +771,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -843,7 +790,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -864,7 +810,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -885,7 +830,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -906,7 +850,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -927,7 +870,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -948,7 +890,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -969,7 +910,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -990,7 +930,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1011,7 +950,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1030,7 +968,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1050,7 +987,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1071,7 +1007,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1092,7 +1027,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1112,7 +1046,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1132,7 +1065,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1152,7 +1084,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1172,7 +1103,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1192,7 +1122,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1212,7 +1141,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1233,7 +1161,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1253,7 +1180,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1273,7 +1199,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1294,7 +1219,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1315,7 +1239,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1336,7 +1259,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1357,7 +1279,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1377,7 +1298,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1397,7 +1317,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1417,7 +1336,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1437,7 +1355,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1458,7 +1375,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1479,7 +1395,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1500,7 +1415,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1520,7 +1434,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1540,7 +1453,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1560,7 +1472,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1580,7 +1491,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1600,7 +1510,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1620,7 +1529,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1640,7 +1548,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1660,7 +1567,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1680,7 +1586,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1700,7 +1605,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1720,7 +1624,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1740,7 +1643,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1760,7 +1662,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1780,7 +1681,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1800,7 +1700,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1820,7 +1719,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1840,7 +1738,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1860,7 +1757,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1880,7 +1776,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1902,7 +1797,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1922,7 +1816,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1942,7 +1835,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1963,7 +1855,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -1984,7 +1875,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2005,7 +1895,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2028,7 +1917,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2048,7 +1936,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2068,7 +1955,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2088,7 +1974,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2108,7 +1993,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2128,7 +2012,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2148,7 +2031,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2168,7 +2050,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2188,7 +2069,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2208,7 +2088,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2228,7 +2107,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2250,7 +2128,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2274,7 +2151,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2294,7 +2170,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2314,7 +2189,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2334,7 +2208,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2352,7 +2225,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2370,7 +2242,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2390,7 +2261,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2412,7 +2282,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2433,7 +2302,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2453,7 +2321,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2473,7 +2340,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2491,7 +2357,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2511,7 +2376,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2531,7 +2395,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2551,7 +2414,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2571,7 +2433,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2591,7 +2452,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2611,7 +2471,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2631,7 +2490,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2651,7 +2509,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2671,7 +2528,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2691,7 +2547,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2711,7 +2566,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2731,7 +2585,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2751,7 +2604,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2771,7 +2623,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2791,7 +2642,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2811,7 +2661,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2833,7 +2682,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2853,7 +2701,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2873,7 +2720,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2893,7 +2739,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2913,7 +2758,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2935,7 +2779,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2955,7 +2798,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2975,7 +2817,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -2995,7 +2836,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3015,7 +2855,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3035,7 +2874,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3055,7 +2893,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3075,7 +2912,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3095,7 +2931,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3115,7 +2950,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3135,7 +2969,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3155,7 +2988,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3175,7 +3007,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3195,7 +3026,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3215,7 +3045,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3235,7 +3064,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3255,7 +3083,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3275,7 +3102,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3295,7 +3121,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3315,7 +3140,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3335,7 +3159,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3355,7 +3178,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3375,7 +3197,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3395,7 +3216,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3416,7 +3236,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3434,7 +3253,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3452,7 +3270,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3470,7 +3287,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3488,7 +3304,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3506,7 +3321,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3524,7 +3338,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3544,7 +3357,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3564,7 +3376,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3582,7 +3393,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3602,7 +3412,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3629,7 +3438,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3651,7 +3459,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3673,7 +3480,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3695,7 +3501,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3715,7 +3520,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3738,7 +3542,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3756,7 +3559,6 @@ Feature: All Loans API
   Scenario: GET all-loans should fail when authentication token is missing
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
-      | x-company-id | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/all-loans"
@@ -3768,7 +3570,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/all-loans"
@@ -3779,7 +3580,6 @@ Feature: All Loans API
   Scenario: POST all-loans should fail when authentication token is missing
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
-      | x-company-id | {COMPANY_ID}                      |
       | Content-Type | application/json                  |
     And I set the request body:
       """
@@ -3796,7 +3596,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3815,7 +3614,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
@@ -3825,7 +3623,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | invalid-company-id                |
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/all-loans"
@@ -3837,7 +3634,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | 00000000-0000-0000-0000-000000000000 |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/all-loans"
@@ -3849,7 +3645,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3867,7 +3662,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | 00000000-0000-0000-0000-000000000000 |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3886,7 +3680,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3905,7 +3698,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3923,7 +3715,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3941,7 +3732,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3959,7 +3749,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -3980,7 +3769,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4000,7 +3788,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4023,7 +3810,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4043,7 +3829,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4065,7 +3850,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4084,7 +3868,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4103,7 +3886,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4122,7 +3904,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4141,7 +3922,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4160,7 +3940,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4179,7 +3958,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4202,7 +3980,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id        | {COMPANY_ID} |
       | allocation_month  | 05-2026      |
@@ -4215,7 +3992,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id        | {COMPANY_ID} |
       | allocation_month  | 2026-05-01   |
@@ -4228,7 +4004,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | page_size   | 1            |
@@ -4241,7 +4016,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | page_size   | 100          |
@@ -4254,7 +4028,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | page_number | 5            |
@@ -4268,7 +4041,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | dpd_bracket | 31_60        |
@@ -4281,7 +4053,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | dpd_bracket | 61_90,90_    |
@@ -4294,7 +4065,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id   | {COMPANY_ID} |
       | select_from  | 11           |
@@ -4308,7 +4078,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id       | {COMPANY_ID} |
       | applicant_state  | delhi        |
@@ -4321,7 +4090,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id       | {COMPANY_ID}    |
       | recovery_status  | promise_to_pay  |
@@ -4334,7 +4102,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | sort        | created_asc  |
@@ -4349,7 +4116,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id   | {COMPANY_ID}  |
       | product_type | personal_loan |
@@ -4362,7 +4128,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID} |
       | search_type | group_id     |
@@ -4375,7 +4140,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id        | {COMPANY_ID} |
       | allocation_month  | not-a-date   |
@@ -4388,7 +4152,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID}  |
       | sort       | invalid_sort  |
@@ -4401,7 +4164,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id  | {COMPANY_ID}  |
       | search_type | invalid_type  |
@@ -4416,7 +4178,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4436,7 +4197,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4456,7 +4216,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4474,7 +4233,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4494,7 +4252,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4515,7 +4272,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4536,7 +4292,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4556,7 +4311,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4577,7 +4331,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4598,7 +4351,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4622,7 +4374,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4642,7 +4393,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4662,7 +4412,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4682,7 +4431,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4702,7 +4450,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4723,7 +4470,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4744,7 +4490,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4765,7 +4510,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4785,7 +4529,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4807,7 +4550,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4827,7 +4569,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4847,7 +4588,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4868,7 +4608,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4888,7 +4627,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4908,7 +4646,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4927,7 +4664,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4948,7 +4684,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4968,7 +4703,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -4988,7 +4722,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5009,7 +4742,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5029,7 +4761,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5049,7 +4780,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5068,7 +4798,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5089,7 +4818,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5109,7 +4837,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5129,7 +4856,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5149,7 +4875,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5171,7 +4896,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5193,7 +4917,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5213,7 +4936,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5235,7 +4957,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5256,7 +4977,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5276,7 +4996,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5299,7 +5018,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5319,7 +5037,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5339,7 +5056,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5359,7 +5075,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5379,7 +5094,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5399,7 +5113,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5421,7 +5134,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5441,7 +5153,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5461,7 +5172,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5481,7 +5191,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5501,7 +5210,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5521,7 +5229,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5543,7 +5250,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5564,7 +5270,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5587,7 +5292,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5609,7 +5313,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5631,7 +5334,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5653,7 +5355,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5674,7 +5375,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5695,7 +5395,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5717,7 +5416,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5738,7 +5436,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5762,7 +5459,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5777,7 +5473,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5796,7 +5491,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5815,7 +5509,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5834,7 +5527,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5854,7 +5546,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5874,7 +5565,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5894,7 +5584,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5912,7 +5601,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | invalid-company                   |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -5929,7 +5617,6 @@ Feature: All Loans API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """

@@ -12,7 +12,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
@@ -25,7 +24,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id         | {COMPANY_ID} |
       | bifurcation_prefix | true         |
@@ -38,7 +36,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id      | {COMPANY_ID} |
       | include_deleted | true         |
@@ -51,7 +48,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
@@ -62,7 +58,6 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: GET amount bifurcation should fail when authentication token is missing
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
-      | x-company-id | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
@@ -74,7 +69,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
@@ -86,7 +80,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
@@ -98,7 +91,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -117,7 +109,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -134,7 +125,6 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: POST amount bifurcation should fail when authentication token is missing
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
-      | x-company-id | {COMPANY_ID}                      |
       | Content-Type | application/json                  |
     And I set the request body:
       """
@@ -154,7 +144,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -172,7 +161,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -190,7 +178,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the request body:
       """
@@ -207,7 +194,6 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: PATCH amount bifurcation should fail when authentication token is missing
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
-      | x-company-id | {COMPANY_ID}                      |
       | Content-Type | application/json                  |
     And I set the request body:
       """
@@ -227,7 +213,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
       | Content-Type         | application/json                  |
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000001 |
@@ -246,7 +231,6 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: PATCH amount bifurcation variable should fail when authentication token is missing
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
-      | x-company-id | {COMPANY_ID}                      |
       | Content-Type | application/json                  |
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000001 |
@@ -268,7 +252,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -282,7 +265,6 @@ Feature: Company Amount Bifurcation Variables API
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -295,7 +277,6 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: DELETE amount bifurcation variable should fail when authentication token is missing
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
-      | x-company-id | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:

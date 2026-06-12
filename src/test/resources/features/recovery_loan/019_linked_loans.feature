@@ -6,7 +6,6 @@ Feature: Linked Loans API
     And I set the request headers:
        | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
-      | x-company-id         | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id       | {COMPANY_ID} |
       | allocation_month | 2026-4-01    |
@@ -54,7 +53,6 @@ Feature: Linked Loans API
   Scenario: GET linked loans should fail when authentication token is missing
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
-      | x-company-id | {COMPANY_ID}                      |
     And I set the query parameters:
       | company_id       | {COMPANY_ID}                         |
       | allocation_month | overall                              |
