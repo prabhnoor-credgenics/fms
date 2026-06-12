@@ -1,33 +1,6 @@
 @api @bulk-loan-purge @recovery
 Feature: Bulk Loan Purge API (data_purging)
-  # DELETE {BASE_ROUTE}/bulk/loan  -> soft-deletes loan/customer data across 9 tables.
-  # Source: app/routes/data_routes.py:196 (endpoint data_purging). Body: { "loan_ids": [<str>...] }.
-  #
-  # ⚠️ DESTRUCTIVE + RPC-GATED. Documented decorator order:
-  #   @login_required -> @verify_organisation -> @validate_rpc -> @validate_request(DataPurgingModel)
-  #
-  # OBSERVED ON STAGING (automation user, public host api.staging.credgenics.com):
-  #   * No / invalid auth token            -> 401 "Session expired, please login again". [VERIFIED]
-  #   * Authenticated (valid token, with or without x-company-id, any RPC key, any body)
-  #                                        -> 400 "invalid company id". [VERIFIED]
-  #     i.e. @verify_organisation rejects this internal route for the automation user BEFORE the RPC
-  #     gate, body validation, or purge are ever reached. The same company id (3e561a13) that works
-  #     on other recovery routes is rejected here — this route is internal/RPC-only and the
-  #     automation org is not authorised for it.ch
-  #
-  # NOT REACHABLE for the automation user (documented per the source, tagged @manual + # TODO):
-  #   * RPC gate           -> 403 "you have insufficient access rights" (needs an org authorised for
-  #                           this route so verify_organisation passes first).
-  #   * Body validation    -> 400 (missing/empty/typed loan_ids) — needs a valid org AND the RPC secret.
-  #   * Successful purge   -> 200, REAL DATA SOFT-DELETED — needs valid org + RPC secret.
-  #
-  # @manual scenarios need the RPC secret wired in (header value {RPC_SECRET_KEY}; header placeholders
-  # are NOT auto-resolved by the framework). All purge bodies use disposable, non-existent ids so a
-  # real 200 matches zero rows and cannot delete a real loan.
 
-  # =====================================================================
-  # EXECUTABLE NOW — AUTH (401). Reachable without the RPC secret.
-  # =====================================================================
 
   @negative @auth @creator @flaky
   Scenario: DELETE bulk loan without authentication token returns 401
@@ -418,22 +391,3 @@ Feature: Bulk Loan Purge API (data_purging)
       """
     When I send a "DELETE" request to "/recovery/bulk/loan"
     Then the response status code should be 200
-
-  # =====================================================================
-  # NOT APPLICABLE (documented; not reachable on this endpoint)
-  # =====================================================================
-  # N/A — "All optional fields populated" / "field type matrix beyond loan_ids": the body has a
-  #       single field (loan_ids: list[str]); there are no optional, enum, boolean, date, email,
-  #       mobile, or UUID fields to vary. The type matrix above fully covers loan_ids.
-  # N/A — "Valid token but wrong role -> 403 (role-based)": no permission submodule on this route;
-  #       the 403 here is the RPC gate, not RBAC. The @approver scenario above confirms role is
-  #       irrelevant to access.
-  # N/A — "Missing company_id -> 403" and "Wrong company_id for the resource -> 403/404": company_id
-  #       is derived server-side from the auth token via @verify_organisation; callers cannot pass it.
-  # N/A — "Create -> read back" / "Create -> update -> read back" / "Create -> delete -> read back":
-  #       this endpoint only purges; there is no create/read/update verb and no read-back of purge
-  #       state via this API, so these multi-step flows cannot be expressed against this route.
-  # N/A — "Soft-deleted resource access -> 404/400": re-purging an already-purged id is a no-op 200
-  #       (covered by the idempotency scenario), not a 404; there is no GET on this route to read it.
-  # TODO: verify on staging — "Wrong HTTP method (e.g. GET /bulk/loan) -> 404 requested route not
-  #       found": method/route mapping is unconfirmed (could be 404 or 405); not asserted here.

@@ -1,7 +1,0 @@
-file:src/test/resources/features/recovery_loan/003_recovery_company.feature:373:396:481:537:560:583:632:659:682
-file:src/test/resources/features/recovery_loan/015_company_amount_bifurcation.feature:153
-file:src/test/resources/features/recovery_loan/018_all_loans.feature:156:169:182:195:346:730:748:766:784:1010:2472:2490:3394:3415:3433:3451:3469:3487:3505:3563:3581:3694:3714
-file:src/test/resources/features/recovery_loan/025_recovery_exports.feature:299:313:862:923:937
-file:src/test/resources/features/recovery_loan/026_assign_default.feature:77:167:185:204:222:275:293:326:366:385:405:436:469:488:528:576:577:578:618:636:655:674:730:766
-file:src/test/resources/features/recovery_loan/028_data_operations.feature:471
-file:src/test/resources/features/recovery_loan/029_data_upload_mappings.feature:849
