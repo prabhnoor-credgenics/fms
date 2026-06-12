@@ -54,7 +54,7 @@ Feature: Bulk tasks API
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "Session expired, please login again"
+    And the response body should contain field "message" with value "invalid authentication token"
 
   @negative @auth @creator
   Scenario: API should fail with invalid authentication token
@@ -73,7 +73,7 @@ Feature: Bulk tasks API
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
     When I send a "GET" request to "/recovery/bulk/tasks"
-    Then the response status code should be 403
+    Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "invalid company id"
   @negative1 @creator
@@ -84,9 +84,9 @@ Feature: Bulk tasks API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/bulk/tasks"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-     And the response body should contain field "message" with value "Session expired, please login again"
+     And the response body should contain field "message" with value "one or more companies not found"
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
     And I set the request headers:
@@ -95,6 +95,6 @@ Feature: Bulk tasks API
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/global-status"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
- And the response body should contain field "message" with value "Session expired, please login again"
+ And the response body should contain field "message" with value "Invalid company_id"

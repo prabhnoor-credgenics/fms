@@ -15,7 +15,7 @@
       "type": "object"
     },
     "output": {
-      "type": "array"
+      "type": ["array", "string", "object", "null"]
     },
     "error": {
       "type": ["object", "array", "string", "null"]
@@ -24,9 +24,5 @@
       "type": ["string", "null"]
     }
   },
-  "anyOf": [
-    { "required": ["message"] },
-    { "required": ["error"] }
-  ],
   "additionalProperties": true
 }

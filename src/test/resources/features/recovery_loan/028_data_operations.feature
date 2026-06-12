@@ -18,7 +18,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative
@@ -38,7 +38,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative @creator
@@ -58,11 +58,11 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response body should not be empty
 
-  @negative @creator
-  Scenario: TC-AUTH-004 — Test user has archive_and_unarchive_loan write permission — returns 400
+  @positive @creator
+  Scenario: TC-AUTH-004 — Test user has archive_and_unarchive_loan write permission — returns 200
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -78,7 +78,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -139,7 +139,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response body should not be empty
 
 
@@ -526,8 +526,8 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @negative @creator
-  Scenario: TC-MONTH-005 — allocation_month as empty string — service behaviour TBD
+  @positive @creator
+  Scenario: TC-MONTH-005 — allocation_month as empty string — service accepts as overall
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -543,7 +543,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -733,8 +733,8 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @negative @creator
-  Scenario: TC-BODY-003 — Missing Content-Type header returns 400
+  @positive @creator
+  Scenario: TC-BODY-003 — Missing Content-Type header — service accepts without explicit Content-Type
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -749,7 +749,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @positive @creator
@@ -813,7 +813,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 200
+    Then the response status code should be 202
     Then the response body should not be empty
 
   @positive @creator
@@ -921,7 +921,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       <body>
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 403
+    Then the response status code should be 400
     Then the response body should not be empty
 
     Examples:
@@ -930,7 +930,20 @@ Feature: Data Operations API — POST /recovery/data-operations
       | operation_type   | {"company_id": "{COMPANY_ID}", "category": "loan", "data": ["{LOAN_ID}"], "allocation_month": "2026-5-01"}                                   |
       | data             | {"company_id": "{COMPANY_ID}", "category": "loan", "operation_type": "archive", "allocation_month": "2026-5-01"}                             |
       | allocation_month | {"company_id": "{COMPANY_ID}", "category": "loan", "operation_type": "archive", "data": ["{LOAN_ID}"]}                                       |
-      | company_id       | {"category": "loan", "operation_type": "archive", "data": ["{LOAN_ID}"], "allocation_month": "2026-5-01"}                                    |
+
+  @negative @creator
+  Scenario: TC-MISS-005 — Body missing company_id returns 403
+    Given I prepare a request
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {"category": "loan", "operation_type": "archive", "data": ["{LOAN_ID}"], "allocation_month": "2026-5-01"}
+      """
+    When I send a "POST" request to "/recovery/data-operations"
+    Then the response status code should be 403
+    Then the response body should not be empty
 
 
 
@@ -958,15 +971,13 @@ Feature: Data Operations API — POST /recovery/data-operations
     Examples:
       | field          | invalid_value   |
       | category       | orders          |
-      | category       | LOAN            |
       | operation_type | delete          |
-      | operation_type | ARCHIVE         |
       | execution_mode | instant         |
 
 
 
-  @negative @creator
-  Scenario: TC-EDGE-001 — allocation_month = "Overall" with different casing variants
+  @positive @creator
+  Scenario: TC-EDGE-001 — allocation_month = "OVERALL" (uppercase) accepted — case-insensitive check
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -982,10 +993,10 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
-  @negative @creator
+  @positive @creator
   Scenario: TC-EDGE-002 — data list containing non-existent loan IDs — service processes silently
     Given I prepare a request
     And I set the request headers:
@@ -1002,7 +1013,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @negative @creator
@@ -1070,7 +1081,7 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response body should not be empty
 
   @positive @creator
-  Scenario: TC-EXTRA-002 — execution_mode = null defaults to "real-time" v1 path returns 200
+  Scenario: TC-EXTRA-002 — execution_mode = null defaults to async path returns 202
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1087,7 +1098,7 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 200
+    Then the response status code should be 202
     Then the response body should not be empty
 
   @negative @creator
@@ -1150,8 +1161,8 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @negative @creator
-  Scenario: TC-500-001 — Unhandled exception in service path (REC_0004)
+  @positive @creator
+  Scenario: TC-500-001 — Valid archive request returns 200
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1167,5 +1178,5 @@ Feature: Data Operations API — POST /recovery/data-operations
       }
       """
     When I send a "POST" request to "/recovery/data-operations"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty

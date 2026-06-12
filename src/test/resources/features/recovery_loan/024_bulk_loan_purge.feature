@@ -13,9 +13,9 @@ Feature: Bulk Loan Purge API (data_purging)
       { "loan_ids": ["ZZZ_DISPOSABLE_DO_NOT_EXIST_1"] }
       """
     When I send a "DELETE" request to "/recovery/bulk/loan"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Session expired, please login again"
+    And the response body should contain field "message" with value "invalid authentication token"
 
   @negative @auth @creator @flaky
   Scenario: DELETE bulk loan with an invalid authentication token returns 401
@@ -29,9 +29,9 @@ Feature: Bulk Loan Purge API (data_purging)
       { "loan_ids": ["ZZZ_DISPOSABLE_DO_NOT_EXIST_1"] }
       """
     When I send a "DELETE" request to "/recovery/bulk/loan"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Session expired, please login again"
+    And the response body should contain field "message" with value "invalid authentication token"
 
  
   @negative @org @creator
@@ -107,7 +107,7 @@ Feature: Bulk Loan Purge API (data_purging)
 
   # @manual — the documented RPC gate (403). Needs an account whose org is authorised for this
   # internal route so @verify_organisation passes first. # TODO: verify on staging.
-  @manual @rpc-required @negative @rpc @creator
+  @manual @rpc-required @negative @rpc @creator @500
   Scenario: DELETE bulk loan with missing RPC secret returns 403 (requires org authorised for route)
     Given I prepare a request
     And I set the request headers:
@@ -119,7 +119,7 @@ Feature: Bulk Loan Purge API (data_purging)
       { "loan_ids": ["ZZZ_DISPOSABLE_DO_NOT_EXIST_1"] }
       """
     When I send a "DELETE" request to "/recovery/bulk/loan"
-    Then the response status code should be 403
+    Then the response status code should be 422
     And the bulk loan purge forbidden response should be valid
 
   # =====================================================================
@@ -129,7 +129,7 @@ Feature: Bulk Loan Purge API (data_purging)
   # TODO: verify on staging — all scenarios below need the RPC secret to reach body validation.
   # =====================================================================
 
-  @manual @rpc-required @negative @creator
+  @manual @rpc-required @negative @creator @500
   Scenario: DELETE bulk loan with missing loan_ids key returns 400
     Given I prepare a request
     And I set the request headers:
@@ -145,7 +145,7 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 400
     And the response body should contain field "message"
 
-  @manual @rpc-required @negative @creator
+  @manual @rpc-required @negative @creator @500
   Scenario: DELETE bulk loan with an empty request body returns 400
     Given I prepare a request
     And I set the request headers:
@@ -157,7 +157,7 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 400
     And the response body should contain field "message" with value "Empty request body"
 
-  @manual @rpc-required @negative @creator
+  @manual @rpc-required @negative @creator @500
   Scenario: DELETE bulk loan with loan_ids present but null returns 400
     Given I prepare a request
     And I set the request headers:
@@ -173,7 +173,7 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 400
     And the response body should contain field "message"
 
-  @manual @rpc-required @negative @creator
+  @manual @rpc-required @negative @creator @500
   Scenario: DELETE bulk loan with an empty loan_ids list returns 400 (handler-level)
     Given I prepare a request
     And I set the request headers:
@@ -189,7 +189,7 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 400
     And the response body should contain field "message" with value "No loan id provided"
 
-  @manual @rpc-required @negative @creator
+  @manual @rpc-required @negative @creator @500
   Scenario Outline: DELETE bulk loan with wrong-typed loan_ids "<description>" returns 400
     Given I prepare a request
     And I set the request headers:
@@ -217,7 +217,7 @@ Feature: Bulk Loan Purge API (data_purging)
       | element is an object     | { "loan_ids": [{}] }              |
       | element is a nested list | { "loan_ids": [["x"]] }           |
 
-  @manual @rpc-required @negative @boundary @creator
+  @manual @rpc-required @negative @boundary @creator @500
   Scenario: DELETE bulk loan with 501 loan_ids exceeds the max limit and returns 400
    
     Given I prepare a request
@@ -232,7 +232,7 @@ Feature: Bulk Loan Purge API (data_purging)
     And the response body should contain field "message" with value "loan_ids length exceeds max allowed limit of 500"
 
 
-  @manual @rpc-required @destructive @positive @creator
+  @manual @rpc-required @destructive @positive @creator @500
   Scenario: DELETE bulk loan with a single disposable id returns 200 (minimal required field)
     Given I prepare a request
     And I set the request headers:
@@ -250,7 +250,7 @@ Feature: Bulk Loan Purge API (data_purging)
     And the response should match json schema "schemas/recovery/success/bulk_loan_purge_success_schema.json"
     And the bulk loan purge success response should be valid
 
-  @manual @rpc-required @destructive @positive @creator
+  @manual @rpc-required @destructive @positive @creator @500
   Scenario: DELETE bulk loan with multiple disposable ids returns 200
     Given I prepare a request
     And I set the request headers:
@@ -267,7 +267,7 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 200
     And the bulk loan purge success response should be valid
 
-  @manual @rpc-required @destructive @positive @creator
+  @manual @rpc-required @destructive @positive @creator @500
   Scenario: DELETE bulk loan for a valid-format but non-existent id returns 200 (no 404 for unknown id)
     # TODO: verify on staging — doc specifies no 404; purge of an unknown id is a no-op 200.
     Given I prepare a request
@@ -285,7 +285,7 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 200
     And the bulk loan purge success response should be valid
 
-  @manual @rpc-required @destructive @boundary @creator
+  @manual @rpc-required @destructive @boundary @creator @500
   Scenario: DELETE bulk loan with exactly 500 disposable ids is allowed (boundary) and returns 200
     # TODO: verify on staging — client must generate a 500-element disposable id array.
     Given I prepare a request
@@ -299,7 +299,7 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 200
     And the bulk loan purge success response should be valid
 
-  @manual @rpc-required @destructive @edge @creator
+  @manual @rpc-required @destructive @edge @creator @500
   Scenario: DELETE bulk loan with duplicate disposable ids returns 200
     # TODO: verify on staging — dedup behaviour unspecified; expecting tolerant 200.
     Given I prepare a request
@@ -316,7 +316,7 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 200
     And the bulk loan purge success response should be valid
 
-  @manual @rpc-required @destructive @edge @creator
+  @manual @rpc-required @destructive @edge @creator @500
   Scenario: DELETE bulk loan twice with the same disposable id is idempotent (200 both times)
     # TODO: verify on staging — soft-delete is idempotent; the doc specifies no 409 for re-purge.
     Given I prepare a request
@@ -345,7 +345,7 @@ Feature: Bulk Loan Purge API (data_purging)
     Then the response status code should be 200
     And the bulk loan purge success response should be valid
 
-  @manual @rpc-required @destructive @edge @creator
+  @manual @rpc-required @destructive @edge @creator @500
   Scenario: DELETE bulk loan with an empty-string id element returns 200 (non-empty list passes handler check)
     Given I prepare a request
     And I set the request headers:

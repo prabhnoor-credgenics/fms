@@ -6,12 +6,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ParallelUserAllocator {
 
     private static final Logger logger = LogManager.getLogger(ParallelUserAllocator.class);
 
     private static final ConcurrentHashMap<Long, Integer> THREAD_TO_SLOT = new ConcurrentHashMap<>();
+
+    // Hands out strictly increasing, unique slot numbers. Using an atomic counter (instead of
+    // THREAD_TO_SLOT.size()) avoids a race where two threads computing slots concurrently for
+    // different keys both read the same size() and get assigned the SAME slot -> two threads
+    // would then share one credential, causing the server to invalidate a session.
+    private static final AtomicInteger NEXT_SLOT = new AtomicInteger(0);
 
     private final ConfigReader configReader;
 
@@ -40,15 +47,18 @@ public class ParallelUserAllocator {
         }
         long threadId = Thread.currentThread().threadId();
         return THREAD_TO_SLOT.computeIfAbsent(threadId, id -> {
-            if (THREAD_TO_SLOT.size() >= poolSize) {
+            int slot = NEXT_SLOT.getAndIncrement();
+            if (slot >= poolSize) {
+                // Roll back so the counter and the error message stay consistent if more
+                // over-capacity threads arrive.
+                NEXT_SLOT.decrementAndGet();
                 throw new IllegalStateException(
-                        "Cannot assign a unique user slot: " + (THREAD_TO_SLOT.size() + 1)
+                        "Cannot assign a unique user slot: more than " + poolSize
                                 + " worker threads are active but parallel.user.pool.size=" + poolSize + ". "
                                 + "Add more user credentials (stag.user.N.email) and increase "
                                 + "parallel.user.pool.size and testng thread-count together."
                 );
             }
-            int slot = THREAD_TO_SLOT.size();
             logger.debug("Mapped thread id {} to user slot {}", id, slot);
             return slot;
         });
@@ -57,5 +67,6 @@ public class ParallelUserAllocator {
 
     public static void reset() {
         THREAD_TO_SLOT.clear();
+        NEXT_SLOT.set(0);
     }
 }

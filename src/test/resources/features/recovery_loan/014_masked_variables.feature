@@ -297,7 +297,7 @@ Feature: Masked Variables API
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "DELETE" request to "/recovery/masked-variables/{variable_id}"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @delete @creator

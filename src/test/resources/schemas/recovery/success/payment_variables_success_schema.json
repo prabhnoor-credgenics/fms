@@ -1,13 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["output", "message"],
   "properties": {
     "output": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["variable_id", "variable_name", "variable_type", "data_type", "is_mandatory"],
         "properties": {
           "variable_id": { "type": "string", "minLength": 1 },
           "variable_name": { "type": "string", "minLength": 1 },

@@ -13,7 +13,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       {}
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative
@@ -27,7 +27,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       {}
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative @chief-admin
@@ -1104,7 +1104,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 200
+    Then the response status code should be 400
     Then the response body should not be empty
 
 

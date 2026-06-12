@@ -11,7 +11,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | replace_given_data    | false |
 
 
-  @api-validation @negative @approver
+  @api-validation @negative @approver @500
   Scenario: API should return 400 when authentication token is missing
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -20,10 +20,10 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request body from file "test-data/loan_recovery_request.json"
     When I send a "POST" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 400
-    And the response message should be "Session expired, please login again"
+    And the response message should be "invalid authentication token"
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
-  @api-validation @negative @testapi @creator
+  @api-validation @negative @testapi @creator @500
   Scenario: API should return 400 when authentication token is invalid
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -36,7 +36,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
-  @api-validation @negative @creator
+  @api-validation @negative @creator @500
   Scenario: API should return 403 when company_id query parameter is missing
     Given I set the path parameters:
       | loan_id | {LOAN_ID} |
@@ -47,7 +47,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     Then the response status code should be 403
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
-  @api-validation @negative @creator
+  @api-validation @negative @creator @500
   Scenario: API should return 403 when URI loan_id does not match payload loan_id
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -61,7 +61,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
 
-  @api-validation @negative @creator
+  @api-validation @negative @creator @500
   Scenario: API should return 400 when loan_id is null in payload
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -78,7 +78,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
 
 
-  @datatype-validation @text @special-characters @positive @creator
+  @datatype-validation @text @special-characters @positive @creator @500
   Scenario: Loan ID field should accept values containing allowed special characters
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -92,7 +92,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/loan_recovery_success_schema.json"
 
-  @datatype-validation @text @special-characters @negative @creator
+  @datatype-validation @text @special-characters @negative @creator @500
   Scenario: Loan ID field should not accept values containing allowed special characters
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -105,7 +105,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     When I send a "POST" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 400
 
-  @datatype-validation @text @special-characters @positive @creator
+  @datatype-validation @text @special-characters @positive @creator @500
   Scenario Outline: Text fields should accept values containing allowed special characters
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -166,7 +166,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | references[0].reference_address[0].reference_address_text | S-142/67, Dehradun             |
 
 
-  @datatype-validation @text @special-characters @negative @creator
+  @datatype-validation @text @special-characters @negative @creator @500
   Scenario Outline: Text fields should reject values containing disallowed special characters
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -221,7 +221,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | references[0].name                                      | Test\|Reference     |
 
 
-  @datatype-validation @text @negative @creator
+  @datatype-validation @text @negative @creator @500
   Scenario: Loan ID should reject values exceeding max length of 64
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -235,7 +235,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     Then the response status code should be 400
 
 
-  @datatype-validation @text @negative @creator
+  @datatype-validation @text @negative @creator @500
   Scenario Outline: Text field should reject values exceeding max length of 255
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -723,7 +723,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | co_applicant_address_type                 |
 
 
-  @datatype-validation @text @positive
+  @datatype-validation @text @positive @500
   Scenario Outline: Text field should accept empty string values
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |

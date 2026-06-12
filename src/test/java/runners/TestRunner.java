@@ -27,7 +27,7 @@ import io.cucumber.testng.CucumberOptions;
         },
 
         monochrome = true,
-        tags = "@500"
+        tags = "@api"
 
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

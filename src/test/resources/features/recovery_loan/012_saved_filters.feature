@@ -13,7 +13,7 @@ Feature: Saved Filter API
     When I send a "GET" request to "/recovery/saved/filters"
     Then the response status code should be 200
     And the response message should be "success"
-    And the response should match json schema "schemas/recovery_saved_filter_api_schema.json"
+    And the response should match json schema "schemas/recovery/success/recovery_saved_filter_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "message"
     And the response body should contain field "message_template"
@@ -31,7 +31,7 @@ Feature: Saved Filter API
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
     When I send a "GET" request to "/recovery/move-loan-restriction"
-    Then the response status code should be 403
+    Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" with value "invalid company id"
 
@@ -43,9 +43,9 @@ Feature: Saved Filter API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/move-loan-restriction"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "forbidden: invalid company id"
+    And the response body should contain field "message" with value "one or more companies not found"
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
@@ -55,6 +55,6 @@ Feature: Saved Filter API
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/move-loan-restriction"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "Session expired, please login again"
+    And the response body should contain field "message" with value "Invalid company_id"

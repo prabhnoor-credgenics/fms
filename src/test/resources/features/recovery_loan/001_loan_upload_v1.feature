@@ -20,7 +20,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And I set the request body from file "test-data/loan_recovery_request.json"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
-    And the response message should be "Session expired, please login again"
+    And the response message should be "invalid authentication token"
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
   @api-validation @negative @testapi @creator
@@ -74,7 +74,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
-    And the response message should be "loan_id should be same in parameter and payload"
+    And the response message should be "loan_id provided in parameter and payload should be same."
 
 
 

@@ -18,7 +18,7 @@ Feature: Exports API — GET /recovery/exports
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative
@@ -31,7 +31,7 @@ Feature: Exports API — GET /recovery/exports
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative @chief-admin
@@ -43,7 +43,7 @@ Feature: Exports API — GET /recovery/exports
       | export_category | loan |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -804,7 +804,7 @@ Feature: Exports API — GET /recovery/exports
       | company_id      | {COMPANY_ID} |
       | page_size       | 0   |
     When I send a "GET" request to "/recovery/exports"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
   @negative @chief-admin @500

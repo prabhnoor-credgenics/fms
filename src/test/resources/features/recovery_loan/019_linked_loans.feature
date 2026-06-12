@@ -57,8 +57,8 @@ Feature: Linked Loans API
       | company_id       | {COMPANY_ID}                         |
       | allocation_month | overall                              |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be one of "401"
-    And the response body should contain field "message" with value "Session expired, please login again"
+    Then the response status code should be 422
+    And the response body should contain field "message" with value "invalid authentication token"
 
   @negative @auth @creator
   Scenario: GET linked loans should fail with invalid authentication token
@@ -106,9 +106,9 @@ Feature: Linked Loans API
       | company_id       | invalid-company-id |
       | allocation_month | overall            |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Session expired, please login again"
+    And the response body should contain field "message" with value "invalid authentication token"
     
       @negative @creator @bug
     Scenario: GET linked loans should fail when allocation_month does not exist

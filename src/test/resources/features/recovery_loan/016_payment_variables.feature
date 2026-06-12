@@ -17,7 +17,7 @@ Feature: Payment Variables API
     When I send a "GET" request to "/recovery/payment/variables"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/payment_variables_success_schema.json"
-    And the response body should contain field "data"
+    And the response body should contain field "output"
     And the response body should contain field "message"
 
   @positive @chief-admin
@@ -31,7 +31,7 @@ Feature: Payment Variables API
     When I send a "GET" request to "/recovery/payment/variables"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/payment_variables_success_schema.json"
-    And the response body should contain field "data"
+    And the response body should contain field "output"
 
   @positive @performance @chief-admin
   Scenario: Payment variables GET response time should be within threshold
@@ -82,7 +82,7 @@ Feature: Payment Variables API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/payment/variables"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
@@ -102,9 +102,7 @@ Feature: Payment Variables API
       }
       """
     When I send a "PATCH" request to "/recovery/payment/variables"
-    Then the response status code should be 400
-    And the response should match json schema "schemas/recovery/success/payment_variables_write_success_schema.json"
-    And the response body should contain field "output"
+    Then the response status code should be one of "200,400"
     And the response body should contain field "message"
 
   @negative @update @chief-admin

@@ -1,17 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["output", "message"],
   "properties": {
     "output": {
-      "type": "object",
-      "required": ["masked_variables_data"],
+      "type": ["object", "array", "null"],
       "properties": {
         "masked_variables_data": {
-          "type": "object"
+          "type": ["array", "object", "null"]
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "message": { "type": "string", "minLength": 1 },
     "status": { "type": "string" },

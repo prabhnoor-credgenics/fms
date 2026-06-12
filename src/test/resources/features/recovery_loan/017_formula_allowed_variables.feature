@@ -104,7 +104,7 @@ Feature: Formula Allowed Variables API
       | company_id    | 00000000-0000-0000-0000-000000000000 |
       | variable_type | amount                               |
     When I send a "GET" request to "/recovery/formula/allowed-variables"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @auth @creator

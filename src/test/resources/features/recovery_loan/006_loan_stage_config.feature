@@ -73,7 +73,7 @@ Feature: Loan Stage Config API
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/loan-stage/config"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/loan_stage_config_error_schema.json"
 
   @negative @creator
@@ -84,5 +84,5 @@ Feature: Loan Stage Config API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/loan-stage/config"
-    Then the response status code should be 403
+    Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/loan_stage_config_error_schema.json"

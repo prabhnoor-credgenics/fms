@@ -208,7 +208,7 @@ Feature: Recovery Variables API
       | include_computed_variables   | true |
       | include_meta_data            | true |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 403
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
@@ -221,7 +221,7 @@ Feature: Recovery Variables API
       | include_computed_variables   | true               |
       | include_meta_data            | true               |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
   @negative @creator
@@ -234,7 +234,7 @@ Feature: Recovery Variables API
       | include_computed_variables   | true                                 |
       | include_meta_data            | true                                 |
     When I send a "GET" request to "/recovery/variables"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
@@ -948,7 +948,7 @@ Feature: Recovery Variables API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/variables/categorisation"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
@@ -990,7 +990,7 @@ Feature: Recovery Variables API
       }
       """
     When I send a "POST" request to "/recovery/variables"
-    Then the response status code should be 200
+    Then the response status code should be 201
     And the response body should not be empty
 
   @negative @server-error @expected-200 @creator
@@ -1045,7 +1045,6 @@ Feature: Recovery Variables API
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | true         |
-      | include_computed_variables | false        |
       | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200

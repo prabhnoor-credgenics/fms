@@ -26,7 +26,7 @@ import io.cucumber.testng.CucumberOptions;
                 "rerun:rerun/failedrerun.txt"
         },
 monochrome = true,
-tags = "@testyop"
+tags = "not @500"
 
         )
 public class FailedScenarioRunner extends AbstractTestNGCucumberTests {

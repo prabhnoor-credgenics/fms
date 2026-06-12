@@ -125,9 +125,9 @@ Feature: EMI Schedule API
       }
       """
     When I send a "POST" request to "/recovery/loan/emi-schedule/{loan_id}"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-      And the response body should contain field "message" with value "Session expired, please login again"
+      And the response body should contain field "message" with value "invalid authentication token"
  
   @negative @create @creator 
   Scenario: POST EMI schedule should fail for an invalid loan_id

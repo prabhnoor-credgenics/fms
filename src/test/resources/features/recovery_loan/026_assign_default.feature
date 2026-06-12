@@ -16,7 +16,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       }
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative
@@ -34,11 +34,11 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       }
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative @creator
-  Scenario: TC-AUTH-003 — Valid token but non-existent organisation returns 400
+  Scenario: TC-AUTH-003 — Valid token but non-existent organisation returns 422
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -52,7 +52,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       }
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response body should not be empty
 
 
@@ -110,7 +110,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
     Then the response body should not be empty
 
   @negative @creator
-  Scenario: TC-COMP-004 — Non-existent company_id returns 401
+  Scenario: TC-COMP-004 — Non-existent company_id returns 422
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -124,7 +124,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       }
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response body should not be empty
 
 
@@ -319,7 +319,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       {}
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 403
+    Then the response status code should be 400
     Then the response body should not be empty
 
   @positive @creator @500
@@ -357,7 +357,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       }
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 400
     Then the response body should not be empty
 
 
@@ -568,7 +568,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       """
     And I update JSON field "<field>" to "   "
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 422
     Then the response body should not be empty
 
     Examples:
@@ -593,7 +593,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       }
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 400
     Then the response body should not be empty
 
   @negative @creator
@@ -611,7 +611,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       }
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 400
     Then the response body should not be empty
 
   @negative @creator @500
@@ -705,7 +705,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       }
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 400
     Then the response body should not be empty
 
   @negative @creator
@@ -723,7 +723,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
       }
       """
     When I send a "POST" request to "/recovery/assign-default"
-    Then the response status code should be 401
+    Then the response status code should be 400
     Then the response body should not be empty
 
   @negative @creator @500

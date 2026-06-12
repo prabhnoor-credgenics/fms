@@ -225,7 +225,7 @@ Feature: Recovery Company API and Company Creation Flow
       | company_id          | invalid-company-id |
       | bifurcation_prefix  | true               |
     When I send a "GET" request to "/recovery/company"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @get-company @creator
@@ -238,7 +238,7 @@ Feature: Recovery Company API and Company Creation Flow
       | company_id          | 00000000-0000-0000-0000-000000000000 |
       | bifurcation_prefix  | true                                 |
     When I send a "GET" request to "/recovery/company"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @get-company @creator
@@ -474,7 +474,7 @@ Feature: Recovery Company API and Company Creation Flow
       }
       """
     When I send a "PUT" request to "/recovery/company"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
 
   @negative @put-company @creator @500

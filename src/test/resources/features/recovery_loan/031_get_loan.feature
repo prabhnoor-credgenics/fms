@@ -10,7 +10,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative
@@ -22,7 +22,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative @creator

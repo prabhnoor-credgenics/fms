@@ -3626,7 +3626,7 @@ Feature: All Loans API
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
   @negative @creator
@@ -3637,7 +3637,7 @@ Feature: All Loans API
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/all-loans"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
   @negative @creator
@@ -3670,7 +3670,7 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
 
@@ -5609,7 +5609,7 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
   @negative @creator

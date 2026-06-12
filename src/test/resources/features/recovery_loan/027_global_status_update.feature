@@ -19,7 +19,7 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
       }
       """
     When I send a "PATCH" request to "/recovery/global-status/update/{loanId}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative
@@ -40,7 +40,7 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
       }
       """
     When I send a "PATCH" request to "/recovery/global-status/update/{loanId}"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative @creator
@@ -506,7 +506,7 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @negative @creator
+  @negative @creator @500
   Scenario: TC-BODY-004 — Missing Content-Type header returns 400
     Given I prepare a request
     And I set the request headers:

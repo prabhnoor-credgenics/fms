@@ -67,7 +67,7 @@ Feature: Loan Details (Metadata) API
       }
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
-    Then the response status code should be 400
+    Then the response status code should be 403
     And the response body should contain field "message"
 
 
@@ -113,5 +113,5 @@ Feature: Loan Details (Metadata) API
       }
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be one of "400,403"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"

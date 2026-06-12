@@ -10,7 +10,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/data-upload/mappings"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative
@@ -22,7 +22,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/data-upload/mappings"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative @creator
@@ -73,7 +73,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/data-upload/mappings"
-    Then the response status code should be 401
+    Then the response status code should be 422
     And the response body should not be empty
 
 
@@ -762,14 +762,27 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
       <body>
       """
     When I send a "POST" request to "/recovery/data-upload/mappings"
-    Then the response status code should be 403
+    Then the response status code should be 400
     Then the response body should not be empty
 
     Examples:
       | absent_field      | body                                                                                         |
       | mapping_name      | {"company_id": "{COMPANY_ID}", "mapping_variables": {"loan_id": "Loan ID"}}                 |
       | mapping_variables | {"company_id": "{COMPANY_ID}", "mapping_name": "no-vars-outline-{UUID}"}                    |
-      | company_id        | {"mapping_name": "no-company-outline-{UUID}", "mapping_variables": {"loan_id": "Loan ID"}}  |
+
+  @negative @creator
+  Scenario: TC-POSTMISS-003 — POST body missing company_id returns 403
+    Given I prepare a request
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {"mapping_name": "no-company-outline-{UUID}", "mapping_variables": {"loan_id": "Loan ID"}}
+      """
+    When I send a "POST" request to "/recovery/data-upload/mappings"
+    Then the response status code should be 403
+    Then the response body should not be empty
 
 
 
