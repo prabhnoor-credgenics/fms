@@ -18,7 +18,7 @@ Feature: V3 Loan Details API
 
   @positive @creator
   Scenario: GET loan details returns variable_data keyed by the requested loan id
-    # TODO: verify on staging — asserts the loan key is present; depends on Loan047122 existing for the org.
+ 
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -156,7 +156,7 @@ Feature: V3 Loan Details API
       | 2026-12-01       |
       | 2000-1-01        |
 
-  # --- source enum: one row per documented ApiRequestSource value (case-insensitive) ---
+
 
   @positive @creator
   Scenario Outline: GET loan details accepts source "<source>"
@@ -206,7 +206,6 @@ Feature: V3 Loan Details API
       | Frontend   |
       | SETTLEMENT |
 
-  # --- attribute_levels enum: one row per documented LendingAttributeLevels value ---
 
   @positive @creator
   Scenario Outline: GET loan details accepts attribute_levels "<attribute_level>"
@@ -255,7 +254,7 @@ Feature: V3 Loan Details API
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
 
-  # --- boolean flags: each flag, both true and false ---
+
 
   @positive @creator
   Scenario Outline: GET loan details accepts boolean flag <flag>=<value>
@@ -283,9 +282,7 @@ Feature: V3 Loan Details API
       | apply_transform      | true  |
       | apply_transform      | false |
 
-  # =====================================================================
-  # EDGE: empty / blank CSV params coerce to null (still 200)
-  # =====================================================================
+
 
   @positive @edge @creator
   Scenario: GET loan details with empty attribute_levels string coerces to null
@@ -328,9 +325,6 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
 
-  # =====================================================================
-  # AUTH & PERMISSION
-  # =====================================================================
 
   @negative @auth @creator
   Scenario: GET loan details without authentication token returns 401
@@ -368,13 +362,10 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 401
 
-  # NOTE: the {UUID} above is sent literally (query/header placeholders are not resolved by the
-  # framework); it still serves as a syntactically-different invalid token.
-
+  
   @positive @approver
   Scenario: GET loan details succeeds for a non-creator role (no permission submodule on this route)
-    # This route declares NO permission submodules, so role does not gate access.
-    # "valid token but wrong role -> 403" is NOT reachable here; an authenticated approver gets 200.
+   
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -384,14 +375,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
 
-  # N/A — "Missing company_id -> 403": company_id is derived server-side from the auth token via
-  #       @verify_organisation; callers cannot pass it, so this condition is not reachable here.
-  # N/A — "Wrong company_id for the resource -> 403/404": same reason; see the non-existent-loan
-  #       scenario below for the closest reachable behaviour.
 
-  # =====================================================================
-  # PATH loan_id VALIDATION (the only "required field" on this endpoint)
-  # =====================================================================
 
   @negative @creator
   Scenario: GET loan details with loan_id "undefined" is rejected by validity check
@@ -439,8 +423,7 @@ Feature: V3 Loan Details API
 
   @negative @creator
   Scenario Outline: GET loan details with forbidden character in loan_id "<loan_id>" (encoding-sensitive)
-    # TODO: verify on staging — these characters may be URL-encoded by the client before reaching
-    #       the server's [{}%';~] check; confirm the 400/REC_0007 still triggers.
+    
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -456,9 +439,6 @@ Feature: V3 Loan Details API
       | loan%123 |
       | loan}123 |
 
-  # =====================================================================
-  # QUERY PARAM VALIDATION (serializer -> 400 REC_0003)
-  # =====================================================================
 
   @negative @creator
   Scenario: GET loan details with an invalid source value returns validation error
@@ -520,14 +500,9 @@ Feature: V3 Loan Details API
       | notadate         | # non-date string                 |
       | 2026/12/01       | # wrong separators                |
 
-  # =====================================================================
-  # FIELD TYPE / FORMAT VALIDATION
-  # =====================================================================
-
   @negative @creator
   Scenario Outline: GET loan details with non-boolean flag value <flag>=<value> returns validation error
-    # TODO: verify on staging — pydantic bool coercion is permissive (true/false/1/0/yes/no/on/off);
-    #       these clearly-invalid tokens are expected to fail validation with REC_0003.
+
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -546,19 +521,9 @@ Feature: V3 Loan Details API
       | data_type_conversion | abcd  |
       | id_info              | 7     |
 
-  # N/A — "String field receives integer / numeric receives string / UUID / email / mobile -> 400":
-  #       this endpoint has no UUID, email, mobile, numeric, or strict-typed body fields. Its only
-  #       typed inputs are the enum (source / attribute_levels), the date-regex (allocation_month),
-  #       and the booleans — all covered above. No further type/format cases are reachable.
-
-  # =====================================================================
-  # BOUNDARY / EDGE — loan_id length & fuzz (path param resolves placeholders)
-  # =====================================================================
-
   @negative @boundary @creator
   Scenario: GET loan details with a very long random loan_id
-    # TODO: verify on staging — no documented max length for loan_id; behaviour (200 empty vs error)
-    #       is unconfirmed. Asserting 200 as the most likely "valid format, not found" outcome.
+   
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -570,7 +535,7 @@ Feature: V3 Loan Details API
 
   @negative @boundary @creator
   Scenario: GET loan details with a single-character loan_id
-    # TODO: verify on staging — boundary-minimum id; expected valid-format 200 (empty variable_data).
+
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -580,14 +545,9 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
 
-  # =====================================================================
-  # BUSINESS LOGIC / DOMAIN RULES
-  # =====================================================================
-
   @negative @creator
   Scenario: GET loan details for a valid-format but non-existent loan id
-    # TODO: verify on staging — doc does not specify 404 for unknown loan; the service returns a
-    #       success envelope with empty/absent variable_data. Asserting 200 accordingly.
+  
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -598,19 +558,6 @@ Feature: V3 Loan Details API
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
 
-  # N/A — "version not v3 -> 404 (REC_0000)": the route hard-codes defaults={"version":"v3"};
-  #       there is no path/param to send a different version, so this branch is not reachable here.
-  # N/A — "company is not of type LOAN -> 400 (REC_0008)": requires authenticating as a credit-line
-  #       company; the configured automation org is a LOAN company. TODO: verify on staging with a
-  #       credit-line token if/when available.
-  # N/A — "Idempotency: duplicate create -> 409" and "state-transition (e.g. closed loan) -> 409":
-  #       this endpoint is a read-only GET with no create/update/state machine. Not applicable.
-  # TODO: verify on staging — "soft-deleted / inactive loan access": behaviour unconfirmed; would
-  #       need a known soft-deleted loan id on staging.
-
-  # =====================================================================
-  # MULTI-STEP / DEPENDENT (read-only variants; no create/delete on this endpoint)
-  # =====================================================================
 
   @positive @multistep @creator
   Scenario: GET full attribute set then GET a narrowed variable both succeed
@@ -637,9 +584,7 @@ Feature: V3 Loan Details API
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
 
-  # =====================================================================
-  # PERFORMANCE
-  # =====================================================================
+ 
 
   @positive @performance @creator
   Scenario: GET loan details responds within the time threshold
