@@ -73,6 +73,10 @@ public class ScenarioTestDataResolver {
         return configReader.getAllocationMonth();
     }
 
+    public String resolveAllocationMonthOffset(String text) {
+        return testDataHelper.replaceAllocationMonthOffset(text);
+    }
+
     public String resolveVariableId() {
         if (testContext.getScenarioVariableId() != null && !testContext.getScenarioVariableId().isBlank()) {
             return testContext.getScenarioVariableId();
@@ -99,7 +103,20 @@ public class ScenarioTestDataResolver {
         if (result.contains(ContextKeys.MAPPING_ID)) {
             result = result.replace(ContextKeys.MAPPING_ID, resolveMappingId());
         }
+        if (result.contains(ContextKeys.CREATOR_USER_ID)) {
+            result = result.replace(ContextKeys.CREATOR_USER_ID, resolveCreatorUserId());
+        }
         return result;
+    }
+
+    public String resolveCreatorUserId() {
+        if (testContext.getUserId() != null && !testContext.getUserId().isBlank()) {
+            return testContext.getUserId();
+        }
+        throw new IllegalStateException(
+                "Creator user id is not set. Use 'I store the current user id from the user profile' "
+                        + "while authenticated as the creator before referencing {CREATOR_USER_ID}."
+        );
     }
 
     public String resolveMappingId() {

@@ -8,6 +8,9 @@ import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 public class ScenarioDataStepDefinitions {
 
@@ -64,5 +67,15 @@ public class ScenarioDataStepDefinitions {
     public void scenario_allocation_month_is(String allocationMonth) {
         testContext.setScenarioAllocationMonth(allocationMonth);
         logger.info("Scenario allocation month set to: {}", allocationMonth);
+    }
+
+    @Given("scenario allocation month offset is {int}")
+    public void scenario_allocation_month_offset_is(int monthOffset) {
+        String allocationMonth = LocalDate.now()
+                .plusMonths(monthOffset)
+                .withDayOfMonth(1)
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        testContext.setScenarioAllocationMonth(allocationMonth);
+        logger.info("Scenario allocation month offset {} resolved to: {}", monthOffset, allocationMonth);
     }
 }

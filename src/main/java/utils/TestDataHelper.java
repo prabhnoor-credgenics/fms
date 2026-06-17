@@ -6,6 +6,7 @@ import helpers.RandomDataHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
@@ -109,7 +110,34 @@ public class TestDataHelper {
             }
         }
 
+        result = replaceAllocationMonthOffset(result);
+
         logger.debug("Replaced placeholders in template");
+        return result;
+    }
+
+
+    public String replaceAllocationMonthOffset(String template) {
+        if (template == null) {
+            return null;
+        }
+        String result = template;
+        String prefix = "{ALLOCATION_MONTH_OFFSET:";
+        while (result.contains(prefix)) {
+            int start = result.indexOf(prefix);
+            int end = result.indexOf("}", start);
+            if (end <= start) {
+                break;
+            }
+            String placeholder = result.substring(start, end + 1);
+            String inner = placeholder.substring(prefix.length(), placeholder.length() - 1).trim();
+            int offset = Integer.parseInt(inner);
+            String allocationMonth = LocalDate.now()
+                    .plusMonths(offset)
+                    .withDayOfMonth(1)
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            result = result.replace(placeholder, allocationMonth);
+        }
         return result;
     }
 }

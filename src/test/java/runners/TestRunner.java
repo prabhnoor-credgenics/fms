@@ -27,7 +27,7 @@ import io.cucumber.testng.CucumberOptions;
         },
 
         monochrome = true,
-        tags = "@api"
+        tags = "@loan-lifecycle"
 
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

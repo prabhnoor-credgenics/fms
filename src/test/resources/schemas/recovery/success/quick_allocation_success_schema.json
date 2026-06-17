@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QuickAllocationSuccessResponse",
+  "description": "Success envelope for POST /recovery/allocation (make_response_handler). On success `message` is the literal misspelled string \"sucess\".",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": ["string", "object", "null"]
+    },
+    "message": {
+      "type": "string"
+    },
+    "message_template": {
+      "type": ["string", "null"]
+    },
+    "message_placeholder": {
+      "type": ["object", "string", "null"]
+    }
+  },
+  "additionalProperties": true
+}

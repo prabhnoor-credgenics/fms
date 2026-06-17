@@ -77,6 +77,49 @@ public class ApiStepDefinitions {
         this.authManager = authManager;
     }
 
+    @Given("I authenticate as {string}")
+    public void i_authenticate_as(String roleName) {
+        enums.UserRole role = switch (roleName.trim().toLowerCase()) {
+            case "creator" -> enums.UserRole.CREATOR;
+            case "approver" -> enums.UserRole.APPROVER;
+            case "chief-admin", "chief_admin", "chiefadmin" -> enums.UserRole.CHIEF_ADMIN;
+            default -> throw new IllegalArgumentException(
+                    "Unknown role '" + roleName + "'. Expected: creator | approver | chief-admin");
+        };
+        testContext.setUserRole(role);
+        authManager.initializeAuthentication(role);
+        logger.info("Switched active authentication to role: {} (token now resolves to this role for {{AUTH_TOKEN}})", role);
+    }
+
+    @When("I wait for {int} seconds")
+    public void i_wait_for_seconds(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000L);
+            logger.info("Waited for {} seconds", seconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    @When("I poll a {string} request to {string} until the response body contains {string}")
+    public void i_poll_until_body_contains(String httpMethod, String endpoint, String expected) {
+        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(expected);
+        int maxAttempts = 3;
+        int delaySeconds = 5;
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            i_send_a_request_to(httpMethod, endpoint);
+            if (activeResponse().getBody().asString().contains(resolved)) {
+                logger.info("Poll matched: body contains '{}' on attempt {}/{}", resolved, attempt, maxAttempts);
+                return;
+            }
+            logger.info("Poll attempt {}/{}: '{}' not present yet", attempt, maxAttempts, resolved);
+            if (attempt < maxAttempts) {
+                i_wait_for_seconds(delaySeconds);
+            }
+        }
+        logger.warn("Poll exhausted: '{}' never appeared after {} attempts", resolved, maxAttempts);
+    }
+
     @Given("I prepare a request")
     public void i_prepare_a_request() {
         request = restAssuredBase.getRequestSpec();
@@ -159,6 +202,18 @@ public class ApiStepDefinitions {
             String value = param.getValue();
             if ("company_id".equals(paramNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
                 value = scenarioTestDataResolver.resolveCompanyId();
+            }
+            if (ContextKeys.LOAN_ID.equals(value)) {
+                value = scenarioTestDataResolver.resolveLoanId();
+            }
+            if (ContextKeys.CREATOR_USER_ID.equals(value)) {
+                value = scenarioTestDataResolver.resolveCreatorUserId();
+            }
+            if (ContextKeys.ALLOCATION_MONTH.equals(value)) {
+                value = scenarioTestDataResolver.resolveAllocationMonth();
+            }
+            if (value != null && value.contains("{ALLOCATION_MONTH_OFFSET:")) {
+                value = scenarioTestDataResolver.resolveAllocationMonthOffset(value);
             }
             storedQueryParams.put(param.getKey(), value);
             request.queryParam(param.getKey(), value);
@@ -494,6 +549,22 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
     @Then("the response body should contain field {string}")
     public void the_response_body_should_contain_field(String jsonPath) {
         AssertionHelper.assertFieldExists(activeResponse(), jsonPath);
+    }
+
+    @Then("the response body should contain text {string}")
+    public void the_response_body_should_contain_text(String expected) {
+        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(expected);
+        String body = activeResponse().getBody().asString();
+        Assert.assertTrue(body.contains(resolved),
+                "Expected response body to contain '" + resolved + "' but it did not. Body: " + body);
+    }
+
+    @Then("the response body should not contain text {string}")
+    public void the_response_body_should_not_contain_text(String unexpected) {
+        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(unexpected);
+        String body = activeResponse().getBody().asString();
+        Assert.assertFalse(body.contains(resolved),
+                "Expected response body NOT to contain '" + resolved + "' but it did. Body: " + body);
     }
 
     @Then("the response header {string} should be {string}")

@@ -13,6 +13,7 @@ public final class ContextKeys {
     public static final String RANDOM_NAME = "{RANDOM_NAME}";
     public static final String VARIABLE_ID = "{VARIABLE_ID}";
     public static final String MAPPING_ID  = "{MAPPING_ID}";
+    public static final String CREATOR_USER_ID = "{CREATOR_USER_ID}";
 
     private ContextKeys() {
         throw new UnsupportedOperationException("Constants class");

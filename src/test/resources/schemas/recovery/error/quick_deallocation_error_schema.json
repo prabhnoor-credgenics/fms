@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QuickDeAllocationErrorResponse",
+  "description": "Failure shapes for POST /recovery/deallocation: (1) message-only auth/org errors, (2) quart-schema ValidationError body-validation failures, (3) service failure envelope {output, message:\"failed\", ...}.",
+  "type": "object",
+  "anyOf": [
+    {
+      "description": "Service / handler failure envelope (e.g. 'Length of loan_ids cannot be greater than 1')",
+      "required": ["message"],
+      "properties": {
+        "output": {
+          "type": ["string", "object", "null"]
+        },
+        "message": {
+          "type": "string"
+        },
+        "message_template": {
+          "type": ["string", "null"]
+        },
+        "message_placeholder": {
+          "type": ["object", "string", "null"]
+        }
+      }
+    },
+    {
+      "description": "Message-only errors (401 auth, 403 insufficient rights, org resolution)",
+      "required": ["message"],
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "description": "quart-schema ValidationError shape",
+      "required": ["error"],
+      "properties": {
+        "error": {
+          "type": ["object", "string", "array", "null"]
+        },
+        "message": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  ],
+  "additionalProperties": true
+}
