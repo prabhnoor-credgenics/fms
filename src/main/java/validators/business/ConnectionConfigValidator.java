@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ConnectionConfigValidator {
+public class ConnectionConfigValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(ConnectionConfigValidator.class);
 
@@ -26,13 +26,5 @@ public class ConnectionConfigValidator {
 
         sa.assertAll();
         logger.info("connection config success envelope validated (rows: {})", rows == null ? 0 : rows.size());
-    }
-
-    public void validateFailureEnvelope(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertNotNull(jp.get("message"), "message must be present");
-        sa.assertAll();
-        logger.info("connection config failure envelope validated");
     }
 }

@@ -2,19 +2,16 @@ package stepdefinitions;
 
 import context.ScenarioTestDataResolver;
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.BulkVerifyLoanValidator;
 
 
-public class BulkVerifyLoanStepDefinitions {
+public class BulkVerifyLoanStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(BulkVerifyLoanStepDefinitions.class);
 
-    private final TestContext testContext;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final BulkVerifyLoanValidator validator;
 
@@ -23,7 +20,7 @@ public class BulkVerifyLoanStepDefinitions {
             ScenarioTestDataResolver scenarioTestDataResolver,
             BulkVerifyLoanValidator validator
     ) {
-        this.testContext = testContext;
+        super(testContext);
         this.scenarioTestDataResolver = scenarioTestDataResolver;
         this.validator = validator;
     }
@@ -43,9 +40,5 @@ public class BulkVerifyLoanStepDefinitions {
     @Then("the bulk verify loan failure response should be valid")
     public void the_bulk_verify_loan_failure_response_should_be_valid() {
         validator.validateFailureEnvelope(activeResponse());
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

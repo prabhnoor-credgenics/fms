@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
 
 
-public class InternalCompanyUsersValidator {
+public class InternalCompanyUsersValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(InternalCompanyUsersValidator.class);
 
@@ -20,13 +20,5 @@ public class InternalCompanyUsersValidator {
 
         sa.assertAll();
         logger.info("internal company users success envelope validated");
-    }
-
-    public void validateFailureEnvelope(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertNotNull(jp.get("message"), "message must be present");
-        sa.assertAll();
-        logger.info("internal company users failure envelope validated");
     }
 }

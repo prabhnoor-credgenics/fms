@@ -1,24 +1,21 @@
 package stepdefinitions;
 
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.QuickAllocationValidator;
 
 
 
-public class QuickAllocationStepDefinitions {
+public class QuickAllocationStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(QuickAllocationStepDefinitions.class);
 
-    private final TestContext testContext;
     private final QuickAllocationValidator quickAllocationValidator;
 
     public QuickAllocationStepDefinitions(TestContext testContext, QuickAllocationValidator quickAllocationValidator) {
-        this.testContext = testContext;
+        super(testContext);
         this.quickAllocationValidator = quickAllocationValidator;
     }
 
@@ -44,9 +41,5 @@ public class QuickAllocationStepDefinitions {
     public void the_quick_allocation_field_one_to_many_rejection_response_should_be_valid() {
         quickAllocationValidator.validateFieldOneToManyRejection(activeResponse());
         logger.info("quick allocation field+one_to_many rejection validation completed");
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

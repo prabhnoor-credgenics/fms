@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
 
 
-public class ProfileDetailsValidator {
+public class ProfileDetailsValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(ProfileDetailsValidator.class);
 
@@ -23,12 +23,4 @@ public class ProfileDetailsValidator {
         logger.info("profile details success envelope validated");
     }
 
-
-    public void validateFailureEnvelope(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertNotNull(jp.get("message"), "message must be present");
-        sa.assertAll();
-        logger.info("profile details failure envelope validated");
-    }
 }

@@ -95,6 +95,14 @@ public class UserProfileService {
 
 
     private Response verifyUser(String authToken) {
+        return requestVerifyUser(configReader, authToken);
+    }
+
+    /**
+     * Issues the raw {@code GET /user/public/verify/user} call. Shared with
+     * {@link UserLoginService} so the request is built in exactly one place.
+     */
+    static Response requestVerifyUser(ConfigReader configReader, String authToken) {
         String baseUrl = configReader.getBaseUrl();
         return given()
                 .baseUri(baseUrl)

@@ -14,7 +14,6 @@ import helpers.LoggingHelper;
 import helpers.PayloadHelper;
 import helpers.ResponseHelper;
 import helpers.SchemaHelper;
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -23,7 +22,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.asserts.SoftAssert;
 
 import utils.JsonUtils;
 import utils.ResponseValidator;
@@ -38,7 +36,6 @@ import java.util.Set;
 
 import java.io.File;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -159,12 +156,6 @@ public class ApiStepDefinitions {
                 logger.info("Added header: {} = {}", headerName, value);
             }
         }
-    }
-
-    @Given("I remove header {string}")
-    public void i_remove_header(String headerName) {
-        headersToRemove.add(headerName.toLowerCase());
-        logger.info("Marked header '{}' for removal on send", headerName);
     }
 
     private void ensureRequestPrepared() {
@@ -482,23 +473,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         }
         logger.info("=== End Response Details ===");
     }
-    @Then("the validation error should contain")
-    public void the_validation_error_should_contain(DataTable table) {
-        SoftAssert softAssert = new SoftAssert();
-        Map<String, String> expected = table.asMap(String.class, String.class);
-        Map<String, String> actual = activeResponse().jsonPath().getMap("error");
-
-        softAssert.assertNotNull(actual, "Error data is null in response");
-        if (actual != null) {
-            expected.forEach((key, value) -> {
-                softAssert.assertTrue(actual.containsKey(key), "Missing error key: " + key);
-                if (actual.containsKey(key)) {
-                    softAssert.assertEquals(actual.get(key), value, "Mismatch for error key: " + key);
-                }
-            });
-        }
-        softAssert.assertAll();
-    }
 
     @Then("the response status code should be {int}")
     public void the_response_status_code_should_be(int statusCode) {
@@ -536,17 +510,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         AssertionHelper.assertStatusCodeOneOf(activeResponse(), statusCodes);
     }
 
-    @Then("the response status code should be in 2xx or 4xx range")
-    public void the_response_status_code_should_be_in_2xx_or_4xx_range() {
-        int statusCode = activeResponse().getStatusCode();
-        boolean isAcceptable = (statusCode >= 200 && statusCode < 300) || (statusCode >= 400 && statusCode < 500);
-        org.hamcrest.MatcherAssert.assertThat(
-            "Expected 2xx or 4xx status code but got " + statusCode + " — API returned a 5xx error which indicates a server-side failure",
-            isAcceptable,
-            org.hamcrest.Matchers.is(true)
-        );
-    }
-
     @Then("the response body should contain field {string} with value {string}")
     public void the_response_body_should_contain_field_with_value(String jsonPath, String expectedValue) {
         ResponseValidator.validateJsonField(activeResponse(), jsonPath, expectedValue);
@@ -571,11 +534,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         String body = activeResponse().getBody().asString();
         Assert.assertFalse(body.contains(resolved),
                 "Expected response body NOT to contain '" + resolved + "' but it did. Body: " + body);
-    }
-
-    @Then("the response header {string} should be {string}")
-    public void the_response_header_should_be(String headerName, String expectedValue) {
-        ResponseValidator.validateHeader(activeResponse(), headerName, expectedValue);
     }
 
     @Then("the response content type should be {string}")
@@ -609,32 +567,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
     public void the_response_should_match_json_schema(String schemaPath) {
         activeResponse().then().assertThat().body(matchesJsonSchema(new File("src/test/resources/" + schemaPath)));
         logger.info("Response schema validation passed for: {}", schemaPath);
-    }
-
-    @Then("the request body should match json schema {string}")
-    public void the_request_body_should_match_json_schema(String schemaPath) {
-        if (requestBody == null || requestBody.isEmpty()) {
-            throw new IllegalStateException(
-                    "Request body must be set before schema validation. "
-                            + "Use 'I set the request body' or 'I set the request body from file' first."
-            );
-        }
-        assertThat("Request body failed schema validation against " + schemaPath,
-                requestBody, matchesJsonSchema(new File("src/test/resources/" + schemaPath)));
-        logger.info("Request body schema validation passed for: {}", schemaPath);
-    }
-
-    @Then("I store the response for later use")
-    public void i_store_the_response_for_later_use() {
-        logger.info("Response stored for later use. Status code: {}", activeResponse().getStatusCode());
-    }
-
-    public Response getResponse() {
-        return activeResponse();
-    }
-
-    public RequestSpecification getRequest() {
-        return request;
     }
 
     private Response activeResponse() {

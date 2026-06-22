@@ -1,6 +1,5 @@
 package helpers;
 
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,40 +46,6 @@ public final class SchemaHelper {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    
-    public static void register(String endpointSubstring, String schemaClasspath) {
-        DEFAULT_MAPPINGS.put(endpointSubstring, schemaClasspath);
-    }
-
-    
-    public static void registerRequestSchema(String testDataPathSubstring, String schemaClasspath) {
-        REQUEST_BODY_MAPPINGS.put(testDataPathSubstring, schemaClasspath);
-    }
-
-    
-    public static void autoValidateSuccessSchema(String endpoint, int statusCode, Response response) {
-        if (response == null) {
-            return;
-        }
-        if (statusCode < 200 || statusCode >= 300) {
-            LOGGER.debug("Skipping auto schema validation for non-2xx status {}", statusCode);
-            return;
-        }
-        if (endpoint == null) {
-            return;
-        }
-        for (Map.Entry<String, String> entry : DEFAULT_MAPPINGS.entrySet()) {
-            if (endpoint.contains(entry.getKey())) {
-                response.then().assertThat().body(matchesJsonSchema(new File(TEST_RESOURCES_PATH + entry.getValue())));
-                LOGGER.info("Auto schema validation passed for endpoint '{}' using '{}'",
-                        endpoint, entry.getValue());
-                return;
-            }
-        }
-        LOGGER.info("No auto schema mapping configured for endpoint '{}'", endpoint);
-    }
-
-    
     public static void autoValidateRequestSchema(String testDataPath, String requestBody) {
         if (testDataPath == null || requestBody == null || requestBody.isEmpty()) {
             return;

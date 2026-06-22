@@ -2,19 +2,16 @@ package stepdefinitions;
 
 import context.ScenarioTestDataResolver;
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.InternalBulkLoansValidator;
 
 
-public class InternalBulkLoansStepDefinitions {
+public class InternalBulkLoansStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(InternalBulkLoansStepDefinitions.class);
 
-    private final TestContext testContext;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final InternalBulkLoansValidator validator;
 
@@ -23,7 +20,7 @@ public class InternalBulkLoansStepDefinitions {
             ScenarioTestDataResolver scenarioTestDataResolver,
             InternalBulkLoansValidator validator
     ) {
-        this.testContext = testContext;
+        super(testContext);
         this.scenarioTestDataResolver = scenarioTestDataResolver;
         this.validator = validator;
     }
@@ -45,17 +42,8 @@ public class InternalBulkLoansStepDefinitions {
         validator.validateValidationError(activeResponse());
     }
 
-    @Then("the internal bulk loans failure response should be valid")
-    public void the_internal_bulk_loans_failure_response_should_be_valid() {
-        validator.validateFailureEnvelope(activeResponse());
-    }
-
     @Then("the internal bulk loans error code should be {string}")
     public void the_internal_bulk_loans_error_code_should_be(String code) {
         validator.validateErrorCode(activeResponse(), code);
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

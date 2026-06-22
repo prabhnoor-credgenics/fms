@@ -192,18 +192,6 @@ public class ConfigReader {
         return baseUrl;
     }
 
-    public String getAuthToken() {
-        return getProperty("auth.token", "");
-    }
-
-    public int getConnectionTimeout() {
-        return Integer.parseInt(getProperty("api.connection.timeout", "30000"));
-    }
-
-    public int getReadTimeout() {
-        return Integer.parseInt(getProperty("api.read.timeout", "60000"));
-    }
-
     public boolean isRequestLoggingEnabled() {
         return Boolean.parseBoolean(getProperty("request.logging.enabled", "true"));
     }
@@ -243,10 +231,6 @@ public class ConfigReader {
 
     public boolean isUniqueLoanIdPerScenarioEnabled() {
         return Boolean.parseBoolean(getProperty("test.data.unique.loan.id.per.scenario", "true"));
-    }
-
-    public String getLoanIdPrefix() {
-        return getProperty("test.data.loan.id.prefix", "api_auto");
     }
 
     public boolean isAuthTokenCacheEnabled() {

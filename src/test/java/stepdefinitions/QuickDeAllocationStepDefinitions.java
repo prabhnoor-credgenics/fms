@@ -1,24 +1,21 @@
 package stepdefinitions;
 
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.QuickDeAllocationValidator;
 
 
 
-public class QuickDeAllocationStepDefinitions {
+public class QuickDeAllocationStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(QuickDeAllocationStepDefinitions.class);
 
-    private final TestContext testContext;
     private final QuickDeAllocationValidator quickDeAllocationValidator;
 
     public QuickDeAllocationStepDefinitions(TestContext testContext, QuickDeAllocationValidator quickDeAllocationValidator) {
-        this.testContext = testContext;
+        super(testContext);
         this.quickDeAllocationValidator = quickDeAllocationValidator;
     }
 
@@ -50,9 +47,5 @@ public class QuickDeAllocationStepDefinitions {
     public void the_quick_deallocation_no_input_rejection_response_should_be_valid() {
         quickDeAllocationValidator.validateNoInputRejection(activeResponse());
         logger.info("quick deallocation no-input rejection validation completed");
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

@@ -9,8 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class RandomDataHelper {
 
     private static final SecureRandom RANDOM = new SecureRandom();
-    private static final String ALPHANUMERIC =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     private static final int SIX_DIGIT_BOUND = 1_000_000;
     private static final int MAX_UNIQUE_ATTEMPTS = 100;
@@ -44,26 +42,10 @@ public final class RandomDataHelper {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    public static String uuid() {
-        return UUID.randomUUID().toString();
-    }
-
     public static String shortUuid() {
         return UUID.randomUUID().toString().replace("-", "").substring(0, 12);
     }
 
-    public static String alphanumeric(int length) {
-        if (length <= 0) {
-            throw new IllegalArgumentException("length must be > 0");
-        }
-        StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-            sb.append(ALPHANUMERIC.charAt(RANDOM.nextInt(ALPHANUMERIC.length())));
-        }
-        return sb.toString();
-    }
-
-    
     public static String uniqueLoanId() {
         return uniqueWithPrefix(LOAN_ID_PREFIX, ISSUED_LOAN_IDS);
     }
@@ -86,12 +68,6 @@ public final class RandomDataHelper {
     
     public static String randomName() {
         return randomFirstName() + " " + randomLastName();
-    }
-
-    
-    public static void resetUniqueRegistries() {
-        ISSUED_LOAN_IDS.clear();
-        ISSUED_COMPANY_NAMES.clear();
     }
 
     private static String uniqueWithPrefix(String prefix, Set<String> registry) {

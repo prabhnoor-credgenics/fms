@@ -8,7 +8,7 @@ import org.testng.asserts.SoftAssert;
 
 
 
-public class QuickAllocationValidator {
+public class QuickAllocationValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(QuickAllocationValidator.class);
 

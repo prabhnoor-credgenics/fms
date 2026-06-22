@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.Map;
 
 
-public class CompanyDetailsValidator {
+public class CompanyDetailsValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(CompanyDetailsValidator.class);
 
@@ -26,13 +26,5 @@ public class CompanyDetailsValidator {
 
         sa.assertAll();
         logger.info("company details success envelope validated");
-    }
-
-    public void validateFailureEnvelope(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertNotNull(jp.get("message"), "message must be present");
-        sa.assertAll();
-        logger.info("company details failure envelope validated");
     }
 }

@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 
 
-public class ExportsPaymentsLogsValidator {
+public class ExportsPaymentsLogsValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(ExportsPaymentsLogsValidator.class);
 
@@ -24,13 +24,5 @@ public class ExportsPaymentsLogsValidator {
         sa.assertAll();
         logger.info("exports payments logs success envelope validated (rows: {}, total_count: {})",
                 exports == null ? 0 : exports.size(), jp.get("data.total_count"));
-    }
-
-    public void validateFailureEnvelope(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertNotNull(jp.get("message"), "message must be present on a failure response");
-        sa.assertAll();
-        logger.info("exports payments logs failure envelope validated (message: {})", jp.getString("message"));
     }
 }

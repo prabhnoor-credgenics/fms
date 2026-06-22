@@ -65,11 +65,6 @@ public class TestContext {
     }
 
 
-    public boolean hasUserSession(String key) {
-        return namedSessions.containsKey(key);
-    }
-
-
     public Map<String, UserSession> getNamedSessions() {
         return namedSessions;
     }

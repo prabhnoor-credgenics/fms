@@ -2,19 +2,16 @@ package stepdefinitions;
 
 import context.ScenarioTestDataResolver;
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.V1LoanMaskedDetailsValidator;
 
 
-public class V1LoanMaskedDetailsStepDefinitions {
+public class V1LoanMaskedDetailsStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(V1LoanMaskedDetailsStepDefinitions.class);
 
-    private final TestContext testContext;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final V1LoanMaskedDetailsValidator validator;
 
@@ -23,7 +20,7 @@ public class V1LoanMaskedDetailsStepDefinitions {
             ScenarioTestDataResolver scenarioTestDataResolver,
             V1LoanMaskedDetailsValidator validator
     ) {
-        this.testContext = testContext;
+        super(testContext);
         this.scenarioTestDataResolver = scenarioTestDataResolver;
         this.validator = validator;
     }
@@ -48,9 +45,5 @@ public class V1LoanMaskedDetailsStepDefinitions {
     @Then("the v1 loan details error code should be {string}")
     public void the_v1_loan_details_error_code_should_be(String code) {
         validator.validateErrorCode(activeResponse(), code);
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

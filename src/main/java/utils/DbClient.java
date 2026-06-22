@@ -37,35 +37,6 @@ public class DbClient {
             String tableName,
             String columnName,
             String whereColumn,
-            String whereValue
-    ) {
-        validateSqlIdentifier(tableName, "table");
-        validateSqlIdentifier(columnName, "column");
-        validateSqlIdentifier(whereColumn, "where column");
-
-        String sql = "SELECT " + columnName + " FROM " + tableName + " WHERE " + whereColumn + " = ?";
-
-        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setString(1, whereValue);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    throw new IllegalStateException(
-                            "No DB row in " + tableName + " where " + whereColumn + " = " + whereValue
-                    );
-                }
-                Object value = rs.getObject(columnName);
-                int sqlType = rs.getMetaData().getColumnType(1);
-                return new DbRow(value, sqlType);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Query execution failed: " + sql, e);
-        }
-    }
-
-    public DbRow fetchSingleColumn(
-            String tableName,
-            String columnName,
-            String whereColumn,
             String whereValue,
             String companyId
     ) {
@@ -136,11 +107,6 @@ public class DbClient {
             case "number" -> value != null && value.contains(".") ? java.sql.Types.NUMERIC : java.sql.Types.INTEGER;
             default -> java.sql.Types.OTHER;
         };
-    }
-
-    public String getSingleValue(String tableName, String columnName, String whereColumn, String whereValue) {
-        DbRow row = fetchSingleColumn(tableName, columnName, whereColumn, whereValue);
-        return row.value() == null ? null : row.value().toString();
     }
 
     private void validateSqlIdentifier(String identifier, String label) {

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class AllocationDetailsValidator {
+public class AllocationDetailsValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(AllocationDetailsValidator.class);
 
@@ -34,13 +34,5 @@ public class AllocationDetailsValidator {
         sa.assertTrue(found, "output should contain a row with loan_id: " + loanId);
         sa.assertAll();
         logger.info("allocation details output contains loan_id {}", loanId);
-    }
-
-    public void validateFailureEnvelope(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertNotNull(jp.get("message"), "message must be present on a failure response");
-        sa.assertAll();
-        logger.info("allocation details failure envelope validated");
     }
 }

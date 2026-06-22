@@ -6,11 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
 
-import java.util.List;
 import java.util.Map;
 
 
-public class V1LoanMaskedDetailsValidator {
+public class V1LoanMaskedDetailsValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(V1LoanMaskedDetailsValidator.class);
 
@@ -34,26 +33,5 @@ public class V1LoanMaskedDetailsValidator {
                 "data.variable_data should contain an entry for loan id: " + loanId);
         sa.assertAll();
         logger.info("v1 loan masked variable_data contains loan id {}", loanId);
-    }
-
-    public void validateValidationError(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertEquals(jp.getBoolean("success"), false, "success flag should be false");
-        sa.assertNotNull(jp.get("message"), "message must be present");
-        sa.assertNotNull(jp.get("error.code"), "error.code must be present");
-        List<Object> errorData = jp.getList("error.data");
-        sa.assertTrue(errorData != null && !errorData.isEmpty(), "error.data should be a non-empty array");
-        sa.assertAll();
-        logger.info("v1 loan masked validation-error envelope validated");
-    }
-
-    public void validateErrorCode(Response response, String expectedCode) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertEquals(jp.getBoolean("success"), false, "success flag should be false");
-        sa.assertEquals(jp.getString("error.code"), expectedCode, "error.code mismatch");
-        sa.assertAll();
-        logger.info("v1 loan masked error code validated: {}", expectedCode);
     }
 }

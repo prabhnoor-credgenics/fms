@@ -30,12 +30,6 @@ public class ScenarioDataStepDefinitions {
         this.scenarioTestDataResolver = scenarioTestDataResolver;
     }
 
-    @Given("scenario loan id is {string}")
-    public void scenario_loan_id_is(String loanId) {
-        testContext.setScenarioLoanId(scenarioTestDataResolver.replaceScenarioPlaceholders(loanId));
-        logger.info("Scenario loan id set to: {}", testContext.getScenarioLoanId());
-    }
-
     @Given("scenario loan id is unique")
     public void scenario_loan_id_is_unique() {
         scenarioTestDataResolver.ensureUniqueLoanIdIfEnabled();
@@ -43,12 +37,6 @@ public class ScenarioDataStepDefinitions {
             testContext.setScenarioLoanId(RandomDataHelper.uniqueLoanId());
         }
         logger.info("Unique scenario loan id: {}", testContext.getScenarioLoanId());
-    }
-
-    @Given("scenario company id is {string}")
-    public void scenario_company_id_is(String companyId) {
-        testContext.setScenarioCompanyId(scenarioTestDataResolver.replaceScenarioPlaceholders(companyId));
-        logger.info("Scenario company id set to: {}", testContext.getScenarioCompanyId());
     }
 
     @Given("scenario company id is from configuration")
@@ -61,12 +49,6 @@ public class ScenarioDataStepDefinitions {
         }
         testContext.setScenarioCompanyId(companyId);
         logger.info("Scenario company id set from configuration: {}", companyId);
-    }
-
-    @Given("scenario allocation month is {string}")
-    public void scenario_allocation_month_is(String allocationMonth) {
-        testContext.setScenarioAllocationMonth(allocationMonth);
-        logger.info("Scenario allocation month set to: {}", allocationMonth);
     }
 
     @Given("scenario allocation month offset is {int}")

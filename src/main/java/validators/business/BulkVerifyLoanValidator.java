@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 
 
-public class BulkVerifyLoanValidator {
+public class BulkVerifyLoanValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(BulkVerifyLoanValidator.class);
 
@@ -32,13 +32,5 @@ public class BulkVerifyLoanValidator {
                 "verified_loan_ids should contain loan id: " + loanId + " but was: " + verified);
         sa.assertAll();
         logger.info("bulk verify loan verified-presence validated for {}", loanId);
-    }
-
-    public void validateFailureEnvelope(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertNotNull(jp.get("message"), "message must be present on a failure response");
-        sa.assertAll();
-        logger.info("bulk verify loan failure envelope validated (message: {})", jp.getString("message"));
     }
 }

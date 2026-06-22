@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class CompanyUsersListValidator {
+public class CompanyUsersListValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(CompanyUsersListValidator.class);
 
@@ -26,13 +26,5 @@ public class CompanyUsersListValidator {
 
         sa.assertAll();
         logger.info("company users list success envelope validated (users: {})", users == null ? 0 : users.size());
-    }
-
-    public void validateFailureEnvelope(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertNotNull(jp.get("message"), "message must be present");
-        sa.assertAll();
-        logger.info("company users list failure envelope validated");
     }
 }

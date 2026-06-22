@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
 
-public class ExportLoanWithDocumentsValidator {
+public class ExportLoanWithDocumentsValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(ExportLoanWithDocumentsValidator.class);
 
@@ -16,13 +16,5 @@ public class ExportLoanWithDocumentsValidator {
         sa.assertNotNull(jp.get("message"), "message must be present");
         sa.assertAll();
         logger.info("export loan with documents success envelope validated (message: {})", jp.getString("message"));
-    }
-
-    public void validateFailureEnvelope(Response response) {
-        JsonPath jp = response.jsonPath();
-        SoftAssert sa = new SoftAssert();
-        sa.assertNotNull(jp.get("message"), "message must be present on a failure response");
-        sa.assertAll();
-        logger.info("export loan with documents failure envelope validated (message: {})", jp.getString("message"));
     }
 }

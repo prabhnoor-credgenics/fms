@@ -2,9 +2,7 @@ package stepdefinitions;
 
 import context.ScenarioTestDataResolver;
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,11 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 
-public class RecoveryVariablesStepDefinitions {
+public class RecoveryVariablesStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(RecoveryVariablesStepDefinitions.class);
 
-    private final TestContext testContext;
     private final RecoveryVariablesValidator recoveryVariablesValidator;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
 
@@ -27,7 +24,7 @@ public class RecoveryVariablesStepDefinitions {
             RecoveryVariablesValidator recoveryVariablesValidator,
             ScenarioTestDataResolver scenarioTestDataResolver
     ) {
-        this.testContext = testContext;
+        super(testContext);
         this.recoveryVariablesValidator = recoveryVariablesValidator;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
     }
@@ -131,24 +128,6 @@ public class RecoveryVariablesStepDefinitions {
         logger.info("Recovery variables full-payload diff validation completed");
     }
 
-    @Then("I store the first variable id from the response list")
-    public void i_store_the_first_variable_id_from_the_response_list() {
-        Response response = activeResponse();
-        List<Map<String, Object>> output = response.jsonPath().getList("output");
-        if (output == null || output.isEmpty()) {
-            throw new IllegalStateException(
-                    "No variables found in response output. Ensure GET /recovery/variables returned a non-empty list."
-            );
-        }
-        Object idObj = output.get(0).get("variable_id");
-        if (idObj == null) {
-            throw new IllegalStateException("First variable in output has no variable_id field.");
-        }
-        String variableId = idObj.toString();
-        testContext.setScenarioVariableId(variableId);
-        logger.info("Stored first variable id from list: {}", variableId);
-    }
-
     @Then("I find and store variable id for name {string} from variables response")
     public void i_find_and_store_variable_id_for_name(String namePattern) {
         String resolvedName = scenarioTestDataResolver.replaceScenarioPlaceholders(namePattern);
@@ -182,30 +161,6 @@ public class RecoveryVariablesStepDefinitions {
         return null;
     }
 
-    @Then("I store the created variable id from response")
-    public void i_store_the_created_variable_id_from_response() {
-        Response response = activeResponse();
-        JsonPath jp = response.jsonPath();
-
-        String variableId = jp.getString("output.variable_id");
-
-        if (variableId == null || variableId.isBlank()) {
-            List<String> ids = jp.getList("output.variable_id");
-            if (ids != null && !ids.isEmpty()) {
-                variableId = ids.get(0);
-            }
-        }
-
-        if (variableId == null || variableId.isBlank()) {
-            throw new IllegalStateException(
-                    "Cannot extract variable_id from response. Ensure the POST succeeded and returns output.variable_id."
-            );
-        }
-
-        testContext.setScenarioVariableId(variableId);
-        logger.info("Stored created variable id: {}", variableId);
-    }
-
     @Then("recovery variables create response should be valid")
     public void recovery_variables_create_response_should_be_valid() {
         recoveryVariablesValidator.validateCreateVariableResponse(activeResponse());
@@ -222,9 +177,5 @@ public class RecoveryVariablesStepDefinitions {
     public void recovery_variables_delete_response_should_be_valid() {
         recoveryVariablesValidator.validateDeleteVariableResponse(activeResponse());
         logger.info("Recovery variables delete response validation completed");
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

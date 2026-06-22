@@ -32,30 +32,6 @@ public class JsonUtils {
     }
 
 
-    public static String toJsonString(Object object) {
-        try {
-            String json = objectMapper.writeValueAsString(object);
-            logger.debug("Converted object to JSON: {}", json);
-            return json;
-        } catch (Exception e) {
-            logger.error("Error converting object to JSON: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to convert object to JSON", e);
-        }
-    }
-
-
-    public static <T> T fromJsonString(String jsonString, Class<T> clazz) {
-        try {
-            T object = objectMapper.readValue(jsonString, clazz);
-            logger.debug("Parsed JSON to object of type: {}", clazz.getSimpleName());
-            return object;
-        } catch (Exception e) {
-            logger.error("Error parsing JSON string to {}: {}", clazz.getSimpleName(), e.getMessage(), e);
-            throw new RuntimeException("Failed to parse JSON to " + clazz.getSimpleName(), e);
-        }
-    }
-
-
     public static String prettyPrint(String jsonString) {
         try {
             Object jsonObject = objectMapper.readValue(jsonString, Object.class);
@@ -65,18 +41,6 @@ public class JsonUtils {
         } catch (Exception e) {
             logger.error("Error pretty printing JSON: {}", e.getMessage(), e);
             return jsonString; 
-        }
-    }
-
-
-    public static boolean isValidJson(String jsonString) {
-        try {
-            objectMapper.readTree(jsonString);
-            logger.debug("JSON string is valid");
-            return true;
-        } catch (Exception e) {
-            logger.warn("Invalid JSON string: {}", e.getMessage());
-            return false;
         }
     }
 

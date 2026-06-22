@@ -2,19 +2,16 @@ package stepdefinitions;
 
 import context.ScenarioTestDataResolver;
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.AllocationDetailsValidator;
 
 
-public class AllocationDetailsStepDefinitions {
+public class AllocationDetailsStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(AllocationDetailsStepDefinitions.class);
 
-    private final TestContext testContext;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final AllocationDetailsValidator validator;
 
@@ -23,7 +20,7 @@ public class AllocationDetailsStepDefinitions {
             ScenarioTestDataResolver scenarioTestDataResolver,
             AllocationDetailsValidator validator
     ) {
-        this.testContext = testContext;
+        super(testContext);
         this.scenarioTestDataResolver = scenarioTestDataResolver;
         this.validator = validator;
     }
@@ -43,9 +40,5 @@ public class AllocationDetailsStepDefinitions {
     @Then("the allocation details failure response should be valid")
     public void the_allocation_details_failure_response_should_be_valid() {
         validator.validateFailureEnvelope(activeResponse());
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

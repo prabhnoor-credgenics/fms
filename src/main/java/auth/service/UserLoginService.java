@@ -110,15 +110,7 @@ public class UserLoginService {
                 queryParams,
                 null
         );
-        Response response = given()
-                .baseUri(baseUrl)
-                .header("referer", baseUrl + "/user/public/verify/user")
-                .queryParam("auth_token", authToken)
-                .when()
-                .get("/user/public/verify/user")
-                .then()
-                .extract()
-                .response();
+        Response response = UserProfileService.requestVerifyUser(configReader, authToken);
         LoggingHelper.logResponseDetails(response);
         assertStatus(response, 200, "GET /user/public/verify/user");
 
