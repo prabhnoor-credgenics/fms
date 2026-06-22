@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InternalBulkLoansSuccessResponse",
+  "description": "Success envelope for POST {BASE_ROUTE}/internal/bulk/loans (external=false, encrypted=false).",
+  "type": "object",
+  "required": ["success", "message", "data"],
+  "properties": {
+    "success": { "const": true },
+    "message": { "type": "string" },
+    "status_code": { "type": ["integer", "null"] },
+    "data": {
+      "type": "object",
+      "required": ["variable_data"],
+      "properties": {
+        "variable_data": {
+          "type": "object",
+          "description": "Keyed by loan_id; each value is the requested attribute map.",
+          "additionalProperties": { "type": "object" }
+        },
+        "variable_source_mapping": {
+          "type": ["object", "null"],
+          "description": "Maps each returned variable name to the attribute level it came from."
+        }
+      },
+      "additionalProperties": true
+    },
+    "error": { "type": ["null", "object"] }
+  },
+  "additionalProperties": true
+}

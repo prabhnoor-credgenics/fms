@@ -3,6 +3,7 @@ Feature: EMI Schedule API
 
   @positive1 @create @creator 
   Scenario: POST upserts an EMI schedule entry
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -31,6 +32,7 @@ Feature: EMI Schedule API
 
   @positive @create @creator
   Scenario: POST upserts an EMI schedule entry with minimal required fields
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -51,6 +53,7 @@ Feature: EMI Schedule API
 
   @negative @create @creator @bug
   Scenario: POST EMI schedule should fail with an empty body
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -68,6 +71,7 @@ Feature: EMI Schedule API
 
   @negative @create @creator
   Scenario: POST EMI schedule should fail when required field date__c is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -88,6 +92,7 @@ Feature: EMI Schedule API
 
   @negative @create @creator 
   Scenario: POST EMI schedule should fail when required field company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -108,6 +113,7 @@ Feature: EMI Schedule API
 
   @negative @auth @create @creator @bug
   Scenario: POST EMI schedule should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept       | application/json, text/plain, */*    |
@@ -131,6 +137,7 @@ Feature: EMI Schedule API
  
   @negative @create @creator 
   Scenario: POST EMI schedule should fail for an invalid loan_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |

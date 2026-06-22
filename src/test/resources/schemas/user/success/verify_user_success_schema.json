@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VerifyUserSuccessResponse",
+  "description": "Success envelope for GET /user/public/verify/user/ (raw tuple, no top-level success flag).",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": "object",
+      "description": "Resolved user identity (platform or API-integration flow)."
+    },
+    "company_details": {
+      "type": ["object", "null"],
+      "description": "Present only when the company_id query param was supplied."
+    },
+    "message": { "type": ["string", "null"] },
+    "suspended": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

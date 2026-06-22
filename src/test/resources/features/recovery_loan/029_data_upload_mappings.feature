@@ -4,6 +4,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative
   Scenario: TC-AUTH-001 — GET list with no authenticationtoken header returns 401
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept | application/json |
@@ -15,6 +16,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative
   Scenario: TC-AUTH-002 — Invalid authenticationtoken returns 401
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json  |
@@ -27,6 +29,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-AUTH-003 — Valid token with loan_upload permission returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -41,6 +44,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-COMP-001 — GET list without company_id query param returns 403
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -50,6 +54,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-COMP-002 — POST without company_id in body returns 403
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -67,6 +72,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-COMP-003 — Non-existent company_id returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -80,6 +86,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-LIST-001 — List all active mappings returns 200 with correct shape
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -91,6 +98,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-LIST-002 — List with query filter returns only matching mappings
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -103,6 +111,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-LIST-003 — List with query that matches no mappings returns empty output list
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -115,6 +124,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-LIST-004 — List with uppercase query — case-insensitive match still works
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -127,6 +137,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-LIST-005 — List with empty query param returns all mappings (treated as no filter)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -141,6 +152,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-DETAIL-001 — GET list returns 200 with correct shape
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -152,6 +164,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-DETAIL-002 — GET list with use_case query param returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -164,6 +177,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-DETAIL-003 — mapping_id as non-integer string returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -175,6 +189,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-DETAIL-004 — Non-existent mapping_id returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -186,6 +201,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-DETAIL-005 — mapping_id = 0 (boundary — no valid mapping has ID 0) returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -197,6 +213,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-DETAIL-006 — mapping_id without company_id query param returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -207,6 +224,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-POST-001 — Create mapping with simple string variable — happy path
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -227,6 +245,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-POST-002 — Create mapping with optional description included
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -248,6 +267,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-POST-003 — Create mapping with multi-value list variable
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -269,6 +289,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-POST-004 — mapping_name is stored in lowercase — case-normalisation verified
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -289,6 +310,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-POST-005 — Create mapping with extra unknown fields — silently dropped
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -309,6 +331,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-POST-006 — Duplicate mapping_name for same company returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -340,6 +363,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-POST-007 — Empty mapping_variables dict returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -358,6 +382,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-POST-008 — Invalid variable ID in mapping_variables returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -378,6 +403,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-POST-009 — mapping_variables with all-null values reduces to empty after preprocessing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -398,6 +424,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-POST-010 — Missing mapping_name returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -415,6 +442,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-POST-011 — Missing mapping_variables returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -432,6 +460,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-POST-012 — mapping_name = null returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -450,6 +479,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-POST-013 — mapping_variables as list (wrong type) returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -470,6 +500,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-PATCH-001 — Update mapping variables — happy path
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -493,6 +524,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-PATCH-002 — Update with multi-value list variable replaces previous variables
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -517,6 +549,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-PATCH-003 — PATCH idempotent — same body sent twice both return 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -554,6 +587,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-PATCH-004 — Missing mapping_name returns 400 with REC_0080
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -574,6 +608,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-PATCH-005 — Missing mapping_variables returns 400 with REC_0080
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -594,6 +629,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-PATCH-006 — Empty mapping_variables returns 400 with REC_0083
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -615,6 +651,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-PATCH-007 — Invalid variable ID in PATCH returns 400 with REC_0083
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -636,6 +673,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-PATCH-008 — Non-existent mapping_id in PATCH — behaviour TBD
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -657,6 +695,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-FLOW-001 — POST creates mapping then GET detail retrieves it by stored mapping_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -687,6 +726,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-FLOW-002 — POST then PATCH then GET — verifies update cycle completes
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -733,6 +773,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario Outline: TC-MIDVAL-00x — mapping_id value "<mid_value>" returns 400 invalid mapping_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -753,6 +794,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario Outline: TC-POSTMISS-00x — POST body missing <absent_field> returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -772,6 +814,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-POSTMISS-003 — POST body missing company_id returns 403
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -788,6 +831,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-EDGE-001 — mapping_name as empty string after whitespace stripping returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -806,6 +850,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-EDGE-002 — Very long mapping_name (256 chars) — no max-length in serializer
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -824,6 +869,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-EDGE-003 — mapping_variables as string (wrong type) returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -842,6 +888,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-EDGE-004 — mapping_variables as integer (wrong type) returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -860,6 +907,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator @500
   Scenario: TC-EDGE-005 — GET list with very long query string does not crash server
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -874,6 +922,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-EXTRA-001 — PATCH without company_id query param returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -893,6 +942,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-EXTRA-002 — GET detail with negative mapping_id returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -904,6 +954,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-EXTRA-003 — mapping_name = empty string returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -922,6 +973,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @positive @creator
   Scenario: TC-EXTRA-004 — GET list with special characters in query does not crash
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -934,6 +986,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-EXTRA-005 — mapping_name with only whitespace stripped to empty TBD
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -952,6 +1005,7 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
 
   @negative @creator
   Scenario: TC-500-001 — Service layer error path returns error
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |

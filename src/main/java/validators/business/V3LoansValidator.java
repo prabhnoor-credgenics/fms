@@ -10,15 +10,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.Map;
 
 
-/**
- * Response-body assertions for the GET {BASE_ROUTE}/v3/loans/<loan_id> endpoint.
- *
- * Success envelope (ResponseHandler.success):
- *   { "success": true, "message": "...", "data": { "variable_data": { "<loan_id>": { ... } } }, ... }
- *
- * Error envelope (ResponseHandler.failure):
- *   { "success": false, "message": "...", "data": null, "error": { "code": "REC_xxxx", ... }, ... }
- */
+
 public class V3LoansValidator {
 
     private static final Logger logger = LogManager.getLogger(V3LoansValidator.class);
@@ -29,7 +21,6 @@ public class V3LoansValidator {
         this.scenarioTestDataResolver = scenarioTestDataResolver;
     }
 
-    /** Asserts the success envelope shape: success=true, message present, data.variable_data is an object. */
     public void validateSuccessEnvelope(Response response) {
         JsonPath jsonPath = response.jsonPath();
         SoftAssert softAssert = new SoftAssert();
@@ -46,7 +37,6 @@ public class V3LoansValidator {
                 variableData == null ? 0 : variableData.size());
     }
 
-    /** Asserts the success envelope additionally carries an attribute map for the given loan id. */
     public void validateLoanPresent(Response response, String loanId) {
         validateSuccessEnvelope(response);
         Map<String, Object> variableData = response.jsonPath().getMap("data.variable_data");
@@ -59,7 +49,6 @@ public class V3LoansValidator {
         logger.info("v3 loan variable_data contains loan id {}", loanId);
     }
 
-    /** Asserts the failure envelope shape with a specific error code (e.g. REC_0003, REC_0007). */
     public void validateErrorEnvelope(Response response, String expectedCode) {
         JsonPath jsonPath = response.jsonPath();
         SoftAssert softAssert = new SoftAssert();

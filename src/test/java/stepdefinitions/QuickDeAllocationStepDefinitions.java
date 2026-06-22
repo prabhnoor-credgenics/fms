@@ -9,10 +9,7 @@ import org.apache.logging.log4j.Logger;
 import validators.business.QuickDeAllocationValidator;
 
 
-/**
- * Domain-specific assertions for POST /recovery/deallocation (quick_deallocation).
- * Generic assertions (status code, field presence/value, schema match, not-empty) are reused from ApiStepDefinitions.
- */
+
 public class QuickDeAllocationStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(QuickDeAllocationStepDefinitions.class);

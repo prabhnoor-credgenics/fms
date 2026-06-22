@@ -3,6 +3,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @auth @creator
   Scenario: AUTH-001 — POST allocation without authenticationtoken header is rejected
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept       | application/json |
@@ -20,6 +21,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @auth @creator
   Scenario: AUTH-002 — POST allocation with an invalid authenticationtoken is rejected
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json    |
@@ -38,6 +40,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @auth @creator
   Scenario: AUTH-003 — POST allocation with an expired-style token is rejected
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json                                  |
@@ -55,6 +58,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @org @creator
   Scenario: ORG-001 — POST allocation without company_id query parameter is rejected at org resolution (400)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -71,6 +75,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @org @creator
   Scenario: ORG-002 — POST allocation with an unknown (random UUID) company_id is rejected at org resolution
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -89,6 +94,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @negative @permission @approver
   Scenario: PERM-001 — POST allocation as a role without allocate_and_deallocate_loans:write returns 403
+    Given I authenticate as "approver" slot 0 and remember as "approver0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -106,6 +112,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @negative @org @creator
   Scenario: ORG-003 — POST allocation for a valid company the caller is not a member of returns 403
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -124,6 +131,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @validation @creator
   Scenario Outline: REQ-001 — Missing required field "<missing>" returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -149,6 +157,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @validation @creator
   Scenario: REQ-002 — All required fields absent (empty body object) returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -166,6 +175,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @validation @creator
   Scenario Outline: REQ-003 — Required field "<field>" present but null returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -190,6 +200,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @validation @creator
   Scenario Outline: REQ-004 — Enum field "<field>" present but empty string returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -214,6 +225,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @validation @type @creator
   Scenario Outline: TYPE-001 — "<case>" returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -246,6 +258,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @validation @enum @creator
   Scenario Outline: ENUM-001 — Invalid enum value for "<field>" returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -270,6 +283,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @validation @creator
   Scenario Outline: NEST-001 — selected_users "<case>" returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -294,6 +308,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @validation @creator
   Scenario: NEST-002 — user_filters with a key outside the four allowed literals returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -311,6 +326,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @validation @creator
   Scenario Outline: NEST-003 — attribute_matching "<case>" returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -336,6 +352,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @boundary @creator
   Scenario: BOUND-001 — selected_users key one char below min (15) returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -353,6 +370,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @boundary @creator
   Scenario: BOUND-002 — selected_users key one char above max (37) returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -370,6 +388,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @boundary @creator
   Scenario: BOUND-003 — selected_users key at min length 16 passes body validation
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -387,6 +406,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @boundary @creator
   Scenario: BOUND-004 — selected_users key at max length 36 passes body validation
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -404,6 +424,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @edge @creator
   Scenario: EDGE-001 — Empty attribute_matching array is accepted (default behaviour)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -421,6 +442,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @edge @creator
   Scenario: EDGE-002 — Empty user_filters object is accepted (no filter keys)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -438,6 +460,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @edge @creator
   Scenario: EDGE-003 — user_filters list with duplicate entries is tolerated
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -455,6 +478,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @fuzz @creator
   Scenario: EDGE-004 — Fuzz inputs via placeholders (random loan id, random workflow_id) pass validation
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -473,6 +497,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @business @creator
   Scenario: BIZ-001 — More than one loan id is rejected by the service (400)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -491,6 +516,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @business @creator
   Scenario: BIZ-002 — Three loan ids are also rejected (single-id rule) (400)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -508,6 +534,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @negative @business @creator
   Scenario: BIZ-003 — field + one_to_many without enable_multiple_field_allocations returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -525,6 +552,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @negative @business @creator
   Scenario: BIZ-004 — Agency allocation with no parent companies found returns a failure envelope
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -542,6 +570,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @negative @business @creator
   Scenario: BIZ-005 — Allocation for a valid-format but non-existent loan id returns a failure envelope
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -559,6 +588,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @edge @business @creator
   Scenario: BIZ-006 — Empty loan_ids array proceeds past the single-id check then fails to find a target
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -577,6 +607,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario: HAPPY-001 — Minimal required fields only (single loan, user / one_to_one) returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -595,6 +626,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario: HAPPY-002 — All optional fields populated returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -624,6 +656,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario: HAPPY-003 — selected_users (entity -> capacity) with a null capacity returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -641,6 +674,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario: HAPPY-004 — user_filters with all four allowed keys returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -658,6 +692,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario: HAPPY-005 — attribute_matching with the only valid operator '=' returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -675,6 +710,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario Outline: HAPPY-006 — Boolean flags disable=<disable> neglect=<neglect> returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -699,6 +735,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario: HAPPY-007 — Agency allocation with parent_company_id returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -716,6 +753,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario Outline: HAPPY-008 — Each source enum value "<source>" is accepted (200)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -744,6 +782,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario Outline: HAPPY-009 — Each allocation_type value "<type>" is accepted (200)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -768,6 +807,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario Outline: HAPPY-010 — Each allocation_algorithm value "<algo>" is accepted (200)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -792,6 +832,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @negative @flow @creator
   Scenario: FLOW-001 — A rejected multi-loan POST followed by a fresh single-loan POST each behave independently
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -822,6 +863,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @flow @creator
   Scenario: FLOW-002 — Allocating the same loan twice is tolerated (re-run, no 409)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |

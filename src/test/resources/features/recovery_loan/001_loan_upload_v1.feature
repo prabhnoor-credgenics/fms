@@ -13,6 +13,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @api-validation @negative @approver
   Scenario: API should return 400 when authentication token is missing
+    Given I authenticate as "approver" slot 0 and remember as "approver0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -25,6 +26,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @api-validation @negative @testapi @creator
   Scenario: API should return 400 when authentication token is invalid
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -38,6 +40,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @api-validation @negative @creator
   Scenario: API should return 403 when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request headers:
@@ -49,6 +52,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @api-validation @negative @creator
   Scenario: API should return 403 when URI loan_id does not match payload loan_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -63,6 +67,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @api-validation @negative @creator
   Scenario: API should return 400 when loan_id is null in payload
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -80,6 +85,9 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @text @special-characters @positive @creator
   Scenario: Loan ID field should accept values containing allowed special characters
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+    And I grant the current user all loan permissions
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -94,6 +102,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @text @special-characters @negative @creator
   Scenario: Loan ID field should not accept values containing allowed special characters
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -107,6 +116,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @text @special-characters @positive @creator
   Scenario Outline: Text fields should accept values containing allowed special characters
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -168,6 +179,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @text @special-characters @negative @creator
   Scenario Outline: Text fields should reject values containing disallowed special characters
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -223,6 +235,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @text @negative @creator
   Scenario: Loan ID should reject values exceeding max length of 64
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -237,6 +250,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @text @negative @creator
   Scenario Outline: Text field should reject values exceeding max length of 255
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -329,6 +343,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @text @negative @creator
   Scenario Outline: Text field should reject numeric-only values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -350,6 +365,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @boolean @negative @creator
   Scenario Outline: Boolean field should reject invalid boolean values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -373,6 +389,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @integer @negative @creator
   Scenario Outline: Integer field should reject decimal values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -392,6 +409,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @integer @negative @creator
   Scenario Outline: Integer field should reject negative values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -410,6 +428,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @integer @negative @creator
   Scenario: CIBIL score should reject values outside 300-900 range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -423,6 +442,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @integer @negative @creator
   Scenario: CIBIL score should reject values above 900
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -437,6 +457,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @amount @negative @creator
   Scenario Outline: Amount field should reject negative values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -456,6 +477,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @amount @negative
   Scenario Outline: Amount field should reject scientific notation
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -474,6 +496,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @amount @negative
   Scenario: Amount field should reject values with more than 2 decimal places
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -487,6 +510,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @percentage @negative
   Scenario: Percentage field should reject values above 100
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -500,6 +524,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @percentage @negative
   Scenario: Percentage field should reject negative values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -514,6 +539,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @mobile @negative
   Scenario Outline: Mobile number should reject invalid formats
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -536,6 +562,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @email @negative
   Scenario Outline: Email should reject invalid email formats
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -557,6 +584,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @pincode @negative
   Scenario Outline: Pincode should reject invalid formats
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -578,6 +606,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @url @negative
   Scenario: URL should reject values not starting with http:// or https://
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -591,6 +620,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @url @negative
   Scenario: URL should reject invalid URL formats
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -605,6 +635,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @date @negative
   Scenario Outline: Date should reject invalid date formats
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -625,6 +656,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @date @negative
   Scenario: Date should reject invalid dates (e.g., invalid month)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -639,6 +671,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @positive @smoke
   Scenario: API should accept request with all valid datatypes
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -652,6 +686,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @text @positive
   Scenario Outline: Text field should accept null values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -725,6 +761,8 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @datatype-validation @text @positive
   Scenario Outline: Text field should accept empty string values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -798,6 +836,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @mandatory-variable @negative @creator
   Scenario: Loan upload fails when mandatory allocation variable is_allocation_variable true is not provided, passes after marking non-mandatory
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -866,6 +905,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @mandatory-variable @negative @creator
   Scenario: Loan upload fails when mandatory non-allocation variable is_allocation_variable false is not provided, passes after marking non-mandatory
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -934,6 +974,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @mandatory-variable @negative @creator
   Scenario: Loan upload fails when mandatory allocation variable is not provided, then variable is deleted and upload succeeds
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -1012,6 +1053,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
 
   @mandatory-variable @negative @creator
   Scenario: Loan upload fails when mandatory non-allocation variable is not provided, then variable is deleted and upload succeeds
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |

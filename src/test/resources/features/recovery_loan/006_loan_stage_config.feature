@@ -7,6 +7,7 @@ Feature: Loan Stage Config API
 
   @positive @smoke @chief-admin
   Scenario: Get loan stage config for configured company_id
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -26,6 +27,7 @@ Feature: Loan Stage Config API
 
   @positive @performance @chief-admin
   Scenario: Loan stage config API response time should be within threshold
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -37,6 +39,7 @@ Feature: Loan Stage Config API
 
   @negative @auth @creator
   Scenario: API should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -47,6 +50,7 @@ Feature: Loan Stage Config API
 
   @negative @auth @creator
   Scenario: API should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -58,6 +62,7 @@ Feature: Loan Stage Config API
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -67,6 +72,7 @@ Feature: Loan Stage Config API
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -78,6 +84,7 @@ Feature: Loan Stage Config API
 
   @negative @creator
   Scenario: API should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |

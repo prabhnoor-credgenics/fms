@@ -16,8 +16,7 @@ public class AuthManager {
 
     private static final Logger logger = LogManager.getLogger(AuthManager.class);
 
-    // Per-(env,role,userType,slot) lock prevents concurrent logins with the same credentials,
-    // which would cause the server to invalidate the earlier session token.
+
     private static final ConcurrentHashMap<String, Object> LOGIN_LOCKS = new ConcurrentHashMap<>();
 
     private final ConfigReader configReader;
@@ -38,6 +37,12 @@ public class AuthManager {
         this.userLoginService = userLoginService;
         this.apiKeyService = apiKeyService;
         this.authTokenCache = authTokenCache;
+    }
+
+
+    public void initializeAuthentication(UserRole role, int slot) {
+        testContext.setUserSlot(slot);
+        initializeAuthentication(role);
     }
 
     public void initializeAuthentication(UserRole role) {

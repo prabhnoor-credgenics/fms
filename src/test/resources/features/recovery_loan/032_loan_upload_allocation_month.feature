@@ -7,6 +7,8 @@ Feature: Loan Upload - Dynamic Allocation Month
 
   @creator
   Scenario: Upload loan with allocation month set to the previous month
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
     Given scenario allocation month offset is -1
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -21,6 +23,8 @@ Feature: Loan Upload - Dynamic Allocation Month
 
   @creator
   Scenario: Upload loan with allocation month set to the current month
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
     Given scenario allocation month offset is 0
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -35,6 +39,8 @@ Feature: Loan Upload - Dynamic Allocation Month
 
   @creator
   Scenario: Upload loan with allocation month set to a future month
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
     Given scenario allocation month offset is 1
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -49,6 +55,8 @@ Feature: Loan Upload - Dynamic Allocation Month
 
   @creator
   Scenario: Filter loans by allocation month using an inline offset query parameter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
     Given I set the query parameters:
       | company_id       | {COMPANY_ID}                 |
       | allocation_month | {ALLOCATION_MONTH_OFFSET:-1} |
@@ -59,6 +67,8 @@ Feature: Loan Upload - Dynamic Allocation Month
 
   @creator
   Scenario Outline: Upload loan with allocation month offset <offset> injected into the body
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
     Given I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:

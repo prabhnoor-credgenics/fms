@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExportLoanLinkSuccessResponse",
+  "description": "200 link-mode response for the LoanExport routes: {\"output\":\"<csv s3 url>\",\"message\":\"success\"}. NOTE: when there is no data the handler returns the data-mode no-data shape instead.",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": { "type": "string" },
+    "message": { "type": "string" },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

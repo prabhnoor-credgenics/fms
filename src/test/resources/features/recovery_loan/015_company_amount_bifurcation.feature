@@ -9,6 +9,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @positive @smoke @chief-admin
   Scenario: Get amount bifurcation variables for configured company_id
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -21,6 +22,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @positive @chief-admin
   Scenario: Get amount bifurcation variables with bifurcation_prefix true
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -33,6 +35,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @positive @chief-admin
   Scenario: Get amount bifurcation variables with include_deleted true
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -45,6 +48,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @positive @performance @chief-admin
   Scenario: Amount bifurcation GET response time should be within threshold
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -56,6 +60,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @auth @creator
   Scenario: GET amount bifurcation should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -66,6 +71,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @auth @creator
   Scenario: GET amount bifurcation should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -77,6 +83,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @creator
   Scenario: GET amount bifurcation should fail when company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -88,6 +95,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @positive @create @chief-admin
   Scenario: Add a variable to amount bifurcation
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -106,6 +114,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @create @chief-admin
   Scenario: POST amount bifurcation should fail when variable_id is missing
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -123,6 +132,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @auth @create @creator
   Scenario: POST amount bifurcation should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -141,6 +151,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @positive @update @chief-admin @500
   Scenario: Reorder amount bifurcation variables via PATCH
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -158,6 +169,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @update @chief-admin
   Scenario: PATCH amount bifurcation should fail when variables_order is missing
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -175,6 +187,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @update @chief-admin
   Scenario: PATCH amount bifurcation should fail when variables_order is empty
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -192,6 +205,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @auth @update @creator
   Scenario: PATCH amount bifurcation should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -210,6 +224,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @positive @update @chief-admin
   Scenario: Update a specific amount bifurcation variable properties via PATCH
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -229,6 +244,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @auth @update @creator
   Scenario: PATCH amount bifurcation variable should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -249,6 +265,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @positive @delete @chief-admin
   Scenario: Delete a specific amount bifurcation variable
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -262,6 +279,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @delete @chief-admin
   Scenario: DELETE amount bifurcation variable should fail for non-existent variable_id
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -275,6 +293,7 @@ Feature: Company Amount Bifurcation Variables API
 
   @negative @auth @delete @creator
   Scenario: DELETE amount bifurcation variable should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:

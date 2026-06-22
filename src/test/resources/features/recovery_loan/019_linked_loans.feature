@@ -2,6 +2,7 @@ Feature: Linked Loans API
 
   @positive1
   Scenario: GET linked loans with required params
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
        | accept               | application/json, text/plain, */* |
@@ -17,6 +18,7 @@ Feature: Linked Loans API
 
   @positive
   Scenario: GET linked loans with allocation_month=overall
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -33,6 +35,7 @@ Feature: Linked Loans API
 
   @positive
   Scenario: GET linked loans with pagination params
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -51,6 +54,7 @@ Feature: Linked Loans API
 
   @negative @auth @creator
   Scenario: GET linked loans should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -62,6 +66,7 @@ Feature: Linked Loans API
 
   @negative @auth @creator
   Scenario: GET linked loans should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | invalid_token_12345               |
@@ -74,6 +79,7 @@ Feature: Linked Loans API
 
   @negative @creator
   Scenario: GET linked loans should fail when company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -86,6 +92,7 @@ Feature: Linked Loans API
 
   @negative @creator @discuss
   Scenario: GET linked loans should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -99,6 +106,7 @@ Feature: Linked Loans API
 
   @negative @creator
   Scenario: GET linked loans should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -112,6 +120,7 @@ Feature: Linked Loans API
     
       @negative @creator @bug
     Scenario: GET linked loans should fail when allocation_month does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |

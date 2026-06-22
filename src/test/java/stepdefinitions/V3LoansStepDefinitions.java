@@ -9,10 +9,7 @@ import org.apache.logging.log4j.Logger;
 import validators.business.V3LoansValidator;
 
 
-/**
- * Domain-specific assertions for GET /recovery/v3/loans/<loan_id>.
- * Generic assertions (status code, field presence, schema match) are reused from ApiStepDefinitions.
- */
+
 public class V3LoansStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(V3LoansStepDefinitions.class);

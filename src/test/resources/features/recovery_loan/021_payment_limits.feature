@@ -3,6 +3,7 @@ Feature: Payment Limits API
 
   @positive @smoke @creator
   Scenario: POST payment limits for loan IDs with cash payment method
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -25,6 +26,7 @@ Feature: Payment Limits API
 
   @positive @creator
   Scenario: POST payment limits for a single loan ID
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -47,6 +49,7 @@ Feature: Payment Limits API
 
   @positive @performance @creator
   Scenario: Payment limits response time should be within threshold
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -65,6 +68,7 @@ Feature: Payment Limits API
 
   @negative @creator
   Scenario: POST payment limits should fail with an empty body
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -81,6 +85,7 @@ Feature: Payment Limits API
 
   @negative @creator
   Scenario: POST payment limits should fail when payment_method is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -99,6 +104,7 @@ Feature: Payment Limits API
 
   @negative @creator
   Scenario: POST payment limits should fail when no loan IDs are provided
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -118,6 +124,7 @@ Feature: Payment Limits API
 
   @negative @creator
   Scenario: POST payment limits should fail for an invalid payment_method
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -137,6 +144,7 @@ Feature: Payment Limits API
 
   @negative @auth @creator @bug
   Scenario: POST payment limits should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept       | application/json, text/plain, */*    |
@@ -155,6 +163,7 @@ Feature: Payment Limits API
 
   @negative @auth @creator @bug
   Scenario: POST payment limits should fail with an invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
@@ -174,6 +183,7 @@ Feature: Payment Limits API
 
   @negative @auth @creator @bug
   Scenario: POST payment limits should fail with an invalid loan_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |

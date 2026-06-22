@@ -3,6 +3,7 @@ Feature: Bulk tasks API
 
   @chief-admin
   Scenario: Verify get bulk tasks API request
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -48,6 +49,7 @@ Feature: Bulk tasks API
     
      @negative @auth @creator
   Scenario: API should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -58,6 +60,7 @@ Feature: Bulk tasks API
 
   @negative @auth @creator
   Scenario: API should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | invalid_token_12345               |
@@ -69,6 +72,7 @@ Feature: Bulk tasks API
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -78,6 +82,7 @@ Feature: Bulk tasks API
     And the response body should contain field "message" with value "invalid company id"
   @negative1 @creator
   Scenario: API should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
@@ -89,6 +94,7 @@ Feature: Bulk tasks API
      And the response body should contain field "message" with value "one or more companies not found"
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |

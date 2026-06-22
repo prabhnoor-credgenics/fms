@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 
 
 @CucumberOptions(
-        features = "src/test/resources/features/recovery_loan/",
+        features = "src/test/resources/features/",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -27,7 +27,7 @@ import io.cucumber.testng.CucumberOptions;
         },
 
         monochrome = true,
-        tags = "@loan-lifecycle"
+        tags = "not @500"
 
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

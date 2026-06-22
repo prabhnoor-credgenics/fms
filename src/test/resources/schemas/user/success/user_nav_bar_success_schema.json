@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserNavBarSuccessResponse",
+  "description": "Success envelope for GET /user/nav-bar/<user_id>. `data` is a client-defined free-form layout (object or array).",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": { "type": ["object", "array", "null"] },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

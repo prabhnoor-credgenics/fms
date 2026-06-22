@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AllocationEnqueueSuccessResponse",
+  "description": "202 ACCEPTED envelope for POST {BASE_ROUTE}/allocation/enqueue (async allocation enqueue).",
+  "type": "object",
+  "required": ["success", "message"],
+  "properties": {
+    "success": { "const": true },
+    "message": { "type": "string" },
+    "status_code": { "type": ["integer", "null"] },
+    "data": { "type": ["object", "array", "null"] },
+    "error": { "type": ["object", "null"] },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

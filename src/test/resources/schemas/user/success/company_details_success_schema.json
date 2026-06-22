@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanyDetailsSuccessResponse",
+  "description": "Success envelope for GET /user/company/.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["company_details"],
+      "properties": {
+        "company_details": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

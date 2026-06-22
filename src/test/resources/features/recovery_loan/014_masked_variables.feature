@@ -8,6 +8,7 @@ Feature: Masked Variables API
 
   @positive @smoke @creator
   Scenario: Get masked variables for configured company_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -21,6 +22,7 @@ Feature: Masked Variables API
 
   @positive @creator
   Scenario: Get masked variables with return_variable_names true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -34,6 +36,7 @@ Feature: Masked Variables API
 
   @positive @performance @creator
   Scenario: Masked variables GET response time should be within threshold
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -45,6 +48,7 @@ Feature: Masked Variables API
 
   @negative @auth @creator
   Scenario: GET masked variables should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -55,6 +59,7 @@ Feature: Masked Variables API
 
   @negative @auth @creator
   Scenario: GET masked variables should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -66,6 +71,7 @@ Feature: Masked Variables API
 
   @negative @creator
   Scenario: GET masked variables should fail when company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -77,6 +83,7 @@ Feature: Masked Variables API
 
   @positive @create @creator
   Scenario: Add masked variable for a permission group
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -96,6 +103,7 @@ Feature: Masked Variables API
 
   @positive @create @creator
   Scenario: Add masked variable with complete_masking_enabled true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -114,6 +122,7 @@ Feature: Masked Variables API
 
   @negative @create @creator
   Scenario: POST masked variables should fail when permission_group_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -130,6 +139,7 @@ Feature: Masked Variables API
 
   @negative @create @creator
   Scenario: POST masked variables should fail when permission_group_id is empty list
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -147,6 +157,7 @@ Feature: Masked Variables API
 
   @negative @auth @create @creator
   Scenario: POST masked variables should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -165,6 +176,7 @@ Feature: Masked Variables API
 
   @positive @delete @creator
   Scenario: Delete masked variables by permission_group_id in request body
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -182,6 +194,7 @@ Feature: Masked Variables API
 
   @negative @delete @creator
   Scenario: DELETE masked variables should fail when permission_group_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -198,6 +211,7 @@ Feature: Masked Variables API
 
   @negative @auth @delete @creator
   Scenario: DELETE masked variables should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -216,6 +230,7 @@ Feature: Masked Variables API
 
   @positive @update @creator
   Scenario: Update masked variable complete_masking_enabled via PATCH
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -236,6 +251,7 @@ Feature: Masked Variables API
 
   @negative @update @creator
   Scenario: PATCH masked variable should fail when permission_group_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -255,6 +271,7 @@ Feature: Masked Variables API
 
   @negative @auth @update @creator
   Scenario: PATCH masked variable should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -276,6 +293,7 @@ Feature: Masked Variables API
 
   @positive @delete @chief-admin
   Scenario: Delete a single masked variable by variable_id
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -289,6 +307,7 @@ Feature: Masked Variables API
 
   @negative @delete @chief-admin
   Scenario: DELETE single masked variable should fail for non-existent variable_id
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -302,6 +321,7 @@ Feature: Masked Variables API
 
   @negative @auth @delete @creator
   Scenario: DELETE single masked variable should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -316,6 +336,7 @@ Feature: Masked Variables API
 
   @positive @delete @deprecated @chief-admin
   Scenario: Delete masked variables by permission_group path param (deprecated endpoint)
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -329,6 +350,7 @@ Feature: Masked Variables API
 
   @negative @auth @delete @creator
   Scenario: DELETE permission-group masked variables should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:

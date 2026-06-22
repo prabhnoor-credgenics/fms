@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InternalBulkLoansErrorResponse",
+  "description": "Failure envelope for POST {BASE_ROUTE}/internal/bulk/loans. Validation failures carry error_data (from Pydantic e.errors()); service guards carry an error object/code.",
+  "type": "object",
+  "required": ["success", "message"],
+  "properties": {
+    "success": { "const": false },
+    "message": { "type": "string" },
+    "status_code": { "type": ["integer", "null"] },
+    "error_data": {
+      "type": ["array", "null"],
+      "description": "Pydantic field errors: each item has loc/msg/type.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "loc": { "type": "array" },
+          "msg": { "type": "string" },
+          "type": { "type": "string" }
+        }
+      }
+    },
+    "error": { "type": ["null", "object"] }
+  },
+  "additionalProperties": true
+}

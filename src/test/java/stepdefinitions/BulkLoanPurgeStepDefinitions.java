@@ -9,10 +9,7 @@ import org.apache.logging.log4j.Logger;
 import validators.business.BulkLoanPurgeValidator;
 
 
-/**
- * Domain-specific assertions for DELETE /recovery/bulk/loan (data purging).
- * Generic assertions (status code, field presence/value, schema match) are reused from ApiStepDefinitions.
- */
+
 public class BulkLoanPurgeStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(BulkLoanPurgeStepDefinitions.class);

@@ -4,11 +4,10 @@ import enums.UserRole;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Per-scenario state holder. Created once per Cucumber scenario by PicoContainer.
- */
+
 public class TestContext {
 
     private String authToken;
@@ -31,10 +30,10 @@ public class TestContext {
     private Response savedComparisonResponse;
     private String lastRequestBody;
 
-    /** Request/Response logs for Extent failure reporting */
+
     private String apiLogs;
 
-    /** Scenario-specific overrides */
+
     private String scenarioLoanId;
     private String scenarioCompanyId;
     private String scenarioAllocationMonth;
@@ -42,13 +41,38 @@ public class TestContext {
     private String scenarioVariableId;
     private String scenarioMappingId;
 
-    /** Parallel user pool slot */
+
     private int userSlot;
 
-    /** Role used for authentication in the current scenario */
+
     private UserRole userRole;
 
     private final Map<String, String> randomStringCache = new HashMap<>();
+
+
+    public record UserSession(String authToken, String companyId, String userId, UserRole role, int slot) {}
+
+
+    private final Map<String, UserSession> namedSessions = new LinkedHashMap<>();
+
+
+    public void rememberUserSession(String key, UserSession session) {
+        namedSessions.put(key, session);
+    }
+
+    public UserSession getUserSession(String key) {
+        return namedSessions.get(key);
+    }
+
+
+    public boolean hasUserSession(String key) {
+        return namedSessions.containsKey(key);
+    }
+
+
+    public Map<String, UserSession> getNamedSessions() {
+        return namedSessions;
+    }
 
     public Response getResponse() {
         return response;

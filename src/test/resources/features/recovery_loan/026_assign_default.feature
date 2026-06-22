@@ -4,6 +4,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative
   Scenario: TC-AUTH-001 — Request without authenticationtoken header returns 401
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
@@ -21,6 +22,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative
   Scenario: TC-AUTH-002 — Invalid authenticationtoken returns 401
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json  |
@@ -39,6 +41,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-AUTH-003 — Valid token but non-existent organisation returns 422
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -58,6 +61,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-COMP-001 — Missing company_id returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -75,6 +79,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-COMP-002 — company_id sent as null triggers server-side error
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -93,6 +98,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-COMP-003 — company_id as empty string triggers server-side error
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -111,6 +117,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-COMP-004 — Non-existent company_id returns 422
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -130,6 +137,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-USER-001 — Missing user_id returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -147,6 +155,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-USER-002 — user_id sent as null returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -165,6 +174,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-USER-003 — user_id as empty string triggers server-side error
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -183,6 +193,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @positive @creator @500
   Scenario: TC-USER-004 — user_id with surrounding whitespace — behaviour TBD on staging
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -202,6 +213,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @positive @creator @500
   Scenario: TC-TYPE-001 — company_type "loan" creates full disposition set and returns 201
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -220,6 +232,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @positive @creator @500
   Scenario: TC-TYPE-002 — company_type "credit line" creates filtered disposition set and returns 201
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -238,6 +251,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-TYPE-003 — Missing company_type returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -255,6 +269,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-TYPE-004 — company_type sent as null returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -273,6 +288,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @positive @creator @500
   Scenario: TC-TYPE-005 — Unrecognised company_type accepted; service defaults to loan disposition path
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -291,6 +307,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @positive @creator @500
   Scenario: TC-TYPE-006 — company_type with surrounding whitespace is stripped to "credit line"
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -310,6 +327,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-BODY-001 — Empty JSON body returns 400 with all-fields-required error
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -324,6 +342,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @positive @creator @500
   Scenario: TC-BODY-002 — Extra unknown fields are silently ignored by serializer
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -344,6 +363,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-BODY-003 — Integer values for all string fields — Pydantic coercion TBD
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -364,6 +384,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @positive @creator @500
   Scenario: TC-HAPPY-001 — Full success loan company — complete response shape verified
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -383,6 +404,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @positive @creator @500
   Scenario: TC-HAPPY-002 — Full success credit line company — complete response shape verified
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -403,6 +425,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-IDEM-001 — Second call with same company_id fails with 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -434,6 +457,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-IDEM-002 — Second call with same company_id and different user_id fails with 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -467,6 +491,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @positive @creator @500
   Scenario: TC-SHAPE-001 — Success response contains exactly data, message, success keys
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -486,6 +511,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-SHAPE-002 — Failure response contains output and message keys
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -506,6 +532,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario Outline: TC-NULL-00x — Required field <field> set to null returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -532,6 +559,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario Outline: TC-MISS-00x — Body missing only <absent_field> returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -554,6 +582,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario Outline: TC-WS-00x — Field <field> as whitespace-only string behaviour TBD
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -580,6 +609,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-EDGE-001 — Integer value for company_id field
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -598,6 +628,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-EDGE-002 — company_id as 256-character random string returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -616,6 +647,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-EDGE-003 — user_id as 256-character random string
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -634,6 +666,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-EDGE-004 — Boolean value for company_type field
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -653,6 +686,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-SVC-001 — DB transaction failure during disposition insert returns 400 with failure message
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -672,6 +706,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-SVC-002 — Move-loan restriction insert failure returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -692,6 +727,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-EXTRA-001 — company_id as integer — Pydantic coercion behaviour TBD
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -710,6 +746,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-EXTRA-002 — company_id with whitespace stripped by anystr_strip_whitespace
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -728,6 +765,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-EXTRA-003 — All three required fields null simultaneously returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -746,6 +784,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator
   Scenario: TC-EXTRA-004 — company_type as list (wrong type) — Pydantic rejects non-string
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -764,6 +803,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
 
   @negative @creator @500
   Scenario: TC-500-001 — Unhandled exception path (Kafka/DB failure) returns error
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExportLoanErrorResponse",
+  "description": "Failure envelope for the LoanExport routes (invalid body enum/type 400; size-cap 400). output may be null with a message.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": { "type": "string" },
+    "output": { "type": ["string", "array", "object", "null"] },
+    "payload": { "type": ["object", "array", "null"] },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

@@ -3,6 +3,7 @@ Feature: AI Rules Variables
 
   @positive1
   Scenario: Verify AI rules variables request
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -31,6 +32,7 @@ Feature: AI Rules Variables
 
   @negative @auth @creator
   Scenario: API should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -41,6 +43,7 @@ Feature: AI Rules Variables
 
   @negative @auth @creator
   Scenario: API should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | invalid_token_12345               |
@@ -52,6 +55,7 @@ Feature: AI Rules Variables
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -62,6 +66,7 @@ Feature: AI Rules Variables
 
   @negative2 @creator
   Scenario: API should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
@@ -74,6 +79,7 @@ Feature: AI Rules Variables
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -86,6 +92,7 @@ Feature: AI Rules Variables
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -96,6 +103,7 @@ Feature: AI Rules Variables
 
   @negative @creator @500
   Scenario: API should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
@@ -108,6 +116,7 @@ Feature: AI Rules Variables
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -122,6 +131,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=recovery_status
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -140,6 +150,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=calling_status
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -158,6 +169,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=global_status
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -176,6 +188,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=settlement_status
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -194,6 +207,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=legal_status
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -212,6 +226,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=fos_status
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -230,6 +245,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=fos_collections_status
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -248,6 +264,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=communication_status
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -266,6 +283,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=tags (remapped to tag_name internally)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -284,6 +302,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=applicant_state
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -302,6 +321,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=applicant_city
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -320,6 +340,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values for key=applicant_language returns additional_mapping
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -339,6 +360,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values with explicit company_type=loan
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -358,6 +380,7 @@ Feature: AI Rules Variables
 
   @positive
   Scenario: Verify variable values with company_type=credit_line
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -377,6 +400,7 @@ Feature: AI Rules Variables
 
   @negative @auth @creator
   Scenario: Variables values API should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -388,6 +412,7 @@ Feature: AI Rules Variables
 
   @negative @auth @creator
   Scenario: Variables values API should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | invalid_token_12345               |
@@ -400,6 +425,7 @@ Feature: AI Rules Variables
 
   @negative @creator
   Scenario: Variables values API should fail when company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -412,6 +438,7 @@ Feature: AI Rules Variables
 
   @negative @creator
   Scenario: Variables values API should fail when key is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -424,6 +451,7 @@ Feature: AI Rules Variables
 
   @negative @creator
   Scenario: Variables values API should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -437,6 +465,7 @@ Feature: AI Rules Variables
 
   @negative @creator
   Scenario: Variables values API should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -450,6 +479,7 @@ Feature: AI Rules Variables
 
   @negative @creator
   Scenario: Variables values API should return empty output for invalid key
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -464,6 +494,7 @@ Feature: AI Rules Variables
 
   @negative @creator @bug @500
   Scenario: Variables values API with should fail when invalid company_type
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |

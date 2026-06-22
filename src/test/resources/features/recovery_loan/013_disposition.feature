@@ -3,6 +3,7 @@ Feature: Disposition API
 
   @positive
   Scenario: Verify get disposition request
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -24,6 +25,7 @@ Feature: Disposition API
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -34,6 +36,7 @@ Feature: Disposition API
 
   @negative @creator
   Scenario: API should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -46,6 +49,7 @@ Feature: Disposition API
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -58,6 +62,7 @@ Feature: Disposition API
 
   @positive
   Scenario: Verify get disposition request with product_type and service_type
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -78,6 +83,7 @@ Feature: Disposition API
 
   @positive
   Scenario: Verify get disposition request with valid product_type and no service_type
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -96,6 +102,7 @@ Feature: Disposition API
 
   @positive
   Scenario: Verify get disposition request with no product_type and valid service_type
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -114,6 +121,7 @@ Feature: Disposition API
 
   @negative @creator
   Scenario: API should fail when service_type is invalid
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -127,6 +135,7 @@ Feature: Disposition API
 
   @negative @creator
   Scenario: API should fail when product_type is invalid
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -140,6 +149,7 @@ Feature: Disposition API
 
   @negative @creator4
   Scenario: API should fail when service_type is invalid and product_type is invalid
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |

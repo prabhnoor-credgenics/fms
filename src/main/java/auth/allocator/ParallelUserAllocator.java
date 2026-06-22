@@ -14,10 +14,7 @@ public class ParallelUserAllocator {
 
     private static final ConcurrentHashMap<Long, Integer> THREAD_TO_SLOT = new ConcurrentHashMap<>();
 
-    // Hands out strictly increasing, unique slot numbers. Using an atomic counter (instead of
-    // THREAD_TO_SLOT.size()) avoids a race where two threads computing slots concurrently for
-    // different keys both read the same size() and get assigned the SAME slot -> two threads
-    // would then share one credential, causing the server to invalidate a session.
+
     private static final AtomicInteger NEXT_SLOT = new AtomicInteger(0);
 
     private final ConfigReader configReader;
@@ -49,8 +46,7 @@ public class ParallelUserAllocator {
         return THREAD_TO_SLOT.computeIfAbsent(threadId, id -> {
             int slot = NEXT_SLOT.getAndIncrement();
             if (slot >= poolSize) {
-                // Roll back so the counter and the error message stay consistent if more
-                // over-capacity threads arrive.
+
                 NEXT_SLOT.decrementAndGet();
                 throw new IllegalStateException(
                         "Cannot assign a unique user slot: more than " + poolSize

@@ -9,10 +9,7 @@ import org.apache.logging.log4j.Logger;
 import validators.business.QuickAllocationValidator;
 
 
-/**
- * Domain-specific assertions for POST /recovery/allocation (quick_allocation).
- * Generic assertions (status code, field presence/value, schema match, not-empty) are reused from ApiStepDefinitions.
- */
+
 public class QuickAllocationStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(QuickAllocationStepDefinitions.class);

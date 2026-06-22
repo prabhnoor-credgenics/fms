@@ -9,6 +9,7 @@ Feature: Formula Allowed Variables API
 
   @positive @smoke @creator
   Scenario: Get formula allowed variables for amount variable type
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -23,6 +24,7 @@ Feature: Formula Allowed Variables API
 
   @positive @chief-admin
   Scenario: Get formula allowed variables for number variable type
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -36,6 +38,7 @@ Feature: Formula Allowed Variables API
 
   @positive @chief-admin
   Scenario: Get formula allowed variables with variable_level loan
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -50,6 +53,7 @@ Feature: Formula Allowed Variables API
 
   @positive @chief-admin
   Scenario: Get formula allowed variables for date variable type
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -63,6 +67,7 @@ Feature: Formula Allowed Variables API
 
   @positive @performance @chief-admin
   Scenario: Formula allowed variables GET response time should be within threshold
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -75,6 +80,7 @@ Feature: Formula Allowed Variables API
 
   @negative @creator
   Scenario: GET formula allowed variables should fail when variable_type is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -86,6 +92,7 @@ Feature: Formula Allowed Variables API
 
   @negative @creator
   Scenario: GET formula allowed variables should fail when company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -97,6 +104,7 @@ Feature: Formula Allowed Variables API
 
   @negative @creator
   Scenario: GET formula allowed variables should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -109,6 +117,7 @@ Feature: Formula Allowed Variables API
 
   @negative @auth @creator
   Scenario: GET formula allowed variables should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -120,6 +129,7 @@ Feature: Formula Allowed Variables API
 
   @negative @auth @creator
   Scenario: GET formula allowed variables should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |

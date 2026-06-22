@@ -9,6 +9,7 @@ Feature: Payment Variables API
 
   @positive @smoke @chief-admin
   Scenario: Get payment variables configuration for configured company_id
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -22,6 +23,7 @@ Feature: Payment Variables API
 
   @positive @chief-admin
   Scenario: Get payment variables with variables_required true
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -35,6 +37,7 @@ Feature: Payment Variables API
 
   @positive @performance @chief-admin
   Scenario: Payment variables GET response time should be within threshold
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -46,6 +49,7 @@ Feature: Payment Variables API
 
   @negative @auth @creator
   Scenario: GET payment variables should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -56,6 +60,7 @@ Feature: Payment Variables API
 
   @negative @auth @creator
   Scenario: GET payment variables should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -67,6 +72,7 @@ Feature: Payment Variables API
 
   @negative @creator
   Scenario: GET payment variables should fail when company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -76,6 +82,7 @@ Feature: Payment Variables API
 
   @negative @creator
   Scenario: GET payment variables should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -89,6 +96,7 @@ Feature: Payment Variables API
 
   @positive @update @chief-admin
   Scenario: Update payment variable configuration via PATCH
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -107,6 +115,7 @@ Feature: Payment Variables API
 
   @negative @update @chief-admin
   Scenario: PATCH payment variables should fail when company_id is missing from body
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -123,6 +132,7 @@ Feature: Payment Variables API
 
   @negative @auth @update @creator
   Scenario: PATCH payment variables should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -139,6 +149,7 @@ Feature: Payment Variables API
 
   @negative @auth @update @creator
   Scenario: PATCH payment variables should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |

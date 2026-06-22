@@ -7,6 +7,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @chief-admin @smoke @e2e @requires-clean-state
   Scenario: End-to-end company creation and validation
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given company creation test data is prepared
     When I create company with validation step 1
     Then company creation step 1 request should match json schema
@@ -33,6 +34,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @company-creation-step1 @chief-admin
   Scenario Outline: Step 1 should fail when mandatory field <field_name> is missing
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given company creation test data is prepared
     When I create company with validation step 1 without mandatory field "<field_name>"
     Then the response status code should be 400
@@ -51,6 +53,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @company-creation-step3 @chief-admin @requires-clean-state
   Scenario Outline: Step 3 should fail when mandatory admin field <field_name> is missing
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3 without mandatory admin field "<field_name>"
     Then the response status code should be 400
@@ -62,6 +65,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @company-creation-step3 @chief-admin @requires-clean-state
   Scenario: Step 3 should fail when email is missing and mobile is not provided
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3 without email only
     Then the response status code should be 400
@@ -69,6 +73,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @company-creation-step3 @chief-admin @requires-clean-state
   Scenario: Step 3 should fail when both email and mobile are missing
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given company creation steps 1 and 2 are completed
     When I create company with validation step 3 without email and mobile
     Then the response status code should be 400
@@ -78,6 +83,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @get-company
   Scenario: Get full company details with bifurcation prefix true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -94,6 +100,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @get-company
   Scenario: Get full company details with bifurcation prefix false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -108,6 +115,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @get-company
   Scenario: Get company details with specific company_key is_amount_bifurcation_enabled
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -122,6 +130,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @get-company
   Scenario: Get company details with is_amount_bifurcation_enabled and bifurcation prefix
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -137,6 +146,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @get-company
   Scenario: Get company details filtered by module_name payment
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -150,6 +160,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @get-company
   Scenario: Get company details filtered by module_name fos
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -163,6 +174,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @get-company
   Scenario: Get company details filtered by module_name settlement
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -176,6 +188,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @get-company
   Scenario: Get company details with company_key and bifurcation_prefix combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -192,6 +205,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @auth @get-company
   Scenario: GET should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -205,6 +219,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @get-company @creator
   Scenario: GET should fail when company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -217,6 +232,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @get-company @creator
   Scenario: GET should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -230,6 +246,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @get-company @creator
   Scenario: GET should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -243,6 +260,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @get-company @creator
   Scenario: GET should fail with invalid company_keys value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -256,6 +274,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @get-company @creator
   Scenario: GET should fail with invalid module_name value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -269,6 +288,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @get-company @creator
   Scenario Outline: GET should return 200 for non-boolean bifurcation_prefix string values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -287,6 +307,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @get-company @creator
   Scenario: GET should return 400 when bifurcation_prefix is null
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -302,6 +323,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @put-company
   Scenario: Update company enable_auto_calculation to true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -320,6 +342,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @put-company
   Scenario: Update company enable_auto_calculation to false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -337,6 +360,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @put-company
   Scenario: Update company show_balance_claim_amount flag
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -354,6 +378,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @put-company
   Scenario: Update company payment_allocation_month
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -371,6 +396,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @put-company @500
   Scenario: Enable amount bifurcation with payment module
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -394,6 +420,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @put-company @500
   Scenario: Enable amount bifurcation with multiple modules
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -425,6 +452,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @positive @creator @put-company
   Scenario: Update multiple company fields in single request
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -446,6 +474,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @put-company @creator
   Scenario: PUT should fail when company_id is missing from body
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -462,6 +491,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @put-company @creator
   Scenario: PUT should fail when company_id is invalid UUID
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -479,6 +509,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @put-company @creator @500
   Scenario: PUT should fail or error when amount_bifurcation_modules has invalid module_name
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -502,6 +533,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @auth @put-company
   Scenario: PUT should fail without authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type  | application/json |
       | accept        | application/json |
@@ -518,6 +550,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @negative @auth @put-company
   Scenario: PUT should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -535,6 +568,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @additional_scenario @negative @put-company @creator @500
   Scenario: PUT should return 200 when enabling bifurcation with fos module only
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -558,6 +592,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @additional_scenario @negative @put-company @creator @500
   Scenario: PUT should return 200 when enabling bifurcation with settlement module only
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -581,6 +616,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @additional_scenario @negative @put-company @creator @500
   Scenario: PUT should return 200 when enabling bifurcation with all modules disabled
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -612,6 +648,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @additional_scenario @negative @put-company @creator
   Scenario: PUT should return 200 when bifurcation enabled with empty modules array
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -630,6 +667,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @additional_scenario @negative @put-company @creator @500
   Scenario: PUT should return 200 when bifurcation modules array contains duplicate module names
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -657,6 +695,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @additional_scenario @negative @put-company @creator @500
   Scenario: PUT should return 200 when bifurcation module_name is null
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |
@@ -680,6 +719,7 @@ Feature: Recovery Company API and Company Creation Flow
 
   @additional_scenario @negative @put-company @creator @500
   Scenario: PUT should return 200 when disabling bifurcation while providing modules array
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | Content-Type         | application/json |
       | accept               | application/json |

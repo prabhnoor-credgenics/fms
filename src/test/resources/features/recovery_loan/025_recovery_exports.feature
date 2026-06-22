@@ -11,6 +11,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative
   Scenario: TC-AUTH-001 — Request without authenticationtoken header returns 401
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept | application/json |
@@ -23,6 +24,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative
   Scenario: TC-AUTH-002 — Invalid authenticationtoken returns 401
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json  |
@@ -36,6 +38,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-AUTH-003 — Valid token resolves to valid company — 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -50,6 +53,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-EXPCAT-001 — Missing export_category param returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -61,6 +65,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-EXPCAT-002 — Empty export_category string returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -73,6 +78,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-EXPCAT-003 — Invalid category value returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -86,6 +92,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-EXPCAT-004 — "payment" is not valid for /exports endpoint returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -99,6 +106,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-EXPCAT-005 — Mixed valid and invalid categories returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -114,6 +122,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-CAT-001 — export_category "loan" returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -128,6 +137,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-CAT-002 — export_category "transaction" returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -142,6 +152,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-CAT-003 — export_category "customer" returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -155,6 +166,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-CAT-004 — export_category "portfolio_allocated_users" returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -168,6 +180,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-CAT-005 — export_category "portfolio_data" returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -181,6 +194,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-CAT-006 — export_category "portfolio_transaction_data" returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -194,6 +208,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-CAT-007 — Multiple comma-separated categories returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -208,6 +223,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-CAT-008 — Uppercase export_category "LOAN" accepted — tokens are lowercased
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -223,6 +239,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-PAGE-001 — Default pagination (page_number=1, page_size=10) returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -237,6 +254,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-PAGE-002 — Custom page_number=2 page_size=25 returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -252,6 +270,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-PAGE-003 — page_size=5000 (max boundary) returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -266,6 +285,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-PAGE-004 — page_size=5001 exceeds max allowed limit returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -279,6 +299,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin @500
   Scenario: TC-PAGE-005 — Non-numeric page_number returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -292,6 +313,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin @500
   Scenario: TC-PAGE-006 — Non-numeric page_size returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -307,6 +329,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-DPAG-001 — disable_paging=true returns all records without limit
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -322,6 +345,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-DPAG-002 — disable_paging=false (explicit default) uses page_number and page_size
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -338,6 +362,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-DPAG-003 — disable_paging=TRUE (uppercase) accepted — coerced to lowercase true
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -353,6 +378,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-STATUS-001 — status=completed filters to completed exports
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -368,6 +394,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-STATUS-002 — status=failed filters to failed exports
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -382,6 +409,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-STATUS-003 — Multiple comma-separated statuses filter correctly
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -396,6 +424,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-STATUS-004 — Uppercase status "COMPLETED" accepted — tokens are lowercased
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -412,6 +441,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-SRCH-001 — search_type=author with query returns 200 (may be empty if no match)
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -428,6 +458,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-SRCH-002 — search_type=author with query matching no users returns 200 empty
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -443,6 +474,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-SRCH-003 — search_type=request_id with valid integer IDs returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -458,6 +490,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-SRCH-004 — search_type=request_id with ID = 0 (below range) returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -473,6 +506,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-SRCH-005 — search_type=request_id with ID above INT max returns 400
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -488,6 +522,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-SRCH-006 — search_type=request_id non-integer tokens silently skipped returns 200 empty
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -506,6 +541,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-DATE-001 — start_date only filters exports created on or after date
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -521,6 +557,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-DATE-002 — end_date only filters exports created on or before date
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -535,6 +572,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-DATE-003 — start_date + end_date range filters to that period
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -551,6 +589,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-DATE-004 — start_date + end_date with status and category combined
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -571,6 +610,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-AUTHOR-001 — Single author_id filter returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -586,6 +626,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-AUTHOR-002 — Multiple comma-separated author_ids returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -600,6 +641,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-AUTHOR-003 — author_id with no permissible intersection returns 200 empty
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -617,6 +659,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-SHAPE-001 — Full response shape: data.exports array, total_count, message, success
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -633,6 +676,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-SHAPE-002 — Empty result shape: exports=[] total_count=0 with success=true
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -649,6 +693,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-SHAPE-003 — search_type=author no match returns success with empty exports
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -665,6 +710,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario Outline: TC-CATVAL-00x — export_category "<category>" returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -690,6 +736,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario Outline: TC-STVAL-00x — status filter "<status_val>" returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -719,6 +766,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-EDGE-001 — page_size=1 (minimum boundary) returns at most 1 record
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -734,6 +782,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-EDGE-002 — search_type without search_query — ignored gracefully returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -748,6 +797,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-EDGE-003 — All six categories combined in one request returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -762,6 +812,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-EDGE-004 — High page_number with valid page_size returns 200 (empty if beyond data)
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -778,6 +829,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-EDGE-005 — search_type=request_id single valid ID at minimum boundary (ID=1) returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -796,6 +848,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin
   Scenario: TC-EXTRA-001 — page_size = 0 — boundary below minimum returns error
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -809,6 +862,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin @500
   Scenario: TC-EXTRA-002 — page_number = 0 — boundary below valid start returns error
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -822,6 +876,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-EXTRA-003 — search_type=request_id with max boundary ID 2147483647 returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -838,6 +893,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-EXTRA-004 — export_category with surrounding whitespace stripped and accepted
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -851,6 +907,7 @@ Feature: Exports API — GET /recovery/exports
 
   @positive @chief-admin
   Scenario: TC-EXTRA-005 — disable_paging=true with multiple categories returns 200
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -866,6 +923,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin @500
   Scenario: TC-500-001 — Unparseable start_date triggers dateutil.ParserError — status TBD
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -879,6 +937,7 @@ Feature: Exports API — GET /recovery/exports
 
   @negative @chief-admin @500
   Scenario: TC-500-002 — Unparseable end_date triggers dateutil.ParserError — status TBD
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |

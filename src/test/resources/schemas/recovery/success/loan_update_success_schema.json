@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LoanUpdateSuccessResponse",
+  "description": "200 envelope for PATCH {BASE_ROUTE}/loan/<loan_id> (loan_update_revamp). Either {output,message} on update or {message:'no data to update'}; may carry invalid_data when some fields were rejected.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "output": { "type": ["string", "null"] },
+    "message": { "type": "string" },
+    "invalid_data": { "type": ["object", "null"] },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

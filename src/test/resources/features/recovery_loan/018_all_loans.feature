@@ -9,6 +9,7 @@ Feature: All Loans API
 
   @positive @smoke @creator
   Scenario: GET all-loans smoke test returns loan list for configured company_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -21,6 +22,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with page_number=1 and page_size=5
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -34,6 +36,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with page_number=2 and page_size=10
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -47,6 +50,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=created_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -59,6 +63,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=created_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -71,6 +76,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=date_of_default_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -83,6 +89,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=date_of_default_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -95,6 +102,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=total_claim_amount_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -107,6 +115,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=total_claim_amount_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -119,6 +128,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=default_emi_number_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -131,6 +141,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=default_emi_number_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -143,6 +154,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: GET all-loans with sort=number_of_transactions_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -155,6 +167,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: GET all-loans with sort=number_of_transactions_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -167,6 +180,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: GET all-loans with sort=distance_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -179,6 +193,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: GET all-loans with sort=distance_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -191,6 +206,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=principal_outstanding_amount_asc is silently ignored and returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -203,6 +219,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=principal_outstanding_amount_desc is silently ignored and returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -215,6 +232,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with search_type=loan_id and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -228,6 +246,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with search_type=applicant_name and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -241,6 +260,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with search_type=applicant_email and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -254,6 +274,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with search_type=applicant_contact_number and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -267,6 +288,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with search_type=business_name and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -280,6 +302,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with search_type=client_customer_id and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -293,6 +316,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with search_type=group_id and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -306,6 +330,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with search_type=center_name and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -319,6 +344,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: GET all-loans with search_type=transaction_id and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -332,6 +358,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with archive=true returns archived loans
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -344,6 +371,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with archive=false returns non-archived loans explicitly
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -356,6 +384,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with allocation_month=overall
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -368,6 +397,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with return_type=dict returns object keyed by loan_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -382,6 +412,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with select_from=1 and select_to=5 row-range slice
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -395,6 +426,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with user_hierarchy_join=true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -407,6 +439,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with permission_group_id filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -419,6 +452,7 @@ Feature: All Loans API
 
   @positive @performance @creator
   Scenario: GET all-loans response time should be within threshold
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -432,6 +466,7 @@ Feature: All Loans API
 
   @positive @smoke @creator
   Scenario: POST all-loans smoke test returns loan list for configured company_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -451,6 +486,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_number=1 and page_size=5
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -471,6 +507,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_number=2 and page_size=20
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -491,6 +528,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_size=1 boundary value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -510,6 +548,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_size=100
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -529,6 +568,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=created_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -548,6 +588,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=created_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -567,6 +608,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=date_of_default_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -586,6 +628,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=date_of_default_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -605,6 +648,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=total_claim_amount_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -624,6 +668,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=total_claim_amount_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -643,6 +688,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=default_emi_number_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -662,6 +708,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=default_emi_number_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -681,6 +728,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with sort=number_of_transactions_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -698,6 +746,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with sort=number_of_transactions_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -715,6 +764,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with sort=distance_asc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -732,6 +782,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with sort=distance_desc
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -749,6 +800,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=principal_outstanding_amount_asc is silently ignored and returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -768,6 +820,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sort=principal_outstanding_amount_desc is silently ignored and returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -787,6 +840,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with search_type=loan_id and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -807,6 +861,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with search_type=applicant_name and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -827,6 +882,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with search_type=applicant_email and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -847,6 +903,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with search_type=applicant_contact_number and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -867,6 +924,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with search_type=business_name and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -887,6 +945,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with search_type=client_customer_id and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -907,6 +966,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with search_type=group_id and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -927,6 +987,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with search_type=center_name and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -947,6 +1008,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with search_type=transaction_id and query
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -965,6 +1027,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with return_type=dict
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -984,6 +1047,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with select_from=1 and select_to=10 row-range slice
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1004,6 +1068,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with select_from=1 and select_to=100 larger range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1024,6 +1089,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocation_month=overall
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1043,6 +1109,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with archive=true returns archived loans
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1062,6 +1129,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with archive=false returns non-archived loans explicitly
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1081,6 +1149,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with user_hierarchy_join=true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1100,6 +1169,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with permission_group_id filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1119,6 +1189,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with deselected loan IDs excluded from result
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1138,6 +1209,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with include_transactions=true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1158,6 +1230,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with total_loan_amount_from only
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1177,6 +1250,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with total_loan_amount_to only
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1196,6 +1270,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with total_loan_amount_from and total_loan_amount_to valid range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1216,6 +1291,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with principal_outstanding_amount_from and to valid range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1236,6 +1312,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with total_claim_amount_from and to valid range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1256,6 +1333,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with utilisation_from and utilisation_to valid range for credit-line loans
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1276,6 +1354,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket=0_30 single bracket filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1295,6 +1374,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket=31_60,61_90 multiple comma-separated brackets
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1314,6 +1394,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket=90_ open-ended bracket
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1333,6 +1414,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocation_dpd_bracket=0_30,31_60 multiple brackets
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1352,6 +1434,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_from=30 and dpd_to=90 custom range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1372,6 +1455,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_from=0 and dpd_to=30 zero-start custom range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1392,6 +1476,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocation_dpd_value_from=30 and allocation_dpd_value_to=60
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1412,6 +1497,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with default_emi_number=3 single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1431,6 +1517,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with default_emi_number=3,6,9 multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1450,6 +1537,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with product_type single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1469,6 +1557,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with product_type multiple values comma-separated
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1488,6 +1577,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with center_name single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1507,6 +1597,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with center_name multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1526,6 +1617,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_type single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1545,6 +1637,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with tenure_finished=true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1564,6 +1657,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with tenure_finished=false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1583,6 +1677,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_nbfc_name single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1602,6 +1697,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_nbfc_name multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1621,6 +1717,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_regional_manager_name filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1640,6 +1737,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_region single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1659,6 +1757,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_region multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1678,6 +1777,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with channel_partner filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1697,6 +1797,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_branch single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1716,6 +1817,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_branch multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1735,6 +1837,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_zone filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1754,6 +1857,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with rbi_stage single value NPA
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1773,6 +1877,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with rbi_stage multiple values NPA,SMA-1,SMA-2
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1794,6 +1899,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with date_of_default_from only
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1813,6 +1919,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with date_of_default_to only
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1832,6 +1939,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with date_of_default_from and date_of_default_to valid range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1852,6 +1960,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocated_date_of_default_start and end valid range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1872,6 +1981,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with upload_date_from and upload_date_to valid range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1892,6 +2002,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with update_date_from and update_date_to valid range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1914,6 +2025,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_state single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1933,6 +2045,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_state multiple values comma-separated
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1952,6 +2065,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_city single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1971,6 +2085,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_city multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1990,6 +2105,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_pincode single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2009,6 +2125,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_pincode multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2028,6 +2145,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_language single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2047,6 +2165,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_language multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2066,6 +2185,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with co_applicant_present=true without count filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2085,6 +2205,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with co_applicant_present=false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2104,6 +2225,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with co_applicant_present=true and co_app_from=1 and co_app_upto=3 valid range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2125,6 +2247,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with co_applicant_present=true and co_app_from=2 and co_app_upto=2 equal boundary
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2148,6 +2271,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocated_user_profession filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2167,6 +2291,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocated_user_team filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2186,6 +2311,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocated_user_location filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2205,6 +2331,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when allocated_user_name is not a valid NanoID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2222,6 +2349,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when multiple allocated_user_name values are not valid NanoIDs
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2239,6 +2367,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocated_agency single UUID
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2258,6 +2387,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocated_agency multiple UUIDs
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2279,6 +2409,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with call_attempts_from=1 and call_attempts_to=10
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2299,6 +2430,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with call_attempts_from=5 only no upper bound
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2318,6 +2450,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with call_attempts_from=0 treated as null should succeed
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2337,6 +2470,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with ivr_message_heard=true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2354,6 +2488,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with ivr_message_heard=false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2373,6 +2508,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with recovery_status single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2392,6 +2528,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with recovery_status multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2411,6 +2548,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with fos_status single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2430,6 +2568,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with fos_status multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2449,6 +2588,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with telecalling_status single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2468,6 +2608,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with telecalling_status multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2487,6 +2628,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with global_status filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2506,6 +2648,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with legal_status single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2525,6 +2668,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with legal_status multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2544,6 +2688,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with settlement_status filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2563,6 +2708,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with repossession_status filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2582,6 +2728,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with proof_of_payment filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2601,6 +2748,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with digital_communication_status single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2620,6 +2768,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with digital_communication_status multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2639,6 +2788,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with chatr_status filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2658,6 +2808,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with voicebot_status filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2679,6 +2830,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with tags single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2698,6 +2850,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with tags multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2717,6 +2870,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with batch_tag single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2736,6 +2890,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with uploaded_by single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2755,6 +2910,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with uploaded_by multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2776,6 +2932,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with common_legal_process_-_current_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2795,6 +2952,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with common_legal_process_-_next_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2814,6 +2972,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with common_legal_process_-_tat_breached filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2833,6 +2992,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with criminal_proceedings_-_current_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2852,6 +3012,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with criminal_proceedings_-_next_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2871,6 +3032,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with criminal_proceedings_-_tat_breached filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2890,6 +3052,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with arbitration_-_current_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2909,6 +3072,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with arbitration_-_next_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2928,6 +3092,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with arbitration_-_tat_breached filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2947,6 +3112,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sarfaesi_-_current_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2966,6 +3132,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sarfaesi_-_next_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -2985,6 +3152,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with sarfaesi_-_tat_breached filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3004,6 +3172,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with civil_-_current_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3023,6 +3192,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with civil_-_next_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3042,6 +3212,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with civil_-_tat_breached filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3061,6 +3232,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with against_-_current_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3080,6 +3252,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with against_-_next_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3099,6 +3272,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with against_-_tat_breached filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3118,6 +3292,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with ibc_-_current_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3137,6 +3312,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with ibc_-_next_stages filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3156,6 +3332,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with ibc_-_tat_breached filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3175,6 +3352,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with ongoing_case_-_types filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3194,6 +3372,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with case_status filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3213,6 +3392,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with apply_litigation_filter_via_table=true and civil current stages
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3233,6 +3413,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with speedpost_status=delivered
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3250,6 +3431,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with speedpost_status=undelivered
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3267,6 +3449,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with speedpost_status=in-transit
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3284,6 +3467,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with speedpost_status=undelivered,in-transit multiple values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3301,6 +3485,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with last_digital_notice_generated filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3318,6 +3503,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with last_physical_notice_generated filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3335,6 +3521,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with digital_notice_clicked=true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3354,6 +3541,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with digital_notice_clicked=false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3373,6 +3561,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with digital_notice_opened=true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3390,6 +3579,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans with digital_notice_opened=false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3409,6 +3599,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans high-value NPA loans combined filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3435,6 +3626,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans field agent workload combined filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3456,6 +3648,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans settlement pipeline combined filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3477,6 +3670,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans export all as dict using select range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3498,6 +3692,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans notice escalation combined filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3517,6 +3712,7 @@ Feature: All Loans API
 
   @positive @creator @500
   Scenario: POST all-loans SARFAESI TAT breached board report combined filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3539,6 +3735,7 @@ Feature: All Loans API
 
   @positive @performance @creator
   Scenario: POST all-loans response time should be within threshold
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3557,6 +3754,7 @@ Feature: All Loans API
 
   @negative @auth @creator
   Scenario: GET all-loans should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -3567,6 +3765,7 @@ Feature: All Loans API
 
   @negative @auth @creator
   Scenario: GET all-loans should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -3578,6 +3777,7 @@ Feature: All Loans API
 
   @negative @auth @creator
   Scenario: POST all-loans should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -3593,6 +3793,7 @@ Feature: All Loans API
 
   @negative @auth @creator
   Scenario: POST all-loans should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -3611,6 +3812,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: GET all-loans should fail when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3620,6 +3822,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: GET all-loans should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3631,6 +3834,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: GET all-loans should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3642,6 +3846,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when company_id is missing from body
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3659,6 +3864,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3677,6 +3883,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when search_type value is invalid
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3695,6 +3902,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when sort value is invalid
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3712,6 +3920,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when allocation_month format is invalid not-a-date
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3729,6 +3938,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when allocation_month format has invalid month 99-2099
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3746,6 +3956,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans with empty query and valid search_type should succeed as edge case
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3766,6 +3977,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans with very large page_size=10000 should be handled by API
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3785,6 +3997,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans with page_number=0 edge case returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3807,6 +4020,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when co_app_from is greater than co_app_upto
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3826,6 +4040,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans co_app_from=0 and co_app_upto=0 are treated as null and succeed
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3847,6 +4062,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when call_attempts_from is greater than call_attempts_to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3865,6 +4081,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when total_loan_amount_from is greater than total_loan_amount_to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3883,6 +4100,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when principal_outstanding_amount_from is greater than to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3901,6 +4119,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when total_claim_amount_from is greater than total_claim_amount_to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3919,6 +4138,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when date_of_default_from is after date_of_default_to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3937,6 +4157,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when upload_date_from is after upload_date_to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3955,6 +4176,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with inverted utilisation range succeeds on non-credit-line company
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3977,6 +4199,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with allocation_month in MM-YYYY format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -3989,6 +4212,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with allocation_month as first day of month YYYY-MM-DD
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4001,6 +4225,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with page_size=1 boundary value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4013,6 +4238,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with page_size=100 large value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4025,6 +4251,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with page_number=5 higher page
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4038,6 +4265,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with dpd_bracket=31_60 different bracket value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4050,6 +4278,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with dpd_bracket=61_90,90_ multiple including open-ended
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4062,6 +4291,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with select_from=11 and select_to=20 second window
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4075,6 +4305,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with applicant_state query param single value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4087,6 +4318,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with recovery_status query param
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4099,6 +4331,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with sort=created_asc and page_size=5 combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4113,6 +4346,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with product_type query param
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4125,6 +4359,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: GET all-loans with search_type=group_id and empty query returns all
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4137,6 +4372,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: GET all-loans should fail when allocation_month is random text
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4149,6 +4385,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: GET all-loans should fail when sort value is invalid
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4161,6 +4398,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: GET all-loans should fail when search_type is invalid
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4175,6 +4413,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocation_month in MM-YYYY format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4194,6 +4433,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocation_month as YYYY-MM-DD full date
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4213,6 +4453,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when allocation_month is 99-2099 invalid month
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4230,6 +4471,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when allocation_month is YYYY-MM wrong format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4249,6 +4491,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_number=1 and page_size=1 minimum page
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4269,6 +4512,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_number=100 high page returns empty list
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4289,6 +4533,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_size=50 mid-range value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4308,6 +4553,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with select_from=1 and select_to=1 single row
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4328,6 +4574,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with select_from=51 and select_to=100 third window
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4348,6 +4595,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with select_from and select_to combined with return_type=dict
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4371,6 +4619,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket=31_60 single bracket
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4390,6 +4639,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket=61_90 single bucket
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4409,6 +4659,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket=90_ open-ended bucket
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4428,6 +4679,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket all standard buckets
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4447,6 +4699,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_from=0 and dpd_to=30 zero-start custom range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4467,6 +4720,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_from=90 and dpd_to=180 large DPD range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4487,6 +4741,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_from=dpd_to equal boundary values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4507,6 +4762,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with default_emi_number=1 first EMI default
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4526,6 +4782,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with allocation_dpd_bracket=61_90,90_ multiple allocation brackets
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4547,6 +4804,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with total_loan_amount_from only lower bound
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4566,6 +4824,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with total_loan_amount_to only upper bound
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4585,6 +4844,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with total_loan_amount_from=total_loan_amount_to equal boundary
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4605,6 +4865,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with principal_outstanding_amount_from only
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4624,6 +4885,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with total_claim_amount_to only upper bound
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4643,6 +4905,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when principal_outstanding_amount_from greater than to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4661,6 +4924,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when total_claim_amount_from greater than to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4681,6 +4945,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with date_of_default_from only lower bound
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4700,6 +4965,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with date_of_default_to only upper bound
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4719,6 +4985,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with date_of_default_from=date_of_default_to same date boundary
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4739,6 +5006,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with upload_date_from only
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4758,6 +5026,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with update_date_to only upper bound
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4777,6 +5046,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when allocated_date_of_default_start greater than end
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4795,6 +5065,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when update_date_from greater than update_date_to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4815,6 +5086,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_state=UP uppercased value lowercased internally
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4834,6 +5106,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_state three states comma-separated
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4853,6 +5126,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with applicant_pincode multiple pincodes
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4872,6 +5146,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with co_applicant_present=true and co_app_from=1 co_app_upto=1 equal range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4893,6 +5168,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with co_applicant_present=true and co_app_from=1 co_app_upto=5 valid range
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4914,6 +5190,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with co_applicant_present=false explicitly no co-applicant
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4933,6 +5210,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when co_app_from equals co_app_upto=0 zero boundary
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4954,6 +5232,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with call_attempts_from=1 and call_attempts_to=1 single attempt
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4974,6 +5253,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with call_attempts_to=20 only upper bound
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -4993,6 +5273,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with call_attempts_from=0 treated as null per spec
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5015,6 +5296,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with recovery_status=not_contacted
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5034,6 +5316,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with recovery_status=partial_payment
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5053,6 +5336,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with recovery_status=dispute
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5072,6 +5356,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with three recovery_status values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5091,6 +5376,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with rbi_stage=SMA-0
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5110,6 +5396,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with rbi_stage=SMA-1,SMA-2,NPA three stages
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5131,6 +5418,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with tenure_finished=false loans still running
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5150,6 +5438,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan_region multiple regions
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5169,6 +5458,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with product_type three values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5188,6 +5478,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with deselected as list with one item
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5207,6 +5498,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with deselected as list with multiple items
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5226,6 +5518,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with empty deselected list
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5247,6 +5540,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with dpd_bracket and applicant_state combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5267,6 +5561,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with loan amount and date of default combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5289,6 +5584,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with recovery_status and dpd_from dpd_to combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5310,6 +5606,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with product_type and rbi_stage and applicant_state combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5331,6 +5628,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans sort by claim amount desc with page_number=2
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5352,6 +5650,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with tags multiple and upload_date_from combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5372,6 +5671,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans archive=true with allocation_month=overall combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5392,6 +5692,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with search across applicant_email and applicant_state
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5413,6 +5714,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with legal_status and settlement_status combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5433,6 +5735,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with multiple status filters combined
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5456,6 +5759,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans with empty JSON body missing company_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5470,6 +5774,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_size=0 is accepted by API using default value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5488,6 +5793,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_number=0 is accepted by API using default value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5506,6 +5812,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with page_number=-1 negative is accepted by API using default value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5524,6 +5831,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with select_from greater than select_to is accepted by API
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5543,6 +5851,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with negative dpd_from is accepted by API
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5562,6 +5871,7 @@ Feature: All Loans API
 
   @positive @creator
   Scenario: POST all-loans with negative total_loan_amount_from is accepted by API
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5581,6 +5891,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when applicant_pincode contains negative value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5598,6 +5909,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when company_id is not a valid UUID
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -5614,6 +5926,7 @@ Feature: All Loans API
 
   @negative @creator
   Scenario: POST all-loans should fail when upload_date_from greater than upload_date_to
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExportLoanPaymentsLinkSuccessResponse",
+  "description": "200 link-mode response for POST {BASE_ROUTE}/export/bulk/loan-payments. When there is no data the handler returns the data-mode no-data shape instead.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["document_link"],
+      "properties": { "document_link": { "type": "string" } },
+      "additionalProperties": true
+    },
+    "message": { "type": "string" },
+    "success": { "type": ["boolean", "null"] }
+  },
+  "additionalProperties": true
+}

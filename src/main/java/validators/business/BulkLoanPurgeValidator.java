@@ -8,15 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
 
 
-/**
- * Response-body assertions for the destructive DELETE {BASE_ROUTE}/bulk/loan (data_purging) endpoint.
- *
- * Success envelope (make_response_handler):
- *   { "message": "Loan data purged successfully", "message_template": "...", "message_placeholder": {} }
- *
- * Forbidden envelope (RPC gate / ForbiddenException):
- *   { "message": "you have insufficient access rights", "success": false }
- */
+
 public class BulkLoanPurgeValidator {
 
     private static final Logger logger = LogManager.getLogger(BulkLoanPurgeValidator.class);
@@ -29,7 +21,6 @@ public class BulkLoanPurgeValidator {
         this.scenarioTestDataResolver = scenarioTestDataResolver;
     }
 
-    /** Asserts the purge success envelope: message + message_template + message_placeholder. */
     public void validatePurgeSuccess(Response response) {
         JsonPath jsonPath = response.jsonPath();
         SoftAssert softAssert = new SoftAssert();
@@ -42,7 +33,6 @@ public class BulkLoanPurgeValidator {
         logger.info("bulk loan purge success envelope validated");
     }
 
-    /** Asserts a failure envelope carrying a message and success=false (used for the 403 RPC gate). */
     public void validateForbiddenEnvelope(Response response) {
         JsonPath jsonPath = response.jsonPath();
         SoftAssert softAssert = new SoftAssert();

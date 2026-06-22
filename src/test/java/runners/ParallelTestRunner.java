@@ -16,11 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Runs feature files in parallel. All scenarios within the same feature file
- * execute sequentially on a single thread. Thread count is controlled by
- * data-provider-thread-count in testng-parallel.xml.
- */
+
 @CucumberOptions(
         features = "src/test/resources/features/recovery_loan/",
         glue = {
@@ -39,10 +35,11 @@ import java.util.Map;
         plugin = {
                 "pretty",
                 "hooks.ThreadStatsListener",
-                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+                "rerun:rerun/failedparallelrerun.txt"
         },
         monochrome = true,
-        tags = "@api"
+        tags = "not @500"
 )
 public class ParallelTestRunner {
 
@@ -55,10 +52,7 @@ public class ParallelTestRunner {
         testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
     }
 
-    /**
-     * Runs all scenarios of one feature file sequentially on the calling thread.
-     * Failures are collected and the first one is re-thrown after all scenarios finish.
-     */
+
     @Test(groups = "cucumber", description = "Runs Cucumber Feature", dataProvider = "features")
     public void runFeature(List<Object[]> scenarios) throws Throwable {
         Throwable firstFailure = null;
@@ -77,10 +71,7 @@ public class ParallelTestRunner {
         }
     }
 
-    /**
-     * Groups all scenarios by their feature file URI. Each entry in the returned
-     * array represents one feature file and becomes a single parallel unit of work.
-     */
+
     @DataProvider(parallel = true)
     public Object[][] features() {
         Object[][] allScenarios = testNGCucumberRunner.provideScenarios();

@@ -152,6 +152,7 @@ public class ApiStepDefinitions {
                 value = scenarioTestDataResolver.resolveCompanyId();
                 logger.info("Using x-company-id from resolved company id");
             }
+            value = scenarioTestDataResolver.resolveNamedSessionPlaceholders(value);
             if (!"Referer".equals(headerName)) {
                 storedHeaders.put(headerName, value);
                 request.header(headerName, value);
@@ -203,6 +204,9 @@ public class ApiStepDefinitions {
             if ("company_id".equals(paramNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
                 value = scenarioTestDataResolver.resolveCompanyId();
             }
+            if (ContextKeys.AUTH_TOKEN.equals(value)) {
+                value = testContext.getAuthToken();
+            }
             if (ContextKeys.LOAN_ID.equals(value)) {
                 value = scenarioTestDataResolver.resolveLoanId();
             }
@@ -215,6 +219,7 @@ public class ApiStepDefinitions {
             if (value != null && value.contains("{ALLOCATION_MONTH_OFFSET:")) {
                 value = scenarioTestDataResolver.resolveAllocationMonthOffset(value);
             }
+            value = scenarioTestDataResolver.resolveNamedSessionPlaceholders(value);
             storedQueryParams.put(param.getKey(), value);
             request.queryParam(param.getKey(), value);
             logger.info("Added query parameter: {} = {}", param.getKey(), value);
@@ -428,7 +433,8 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
                 schemaPath = "schemas/recovery/success/loan_recovery_success_schema.json";
             }
 
-        } else if (endpoint != null && endpoint.contains("/recovery/company")) {
+        } else if (endpoint != null && endpoint.contains("/recovery/company")
+                && !endpoint.contains("company-table-names")) {
             if (isSuccess) {
                 boolean isWrite = "PUT".equalsIgnoreCase(httpMethod) || "PATCH".equalsIgnoreCase(httpMethod) || "POST".equalsIgnoreCase(httpMethod);
                 schemaPath = isWrite

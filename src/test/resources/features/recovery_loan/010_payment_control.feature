@@ -2,6 +2,7 @@
 Feature: Payment Control
 
   Scenario: Verify get payment control request
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -21,6 +22,7 @@ Feature: Payment Control
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -31,6 +33,7 @@ Feature: Payment Control
 
   @negative @creator
   Scenario: API should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
@@ -43,6 +46,7 @@ Feature: Payment Control
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |

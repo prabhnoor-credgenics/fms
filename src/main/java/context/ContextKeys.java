@@ -15,6 +15,11 @@ public final class ContextKeys {
     public static final String MAPPING_ID  = "{MAPPING_ID}";
     public static final String CREATOR_USER_ID = "{CREATOR_USER_ID}";
 
+
+    public static final String AUTH_TOKEN_FOR_PREFIX = "{AUTH_TOKEN:";
+    public static final String COMPANY_ID_FOR_PREFIX = "{COMPANY_ID:";
+    public static final String USER_ID_FOR_PREFIX = "{USER_ID:";
+
     private ContextKeys() {
         throw new UnsupportedOperationException("Constants class");
     }

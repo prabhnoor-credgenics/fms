@@ -1,0 +1,60 @@
+{
+  "profile_name": "role 1",
+  "permissions": {
+    "Core Collection Modules": {
+      "access_loan_edit_history": {"levels": "company", "meta_data": {"description": "Ability to access the edit history of any Loan Id", "name": "Access Loan Edit History"}, "read": true},
+      "add_borrower_details": {"levels": "company", "meta_data": {"description": "This permission will allow users to only add details of different borrower types from Loan Details page", "name": "Add Borrower Details"}, "write": true},
+      "add_payment": {"levels": "company", "meta_data": {"description": "It will enable user to add payment from Loan Details page", "name": "Add Payment"}, "write": true},
+      "allocate_and_deallocate_loans": {"levels": "company", "meta_data": {"description": "Gives user ability to allocate and de-allocate loans through portfolio,excel and workflow", "name": "Allocate and Deallocate loans"}, "write": true},
+      "archive_and_unarchive_loan": {"levels": "company", "meta_data": {"description": "Ability to archive and un-archive loans from portfolio and archive loans section respectively", "name": "Archive Loans"}, "write": true},
+      "authorised_officer_assignment": {"levels": "company", "meta_data": {"description": "This feature is not available out of the box, there are some variable configurations that need to be in place for this feature to work properly. Do not enable this permission without proper implementation.", "name": "AO Assignment"}, "write": true},
+      "custom_integrations": {"levels": "company", "meta_data": {"description": "This permission allows the user to modify custom integrations settings for the company.", "name": "Custom Integrations"}, "write": true},
+      "export_payments": {"levels": "company", "meta_data": {"description": "Ability to export payments from portfolio page for a given set of selected loans", "name": "Payments Export"}, "read": true},
+      "loan_collection_stage": {"levels": "company", "meta_data": {"description": "This permission provides the ability to access the collection stage configuration for the company.", "name": "Collection Stage"}, "read": true, "write": true},
+      "loan_update": {"levels": "company", "meta_data": {"description": "Ability to upload new loans in bulk on-to the platform through excel upload in data upload section", "name": "Loan Update"}, "write": true},
+      "loan_upload": {"levels": "company", "meta_data": {"description": "Ability to upload new loans in bulk on-to the platform through excel upload in data upload section", "name": "Loan Upload"}, "write": true},
+      "loan_upload_with_replace_given_data": {"levels": "company", "meta_data": {"description": "Loan Upload (Replace Previous Data for uploaded columns only)", "name": "Loan Upload (Replace Previous Data for uploaded columns only)"}, "write": true},
+      "loan_upload_with_replace_previous_data": {"levels": "company", "meta_data": {"description": "Loan Upload (Remove All Previous Data)", "name": "Loan Upload (Remove All Previous Data)"}, "write": true},
+      "move_loans": {"levels": "company", "meta_data": {"description": "Ability to move loans to current allocation month from a previous month through portfolio page", "name": "Move Loans"}, "write": true},
+      "out_of_hierarchy_allocation": {"levels": "company", "meta_data": {"description": "If this permission is enabled for a permission group, users can perform bulk allocation/deallocation (via Excel upload) to and from users outside their reporting hierarchy.", "name": "Out of Hierarchy Allocation"}, "write": true},
+      "payment_upload": {"levels": "company", "meta_data": {"description": "Ability to upload payments in bulk on-to the platform through excel upload in data upload section", "name": "Payment Upload"}, "read": true, "write": true},
+      "portfolio_customisation": {"levels": "company", "meta_data": {"description": "Ability to enable or disable variables/filters on the portfolio and also change the order of visibility", "name": "Portfolio Customisation"}, "write": true},
+      "send_receipt": {"levels": "company", "meta_data": {"description": "This permission provides the ability to send the payment receipt froom loan details page.", "name": "Send Receipt"}, "write": true},
+      "settings_company_details": {"levels": "company", "meta_data": {"description": "This permission will give access to user to edit company details from the settings page", "name": "Edit Company Details"}, "write": true},
+      "settings_loan_status": {"levels": "company", "meta_data": {"description": "Enables you to view all disposition status at one place and you can easily customize it too", "name": "Status Management"}, "read": true, "write": true},
+      "settings_loan_variables": {"levels": "company", "meta_data": {"description": "Ability to add new custom variables and edit their attributes from loan variables section in settings", "name": "Variable Management"}, "read": true, "write": true},
+      "status_update": {"levels": "company", "meta_data": {"description": "This permission provides access to the remarks and status upload functionality which is a part of Data Upload Tab.", "name": "Remarks and Status Upload"}, "write": true},
+      "tags": {"levels": "company", "meta_data": {"description": "Ability to add and remove tags from loans", "name": "Tags"}, "write": true},
+      "export_loans": {"read": true, "meta_data": {"description": "Ability to export loans from portfolio page for a given set of selected loans", "name": "Loans Export"}}
+    },
+    "User Management Module": {
+      "configure_sso": {"levels": ["agency", "company"], "meta_data": {"description": "This permission will give you access to configure different  types of SSO", "name": "SSO Configuration"}, "read": true, "write": true},
+      "profiles": {"levels": ["agency", "company"], "meta_data": {"description": "Ability to create and edit permission groups for all users in the user management section of settings", "name": "Permission Group Management"}, "write": true},
+      "roles": {"levels": ["agency", "company"], "meta_data": {"description": "Ability to create, edit and modify hierarchy of roles in the user management section of settings", "name": "Roles Management"}, "write": true},
+      "settings_company_details": {"levels": ["agency", "agency_owned", "company"], "meta_data": {"description": "This permission will give access to user to edit company details from the settings page", "name": "Edit Company Details"}, "write": true},
+      "settings_connection_configuration": {"levels": ["agency", "agency_owned", "company"], "meta_data": {"description": "Permission to view & edit connection configuration", "name": "Connection Configuration (S3 and SFTP)"}, "read": true, "write": true},
+      "settings_outgoing_webhook": {"levels": ["agency", "agency_owned", "company"], "meta_data": {"description": "Ability to configure outgoing webhooks for a company in the settings", "name": "Outgoing Webhook"}, "read": true, "write": true},
+      "settings_user_variables": {"levels": ["agency", "company"], "meta_data": {"description": "Ability to configure additional variables of users in a company", "name": "User Variables"}, "write": true},
+      "single_factor_authentication": {"levels": ["agency", "company"], "meta_data": {"description": "This permission allows user to access platform without OTP authentication", "name": "Single Factor Authentication"}, "read": true},
+      "territory_management": {"levels": ["agency", "company"], "meta_data": {"description": "This permission allows the user to configure territory tree as well as manage individual territories defined in a given company", "name": "Territory Management"}, "read": true, "write": true},
+      "user_device_validation": {"levels": ["agency", "company"], "meta_data": {"description": "Permission that makes the validation of device id required", "name": "User Device Validation"}, "write": true},
+      "users": {"levels": ["agency", "company"], "meta_data": {"description": "Ability to create, edit and delete in the user management section of settings", "name": "User Management"}, "read": true, "write": true}
+    },
+    "fos": {
+      "branch_collection_management": {"levels": "company", "meta_data": {"description": "User would be able to view the Branch Collection Managment section and sub-tabs within this section", "name": "branch_collection_management"}, "read": true, "write": true},
+      "change_requests_module": {"levels": "company", "meta_data": {"description": "Used for viewing and responding to edit/cancel verification requests", "name": "change_requests_module"}, "read": true, "write": true},
+      "deferred_verification": {"levels": "company", "meta_data": {"description": "Allow user to mark 'Approved As Deferred' in deposit cash verification", "name": "deferred_verification"}, "write": true},
+      "deposit_verification_module": {"levels": "company", "meta_data": {"description": "Used for viewing and responding to deposit verification requests", "name": "deposit_verification_module"}, "read": true, "write": true},
+      "field_collection_dashboard": {"levels": "company", "meta_data": {"description": "User would be able to view the Field Collection Dashboard tab and sub-tabs within this section", "name": "field_collection_dashboard"}, "read": true},
+      "form_management": {"levels": "company", "meta_data": {"description": "User would be able to view the Form Management tab and sub-tabs within this section", "name": "form_management"}, "write": true},
+      "fos_settings_module": {"levels": "company", "meta_data": {"description": "Used for viewing and updating fos settings", "name": "fos_settings_module"}, "read": true, "write": true},
+      "lead_addition": {"levels": "company", "meta_data": {"description": "Used for adding sales leads from fos app", "name": "add_new_lead"}, "write": true},
+      "live_agent_tracking_module": {"levels": "company", "meta_data": {"description": "Used for viewing live agent location", "name": "live_agent_tracking_module"}, "read": true},
+      "non_allocated_loan_access": {"levels": "company", "meta_data": {"description": "Used to allow the agents to perform visits on loans beyond their general allocation", "name": "non_allocated_loan_access"}, "write": true},
+      "online_verification_module": {"levels": "company", "meta_data": {"description": "Used for viewing and responding to online deposit verification requests", "name": "online_verification_module"}, "read": true, "write": true},
+      "restrict_collection_form": {"levels": "company", "meta_data": {"description": "restrict collection form access", "name": "restrict_collection_form"}, "write": true},
+      "restrict_document_upload_from_gallery": {"levels": "company", "meta_data": {"description": "Restrict Field Users from uploading documents from the gallery", "name": "restrict_document_upload_from_gallery"}, "write": true},
+      "visibility_basis_of_loan_allocation": {"levels": "company", "meta_data": {"description": "allow the user to view data basis loan allocation", "name": "visibility_basis_of_loan_allocation"}, "write": true}
+    }
+  }
+}

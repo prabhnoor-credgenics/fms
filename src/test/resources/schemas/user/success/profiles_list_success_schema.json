@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProfilesListSuccessResponse",
+  "description": "Success envelope for GET /user/profiles/ (list branch). data.profiles is a list (default) or a {profile_id: name} map (portfolio sub-branch).",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["profiles"],
+      "properties": {
+        "profiles": { "type": ["array", "object"] }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

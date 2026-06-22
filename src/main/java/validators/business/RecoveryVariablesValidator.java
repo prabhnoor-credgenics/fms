@@ -23,7 +23,6 @@ public class RecoveryVariablesValidator {
             "dpd_bracket"
     );
 
-    /** Present when include_meta_data=true; omitted when false (is_trackable may still appear). */
     private static final String META_DATA_FIELD = "description";
 
     private static final List<String> MANDATORY_VARIABLE_FIELDS = List.of(

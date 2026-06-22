@@ -41,14 +41,21 @@ public class UserCredentialsResolver {
                 password = configReader.getProperty(envKey(env, "approver.user." + slot + ".password"));
             }
         } else {
-            email = firstNonBlank(
-                    configReader.getProperty(envKey(env, "user.email")),
-                    configReader.getProperty(envKey(env, "email"))
-            );
-            password = firstNonBlank(
-                    configReader.getProperty(envKey(env, "user.password")),
-                    configReader.getProperty(envKey(env, "password"))
-            );
+
+            if (slot == 0) {
+
+                email = firstNonBlank(
+                        configReader.getProperty(envKey(env, "user.email")),
+                        configReader.getProperty(envKey(env, "email"))
+                );
+                password = firstNonBlank(
+                        configReader.getProperty(envKey(env, "user.password")),
+                        configReader.getProperty(envKey(env, "password"))
+                );
+            } else {
+                email = configReader.getProperty(envKey(env, "user." + slot + ".email"));
+                password = configReader.getProperty(envKey(env, "user." + slot + ".password"));
+            }
         }
 
         validatePresent(email, password, env, role, slot);
@@ -93,7 +100,11 @@ public class UserCredentialsResolver {
             }
             return envPrefix + ".approver.user." + slot + ".email / " + envPrefix + ".approver.user." + slot + ".password";
         }
-        return envPrefix + ".user.email / " + envPrefix + ".user.password";
+        if (slot == 0) {
+            return envPrefix + ".user.email / " + envPrefix + ".user.password "
+                    + "(or " + envPrefix + ".email / " + envPrefix + ".password)";
+        }
+        return envPrefix + ".user." + slot + ".email / " + envPrefix + ".user." + slot + ".password";
     }
 
     private static String maskEmail(String email) {

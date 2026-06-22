@@ -7,6 +7,7 @@ Feature: Recovery Variables API
 
   @positive @smoke @creator
   Scenario: Get recovery variables for configured company_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -28,6 +29,7 @@ Feature: Recovery Variables API
 
   @positive @meta-data @creator
   Scenario: Get recovery variables with include_meta_data false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -47,6 +49,7 @@ Feature: Recovery Variables API
 
   @positive @meta-data @creator
   Scenario: Response differs when include_meta_data changes from true to false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -72,6 +75,7 @@ Feature: Recovery Variables API
 
   @positive @minimal-payload @creator
   Scenario: Get recovery variables with computed variables and meta data disabled
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -92,6 +96,7 @@ Feature: Recovery Variables API
 
   @positive @minimal-payload @creator
   Scenario: Response differs when both include_computed_variables and include_meta_data are disabled
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -119,6 +124,7 @@ Feature: Recovery Variables API
 
   @positive @computed-variables @creator
   Scenario: Get recovery variables with include_computed_variables false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -138,6 +144,7 @@ Feature: Recovery Variables API
 
   @positive @computed-variables @creator
   Scenario: Response differs when include_computed_variables changes from true to false
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -163,6 +170,7 @@ Feature: Recovery Variables API
 
   @positive @performance @creator
   Scenario: Recovery variables API response time should be within threshold
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -176,6 +184,7 @@ Feature: Recovery Variables API
 
   @negative @auth @creator
   Scenario: API should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -188,6 +197,7 @@ Feature: Recovery Variables API
 
   @negative @auth @creator
   Scenario: API should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -201,6 +211,7 @@ Feature: Recovery Variables API
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -213,6 +224,7 @@ Feature: Recovery Variables API
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -226,6 +238,7 @@ Feature: Recovery Variables API
 
   @negative @creator
   Scenario: API should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -243,6 +256,7 @@ Feature: Recovery Variables API
 
   @positive @smoke @create @creator
   Scenario: Create a new text variable with minimum required fields
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -265,6 +279,7 @@ Feature: Recovery Variables API
 
   @positive @create @creator
   Scenario: Create an amount variable with optional fields
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -287,6 +302,7 @@ Feature: Recovery Variables API
 
   @positive @create @creator
   Scenario: Create a text variable with dropdown values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -308,6 +324,7 @@ Feature: Recovery Variables API
 
   @positive @create @creator
   Scenario: Create a number variable with is_mandatory true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -355,6 +372,7 @@ Feature: Recovery Variables API
 
   @negative @create @creator
   Scenario: POST should fail when variable_name is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -372,6 +390,7 @@ Feature: Recovery Variables API
 
   @negative @create @creator
   Scenario: POST should fail when variable_type is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -389,6 +408,7 @@ Feature: Recovery Variables API
 
   @negative @create @creator
   Scenario: POST should fail when variable_name starts with a digit
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -407,6 +427,7 @@ Feature: Recovery Variables API
 
   @negative @create @creator
   Scenario: POST should fail when variable_name contains spaces
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -425,6 +446,7 @@ Feature: Recovery Variables API
 
   @negative @create @creator
   Scenario: POST should fail when variable_type is invalid
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -443,6 +465,7 @@ Feature: Recovery Variables API
 
   @negative @create @creator
   Scenario: POST should fail when is_dropdown is true but dropdown_values is empty
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -463,6 +486,7 @@ Feature: Recovery Variables API
 
   @negative @create @creator
   Scenario: POST should fail when is_derivable is true but calculation_formula is absent
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -482,6 +506,7 @@ Feature: Recovery Variables API
 
   @negative @auth @create @creator
   Scenario: POST should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -499,6 +524,7 @@ Feature: Recovery Variables API
 
   @negative @auth @create @creator
   Scenario: POST should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -519,6 +545,7 @@ Feature: Recovery Variables API
 
   @positive @update @creator
   Scenario: Update variable description via PATCH
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -564,6 +591,7 @@ Feature: Recovery Variables API
 
   @positive @update @creator
   Scenario: Update variable is_mandatory flag via PATCH
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -624,6 +652,7 @@ Feature: Recovery Variables API
 
   @positive @update @creator
   Scenario: Disable dropdown on variable via PATCH clears dropdown values
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -669,6 +698,7 @@ Feature: Recovery Variables API
 
   @negative @update @creator
   Scenario: PATCH should fail when variable_id is missing from body
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -687,6 +717,7 @@ Feature: Recovery Variables API
 
   @negative @update @creator
   Scenario: PATCH should fail when trying to set is_derivable to true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -730,6 +761,7 @@ Feature: Recovery Variables API
 
   @negative @update @creator
   Scenario: PATCH should fail when trying to set calculation_formula
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -772,6 +804,7 @@ Feature: Recovery Variables API
 
   @negative @auth @update @creator
   Scenario: PATCH should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -789,6 +822,7 @@ Feature: Recovery Variables API
 
   @negative @auth @update @creator
   Scenario: PATCH should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -809,6 +843,7 @@ Feature: Recovery Variables API
 
   @positive @delete @chief-admin
   Scenario: Delete a variable that was just created
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -846,6 +881,7 @@ Feature: Recovery Variables API
 
   @negative @delete @creator
   Scenario: DELETE should fail for a non-existent variable id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -859,6 +895,7 @@ Feature: Recovery Variables API
 
   @negative @auth @delete @creator
   Scenario: DELETE should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -872,6 +909,7 @@ Feature: Recovery Variables API
 
   @positive @smoke @categorisation @creator
   Scenario: Get variable categorisation for configured company_id
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -885,6 +923,7 @@ Feature: Recovery Variables API
 
   @positive @categorisation @creator
   Scenario: Get variable categorisation with transaction target
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -898,6 +937,7 @@ Feature: Recovery Variables API
 
   @positive @categorisation @creator
   Scenario: Get variable categorisation with include_computed_variables true
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -910,6 +950,7 @@ Feature: Recovery Variables API
 
   @positive @categorisation @creator
   Scenario: Get variable categorisation with include_all_variables and include_derivable_variables
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -923,6 +964,7 @@ Feature: Recovery Variables API
 
   @negative @auth @categorisation @creator
   Scenario: Variable categorisation should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
     And I set the query parameters:
@@ -933,6 +975,7 @@ Feature: Recovery Variables API
 
   @negative @categorisation @creator
   Scenario: Variable categorisation should fail when company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -942,6 +985,7 @@ Feature: Recovery Variables API
 
   @negative @categorisation @creator
   Scenario: Variable categorisation should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -955,6 +999,7 @@ Feature: Recovery Variables API
 
   @negative @server-error @expected-200 @creator
   Scenario: POST should handle an invalid calculation_formula for a derivable variable
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -975,6 +1020,7 @@ Feature: Recovery Variables API
 
   @negative @server-error @expected-200 @creator
   Scenario: POST should handle is_dropdown sent as a string instead of a boolean
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -995,6 +1041,7 @@ Feature: Recovery Variables API
 
   @negative @server-error @expected-200 @creator
   Scenario: PATCH should handle dropdown_values sent as an object instead of an array
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1039,6 +1086,7 @@ Feature: Recovery Variables API
 
   @negative @server-error @expected-200 @creator
   Scenario: GET should handle include_computed_variables sent as an array parameter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1052,6 +1100,7 @@ Feature: Recovery Variables API
 
   @negative @server-error @expected-200 @creator
   Scenario: GET categorisation should handle a malformed boolean for include_all_variables
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |

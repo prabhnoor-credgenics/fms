@@ -2,6 +2,7 @@
 Feature: Move Loan Restriction
 
   Scenario: Verify get move loan restriction variables request
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -29,6 +30,7 @@ Feature: Move Loan Restriction
   
  @negative @creator
   Scenario: API should fail when company_id query parameter is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -38,6 +40,7 @@ Feature: Move Loan Restriction
     And the response body should contain field "message" with value "invalid company id"
   @negative @creator
   Scenario: API should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */*    |
       | authenticationtoken | {AUTH_TOKEN}                         |
@@ -49,6 +52,7 @@ Feature: Move Loan Restriction
      And the response body should contain field "message" with value "one or more companies not found"
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |

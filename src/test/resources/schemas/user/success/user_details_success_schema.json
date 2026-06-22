@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserDetailsSuccessResponse",
+  "description": "Success envelope for GET /user/users/ (logged-in user's own details).",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["user_details"],
+      "properties": {
+        "user_details": {
+          "type": "object",
+          "description": "The caller's own account details built from the session."
+        }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LoanDetailsUpdateErrorResponse",
+  "description": "Failure envelope for PATCH {BASE_ROUTE}/loan-details/<loan_id> (HTML-guard 400 / no-section 403 / empty-section 400 / invalid loan 400).",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "output": { "type": ["string", "null"] },
+    "message": { "type": "string" },
+    "errors_dict": { "type": ["object", "null"] },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

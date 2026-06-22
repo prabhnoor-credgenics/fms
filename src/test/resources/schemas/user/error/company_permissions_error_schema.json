@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanyPermissionsErrorResponse",
+  "description": "Error envelope for GET {BASE_ROUTE}/company/permissions/.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

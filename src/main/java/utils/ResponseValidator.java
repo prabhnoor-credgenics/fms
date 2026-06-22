@@ -31,7 +31,7 @@ public class ResponseValidator {
 	    logger.info("Validating JSON field '{}'. Expected: {}, Actual: {}",
 	            jsonPath, expectedValue, actualValue);
 
-	    // Array handling
+
 	    if (actualValue instanceof List<?>) {
 	        String expected = String.valueOf(expectedValue);
 

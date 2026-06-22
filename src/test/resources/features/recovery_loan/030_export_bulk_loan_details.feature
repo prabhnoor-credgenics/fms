@@ -5,6 +5,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
   @negative
   Scenario: TC-AUTH-001 — Request without authenticationtoken header returns 401
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
@@ -18,6 +19,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
   @negative
   Scenario: TC-AUTH-002 — Invalid authenticationtoken returns 401
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json  |
@@ -30,8 +32,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     And the response body should not be empty
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-AUTH-003 — Valid token resolves to valid company — 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -48,8 +51,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-BODY-001 — Empty body {} returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -64,8 +84,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-BODY-002 — Valid allocation_month "2026-01-01" returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -83,8 +120,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-BODY-003 — allocation_month "Overall" — service behaviour TBD
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -102,8 +156,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-BODY-004 — Invalid allocation_month format returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -118,8 +173,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-BODY-005 — archive = true returns 200 (queries archived loans)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -138,8 +210,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-BODY-006 — archive = false returns 200 (queries active loans)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -157,8 +246,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-BODY-007 — Extra unknown fields accepted without error — Config.extra="allow"
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -178,8 +284,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-BODY-008 — allocation_month = null defaults to current month returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -197,8 +320,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-BODY-009 — allocation_month as integer is not a parseable date returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -215,8 +339,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXPTYPE-001 — export_type "customer" (default) returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -235,8 +376,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXPTYPE-002 — export_type "transaction" forces 4 flags to false via root_validator
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -259,8 +417,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXPTYPE-003 — export_type "allocated_users" returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -279,8 +454,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXPTYPE-004 — export_type "portfolio_allocated_users" returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -299,8 +491,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXPTYPE-005 — export_type "portfolio_data" returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -319,8 +528,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXPTYPE-006 — export_type "portfolio_transaction_data" returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -339,8 +565,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXPTYPE-007 — export_type "bulk_document_download" returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -359,8 +602,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-EXPTYPE-008 — Invalid export_type returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -378,8 +622,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-RESP-001 — response_type "link" (default) returns 200 with S3 output URL
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -397,8 +658,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-RESP-002 — response_type "data" returns 200 with data array
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -416,8 +694,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-RESP-003 — Invalid response_type "csv" returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -435,8 +714,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SORT-001 — sort "created_desc" is a valid enum value returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -454,8 +750,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SORT-002 — sort "principal_outstanding_amount_asc" silently dropped to null — returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -474,8 +787,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SORT-003 — sort = "null" string coerced to null returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -494,8 +824,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SORT-004 — sort = null (JSON null) returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -514,8 +861,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-SORT-005 — Invalid sort value not in SortBy enum returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -533,8 +881,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SEARCH-001 — search_type "loan_id" with query string returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -553,8 +918,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SEARCH-002 — search_type "applicant_name" with query returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -574,8 +956,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SEARCH-003 — search_type empty string coerced to "loan_id" returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -595,8 +994,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-SEARCH-004 — Invalid search_type not in SearchType enum returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -613,8 +1013,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SELINDS-001 — selected_loan_ids with valid IDs bypasses portfolio filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -632,8 +1049,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SELINDS-002 — selected_loan_ids as empty list — service behaviour TBD
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -651,8 +1085,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SELINDS-003 — selected_loan_ids + select_from/select_to — portfolio filter takes over
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -673,8 +1124,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SELINDS-004 — selected_loan_ids with only non-existent IDs returns 200 no data
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -694,8 +1162,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-EXPORTID-001 — export_id not found in DB returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -712,8 +1181,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXPORTID-002 — export_id with COMPLETED or FAILED status returns 200 no data
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -731,8 +1217,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXPORTID-003 — Without export_id query param — normal export flow runs
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -752,8 +1255,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-COLS-001 — All boolean column flags = true returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -781,8 +1301,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-COLS-002 — Custom column count overrides with explicit values returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -806,8 +1343,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-COLS-003 — historical_loan_limit = true extends record cap to 100k
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -826,8 +1380,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-COLS-004 — Number column counts as zero — TBD behaviour
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -849,8 +1420,26 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-001 — dpd_bracket filter returns 200
+    # TODO: 200-only — DPD bracket is derived from date_of_default vs the allocation month — not directly settable on a plain upload. Loan presence not asserted.
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -869,8 +1458,26 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-002 — dpd_from / dpd_to numeric range generates dynamic bracket
+    # TODO: 200-only — DPD range is derived — not directly settable on a plain upload. Loan presence not asserted.
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -889,8 +1496,27 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-003 — applicant_state filter returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    # match the applicant_state filter below so the uploaded loan appears in the export
+    And I update JSON field "applicant_address[0].applicant_state" to "maharashtra"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -899,7 +1525,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       """
       {
         "company_id": "{COMPANY_ID}",
-        "allocation_month": "2026-01-01",
+        "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}",
         "applicant_state": ["maharashtra", "karnataka"],
         "response_type": "data"
       }
@@ -907,9 +1533,28 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 200
     Then the response body should not be empty
+    And the response body should contain text "{LOAN_ID}"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-004 — recovery_status filter returns 200
+    # TODO: 200-only — recovery_status is a disposition set via status-update, not on upload. Loan presence not asserted.
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -927,8 +1572,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-005 — date_of_default range filter returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -937,7 +1599,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       """
       {
         "company_id": "{COMPANY_ID}",
-        "allocation_month": "2026-01-01",
+        "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}",
         "date_of_default_from": "2025-01-01",
         "date_of_default_to": "2025-12-31",
         "response_type": "data"
@@ -946,9 +1608,30 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 200
     Then the response body should not be empty
+    # uploaded loan's defaults[0].date_of_default is 2025-08-04 — inside the filter range
+    And the response body should contain text "{LOAN_ID}"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-006 — total_loan_amount range filter returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    # set total_loan_amount inside the 50000-500000 filter range so the loan appears
+    And I update JSON field "total_loan_amount" to "100000"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -957,7 +1640,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       """
       {
         "company_id": "{COMPANY_ID}",
-        "allocation_month": "2026-01-01",
+        "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}",
         "total_loan_amount_from": 50000,
         "total_loan_amount_to": 500000,
         "response_type": "data"
@@ -966,9 +1649,27 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 200
     Then the response body should not be empty
+    And the response body should contain text "{LOAN_ID}"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-007 — co_applicant_present = true with co_app_from/upto returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -977,7 +1678,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       """
       {
         "company_id": "{COMPANY_ID}",
-        "allocation_month": "2026-01-01",
+        "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}",
         "co_applicant_present": true,
         "co_app_from": 1,
         "co_app_upto": 3,
@@ -987,9 +1688,29 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 200
     Then the response body should not be empty
+    # uploaded loan already carries 2 co-applicants — inside the 1..3 filter range
+    And the response body should contain text "{LOAN_ID}"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-008 — upload_date range filter returns 200
+    # TODO: 200-only — upload_date is server-set to the actual upload day; the loan will not fall in a past (Jan) range. Loan presence not asserted.
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1008,8 +1729,26 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-009 — speedpost_status filter returns 200
+    # TODO: 200-only — speedpost_status requires a notice/speedpost dispatch, not produced by a loan upload. Loan presence not asserted.
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1027,8 +1766,26 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-FILTER-010 — Litigation filter civil_-_current_stages returns 200
+    # TODO: 200-only — litigation data requires litigation records, not produced by a loan upload. Loan presence not asserted.
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1049,8 +1806,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SHAPE-001 — Link response has output (S3 URL) and message="success"
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1068,8 +1842,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SHAPE-002 — Data response has data array and message
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1087,8 +1878,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-SHAPE-003 — No-data response has data=[] and message="no data found"
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1109,8 +1917,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @negative @chief-admin
+  @negative 
   Scenario Outline: TC-ENUM-00x — Invalid <field> value "<invalid_value>" returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1136,8 +1945,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EDGE-001 — select_from = 0 and select_to = 1000 with allocation_month returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1157,8 +1983,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EDGE-002 — call_attempts_from = 0 treated as null returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1178,8 +2021,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EDGE-003 — co_applicant_present = false resets co_app_from/upto to null
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1200,8 +2060,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EDGE-004 — Multiple status filters combined returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1222,8 +2099,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EDGE-005 — Digital notice filters combined returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1244,8 +2138,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EDGE-006 — page_number and page_size params forwarded returns 200
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1267,8 +2178,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-COMBO-001 — High-value NPA loans with multiple filters and column flags
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1294,8 +2222,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-COMBO-002 — Telecalling export with call attempts and status filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1318,8 +2263,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-COMBO-003 — Archive export with historical limit and offset pagination
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1342,8 +2304,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-COMBO-004 — Litigation export with co-applicant columns and IBC filter
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1371,6 +2350,23 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
   @positive @performance @creator
   Scenario: TC-PERF-001 — POST response time should be within configured threshold
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1389,8 +2385,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-EXTRA-001 — selected_loan_ids as string instead of list returns 400
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1406,8 +2403,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXTRA-002 — co_app_from > co_app_upto when co_applicant_present=false — range ignored
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1428,8 +2442,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXTRA-003 — response_type = null defaults to "link" response
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1447,8 +2478,25 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive @chief-admin
+  @positive 
   Scenario: TC-EXTRA-004 — principal_outstanding_amount_from > to range — behaviour TBD
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    # --- upload a fresh loan first, then export its data below (as creator) ---
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1467,8 +2515,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-EXTRA-005 — archive as string "yes" is not a valid StrBool value
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -1485,8 +2534,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @negative @chief-admin
+  @negative 
   Scenario: TC-500-001 — Service unhandled exception path returns error
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanyPermissionsSuccessResponse",
+  "description": "Success envelope for GET {BASE_ROUTE}/company/permissions/.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["profile_id", "permissions"],
+      "properties": {
+        "profile_id": { "type": ["string", "null"] },
+        "permissions": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}
