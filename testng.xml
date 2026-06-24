@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <!-- Sequential/default suite. Use: mvn test -Pparallel for multi-threaded scenarios -->
-<suite name="API Test Suite" parallel="false">
-    <test name="API Tests">
+<suite name="API Test Suite" parallel="none" preserve-order="true">
+    <test name="API Tests" preserve-order="true">
         <classes>
             <class name="runners.TestRunner"/>
         </classes>

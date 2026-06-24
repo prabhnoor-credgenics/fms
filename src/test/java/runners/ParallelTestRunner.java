@@ -3,19 +3,23 @@ package runners;
 import io.cucumber.testng.CucumberOptions;
 import io.cucumber.testng.PickleWrapper;
 import io.cucumber.testng.TestNGCucumberRunner;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.net.URI;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 
 @CucumberOptions(
         features = "src/test/resources/features/",
@@ -40,64 +44,148 @@ import java.util.Map;
         },
         monochrome = true
 )
+
 public class ParallelTestRunner {
 
-    private static final Logger logger = LogManager.getLogger(ParallelTestRunner.class);
+    private static final Logger logger =
+            LogManager.getLogger(ParallelTestRunner.class);
 
     private TestNGCucumberRunner testNGCucumberRunner;
 
     @BeforeClass(alwaysRun = true)
     public void setUpClass() {
-        testNGCucumberRunner = new TestNGCucumberRunner(this.getClass());
+        testNGCucumberRunner =
+                new TestNGCucumberRunner(this.getClass());
     }
 
+    @Test(
+            groups = "cucumber",
+            description = "Runs Cucumber Feature",
+            dataProvider = "features"
+    )
+    public void runFeature(
+            List<Object[]> scenarios
+    ) throws Throwable {
 
-    @Test(groups = "cucumber", description = "Runs Cucumber Feature", dataProvider = "features")
-    public void runFeature(List<Object[]> scenarios) throws Throwable {
         Throwable firstFailure = null;
+
         for (Object[] row : scenarios) {
-            PickleWrapper pickle = (PickleWrapper) row[0];
+
+            PickleWrapper pickle =
+                    (PickleWrapper) row[0];
+
             try {
-                testNGCucumberRunner.runScenario(pickle.getPickle());
+
+                testNGCucumberRunner.runScenario(
+                        pickle.getPickle()
+                );
+
             } catch (Throwable t) {
+
                 if (firstFailure == null) {
                     firstFailure = t;
                 }
+
             }
+
         }
+
         if (firstFailure != null) {
             throw firstFailure;
         }
     }
 
-
     @DataProvider(parallel = true)
     public Object[][] features() {
-        Object[][] allScenarios = testNGCucumberRunner.provideScenarios();
 
-        Map<URI, List<Object[]>> byFeature = new LinkedHashMap<>();
+        Object[][] allScenarios =
+                testNGCucumberRunner.provideScenarios();
+
+        // Preserve feature execution order
+        Arrays.sort(
+                allScenarios,
+
+                Comparator.comparing(
+                        row ->
+                                ((PickleWrapper) row[0])
+                                        .getPickle()
+                                        .getUri()
+                                        .toString()
+                )
+        );
+
+        Map<URI, List<Object[]>> byFeature =
+                new LinkedHashMap<>();
+
         for (Object[] row : allScenarios) {
-            PickleWrapper pickle = (PickleWrapper) row[0];
-            URI uri = pickle.getPickle().getUri();
-            byFeature.computeIfAbsent(uri, k -> new ArrayList<>()).add(row);
+
+            PickleWrapper pickle =
+                    (PickleWrapper) row[0];
+
+            URI uri =
+                    pickle.getPickle()
+                            .getUri();
+
+            byFeature
+                    .computeIfAbsent(
+                            uri,
+                            k -> new ArrayList<>()
+                    )
+                    .add(row);
+
         }
 
-        logger.info("Parallel execution: {} feature(s) discovered, each will run on a single thread",
-                byFeature.size());
+        logger.info(
+                "Parallel execution: {} feature(s) discovered",
+                byFeature.size()
+        );
 
-        Object[][] result = new Object[byFeature.size()][];
+        Object[][] result =
+                new Object[byFeature.size()][];
+
         int i = 0;
-        for (Map.Entry<URI, List<Object[]>> entry : byFeature.entrySet()) {
-            String featureName = entry.getKey().toString();
-            featureName = featureName.substring(featureName.lastIndexOf('/') + 1);
-            logger.debug("Feature slot {}: {} ({} scenario(s))", i, featureName, entry.getValue().size());
-            result[i++] = new Object[]{entry.getValue()};
+
+        for (
+                Map.Entry<
+                        URI,
+                        List<Object[]>
+                        > entry
+                :
+                byFeature.entrySet()
+        ) {
+
+            String featureName =
+                    entry.getKey()
+                            .toString();
+
+            featureName =
+                    featureName.substring(
+                            featureName.lastIndexOf('/')
+                                    + 1
+                    );
+
+            logger.debug(
+                    "Feature slot {}: {} ({} scenario(s))",
+                    i,
+                    featureName,
+                    entry.getValue().size()
+            );
+
+            result[i++] =
+                    new Object[]{
+                            entry.getValue()
+                    };
+
         }
+
         return result;
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDownClass() {
+
         testNGCucumberRunner.finish();
+
     }
+
 }

@@ -170,19 +170,39 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.5.4</version>
-				<configuration>
-					<suiteXmlFiles>
-						<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
-					</suiteXmlFiles>
-					<systemPropertyVariables>
-						<ci.mode>${ci.mode}</ci.mode>
-					</systemPropertyVariables>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+
+                <artifactId>
+                    maven-surefire-plugin
+                </artifactId>
+
+                <version>3.5.4</version>
+
+                <configuration>
+
+                    <suiteXmlFiles>
+                        <suiteXmlFile>
+                            ${suiteXmlFile}
+                        </suiteXmlFile>
+                    </suiteXmlFiles>
+
+                    <systemPropertyVariables>
+                        <ci.mode>${ci.mode}</ci.mode>
+                    </systemPropertyVariables>
+
+                    <!-- preserve feature order -->
+                    <runOrder>filesystem</runOrder>
+
+                    <!-- disable extra JVM scheduling -->
+                    <forkCount>1</forkCount>
+
+                    <!-- avoid reshuffling -->
+                    <reuseForks>false</reuseForks>
+
+                </configuration>
+
+            </plugin>
 
 			<!-- Fix Cucumber HTML Report after test execution -->
 			<!-- Note: Run manually with: python3 fix-cucumber-html-report.py
