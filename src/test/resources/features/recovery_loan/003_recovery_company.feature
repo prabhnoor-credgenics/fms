@@ -407,10 +407,7 @@ Feature: Recovery Company API and Company Creation Flow
         "company_id": "{COMPANY_ID}",
         "is_amount_bifurcation_enabled": true,
         "amount_bifurcation_modules": [
-          {
-            "module_name": "payment",
-            "is_enabled": true
-          }
+          "payment"
         ]
       }
       """
@@ -431,18 +428,8 @@ Feature: Recovery Company API and Company Creation Flow
         "company_id": "{COMPANY_ID}",
         "is_amount_bifurcation_enabled": true,
         "amount_bifurcation_modules": [
-          {
-            "module_name": "payment",
-            "is_enabled": true
-          },
-          {
-            "module_name": "fos",
-            "is_enabled": true
-          },
-          {
-            "module_name": "settlement",
-            "is_enabled": false
-          }
+
+            "module_name": "payment","fos","settlement"
         ]
       }
       """
@@ -519,11 +506,7 @@ Feature: Recovery Company API and Company Creation Flow
       {
         "company_id": "{COMPANY_ID}",
         "is_amount_bifurcation_enabled": true,
-        "amount_bifurcation_modules": [
-          {
-            "module_name": "invalid_module",
-            "is_enabled": true
-          }
+        "amount_bifurcation_modules": [invalid_module"
         ]
       }
       """
@@ -578,11 +561,7 @@ Feature: Recovery Company API and Company Creation Flow
       {
         "company_id": "{COMPANY_ID}",
         "is_amount_bifurcation_enabled": true,
-        "amount_bifurcation_modules": [
-          {
-            "module_name": "fos",
-            "is_enabled": true
-          }
+        "amount_bifurcation_modules": ["fos"
         ]
       }
       """
@@ -602,11 +581,7 @@ Feature: Recovery Company API and Company Creation Flow
       {
         "company_id": "{COMPANY_ID}",
         "is_amount_bifurcation_enabled": true,
-        "amount_bifurcation_modules": [
-          {
-            "module_name": "settlement",
-            "is_enabled": true
-          }
+        "amount_bifurcation_modules":  "settlement"
         ]
       }
       """
@@ -626,18 +601,7 @@ Feature: Recovery Company API and Company Creation Flow
       {
         "company_id": "{COMPANY_ID}",
         "is_amount_bifurcation_enabled": true,
-        "amount_bifurcation_modules": [
-          {
-            "module_name": "payment",
-            "is_enabled": false
-          },
-          {
-            "module_name": "fos",
-            "is_enabled": false
-          },
-          {
-            "module_name": "settlement",
-            "is_enabled": false
+        "amount_bifurcation_modules": ["payment","fos","settlement"
           }
         ]
       }
@@ -677,15 +641,7 @@ Feature: Recovery Company API and Company Creation Flow
       {
         "company_id": "{COMPANY_ID}",
         "is_amount_bifurcation_enabled": true,
-        "amount_bifurcation_modules": [
-          {
-            "module_name": "payment",
-            "is_enabled": true
-          },
-          {
-            "module_name": "payment",
-            "is_enabled": false
-          }
+        "amount_bifurcation_modules": ["payment","payment"
         ]
       }
       """
@@ -705,11 +661,7 @@ Feature: Recovery Company API and Company Creation Flow
       {
         "company_id": "{COMPANY_ID}",
         "is_amount_bifurcation_enabled": true,
-        "amount_bifurcation_modules": [
-          {
-            "module_name": null,
-            "is_enabled": true
-          }
+        "amount_bifurcation_modules": [null
         ]
       }
       """
@@ -729,11 +681,7 @@ Feature: Recovery Company API and Company Creation Flow
       {
         "company_id": "{COMPANY_ID}",
         "is_amount_bifurcation_enabled": false,
-        "amount_bifurcation_modules": [
-          {
-            "module_name": "payment",
-            "is_enabled": true
-          }
+        "amount_bifurcation_modules": ["payment"
         ]
       }
       """

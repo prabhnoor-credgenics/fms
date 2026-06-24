@@ -18,7 +18,7 @@ import java.util.Map;
 
 
 @CucumberOptions(
-        features = "src/test/resources/features/recovery_loan/",
+        features = "src/test/resources/features/",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -38,8 +38,7 @@ import java.util.Map;
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
                 "rerun:rerun/failedparallelrerun.txt"
         },
-        monochrome = true,
-        tags = "not @500"
+        monochrome = true
 )
 public class ParallelTestRunner {
 

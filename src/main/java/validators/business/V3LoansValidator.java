@@ -39,9 +39,12 @@ public class V3LoansValidator {
 
     public void validateLoanPresent(Response response, String loanId) {
         validateSuccessEnvelope(response);
+        logger.info("response is this and this is done",response);
+        logger.info("response is this and this is done",response.jsonPath().getMap("data.variable_data") );
         Map<String, Object> variableData = response.jsonPath().getMap("data.variable_data");
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertTrue(
+
                 variableData != null && variableData.containsKey(loanId),
                 "data.variable_data should contain an entry for loan id: " + loanId
         );

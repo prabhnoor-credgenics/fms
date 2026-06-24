@@ -39,7 +39,7 @@ Feature: V3 Loan Details API
     And the v3 loan success envelope should be valid
     And the response body should contain field "data.variable_data"
 
-  @positive @creator
+  @positive @creator @test12345
   Scenario: GET loan details returns variable_data keyed by the requested loan id
  
     Given I authenticate as "creator" slot 0 and remember as "creator0"

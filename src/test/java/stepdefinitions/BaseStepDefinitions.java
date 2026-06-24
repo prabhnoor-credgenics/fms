@@ -22,6 +22,7 @@ public abstract class BaseStepDefinitions {
     }
 
     protected Response activeResponse() {
+
         return ResponseHelper.resolve(null, testContext);
     }
 }
