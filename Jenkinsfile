@@ -11,36 +11,14 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git(
-                    url: 'https://github.com/credgenics/cg-api-automation.git',
-                    branch: 'main'
-                )
-            }
-        }
-
-        stage('Build') {
-            steps {
-                sh 'mvn clean compile'
+                git branch: 'new_recovery',
+                    url: 'https://github.com/credgenics/cg-api-automation.git'
             }
         }
 
         stage('Execute Tests') {
             steps {
-                sh '''
-                mvn clean test
-                '''
-            }
-        }
-
-        stage('Publish Report') {
-            steps {
-
-                publishHTML([
-                    reportDir: 'target/cucumber-reports',
-                    reportFiles: 'overview-features.html',
-                    reportName: 'Automation Report'
-                ])
-
+                sh 'mvn clean test'
             }
         }
 
@@ -51,13 +29,27 @@ pipeline {
         always {
 
             junit(
-                testResults:
-                'target/surefire-reports/*.xml'
+                allowEmptyResults: true,
+                testResults: 'target/surefire-reports/*.xml'
             )
 
-            archiveArtifacts(
-                artifacts: 'target/**/*'
-            )
+            publishHTML(target: [
+                reportDir: 'TestReports',
+                reportFiles: '**/SparkReport/Spark.html',
+                reportName: 'Extent Spark Report',
+                keepAll: true,
+                alwaysLinkToLastBuild: true,
+                allowMissing: true
+            ])
+
+            publishHTML(target: [
+                reportDir: 'TestReports',
+                reportFiles: '**/HtmlReport/ExtentReport.html',
+                reportName: 'Extent HTML Report',
+                keepAll: true,
+                alwaysLinkToLastBuild: true,
+                allowMissing: true
+            ])
         }
 
     }
