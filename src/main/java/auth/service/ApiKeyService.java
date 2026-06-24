@@ -21,8 +21,8 @@ public class ApiKeyService {
     }
 
     public void generateSingleCompanyApiKey(Environment env) {
-        String clientId = configReader.getProperty("prod.client.id");
-        String clientSecret = configReader.getProperty("prod.client.secret");
+        String clientId = configReader.getProperty("prod_client_id");
+        String clientSecret = configReader.getProperty("prod_client_secret");
         String baseUrl = configReader.getBaseUrl();
         String requestBody = """
                 {
@@ -61,7 +61,7 @@ public class ApiKeyService {
     }
 
     public void loadMultiCompanyApiKey(Environment env) {
-        String apiKey = configReader.getCryptoProperty(env.name().toLowerCase() + ".api.key");
+        String apiKey = configReader.getCryptoProperty(env.name().toLowerCase() + "_api_key");
         testContext.setAuthToken(apiKey);
 
         String companyIdKey = env.name().toLowerCase() + ".api.key.global.company.id";

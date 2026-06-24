@@ -9,6 +9,30 @@ pipeline {
 
     stages {
 
+    stage('Prepare Secrets') {
+
+                steps {
+
+                    withCredentials([
+                        string(
+                            credentialsId: 'crypto-properties',
+                            variable: 'CRYPTO_FILE'
+                        )
+                    ]) {
+
+                        sh '''
+                        mkdir -p src/main/resources/secrets
+
+                        cat <<EOF > src/main/resources/secrets/crypto.properties
+                        $CRYPTO_FILE
+                        EOF
+                        '''
+                    }
+
+                }
+
+            }
+
         stage('Checkout') {
             steps {
                     checkout scm

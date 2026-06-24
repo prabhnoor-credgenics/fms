@@ -101,7 +101,7 @@ public class ConfigReader {
 
 
     private String resolvePublicKey(Environment env) {
-        String envKey = env.getValue() + ".public.key";
+        String envKey = env.getValue() + "_public_key";
         String publicKey = cryptoProperties.getProperty(envKey);
 
         if (isBlank(publicKey)) {
@@ -110,9 +110,9 @@ public class ConfigReader {
         }
 
         if (isBlank(publicKey) && (env == Environment.STAG || env == Environment.UAT)) {
-            publicKey = cryptoProperties.getProperty("dev.public.key");
+            publicKey = cryptoProperties.getProperty("dev_public_key");
             if (!isBlank(publicKey)) {
-                logger.warn("{}.public.key not found; using dev.public.key for {}", envKey, env.name());
+                logger.warn("{} not found; using dev_public_key for {}", envKey, env.name());
             }
         }
 
@@ -120,7 +120,7 @@ public class ConfigReader {
             throw new RuntimeException(
                     "RSA public key not found for environment " + env.name()
                             + ". Add '" + envKey + "' to src/main/resources/secrets/crypto.properties "
-                            + "(see dev.public.key / prod.public.key)."
+                            + "(see dev_public_key / prod_public_key)."
             );
         }
         return publicKey.trim();
@@ -133,9 +133,9 @@ public class ConfigReader {
     public String getDbUrl() {
         Environment env = getEnvironment();
         String dbUrlKey = switch (env) {
-            case PROD -> "prod.recovery.db.url";
-            case STAG -> "stag.recovery.db.url";
-            default -> "dev.recovery.db.url";
+            case PROD -> "prod_recovery_db_url";
+            case STAG -> "stag_recovery_db_url";
+            default -> "dev_recovery_db_url";
         };
         String dbURL = getCryptoProperty(dbUrlKey);
         logger.info("Using DB URL for environment {}", env.name());
@@ -145,9 +145,9 @@ public class ConfigReader {
     public String getDbUsername() {
         Environment env = getEnvironment();
         String dbUsernameKey = switch (env) {
-            case PROD -> "prod.recovery.db.username";
-            case STAG -> "stag.recovery.db.username";
-            default -> "dev.recovery.db.username";
+            case PROD -> "prod_recovery_db_username";
+            case STAG -> "stag_recovery_db_username";
+            default -> "dev_recovery_db_username";
         };
         return getCryptoProperty(dbUsernameKey);
     }
@@ -155,9 +155,9 @@ public class ConfigReader {
     public String getDbPassword() {
         Environment env = getEnvironment();
         String dbPasswordKey = switch (env) {
-            case PROD -> "prod.recovery.db.password";
-            case STAG -> "stag.recovery.db.password";
-            default -> "dev.recovery.db.password";
+            case PROD -> "prod_recovery_db_password";
+            case STAG -> "stag_recovery_db_password";
+            default -> "dev_recovery_db_password";
         };
         return getCryptoProperty(dbPasswordKey);
     }
