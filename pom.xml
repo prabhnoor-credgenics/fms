@@ -20,26 +20,17 @@
 
     <properties>
 
-        <project.build.sourceEncoding>
-            UTF-8
-        </project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <maven.compiler.release>
-            21
-        </maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
 
-        <suiteXmlFile>
-            testng.xml
-        </suiteXmlFile>
+        <suiteXmlFile>testng.xml</suiteXmlFile>
 
-        <ci.mode>
-            false
-        </ci.mode>
+        <ci.mode>false</ci.mode>
 
-        <!-- default parallel thread count -->
-        <threadCount>
-            10
-        </threadCount>
+        <threadCount>10</threadCount>
+
+        <cucumber.filter.tags></cucumber.filter.tags>
 
     </properties>
 
@@ -90,7 +81,6 @@
             <version>7.33.0</version>
         </dependency>
 
-        <!-- HTML Report -->
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-html</artifactId>
@@ -165,9 +155,7 @@
 
             <plugin>
 
-                <groupId>
-                    org.apache.maven.plugins
-                </groupId>
+                <groupId>org.apache.maven.plugins</groupId>
 
                 <artifactId>
                     maven-compiler-plugin
@@ -179,9 +167,7 @@
 
                 <configuration>
 
-                    <release>
-                        21
-                    </release>
+                    <release>21</release>
 
                 </configuration>
 
@@ -221,6 +207,10 @@
                             ${threadCount}
                         </threadCount>
 
+                        <cucumber.filter.tags>
+                            ${cucumber.filter.tags}
+                        </cucumber.filter.tags>
+
                     </systemPropertyVariables>
 
                     <runOrder>
@@ -247,9 +237,7 @@
 
         <profile>
 
-            <id>
-                parallel
-            </id>
+            <id>parallel</id>
 
             <properties>
 
@@ -263,15 +251,11 @@
 
         <profile>
 
-            <id>
-                ci
-            </id>
+            <id>ci</id>
 
             <properties>
 
-                <ci.mode>
-                    true
-                </ci.mode>
+                <ci.mode>true</ci.mode>
 
             </properties>
 
@@ -279,9 +263,7 @@
 
         <profile>
 
-            <id>
-                parallel-ci
-            </id>
+            <id>parallel-ci</id>
 
             <properties>
 
@@ -289,9 +271,7 @@
                     testng-parallel.xml
                 </suiteXmlFile>
 
-                <ci.mode>
-                    true
-                </ci.mode>
+                <ci.mode>true</ci.mode>
 
             </properties>
 
