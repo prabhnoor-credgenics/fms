@@ -17,26 +17,26 @@ pipeline {
 
 
 
-            stage('Create Secrets File') {
+            stage('Prepare Secrets') {
 
                 steps {
 
                     withCredentials([
-                        string(
+                        file(
                             credentialsId: 'crypto-properties',
-                            variable: 'CRYPTO_CONTENT'
+                            variable: 'CRYPTO_FILE'
                         )
                     ]) {
 
                         sh '''
                         mkdir -p src/main/resources/secrets
 
-                        cat > src/main/resources/secrets/crypto.properties <<EOF
-            $CRYPTO_CONTENT
-            EOF
+                        cp "$CRYPTO_FILE" \
+                        src/main/resources/secrets/crypto.properties
 
-                        echo "crypto.properties created"
+                        echo "crypto.properties copied"
                         '''
+
                     }
 
                 }
