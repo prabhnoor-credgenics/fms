@@ -1,235 +1,302 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="
+         http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<groupId>com.organization</groupId>
-	<artifactId>cg-api-framework</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <modelVersion>4.0.0</modelVersion>
 
-	<name>API Test Framework</name>
-	<description>RestAssured TestNG Cucumber Hybrid Framework for API Testing</description>
+    <groupId>com.organization</groupId>
+    <artifactId>cg-api-framework</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.release>21</maven.compiler.release>
-		<suiteXmlFile>testng.xml</suiteXmlFile>
-		<ci.mode>false</ci.mode>
-	</properties>
+    <name>API Test Framework</name>
 
-	<dependencies>
-		<!-- RestAssured -->
-		<!-- Source:
-		https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>6.0.0</version>
-		</dependency>
+    <description>
+        RestAssured TestNG Cucumber Hybrid Framework for API Testing
+    </description>
 
-		<!-- JSON Processing -->
-		<!-- Source:
-		https://mvnrepository.com/artifact/io.rest-assured/json-path -->
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>json-path</artifactId>
-			<version>6.0.0</version>
-		</dependency>
+    <properties>
 
-		<!-- Source:
-		https://mvnrepository.com/artifact/io.rest-assured/json-schema-validator -->
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>json-schema-validator</artifactId>
-			<version>6.0.0</version>
-		</dependency>
+        <project.build.sourceEncoding>
+            UTF-8
+        </project.build.sourceEncoding>
 
-		<!-- TestNG -->
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>7.11.0</version>
-		</dependency>
+        <maven.compiler.release>
+            21
+        </maven.compiler.release>
 
-		<!-- Cucumber -->
-		<!-- Source:
-		https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-java</artifactId>
-			<version>7.33.0</version>
-		</dependency>
+        <suiteXmlFile>
+            testng.xml
+        </suiteXmlFile>
 
-		<!-- Source:
-		https://mvnrepository.com/artifact/io.cucumber/cucumber-testng -->
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-testng</artifactId>
-			<version>7.33.0</version>
-		</dependency>
+        <ci.mode>
+            false
+        </ci.mode>
 
-		<!-- Source:
-		https://mvnrepository.com/artifact/io.cucumber/cucumber-picocontainer -->
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-picocontainer</artifactId>
-			<version>7.33.0</version>
-			<scope>compile</scope>
-		</dependency>
+        <!-- default parallel thread count -->
+        <threadCount>
+            10
+        </threadCount>
 
-		<!-- Cucumber HTML Formatter - Required for proper HTML report
-		generation -->
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-html</artifactId>
-			<version>0.2.7</version>
-		</dependency>
+    </properties>
 
-		<!-- Hamcrest -->
-		<!-- Source: https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
-		<dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest</artifactId>
-			<version>3.0</version>
-		</dependency>
+    <dependencies>
 
-		<!-- Logging -->
-		<!-- Source:
-		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.25.4</version>
-		</dependency>
+        <!-- RestAssured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>6.0.0</version>
+        </dependency>
 
-		<!-- Source:
-		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.25.3</version>
-		</dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-path</artifactId>
+            <version>6.0.0</version>
+        </dependency>
 
-		<!-- ExtentReports core -->
-		<dependency>
-			<groupId>com.aventstack</groupId>
-			<artifactId>extentreports</artifactId>
-			<version>5.0.9</version>
-		</dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>6.0.0</version>
+        </dependency>
 
-		<!-- Cucumber 7 adapter -->
-		<dependency>
-			<groupId>tech.grasshopper</groupId>
-			<artifactId>extentreports-cucumber7-adapter</artifactId>
-			<version>1.14.0</version>
-		</dependency>
+        <!-- TestNG -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.11.0</version>
+        </dependency>
 
-		<!-- SLF4J binding for Log4j2 -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-slf4j2-impl</artifactId>
-			<version>2.25.3</version>
-		</dependency>
-		<!-- Jackson for JSON -->
-		<!-- Source:
-		https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.21.0</version>
-		</dependency>
+        <!-- Cucumber -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.33.0</version>
+        </dependency>
 
-		<!-- SLF4J -->
-		<!-- Source: https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>2.0.17</version>
-		</dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>7.33.0</version>
+        </dependency>
 
-		<!-- PostgreSQL JDBC (DbClient) -->
-		<!-- Source:
-		https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.7.11</version>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>7.33.0</version>
+        </dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.14.1</version>
-				<configuration>
-					<release>21</release>
-				</configuration>
-			</plugin>
+        <!-- HTML Report -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-html</artifactId>
+            <version>0.2.7</version>
+        </dependency>
+
+        <!-- Hamcrest -->
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>3.0</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.25.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.25.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j2-impl</artifactId>
+            <version>2.25.3</version>
+        </dependency>
+
+        <!-- Extent -->
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>5.0.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>tech.grasshopper</groupId>
+            <artifactId>extentreports-cucumber7-adapter</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+
+        <!-- Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.21.0</version>
+        </dependency>
+
+        <!-- SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.17</version>
+        </dependency>
+
+        <!-- PostgreSQL -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.11</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <plugins>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
+
+                <groupId>
+                    org.apache.maven.plugins
+                </groupId>
 
                 <artifactId>
-                    maven-surefire-plugin
+                    maven-compiler-plugin
                 </artifactId>
 
-                <version>3.5.4</version>
+                <version>
+                    3.14.1
+                </version>
 
                 <configuration>
 
-                    <suiteXmlFiles>
-                        <suiteXmlFile>
-                            ${suiteXmlFile}
-                        </suiteXmlFile>
-                    </suiteXmlFiles>
-
-                    <systemPropertyVariables>
-                        <ci.mode>${ci.mode}</ci.mode>
-                    </systemPropertyVariables>
-
-                    <!-- preserve feature order -->
-                    <runOrder>filesystem</runOrder>
-
-                    <!-- disable extra JVM scheduling -->
-                    <forkCount>1</forkCount>
-
-                    <!-- avoid reshuffling -->
-                    <reuseForks>false</reuseForks>
+                    <release>
+                        21
+                    </release>
 
                 </configuration>
 
             </plugin>
 
-			<!-- Fix Cucumber HTML Report after test execution -->
-			<!-- Note: Run manually with: python3 fix-cucumber-html-report.py
-			target/cucumber-reports/cucumber.html -->
-			<!-- Or add to your CI/CD pipeline as a post-test step -->
-		</plugins>
-	</build>
+            <plugin>
 
-	<profiles>
-		<profile>
-			<id>parallel</id>
-			<properties>
-				<suiteXmlFile>testng-parallel.xml</suiteXmlFile>
-			</properties>
-		</profile>
-		<profile>
-			<id>ci</id>
-			<properties>
-				<ci.mode>true</ci.mode>
-			</properties>
-		</profile>
-		<profile>
-			<id>parallel-ci</id>
-			<properties>
-				<suiteXmlFile>testng-parallel.xml</suiteXmlFile>
-				<ci.mode>true</ci.mode>
-			</properties>
-		</profile>
-	</profiles>
+                <groupId>
+                    org.apache.maven.plugins
+                </groupId>
+
+                <artifactId>
+                    maven-surefire-plugin
+                </artifactId>
+
+                <version>
+                    3.5.4
+                </version>
+
+                <configuration>
+
+                    <suiteXmlFiles>
+
+                        <suiteXmlFile>
+                            ${suiteXmlFile}
+                        </suiteXmlFile>
+
+                    </suiteXmlFiles>
+
+                    <systemPropertyVariables>
+
+                        <ci.mode>
+                            ${ci.mode}
+                        </ci.mode>
+
+                        <threadCount>
+                            ${threadCount}
+                        </threadCount>
+
+                    </systemPropertyVariables>
+
+                    <runOrder>
+                        filesystem
+                    </runOrder>
+
+                    <forkCount>
+                        1
+                    </forkCount>
+
+                    <reuseForks>
+                        false
+                    </reuseForks>
+
+                </configuration>
+
+            </plugin>
+
+        </plugins>
+
+    </build>
+
+    <profiles>
+
+        <profile>
+
+            <id>
+                parallel
+            </id>
+
+            <properties>
+
+                <suiteXmlFile>
+                    testng-parallel.xml
+                </suiteXmlFile>
+
+            </properties>
+
+        </profile>
+
+        <profile>
+
+            <id>
+                ci
+            </id>
+
+            <properties>
+
+                <ci.mode>
+                    true
+                </ci.mode>
+
+            </properties>
+
+        </profile>
+
+        <profile>
+
+            <id>
+                parallel-ci
+            </id>
+
+            <properties>
+
+                <suiteXmlFile>
+                    testng-parallel.xml
+                </suiteXmlFile>
+
+                <ci.mode>
+                    true
+                </ci.mode>
+
+            </properties>
+
+        </profile>
+
+    </profiles>
+
 </project>

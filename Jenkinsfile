@@ -4,7 +4,6 @@ pipeline {
 
     tools {
         maven 'Maven3'
-        jdk 'JDK17'
     }
 
     parameters {
@@ -12,7 +11,7 @@ pipeline {
         string(
             name: 'BRANCH',
             defaultValue: 'main',
-            description: 'Enter branch name'
+            description: 'Git branch to execute'
         )
 
         choice(
@@ -23,7 +22,7 @@ pipeline {
                 'uat',
                 'prod'
             ],
-            description: 'Select environment'
+            description: 'Execution environment'
         )
 
         choice(
@@ -32,7 +31,19 @@ pipeline {
                 'sequential',
                 'parallel'
             ],
-            description: 'Select execution mode'
+            description: 'Sequential or Parallel'
+        )
+
+        string(
+            name: 'THREAD_COUNT',
+            defaultValue: '10',
+            description: 'Used only for parallel execution'
+        )
+
+        string(
+            name: 'CUCUMBER_TAGS',
+            defaultValue: '',
+            description: 'Example: @regression and not @other-pod'
         )
 
     }
@@ -47,14 +58,11 @@ pipeline {
                     $class: 'GitSCM',
 
                     branches: [[
-                        name:
-                        "*/${params.BRANCH}"
+                        name: "*/${params.BRANCH}"
                     ]],
 
                     userRemoteConfigs: [[
-                        url:
-                        'git@github.com:credgenics/cg-api-automation.git',
-
+                        url: 'git@github.com:credgenics/cg-api-automation.git',
                         credentialsId:
                         'ca53bb45-e65c-433a-b0d3-60ab83c1b41a'
                     ]]
@@ -69,6 +77,7 @@ pipeline {
             steps {
 
                 withCredentials([
+
                     file(
                         credentialsId:
                         'crypto-properties',
@@ -76,6 +85,7 @@ pipeline {
                         variable:
                         'CRYPTO_FILE'
                     )
+
                 ]) {
 
                     sh '''
@@ -83,8 +93,6 @@ pipeline {
 
                     cp "$CRYPTO_FILE" \
                     src/main/resources/secrets/crypto.properties
-
-                    echo "crypto.properties copied"
                     '''
 
                 }
@@ -101,9 +109,8 @@ pipeline {
                 sed -i.bak \
                 's/^environment=.*/environment=${params.ENVIRONMENT}/' \
                 src/main/resources/global.properties
-
-                echo "Environment set to ${params.ENVIRONMENT}"
                 """
+
             }
 
         }
@@ -114,25 +121,38 @@ pipeline {
 
                 script {
 
+                    def tagCommand = ""
+
+                    if (
+                        params.CUCUMBER_TAGS?.trim()
+                    ) {
+
+                        tagCommand =
+                        "-Dcucumber.filter.tags='${params.CUCUMBER_TAGS}'"
+
+                    }
+
                     if (
                         params.EXECUTION_MODE
                         ==
                         'parallel'
                     ) {
 
-                        echo 'Running Parallel Execution'
+                        sh """
+                        mvn clean test \
+                        -Pparallel \
+                        -DthreadCount=${params.THREAD_COUNT} \
+                        ${tagCommand}
+                        """
 
-                        sh '''
-                        mvn clean test -Pparallel
-                        '''
+                    }
 
-                    } else {
+                    else {
 
-                        echo 'Running Sequential Execution'
-
-                        sh '''
-                        mvn clean test
-                        '''
+                        sh """
+                        mvn clean test \
+                        ${tagCommand}
+                        """
 
                     }
 
@@ -165,12 +185,14 @@ pipeline {
                 reportName:
                 'Extent Spark Report',
 
-                keepAll: true,
+                keepAll:
+                true,
 
-                alwaysLinkToLastBuild: true,
+                alwaysLinkToLastBuild:
+                true,
 
-                allowMissing: true
-
+                allowMissing:
+                true
             ])
 
             publishHTML(target: [
@@ -184,35 +206,25 @@ pipeline {
                 reportName:
                 'Extent HTML Report',
 
-                keepAll: true,
+                keepAll:
+                true,
 
-                alwaysLinkToLastBuild: true,
+                alwaysLinkToLastBuild:
+                true,
 
-                allowMissing: true
-
+                allowMissing:
+                true
             ])
 
             archiveArtifacts(
+
                 artifacts:
                 'TestReports/**/*',
-                allowEmptyArchive: true
+
+                allowEmptyArchive:
+                true
+
             )
-
-        }
-
-        success {
-
-            echo '''
-            Build Completed Successfully
-            '''
-
-        }
-
-        failure {
-
-            echo '''
-            Build Failed
-            '''
 
         }
 
