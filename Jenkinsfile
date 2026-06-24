@@ -9,23 +9,33 @@ pipeline {
 
     stages {
 
-    stage('Prepare Secrets') {
+    stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+
+
+            stage('Create Secrets File') {
 
                 steps {
 
                     withCredentials([
                         string(
                             credentialsId: 'crypto-properties',
-                            variable: 'CRYPTO_FILE'
+                            variable: 'CRYPTO_CONTENT'
                         )
                     ]) {
 
                         sh '''
                         mkdir -p src/main/resources/secrets
 
-                        cat <<EOF > src/main/resources/secrets/crypto.properties
-                        $CRYPTO_FILE
-                        EOF
+                        cat > src/main/resources/secrets/crypto.properties <<EOF
+            $CRYPTO_CONTENT
+            EOF
+
+                        echo "crypto.properties created"
                         '''
                     }
 
@@ -33,10 +43,16 @@ pipeline {
 
             }
 
-        stage('Checkout') {
+        stage('Verify Secret Keys') {
             steps {
-                    checkout scm
-                }
+
+                sh '''
+                grep "stag_public_key" \
+                src/main/resources/secrets/crypto.properties \
+                && echo "STAG KEY FOUND"
+                '''
+
+            }
         }
 
         stage('Execute Tests') {
