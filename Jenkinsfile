@@ -11,9 +11,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git branch: 'new_recovery',
-                    url: 'https://github.com/credgenics/cg-api-automation.git'
-            }
+                    checkout scm
+                }
         }
 
         stage('Execute Tests') {
