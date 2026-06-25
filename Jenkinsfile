@@ -127,10 +127,10 @@ pipeline {
                         params.CUCUMBER_TAGS?.trim()
                     ) {
 
-                        tagCommand =
-                        "-Dcucumber.filter.tags='${params.CUCUMBER_TAGS}'"
+                          TAG_ARG =
+                          "-Dcucumber.filter.tags=${params.CUCUMBER_TAGS}"
 
-                    }
+                      }
 
                     if (
                         params.EXECUTION_MODE
