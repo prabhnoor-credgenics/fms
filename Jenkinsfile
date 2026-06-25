@@ -10,7 +10,7 @@ pipeline {
 
         string(
             name: 'BRANCH',
-            defaultValue: 'main',
+            defaultValue: 'new_recovery',
             description: 'Git branch to execute'
         )
 
@@ -22,6 +22,7 @@ pipeline {
                 'uat',
                 'prod'
             ],
+            defaultValue: 'stag',
             description: 'Execution environment'
         )
 
