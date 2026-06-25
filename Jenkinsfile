@@ -123,20 +123,14 @@ pipeline {
 
                     def tagCommand = ""
 
-                    if (
-                        params.CUCUMBER_TAGS?.trim()
-                    ) {
+                    if (params.CUCUMBER_TAGS?.trim()) {
 
-                          TAG_ARG =
-                          "-Dcucumber.filter.tags=${params.CUCUMBER_TAGS}"
+                        tagCommand =
+                        "\"-Dcucumber.filter.tags=${params.CUCUMBER_TAGS}\""
 
-                      }
+                    }
 
-                    if (
-                        params.EXECUTION_MODE
-                        ==
-                        'parallel'
-                    ) {
+                    if (params.EXECUTION_MODE == 'parallel') {
 
                         sh """
                         mvn clean test \
@@ -145,9 +139,7 @@ pipeline {
                         ${tagCommand}
                         """
 
-                    }
-
-                    else {
+                    } else {
 
                         sh """
                         mvn clean test \
