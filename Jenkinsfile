@@ -17,12 +17,11 @@ pipeline {
         choice(
             name: 'ENVIRONMENT',
             choices: [
-                'dev',
                 'stag',
+                'dev',
                 'uat',
                 'prod'
             ],
-            defaultValue: 'stag',
             description: 'Execution environment'
         )
 
