@@ -6,7 +6,7 @@
   To change parallelism: edit data-provider-thread-count only.
   Run: mvn test -Pparallel
 -->
-<suite name="API Test Suite (Parallel)" data-provider-thread-count="${threadCount}">
+<suite name="API Test Suite (Parallel)" data-provider-thread-count="10">
     <test name="API Tests Parallel">
         <classes>
             <class name="runners.ParallelTestRunner"/>
