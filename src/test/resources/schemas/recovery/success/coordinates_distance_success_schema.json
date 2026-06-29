@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Coordinates Distance — POST Success Response",
+  "description": "Raw (dict, 200) for POST /recovery/coordinates/distance. {output, message}; output maps each loan_id -> distance_in_km (number) or null.",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": "object",
+      "description": "loan_id -> distance in km (number, rounded) or null when the loan's applicant coordinates are missing/invalid."
+    },
+    "message": {
+      "type": "string",
+      "enum": ["success"]
+    }
+  },
+  "additionalProperties": false
+}

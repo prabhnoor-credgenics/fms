@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanyUsersExportSuccessResponse",
+  "description": "Success envelope for POST {BASE_ROUTE}/company/users/export. Raw (dict, 200) tuple: {data, message}. `data` is an object ({s3_link} | {data:[...]} | {}) when uncompressed; for return_type=data the whole body is a JSON string.",
+  "type": ["object", "string"],
+  "required": ["data", "message"],
+  "properties": {
+    "data": { "type": ["object", "array", "string"] },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

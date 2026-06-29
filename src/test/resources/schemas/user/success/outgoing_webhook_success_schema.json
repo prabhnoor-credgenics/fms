@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OutgoingWebhookSuccessResponse",
+  "description": "Raw tuple for GET {BASE_ROUTE}/outgoing-webhook/. {message, data} where data is an object {webhook_details, payload_config?} when found or the literal [] when none.",
+  "type": "object",
+  "required": ["message", "data"],
+  "properties": {
+    "message": { "type": ["string", "null"] },
+    "data": { "type": ["object", "array"] }
+  },
+  "additionalProperties": true
+}

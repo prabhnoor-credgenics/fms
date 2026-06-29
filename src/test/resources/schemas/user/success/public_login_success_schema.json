@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PublicLoginSuccessResponse",
+  "description": "Raw (dict, 200) tuple for POST {BASE_ROUTE}/public/login. 2FA -> {data:{login_id, request_id}, message}; 1FA -> {data:{authentication_token,...}, message}.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": { "type": ["object", "null"] },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

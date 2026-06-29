@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserVariablesSuccessResponse",
+  "description": "Raw dict (200) for GET {BASE_ROUTE}/variables/. {data:{variables:[...]}, message}.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["variables"],
+      "properties": {
+        "variables": { "type": "array" }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

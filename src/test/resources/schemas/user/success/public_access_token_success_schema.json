@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PublicAccessTokenSuccessResponse",
+  "description": "Raw (dict, 200) tuple for POST {BASE_ROUTE}/public/access-token. {data:{api_key, client_id, expiry, company_details}, message}.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["api_key", "client_id", "expiry"],
+      "properties": {
+        "api_key": { "type": "string" },
+        "client_id": { "type": "string" },
+        "expiry": { "type": ["integer", "number"] },
+        "company_details": { "type": "array" }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

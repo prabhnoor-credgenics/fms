@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "User Allocated Loans — GET/POST Success Response",
+  "description": "Raw (dict, 200) for GET|POST /recovery/user/allocated-loans. {data:{loan_ids, complete_access}, message}.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["loan_ids", "complete_access"],
+      "properties": {
+        "loan_ids": { "type": "array" },
+        "complete_access": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}
