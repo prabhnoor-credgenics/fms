@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GlobalUsersListSuccessResponse",
+  "description": "Raw tuple for GET /user/global/users/ (list branch): {data:{total_count, users[]}, message}.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["users"],
+      "properties": {
+        "total_count": { "type": ["integer", "string", "null"] },
+        "users": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}
