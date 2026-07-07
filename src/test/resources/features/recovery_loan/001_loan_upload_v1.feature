@@ -24,7 +24,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
     And the response message should be "invalid authentication token"
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
-  @api-validation @negative @testapi @creator
+  @api-validation @negative  @creator
   Scenario: API should return 400 when authentication token is invalid
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I set the query parameters:

@@ -64,3 +64,8 @@ README.md
 !TestReports/.gitkeep
 TestReports/*
 /target/
+
+
+Jenkinsfile
+
+scripts/*
