@@ -1,0 +1,47 @@
+{
+  "User Management Module": {
+    "profiles": {
+      "levels": ["agency", "company"],
+      "meta_data": {
+        "description": "Ability to create and edit permission groups for all users in the user management section of settings",
+        "name": "Permission Group Management"
+      },
+      "write": true
+    },
+    "roles": {
+      "levels": ["agency", "company"],
+      "meta_data": {
+        "description": "Ability to create, edit and modify hierarchy of roles in the user management section of settings",
+        "name": "Roles Management"
+      },
+      "write": true
+    },
+    "users": {
+      "levels": ["agency", "company"],
+      "meta_data": {
+        "description": "Ability to create, edit and delete in the user management section of settings",
+        "name": "User Management"
+      },
+      "read": true,
+      "write": true
+    }
+  },
+  "Core Collection Modules": {
+    "export_loans": {
+      "levels": "company",
+      "meta_data": {
+        "description": "Ability to export loans from portfolio page for a given set of selected loans",
+        "name": "Loans Export"
+      },
+      "read": true
+    },
+    "loan_update": {
+      "levels": "company",
+      "meta_data": {
+        "description": "Ability to update loans in bulk on-to the platform through excel upload in data upload section",
+        "name": "Loan Update"
+      },
+      "write": true
+    }
+  }
+}

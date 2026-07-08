@@ -162,3 +162,56 @@ Feature: Verify User — GET /user/public/verify/user/
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 400
     And the response body should not be empty
+
+
+  @positive @e2e @lifecycle @chief-admin
+  Scenario: Full lifecycle — create role, create user with that role, set/reset password, login, verify by user_id
+    # Auth: creator creates the role + user; chief admin sets the password and does the verify lookup.
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+
+    # 1) Create a role (reporting to an existing role)
+    And I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    When I send a "GET" request to "/user/roles/"
+    Then the response status code should be 200
+    And I store response field "data.roles[0].role_id" as mapping id
+    And I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request body:
+      """
+      { "role_name": "lifecycleRole{RANDOM_STRING:8}", "reports_to_role_id": "{MAPPING_ID}" }
+      """
+    When I send a "POST" request to "/user/roles/"
+    Then the response status code should be 201
+    And I store response field "data.role_id" as variable id
+
+    # 2) Create a permission profile (POST /user/profiles) — this is the "permission" step; a profile is
+    # a permission group. The created profile_id is used for the new user below. Asserts 2xx internally.
+    When I create a permission profile
+
+    # 3) Create a company user assigned the created role + created profile (reports_to resolved from the
+    # creator). This step asserts 201 internally (the generic status step reads the prior response).
+    When I create a company user assigned the created role
+
+    # 4) Chief admin sets the new user's password, then 5) the user logs in (login asserts 200 internally)
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+    When I set the lifecycle user's password to "User@123" using the chief admin token
+    And I log in as the lifecycle user with password "User@123"
+
+    # 6) Change the password again (a different value), then log in with it
+    When I set the lifecycle user's password to "User@1234" using the chief admin token
+    And I log in as the lifecycle user with password "User@1234"
+
+    # 7) Verify the user's details via verify-user, looked up by user_id (admin token; asserts 200 internally)
+    When I verify the lifecycle user's details by user id
+    And the verify user success response should be valid

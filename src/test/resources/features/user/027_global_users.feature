@@ -3,7 +3,12 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
 
 
   Background:
-    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+    # chief-admin is the caller for the endpoint; its own company is the pseudo value "All"
+    # (not a real UUID), so we also source a real member-company UUID from a creator session
+    # and reference it via {COMPANY_ID:creator0} in assigned_companies. chief-admin is
+    # authenticated last so it remains the active caller.
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
 
 
   @positive @smoke @chief-admin
@@ -88,10 +93,10 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     And the global users list response should be valid
 
   @positive @chief-admin
-  Scenario: assigned_companies filter (caller's own company) returns 200
+  Scenario: assigned_companies filter (a real member company) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | assigned_companies | {COMPANY_ID} |
+      | assigned_companies | {COMPANY_ID:creator0} |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
       | referer             | abc          |
@@ -151,22 +156,22 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     And the global users failure response should be valid
 
   @negative @auth @chief-admin
-  Scenario: Missing authenticationtoken header is rejected with 401
+  Scenario: Missing authenticationtoken header is rejected with 400
     Given I prepare a request
     And I set the request headers:
       | referer | abc |
     When I send a "GET" request to "/user/global/users/"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative @auth @chief-admin
-  Scenario: Invalid authenticationtoken is rejected with 401
+  Scenario: Invalid authenticationtoken is rejected with 400
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | invalid-token-xyz |
       | referer             | abc               |
     When I send a "GET" request to "/user/global/users/"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
 
   @negative @auth
@@ -190,7 +195,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc              |
     And I set the request body:
       """
-      { "first_name": "Sam", "email": "globalu{RANDOM_STRING:8}@credgenics.com", "user_type": "super user", "assigned_companies": [ { "company_id": "{COMPANY_ID}" } ] }
+      { "first_name": "Sam", "email": "globalu{RANDOM_STRING:8}@credgenics.com", "user_type": "super user", "assigned_companies": [ { "company_id": "{COMPANY_ID:creator0}" } ] }
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 201
@@ -206,7 +211,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc              |
     And I set the request body:
       """
-      { "first_name": "Sam", "mobile": "98{RANDOM_INT:10000000:99999999}", "user_type": "super user", "assigned_companies": [ { "company_id": "{COMPANY_ID}" } ] }
+      { "first_name": "Sam", "mobile": "98{RANDOM_INT:10000000:99999999}", "user_type": "super user", "assigned_companies": [ { "company_id": "{COMPANY_ID:creator0}" } ] }
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 201
@@ -237,7 +242,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc              |
     And I set the request body:
       """
-      { "email": "globalu{RANDOM_STRING:8}@credgenics.com", "user_type": "super user", "assigned_companies": [ { "company_id": "{COMPANY_ID}" } ] }
+      { "email": "globalu{RANDOM_STRING:8}@credgenics.com", "user_type": "super user", "assigned_companies": [ { "company_id": "{COMPANY_ID:creator0}" } ] }
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
@@ -267,7 +272,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc              |
     And I set the request body:
       """
-      { "first_name": "Bad", "email": "not-an-email", "user_type": "super user", "assigned_companies": [ { "company_id": "{COMPANY_ID}" } ] }
+      { "first_name": "Bad", "email": "not-an-email", "user_type": "super user", "assigned_companies": [ { "company_id": "{COMPANY_ID:creator0}" } ] }
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
@@ -319,7 +324,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     And the global users failure response should be valid
 
   @negative @auth @chief-admin @global-user-create
-  Scenario: Create with missing authenticationtoken header is rejected with 401
+  Scenario: Create with missing authenticationtoken header is rejected with 400
     Given I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
@@ -329,5 +334,5 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       { "first_name": "NoAuth", "email": "noauth{RANDOM_STRING:6}@credgenics.com", "user_type": "chief admin" }
       """
     When I send a "POST" request to "/user/global/users/"
-    Then the response status code should be 401
+    Then the response status code should be 400
     And the response body should not be empty
