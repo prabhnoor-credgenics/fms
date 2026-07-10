@@ -117,6 +117,25 @@ public class ApiStepDefinitions {
         logger.warn("Poll exhausted: '{}' never appeared after {} attempts", resolved, maxAttempts);
     }
 
+    @When("I poll a {string} request to {string} until the response body does not contain {string}")
+    public void i_poll_until_body_not_contains(String httpMethod, String endpoint, String unexpected) {
+        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(unexpected);
+        int maxAttempts = 3;
+        int delaySeconds = 5;
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            i_send_a_request_to(httpMethod, endpoint);
+            if (!activeResponse().getBody().asString().contains(resolved)) {
+                logger.info("Poll matched: body no longer contains '{}' on attempt {}/{}", resolved, attempt, maxAttempts);
+                return;
+            }
+            logger.info("Poll attempt {}/{}: '{}' still present", attempt, maxAttempts, resolved);
+            if (attempt < maxAttempts) {
+                i_wait_for_seconds(delaySeconds);
+            }
+        }
+        logger.warn("Poll exhausted: '{}' still present after {} attempts", resolved, maxAttempts);
+    }
+
     @Given("I prepare a request")
     public void i_prepare_a_request() {
         request = restAssuredBase.getRequestSpec();
