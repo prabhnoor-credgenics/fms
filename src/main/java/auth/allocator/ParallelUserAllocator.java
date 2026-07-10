@@ -50,9 +50,9 @@ public class ParallelUserAllocator {
                 NEXT_SLOT.decrementAndGet();
                 throw new IllegalStateException(
                         "Cannot assign a unique user slot: more than " + poolSize
-                                + " worker threads are active but parallel.user.pool.size=" + poolSize + ". "
-                                + "Add more user credentials (stag.user.N.email) and increase "
-                                + "parallel.user.pool.size and testng thread-count together."
+                                + " worker threads are active but parallel_user_pool_size=" + poolSize + ". "
+                                + "Add more user credentials (stag_user_N_email) and increase "
+                                + "parallel_user_pool_size and testng thread-count together."
                 );
             }
             logger.debug("Mapped thread id {} to user slot {}", id, slot);

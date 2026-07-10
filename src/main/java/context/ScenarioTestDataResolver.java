@@ -62,7 +62,7 @@ public class ScenarioTestDataResolver {
         }
         throw new IllegalStateException(
                 "Company ID is not initialized. Use 'Given scenario company id is ...', "
-                        + "set company.id in properties, or configure {env}.api.key.global.company.id"
+                        + "set company_id in properties, or configure {env}_api_key_global_company_id"
         );
     }
 
@@ -88,7 +88,7 @@ public class ScenarioTestDataResolver {
         }
         throw new IllegalStateException(
                 "Active user's company id is not initialized. Authenticate first, "
-                        + "set company.id in properties, or configure {env}.api.key.global.company.id"
+                        + "set company_id in properties, or configure {env}_api_key_global_company_id"
         );
     }
 

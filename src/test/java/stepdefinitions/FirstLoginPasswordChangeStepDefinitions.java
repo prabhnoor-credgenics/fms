@@ -56,7 +56,7 @@ public class FirstLoginPasswordChangeStepDefinitions {
         this.createdEmail = scenarioTestDataResolver.replaceScenarioPlaceholders(EMAIL_TEMPLATE);
         String companyId = configReader.getApiKeyGlobalCompanyId();
         if (companyId == null || companyId.isBlank()) {
-            throw new AssertionError("No global company id configured ({env}.api.key.global.company.id); "
+            throw new AssertionError("No global company id configured ({env}_api_key_global_company_id); "
                     + "cannot create a global user.");
         }
 

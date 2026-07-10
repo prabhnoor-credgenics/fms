@@ -64,7 +64,7 @@ public class ApiKeyService {
         String apiKey = configReader.getCryptoProperty(env.name().toLowerCase() + "_api_key");
         testContext.setAuthToken(apiKey);
 
-        String companyIdKey = env.name().toLowerCase() + ".api.key.global.company.id";
+        String companyIdKey = env.name().toLowerCase() + "_api_key_global_company_id";
         String companyId = configReader.getProperty(companyIdKey);
         testContext.setCompanyId(companyId);
     }

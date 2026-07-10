@@ -74,8 +74,8 @@ public class FrameworkConstants {
 
     
     public static final String PROP_ENVIRONMENT = "environment";
-    public static final String PROP_AUTH_TOKEN = "auth.token";
-    public static final String PROP_BASE_URL = ".base.url";
+    public static final String PROP_AUTH_TOKEN = "auth_token";
+    public static final String PROP_BASE_URL = "_base_url";
 
     
     public static final String LOG_REQUEST_SENT = "Request sent successfully";

@@ -180,7 +180,7 @@ public class ConfigReader {
 
     public String getBaseUrl() {
         Environment env = getEnvironment();
-        String envKey = env.getValue() + ".base.url";
+        String envKey = env.getValue() + "_base_url";
         String baseUrl = getProperty(envKey);
 
         if (baseUrl == null || baseUrl.isEmpty()) {
@@ -193,52 +193,52 @@ public class ConfigReader {
     }
 
     public boolean isRequestLoggingEnabled() {
-        return Boolean.parseBoolean(getProperty("request.logging.enabled", "true"));
+        return Boolean.parseBoolean(getProperty("request_logging_enabled", "true"));
     }
 
     public boolean isResponseLoggingEnabled() {
-        return Boolean.parseBoolean(getProperty("response.logging.enabled", "true"));
+        return Boolean.parseBoolean(getProperty("response_logging_enabled", "true"));
     }
 
     public String getDefaultContentType() {
-        return getProperty("default.content.type", "application/json");
+        return getProperty("default_content_type", "application/json");
     }
 
     public String getDefaultAcceptType() {
-        return getProperty("default.accept.type", "application/json");
+        return getProperty("default_accept_type", "application/json");
     }
 
     public String getLoanId() {
-        return getProperty("loan.id", "");
+        return getProperty("loan_id", "");
     }
 
     public String getCompanyId() {
-        return getProperty("company.id", "");
+        return getProperty("company_id", "");
     }
 
     public String getApiKeyGlobalCompanyId() {
         Environment env = getEnvironment();
-        return getProperty(env.getValue() + ".api.key.global.company.id", "");
+        return getProperty(env.getValue() + "_api_key_global_company_id", "");
     }
 
     public long getMaxResponseTimeMs() {
-        return Long.parseLong(getProperty("api.max.response.time.ms", "5000"));
+        return Long.parseLong(getProperty("api_max_response_time_ms", "5000"));
     }
 
     public String getAllocationMonth() {
-        return getProperty("allocation.month", "");
+        return getProperty("allocation_month", "");
     }
 
     public boolean isUniqueLoanIdPerScenarioEnabled() {
-        return Boolean.parseBoolean(getProperty("test.data.unique.loan.id.per.scenario", "true"));
+        return Boolean.parseBoolean(getProperty("test_data_unique_loan_id_per_scenario", "true"));
     }
 
     public boolean isAuthTokenCacheEnabled() {
-        return Boolean.parseBoolean(getProperty("auth.token.cache.enabled", "true"));
+        return Boolean.parseBoolean(getProperty("auth_token_cache_enabled", "true"));
     }
 
     public int getAuthTokenCacheTtlMinutes() {
-        return Integer.parseInt(getProperty("auth.token.cache.ttl.minutes", "30"));
+        return Integer.parseInt(getProperty("auth_token_cache_ttl_minutes", "30"));
     }
 
     public int getParallelThreadCount() {
@@ -246,7 +246,7 @@ public class ConfigReader {
         if (override != null && !override.isBlank()) {
             return Integer.parseInt(override.trim());
         }
-        return Integer.parseInt(getProperty("parallel.thread.count", "2"));
+        return Integer.parseInt(getProperty("parallel_thread_count", "2"));
     }
 
     
@@ -255,7 +255,7 @@ public class ConfigReader {
         if (override != null && !override.isBlank()) {
             return Integer.parseInt(override.trim());
         }
-        String fromFile = getProperty("parallel.user.pool.size");
+        String fromFile = getProperty("parallel_user_pool_size");
         if (fromFile != null && !fromFile.isBlank()) {
             return Integer.parseInt(fromFile.trim());
         }
@@ -263,33 +263,33 @@ public class ConfigReader {
     }
 
     public boolean isParallelExecutionEnabled() {
-        return Boolean.parseBoolean(getProperty("parallel.execution.enabled", "false"));
+        return Boolean.parseBoolean(getProperty("parallel_execution_enabled", "false"));
     }
 
     public boolean isSingleUserMode() {
-        return Boolean.parseBoolean(getProperty("auth.single.user.mode", "false"));
+        return Boolean.parseBoolean(getProperty("auth_single_user_mode", "false"));
     }
 
 
     public boolean isCiMode() {
-        return Boolean.parseBoolean(System.getProperty("ci.mode", getProperty("ci.mode", "false")));
+        return Boolean.parseBoolean(System.getProperty("ci.mode", getProperty("ci_mode", "false")));
     }
 
     public String getCompanyCreationAliasProfileId() {
-        return getProperty("company.creation.alias_profile_id", "icoPMIUXyTzl");
+        return getProperty("company_creation_alias_profile_id", "icoPMIUXyTzl");
     }
 
     public String getCompanyCreationCountryIsdCode() {
-        return getProperty("company.creation.country_isd_code", "+91");
+        return getProperty("company_creation_country_isd_code", "+91");
     }
 
     public String getCompanyCreationGstNumber() {
-        return getProperty("company.creation.gst_number", "24AAACC1206D1ZM");
+        return getProperty("company_creation_gst_number", "24AAACC1206D1ZM");
     }
 
     public String getCompanyCreationWhitelistedIps() {
         return getProperty(
-                "company.creation.whitelisted_ips",
+                "company_creation_whitelisted_ips",
                 "103.55.60.250,103.55.60.251"
         );
     }

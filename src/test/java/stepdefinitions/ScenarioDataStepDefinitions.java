@@ -44,7 +44,7 @@ public class ScenarioDataStepDefinitions {
         String companyId = configReader.getApiKeyGlobalCompanyId();
         if (companyId == null || companyId.isBlank()) {
             throw new IllegalStateException(
-                    "Global company id not configured. Set {env}.api.key.global.company.id in environment properties."
+                    "Global company id not configured. Set {env}_api_key_global_company_id in environment properties."
             );
         }
         testContext.setScenarioCompanyId(companyId);

@@ -24,37 +24,37 @@ public class UserCredentialsResolver {
         String password;
 
         if (role == UserRole.CHIEF_ADMIN) {
-            email = configReader.getProperty(envKey(env, "cheif.admin.email"));
-            password = configReader.getProperty(envKey(env, "cheif.admin.password"));
+            email = configReader.getProperty(envKey(env, "cheif_admin_email"));
+            password = configReader.getProperty(envKey(env, "cheif_admin_password"));
         } else if (role == UserRole.APPROVER) {
             if (slot == 0) {
                 email = firstNonBlank(
-                        configReader.getProperty(envKey(env, "approver.email")),
-                        configReader.getProperty(envKey(env, "approver.user.0.email"))
+                        configReader.getProperty(envKey(env, "approver_email")),
+                        configReader.getProperty(envKey(env, "approver_user_0_email"))
                 );
                 password = firstNonBlank(
-                        configReader.getProperty(envKey(env, "approver.password")),
-                        configReader.getProperty(envKey(env, "approver.user.0.password"))
+                        configReader.getProperty(envKey(env, "approver_password")),
+                        configReader.getProperty(envKey(env, "approver_user_0_password"))
                 );
             } else {
-                email = configReader.getProperty(envKey(env, "approver.user." + slot + ".email"));
-                password = configReader.getProperty(envKey(env, "approver.user." + slot + ".password"));
+                email = configReader.getProperty(envKey(env, "approver_user_" + slot + "_email"));
+                password = configReader.getProperty(envKey(env, "approver_user_" + slot + "_password"));
             }
         } else {
 
             if (slot == 0) {
 
                 email = firstNonBlank(
-                        configReader.getProperty(envKey(env, "user.email")),
+                        configReader.getProperty(envKey(env, "user_email")),
                         configReader.getProperty(envKey(env, "email"))
                 );
                 password = firstNonBlank(
-                        configReader.getProperty(envKey(env, "user.password")),
+                        configReader.getProperty(envKey(env, "user_password")),
                         configReader.getProperty(envKey(env, "password"))
                 );
             } else {
-                email = configReader.getProperty(envKey(env, "user." + slot + ".email"));
-                password = configReader.getProperty(envKey(env, "user." + slot + ".password"));
+                email = configReader.getProperty(envKey(env, "user_" + slot + "_email"));
+                password = configReader.getProperty(envKey(env, "user_" + slot + "_password"));
             }
         }
 
@@ -65,7 +65,7 @@ public class UserCredentialsResolver {
     }
 
     private static String envKey(Environment env, String suffix) {
-        return env.name().toLowerCase() + "." + suffix;
+        return env.name().toLowerCase() + "_" + suffix;
     }
 
     private static String firstNonBlank(String... values) {
@@ -91,20 +91,20 @@ public class UserCredentialsResolver {
     public static String credentialPropertyHint(Environment env, UserRole role, int slot) {
         String envPrefix = env.name().toLowerCase();
         if (role == UserRole.CHIEF_ADMIN) {
-            return envPrefix + ".cheif.admin.email / " + envPrefix + ".cheif.admin.password";
+            return envPrefix + "_cheif_admin_email / " + envPrefix + "_cheif_admin_password";
         }
         if (role == UserRole.APPROVER) {
             if (slot == 0) {
-                return envPrefix + ".approver.email / " + envPrefix + ".approver.password "
-                        + "(or " + envPrefix + ".approver.user.0.email)";
+                return envPrefix + "_approver_email / " + envPrefix + "_approver_password "
+                        + "(or " + envPrefix + "_approver_user_0_email)";
             }
-            return envPrefix + ".approver.user." + slot + ".email / " + envPrefix + ".approver.user." + slot + ".password";
+            return envPrefix + "_approver_user_" + slot + "_email / " + envPrefix + "_approver_user_" + slot + "_password";
         }
         if (slot == 0) {
-            return envPrefix + ".user.email / " + envPrefix + ".user.password "
-                    + "(or " + envPrefix + ".email / " + envPrefix + ".password)";
+            return envPrefix + "_user_email / " + envPrefix + "_user_password "
+                    + "(or " + envPrefix + "_email / " + envPrefix + "_password)";
         }
-        return envPrefix + ".user." + slot + ".email / " + envPrefix + ".user." + slot + ".password";
+        return envPrefix + "_user_" + slot + "_email / " + envPrefix + "_user_" + slot + "_password";
     }
 
     private static String maskEmail(String email) {
