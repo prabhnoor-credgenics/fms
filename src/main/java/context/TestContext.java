@@ -50,6 +50,9 @@ public class TestContext {
     private final Map<String, String> randomStringCache = new HashMap<>();
 
 
+    private final Map<String, Long> capturedTimes = new HashMap<>();
+
+
     public record UserSession(String authToken, String companyId, String userId, UserRole role, int slot) {}
 
 
@@ -295,5 +298,17 @@ public class TestContext {
 
     public void clearRandomStringCache() {
         randomStringCache.clear();
+    }
+
+    public void captureTime(String key, long epochMillis) {
+        capturedTimes.put(key, epochMillis);
+    }
+
+    public Long getCapturedTime(String key) {
+        return capturedTimes.get(key);
+    }
+
+    public Map<String, Long> getCapturedTimes() {
+        return capturedTimes;
     }
 }

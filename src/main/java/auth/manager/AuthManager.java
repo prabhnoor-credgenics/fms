@@ -50,7 +50,7 @@ public class AuthManager {
         Environment env = configReader.getEnvironment();
         int userSlot = testContext.getUserSlot();
 
-        // Fast path: cached token available
+
         AuthTokenCache.CachedSession cached = authTokenCache.getIfValid(env, role, userType, userSlot);
         if (cached != null) {
             testContext.setAuthToken(cached.authToken());
@@ -60,8 +60,7 @@ public class AuthManager {
             return;
         }
 
-        // Slow path: serialize logins for the same key so that only one thread logs in
-        // while others wait and then read from the cache (double-checked locking).
+
         String lockKey = env + ":" + role + ":" + userType + ":" + userSlot;
         Object lock = LOGIN_LOCKS.computeIfAbsent(lockKey, k -> new Object());
         synchronized (lock) {
@@ -85,6 +84,21 @@ public class AuthManager {
 
             authTokenCache.put(env, role, userType, userSlot, testContext.getAuthToken(), testContext.getCompanyId());
         }
+    }
+
+    /**
+     * Authenticates the active session using a pre-issued API key instead of a user login.
+     * Loads {@code <env>_api_key} (from secrets/crypto.properties) into the auth token and
+     * {@code <env>_api_key_global_company_id} into the company id, so subsequent requests send
+     * the API key via {@code {AUTH_TOKEN}} and target the global company via {@code {COMPANY_ID}}.
+     * Bypasses the token cache and user-slot machinery — the API key is environment-scoped, not
+     * per-user. Requires {@code <env>_api_key} to be present in secrets/crypto.properties.
+     */
+    public void initializeApiKeyAuthentication() {
+        Environment env = configReader.getEnvironment();
+        apiKeyService.loadMultiCompanyApiKey(env);
+        logger.info("Authenticated via API key for env={} (company id={})",
+                env, testContext.getCompanyId());
     }
 
     public void reAuthenticate(UserRole role) {

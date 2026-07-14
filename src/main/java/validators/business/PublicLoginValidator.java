@@ -14,7 +14,7 @@ public class PublicLoginValidator {
     public void validateSuccessEnvelope(Response response) {
         JsonPath jp = response.jsonPath();
         SoftAssert sa = new SoftAssert();
-        // 2FA -> {data:{login_id, request_id}, message}; 1FA -> {data:{authentication_token,...}, message}.
+
         sa.assertNotNull(jp.get("data"), "data must be present");
         sa.assertNotNull(jp.get("message"), "message must be present");
         sa.assertAll();

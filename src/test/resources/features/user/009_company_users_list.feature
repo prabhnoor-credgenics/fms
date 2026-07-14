@@ -720,3 +720,390 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
     And the response body should not be empty
+
+  # ---------------------------------------------------------------------------
+  # Expanded coverage (filters, pagination boundaries, response shape, invalid
+  # enums/NanoIDs, injection, method) — grounded in company-users-api-doc.md.
+  # ---------------------------------------------------------------------------
+
+  @positive @creator
+  Scenario: neglect_hierarchy=true bypasses hierarchy scoping and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id        | {COMPANY_ID} |
+      | neglect_hierarchy | true         |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario Outline: duration_to_seconds=<flag> returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id          | {COMPANY_ID} |
+      | duration_to_seconds | <flag>       |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+    Examples:
+      | flag  |
+      | true  |
+      | false |
+
+  @positive @creator
+  Scenario: filters.user_ids plus deselected_user_ids (valid NanoIDs) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id          | {COMPANY_ID}                      |
+      | user_ids            | abcd1234efgh5678,wxyz9876lmno5432 |
+      | deselected_user_ids | qrst1234uvwx5678                  |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: filters.roles/profiles/reports_to/profile_permission_group returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id               | {COMPANY_ID}     |
+      | roles                    | role1234abcd5678 |
+      | profiles                 | prof1234abcd5678 |
+      | reports_to               | mgr01234abcd5678 |
+      | profile_permission_group | group-a          |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: filters.client_employee_id plus mapped_portfolio_ids returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id           | {COMPANY_ID}    |
+      | client_employee_id   | EMP123,EMP124   |
+      | mapped_portfolio_ids | PORT001,PORT002 |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: Audit-date plus activity-time ranges (permission-audit-details) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id               | {COMPANY_ID}             |
+      | data_scope               | permission-audit-details |
+      | audit_created_date_start | 2026-03-01               |
+      | audit_created_date_end   | 2026-06-21               |
+      | activity_start_time      | 2026-06-01 00:00:00      |
+      | activity_end_time        | 2026-06-21 23:59:59      |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: return_type hint is accepted and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id  | {COMPANY_ID} |
+      | return_type | default      |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: disable_paging=true (no page params) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id     | {COMPANY_ID} |
+      | disable_paging | true         |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: Response contains total_count, users array and success message
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the response body should contain field "data.total_count"
+    And the response body should contain field "data.users"
+    And the response content type should be "application/json"
+
+  @positive @boundary @creator
+  Scenario: page_size at minimum (1) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id  | {COMPANY_ID} |
+      | page_number | 1            |
+      | page_size   | 1            |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @boundary @creator
+  Scenario: page_size at maximum allowed (5000) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id  | {COMPANY_ID} |
+      | page_number | 1            |
+      | page_size   | 5000         |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: include_only_parent_company_users=true returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id                        | {COMPANY_ID} |
+      | include_only_parent_company_users | true         |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: Unknown/extra query param is ignored and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id      | {COMPANY_ID} |
+      | totally_unknown | some-value   |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @security @creator
+  Scenario: SQL-injection payload in search_query is treated literally and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id   | {COMPANY_ID} |
+      | search_type  | name         |
+      | search_query | ' OR 1=1 --  |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @security @creator
+  Scenario: XSS payload in search_query is treated literally and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id   | {COMPANY_ID}              |
+      | search_type  | name                     |
+      | search_query | <script>alert(1)</script> |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @boundary @creator
+  Scenario: Very long search_query returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id   | {COMPANY_ID}        |
+      | search_type  | name                |
+      | search_query | {RANDOM_STRING:300} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: Unicode search_query returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id   | {COMPANY_ID}      |
+      | search_type  | name              |
+      | search_query | José Müller 日本語 |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: Combined allocation-picker query (profession + location + sort + paging) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id  | {COMPANY_ID}                                   |
+      | page_number | 1                                              |
+      | page_size   | 50                                             |
+      | sort_by     | created_desc                                   |
+      | attributes  | name,email,mobile,role,profile,profession,team |
+      | profession  | collection manager,field executive             |
+      | location    | mumbai                                         |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @positive @creator
+  Scenario: Combined name search with descendants and parent-company users returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id                   | {COMPANY_ID} |
+      | search_type                  | name         |
+      | search_query                 | john         |
+      | include_descendants          | true         |
+      | include_parent_company_users | true         |
+      | page_number                  | 1            |
+      | page_size                    | 20           |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 200
+    And the company users list success response should be valid
+
+  @negative @creator
+  Scenario Outline: Invalid enum value for <field> returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+      | <field>    | <value>      |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 400
+    And the company users list failure response should be valid
+
+    Examples:
+      | field              | value      |
+      | search_type        | bogus_type |
+      | sort_by            | name_asc   |
+      | data_scope         | everything |
+      | attributes         | not_a_col  |
+      | profession         | astronaut  |
+      | exclude_profession | astronaut  |
+
+  @negative @creator
+  Scenario Outline: Invalid NanoID in <field> filter returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+      | <field>    | short-id     |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 400
+    And the company users list failure response should be valid
+
+    Examples:
+      | field               |
+      | roles               |
+      | reports_to          |
+      | deselected_user_ids |
+      | profiles            |
+
+  @negative @creator
+  Scenario: Invalid usernames value (neither email nor mobile) returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID}   |
+      | usernames  | not-a-username |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 400
+    And the company users list failure response should be valid
+
+  @negative @creator
+  Scenario: Malformed (non-UUID) company_id is rejected
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | not-a-uuid |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 400
+    And the response body should not be empty
+
+  @negative @creator
+  Scenario: Empty company_id value is rejected
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id |  |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 400
+    And the response body should not be empty
+
+  @negative @creator
+  Scenario: Unparseable date in created_date_start returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id         | {COMPANY_ID} |
+      | created_date_start | not-a-date   |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 400
+    And the company users list failure response should be valid
+
+  @negative @boundary @creator
+  Scenario: page_size one over max allowed (5001) returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id  | {COMPANY_ID} |
+      | page_number | 1            |
+      | page_size   | 5001         |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 400
+    And the company users list failure response should be valid
+
+  @negative @boundary @creator
+  Scenario: include_only_inactive combined with include_api_users returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id            | {COMPANY_ID} |
+      | include_only_inactive | true         |
+      | include_api_users     | true         |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/company/users/"
+    Then the response status code should be 400
+    And the company users list failure response should be valid
+
+  @negative @creator
+  Scenario: Wrong HTTP method (PUT) on the collection URL is rejected
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "PUT" request to "/user/company/users/"
+    Then the response status code should be one of "404,405"
+    And the response body should not be empty

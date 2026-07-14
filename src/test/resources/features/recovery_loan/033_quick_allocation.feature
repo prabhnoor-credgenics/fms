@@ -12,7 +12,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -31,7 +31,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -50,7 +50,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -66,10 +66,10 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | Content-Type        | application/json |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
-    Then the response status code should be 400
+    Then the response status code should be 403
     And the response body should not be empty
     And the response body should contain field "message"
 
@@ -85,7 +85,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {UUID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -104,7 +104,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 403
@@ -122,7 +122,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {OTHER_COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 403
@@ -151,9 +151,9 @@ Feature: Quick Allocation API — POST /recovery/allocation
     Examples:
       | missing              | body                                                                                          |
       | loan_ids             | { "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }     |
-      | source               | { "loan_ids": ["LN1001"], "allocation_type": "user", "allocation_algorithm": "one_to_one" }    |
-      | allocation_type      | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_algorithm": "one_to_one" }        |
-      | allocation_algorithm | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user" }                   |
+      | source               | { "loan_ids": ["Loan000631"], "allocation_type": "user", "allocation_algorithm": "one_to_one" }    |
+      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_algorithm": "one_to_one" }        |
+      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user" }                   |
 
   @negative @validation @creator
   Scenario: REQ-002 — All required fields absent (empty body object) returns 400
@@ -194,9 +194,9 @@ Feature: Quick Allocation API — POST /recovery/allocation
     Examples:
       | field                | body                                                                                                                |
       | loan_ids             | { "loan_ids": null, "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }         |
-      | source               | { "loan_ids": ["LN1001"], "source": null, "allocation_type": "user", "allocation_algorithm": "one_to_one" }          |
-      | allocation_type      | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": null, "allocation_algorithm": "one_to_one" }     |
-      | allocation_algorithm | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": null }           |
+      | source               | { "loan_ids": ["Loan000631"], "source": null, "allocation_type": "user", "allocation_algorithm": "one_to_one" }          |
+      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": null, "allocation_algorithm": "one_to_one" }     |
+      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": null }           |
 
   @negative @validation @creator
   Scenario Outline: REQ-004 — Enum field "<field>" present but empty string returns 400
@@ -218,9 +218,9 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
     Examples:
       | field                | body                                                                                                          |
-      | source               | { "loan_ids": ["LN1001"], "source": "", "allocation_type": "user", "allocation_algorithm": "one_to_one" }      |
-      | allocation_type      | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "", "allocation_algorithm": "one_to_one" } |
-      | allocation_algorithm | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "" }       |
+      | source               | { "loan_ids": ["Loan000631"], "source": "", "allocation_type": "user", "allocation_algorithm": "one_to_one" }      |
+      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "", "allocation_algorithm": "one_to_one" } |
+      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "" }       |
 
 
   @negative @validation @type @creator
@@ -243,18 +243,18 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
     Examples:
       | case                                  | body                                                                                                                                  |
-      | loan_ids as string not list           | { "loan_ids": "LN1001", "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                       |
+      | loan_ids as string not list           | { "loan_ids": "Loan000631", "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                       |
       | loan_ids as integer                   | { "loan_ids": 123, "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                            |
       | loan_ids as object                    | { "loan_ids": {}, "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                             |
-      | source as integer                     | { "loan_ids": ["LN1001"], "source": 1, "allocation_type": "user", "allocation_algorithm": "one_to_one" }                              |
-      | allocation_type as integer            | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": 5, "allocation_algorithm": "one_to_one" }                         |
-      | allocation_algorithm as boolean       | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": true }                            |
-      | workflow_id as non-numeric string     | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "workflow_id": "abc" } |
-      | disable_previous flag as "yes"        | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "disable_previous_user_allocation": "yes" } |
-      | neglect_capacity flag as "yes"        | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "neglect_user_allocation_capacity": "yes" } |
-      | parent_company_id not a UUID          | { "loan_ids": ["LN1001"], "source": "legal", "allocation_type": "agency", "allocation_algorithm": "one_to_one", "parent_company_id": "not-a-uuid" } |
-      | selected_users value as string        | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": "five" } } |
-      | user_filters value not a list         | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "user_filters": { "teams": "team-north" } } |
+      | source as integer                     | { "loan_ids": ["Loan000631"], "source": 1, "allocation_type": "user", "allocation_algorithm": "one_to_one" }                              |
+      | allocation_type as integer            | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": 5, "allocation_algorithm": "one_to_one" }                         |
+      | allocation_algorithm as boolean       | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": true }                            |
+      | workflow_id as non-numeric string     | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "workflow_id": "abc" } |
+      | disable_previous flag as "yes"        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "disable_previous_user_allocation": "yes" } |
+      | neglect_capacity flag as "yes"        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "neglect_user_allocation_capacity": "yes" } |
+      | parent_company_id not a UUID          | { "loan_ids": ["Loan000631"], "source": "legal", "allocation_type": "agency", "allocation_algorithm": "one_to_one", "parent_company_id": "not-a-uuid" } |
+      | selected_users value as string        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": "five" } } |
+      | user_filters value not a list         | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "user_filters": { "teams": "team-north" } } |
 
   @negative @validation @enum @creator
   Scenario Outline: ENUM-001 — Invalid enum value for "<field>" returns 400
@@ -276,9 +276,9 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
     Examples:
       | field                | body                                                                                                                       |
-      | source               | { "loan_ids": ["LN1001"], "source": "bogus_src", "allocation_type": "user", "allocation_algorithm": "one_to_one" }          |
-      | allocation_type      | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "bogus_type", "allocation_algorithm": "one_to_one" }    |
-      | allocation_algorithm | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "bogus_algo" }          |
+      | source               | { "loan_ids": ["Loan000631"], "source": "bogus_src", "allocation_type": "user", "allocation_algorithm": "one_to_one" }          |
+      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "bogus_type", "allocation_algorithm": "one_to_one" }    |
+      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "bogus_algo" }          |
 
 
   @negative @validation @creator
@@ -301,10 +301,10 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
     Examples:
       | case                          | body                                                                                                                                                   |
-      | key shorter than 16 chars     | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "short_key": 5 } } |
-      | key longer than 36 chars      | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_this_key_is_definitely_far_too_long_to_be_valid": 5 } } |
-      | value zero (not positive)     | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": 0 } } |
-      | value negative                | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": -3 } } |
+      | key shorter than 16 chars     | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "short_key": 5 } } |
+      | key longer than 36 chars      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_this_key_is_definitely_far_too_long_to_be_valid": 5 } } |
+      | value zero (not positive)     | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": 0 } } |
+      | value negative                | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": -3 } } |
 
   @negative @validation @creator
   Scenario: NEST-002 — user_filters with a key outside the four allowed literals returns 400
@@ -318,7 +318,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "user_filters": { "departments": ["sales"] } }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "user_filters": { "departments": ["sales"] } }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -344,10 +344,10 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
     Examples:
       | case                        | body                                                                                                                                                                                          |
-      | operator other than '='     | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": ">", "user_attribute": "city", "loan_attribute": "borrower_city" } ] } |
-      | empty operator              | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "", "user_attribute": "city", "loan_attribute": "borrower_city" } ] }  |
-      | empty user_attribute        | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "", "loan_attribute": "borrower_city" } ] }     |
-      | empty loan_attribute        | { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "city", "loan_attribute": "" } ] }              |
+      | operator other than '='     | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": ">", "user_attribute": "city", "loan_attribute": "borrower_city" } ] } |
+      | empty operator              | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "", "user_attribute": "city", "loan_attribute": "borrower_city" } ] }  |
+      | empty user_attribute        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "", "loan_attribute": "borrower_city" } ] }     |
+      | empty loan_attribute        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "city", "loan_attribute": "" } ] }              |
 
 
   @negative @boundary @creator
@@ -362,7 +362,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "u15charslong123": 5 } }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "u15charslong123": 5 } }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -380,7 +380,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_this_key_is_thirty_seven_chars_xx": 5 } }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_this_key_is_thirty_seven_chars_xx": 5 } }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -398,7 +398,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_16charskey00": 5 } }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_16charskey00": 5 } }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -416,7 +416,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_this_key_is_exactly_36_chars_xxx": 5 } }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_this_key_is_exactly_36_chars_xxx": 5 } }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -434,7 +434,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "attribute_matching": [] }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "attribute_matching": [] }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -452,7 +452,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "user_filters": {} }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "user_filters": {} }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -470,7 +470,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "calling", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "user_filters": { "teams": ["team-north", "team-north"], "roles": ["agent", "agent"] } }
+      { "loan_ids": ["Loan000631"], "source": "calling", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "user_filters": { "teams": ["team-north", "team-north"], "roles": ["agent", "agent"] } }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -507,7 +507,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001", "LN1002"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631", "LN1002"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -526,7 +526,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001", "LN1002", "LN1003"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631", "LN1002", "LN1003"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -544,7 +544,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_many" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_many" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -562,7 +562,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "legal", "allocation_type": "agency", "allocation_algorithm": "one_to_one", "parent_company_id": "{UUID}" }
+      { "loan_ids": ["Loan000631"], "source": "legal", "allocation_type": "agency", "allocation_algorithm": "one_to_one", "parent_company_id": "{UUID}" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -617,7 +617,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -637,7 +637,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
     And I set the request body:
       """
       {
-        "loan_ids": ["LN1001"],
+        "loan_ids": ["Loan000631"],
         "source": "workflow",
         "workflow_id": 42,
         "allocation_type": "telecalling",
@@ -666,7 +666,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "workflow", "workflow_id": 42, "allocation_type": "telecalling", "allocation_algorithm": "load_balancing", "selected_users": { "usr_abc1234567890xy": 5, "usr_def1234567890zz": null } }
+      { "loan_ids": ["Loan000631"], "source": "workflow", "workflow_id": 42, "allocation_type": "telecalling", "allocation_algorithm": "load_balancing", "selected_users": { "usr_abc1234567890xy": 5, "usr_def1234567890zz": null } }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -684,7 +684,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "calling", "allocation_type": "telecalling", "allocation_algorithm": "one_to_many", "user_filters": { "professions": ["telecaller"], "teams": ["team-north"], "locations": ["maharashtra"], "roles": ["agent"] } }
+      { "loan_ids": ["Loan000631"], "source": "calling", "allocation_type": "telecalling", "allocation_algorithm": "one_to_many", "user_filters": { "professions": ["telecaller"], "teams": ["team-north"], "locations": ["maharashtra"], "roles": ["agent"] } }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -702,7 +702,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "city", "loan_attribute": "borrower_city" } ] }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "city", "loan_attribute": "borrower_city" } ] }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -720,7 +720,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "disable_previous_user_allocation": <disable>, "neglect_user_allocation_capacity": <neglect> }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "disable_previous_user_allocation": <disable>, "neglect_user_allocation_capacity": <neglect> }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -745,7 +745,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "legal", "allocation_type": "agency", "allocation_algorithm": "one_to_one", "parent_company_id": "{PARENT_COMPANY_ID}" }
+      { "loan_ids": ["Loan000631"], "source": "legal", "allocation_type": "agency", "allocation_algorithm": "one_to_one", "parent_company_id": "{PARENT_COMPANY_ID}" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -763,7 +763,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "<source>", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "<source>", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -782,7 +782,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
 
   @manual @positive @creator
   Scenario Outline: HAPPY-009 — Each allocation_type value "<type>" is accepted (200)
-    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" slot 1 and remember as "creator1"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -792,7 +792,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "<source>", "allocation_type": "<type>", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "<source>", "allocation_type": "<type>", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -817,7 +817,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "<type>", "allocation_algorithm": "<algo>" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "<type>", "allocation_algorithm": "<algo>" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -842,7 +842,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001", "LN1002"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631", "LN1002"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
@@ -856,7 +856,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response body should not be empty
@@ -873,7 +873,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -886,7 +886,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["LN1001"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200

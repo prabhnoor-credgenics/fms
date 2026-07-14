@@ -215,3 +215,219 @@ Feature: Verify User — GET /user/public/verify/user/
     # 7) Verify the user's details via verify-user, looked up by user_id (admin token; asserts 200 internally)
     When I verify the lifecycle user's details by user id
     And the verify user success response should be valid
+
+  # ---------------------------------------------------------------------------
+  # Expanded coverage (auth_token format/boundary, flow selection, unknown
+  # attribute lookups, injection, normalisation) — grounded in public-verify-user-api-doc.md.
+  # ---------------------------------------------------------------------------
+
+  @negative @boundary @creator
+  Scenario: Empty auth_token string (default key flow) is rejected as invalid format
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token |  |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 400
+    And the verify user failure response should be valid
+
+  @negative @boundary @creator
+  Scenario: Literal "null" auth_token (default key flow) is rejected as invalid format
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token | null |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 400
+    And the verify user failure response should be valid
+
+  @negative @boundary @creator
+  Scenario: Oversized non-UUID auth_token is rejected as invalid format
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token | {RANDOM_STRING:256} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 400
+    And the verify user failure response should be valid
+
+  @negative @creator
+  Scenario: Well-formed but unknown auth_token UUID (platform flow, no session) returns 401
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token | {UUID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 401
+    And the verify user failure response should be valid
+
+  @negative @creator
+  Scenario: No referer selects API-integration flow; a random UUID as API key returns 401
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token | {UUID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 401
+    And the verify user failure response should be valid
+
+  @negative @creator
+  Scenario Outline: Unknown attribute lookup by "<key_name>" returns 401
+    Given I prepare a request
+    And I set the query parameters:
+      | key_name   | <key_name>   |
+      | key_value  | <key_value>  |
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 401
+    And the verify user failure response should be valid
+
+    Examples:
+      | key_name | key_value                                 |
+      | email    | nonexistent-{RANDOM_STRING:8}@yopmail.com |
+      | user_id  | {UUID}                                    |
+      | mobile   | 0000000000                                |
+
+  @negative @security @creator
+  Scenario Outline: Injection / special-character key_value is sanitised and returns 401
+    Given I prepare a request
+    And I set the query parameters:
+      | key_name   | email        |
+      | key_value  | <key_value>  |
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 401
+    And the response body should not be empty
+
+    Examples:
+      | key_value                          |
+      | ' OR '1'='1                        |
+      | admin'--                           |
+      | <script>alert(1)</script>@x.com    |
+      | 日本語ユーザー@yopmail.com          |
+
+  @negative @creator
+  Scenario: Missing key_value entirely for a non-default key_name returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | key_name   | email        |
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 400
+    And the verify user failure response should be valid
+
+  @negative @creator
+  Scenario: Unknown api_endpoint (missing service route map) returns 404
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token | {AUTH_TOKEN} |
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN}                         |
+      | referer             | abc                                  |
+      | api_endpoint        | nonexistentservice/{RANDOM_STRING:6} |
+      | api_method          | GET                                  |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 404
+    And the response body should not be empty
+
+  @negative @creator
+  Scenario: Unsupported HTTP method on the verify-user route is rejected
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token | {AUTH_TOKEN} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "POST" request to "/user/public/verify/user/"
+    Then the response status code should be one of "404,405"
+    And the response body should not be empty
+
+  @positive @creator
+  Scenario: key_name is normalised (uppercase EMAIL is lowercased) and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | key_name   | EMAIL                                    |
+      | key_value  | testapiautomationusersrole11@yopmail.com |
+      | company_id | {COMPANY_ID}                             |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 200
+    And the verify user success response should be valid
+
+  @positive @creator
+  Scenario: key_value is normalised (mixed-case email is lowercased) and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | key_name   | email                                    |
+      | key_value  | TestApiAutomationUsersRole11@YOPMAIL.com |
+      | company_id | {COMPANY_ID}                             |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 200
+    And the verify user success response should be valid
+
+  @positive @creator
+  Scenario: Unknown/extra query parameters are ignored and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token       | {AUTH_TOKEN}      |
+      | company_id       | {COMPANY_ID}      |
+      | unexpected_param | {RANDOM_STRING:6} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 200
+    And the verify user success response should be valid
+
+  @positive @boundary @creator
+  Scenario: Any non-empty is_test_request value is truthy and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token      | {AUTH_TOKEN} |
+      | company_id      | {COMPANY_ID} |
+      | is_test_request | false        |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+      | referer             | abc          |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 200
+    And the verify user success response should be valid
+
+  @positive @creator
+  Scenario: Trailing slash on api_endpoint is normalised and returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | auth_token | {AUTH_TOKEN} |
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN}        |
+      | referer             | abc                 |
+      | api_endpoint        | recovery/all-loans/ |
+      | api_method          | GET                 |
+    When I send a "GET" request to "/user/public/verify/user/"
+    Then the response status code should be 200
+    And the verify user success response should be valid

@@ -62,7 +62,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "company_id: company_id is required"
+    And the response body should contain field "message" with value "invalid company id"
 
   @negative2 @creator
   Scenario: API should fail when company_id does not exist
@@ -99,7 +99,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "company_id: company_id is required"
+    And the response body should contain field "message" with value "invalid company id"
 
   @negative @creator @500
   Scenario: API should fail when company_id does not exist
@@ -434,9 +434,9 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "company_id: field is required"
+    And the response body should contain field "message" with value "invalid company id"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: Variables values API should fail when key is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:

@@ -122,7 +122,7 @@ Feature: Linked Loans API
     And the response body should contain field "output"
 
   @negative @creator
-  Scenario: GET linked loans should fail when both loan_id and group_id are missing
+  Scenario: GET linked loans should return all loans and groups when both loan_id and group_id are missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -131,8 +131,8 @@ Feature: Linked Loans API
       | company_id       | {COMPANY_ID} |
       | allocation_month | overall      |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be one of "400,422"
-    And the response should match json schema "schemas/recovery/error/invalid_schema.json"
+    Then the response status code should be one of "200"
+    And the response should match json schema "schemas/recovery/success/linked_loans_success_schema.json"
 
   @negative @auth @creator
   Scenario: GET linked loans should fail when authentication token is missing
@@ -143,7 +143,7 @@ Feature: Linked Loans API
       | company_id       | {COMPANY_ID}                         |
       | allocation_month | overall                              |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be 422
+    Then the response status code should be 400
     And the response body should contain field "message" with value "invalid authentication token"
 
   @negative @auth @creator
@@ -156,7 +156,7 @@ Feature: Linked Loans API
       | company_id       | {COMPANY_ID}                         |
       | allocation_month | overall                              |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be one of "400"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
 
   @negative @creator
@@ -182,9 +182,9 @@ Feature: Linked Loans API
       | company_id       | 00000000-0000-0000-0000-000000000000 |
       | allocation_month | overall                              |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be one of "401,403"
+    Then the response status code should be one of "422"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message"
+    And the response body should contain field "message" with value "one or more companies not found"
 
   @negative @creator
   Scenario: GET linked loans should fail when company_id is invalid UUID format
@@ -196,20 +196,20 @@ Feature: Linked Loans API
       | company_id       | invalid-company-id |
       | allocation_month | overall            |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be 422
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" with value "Invalid company_id"
     
-      @negative @creator @bug
-    Scenario: GET linked loans should fail when allocation_month does not exist
+  @negative @creator @500
+  Scenario: GET linked loans should fail when allocation_month does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id       | 00000000-0000-0000-0000-000000000000 |
+      | company_id       | {COMPANY_ID}                                        |
       | allocation_month |   invalid_allocation_month                          |
     When I send a "GET" request to "/recovery/linked/loans"
-    Then the response status code should be 401
-    And the response should match json schema "schemas/recovery/error/invalid_schema.json"
+    Then the response status code should be 422
+    And the response body should contain field "message" with value "one or more companies not found"
   

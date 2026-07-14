@@ -21,8 +21,11 @@ public class ApiKeyService {
     }
 
     public void generateSingleCompanyApiKey(Environment env) {
-        String clientId = configReader.getProperty("prod_client_id");
-        String clientSecret = configReader.getProperty("prod_client_secret");
+        // client_id/client_secret live in secrets/crypto.properties, keyed per active env
+        // (e.g. stag_client_id), and must be read via getCryptoProperty — getProperty reads the
+        // env-merged app properties, where these keys do not exist (would return null).
+        String clientId = configReader.getCryptoProperty(env.getValue() + "_client_id");
+        String clientSecret = configReader.getCryptoProperty(env.getValue() + "_client_secret");
         String baseUrl = configReader.getBaseUrl();
         String requestBody = """
                 {

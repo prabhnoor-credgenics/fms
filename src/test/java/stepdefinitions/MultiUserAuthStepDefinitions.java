@@ -55,6 +55,32 @@ public class MultiUserAuthStepDefinitions {
     }
 
 
+    /**
+     * Authenticates via the environment API key instead of a user login. After this step
+     * {@code {AUTH_TOKEN}} resolves to the API key and {@code {COMPANY_ID}} to
+     * {@code <env>_api_key_global_company_id} (e.g. stag = 3e561a13-3be3-4672-85b0-e1c49a35d8fb).
+     * Send the key exactly like a user token: header {@code authenticationtoken | {AUTH_TOKEN}}.
+     */
+    @Given("I authenticate using the API key")
+    public void i_authenticate_using_the_api_key() {
+        authManager.initializeApiKeyAuthentication();
+        logger.info("Active session is now API-key based (company id={})", testContext.getCompanyId());
+    }
+
+    /**
+     * Same as {@link #i_authenticate_using_the_api_key()} but also remembers the session under
+     * {@code key} so it can be referenced later via {@code {AUTH_TOKEN:<key>}} / {@code {COMPANY_ID:<key>}}.
+     * The API key has no user profile, so {@code {USER_ID:<key>}} is unavailable for this session.
+     */
+    @Given("I authenticate using the API key and remember as {string}")
+    public void i_authenticate_using_the_api_key_and_remember_as(String key) {
+        authManager.initializeApiKeyAuthentication();
+        testContext.rememberUserSession(key, new TestContext.UserSession(
+                testContext.getAuthToken(), testContext.getCompanyId(), null, null, 0));
+        logger.info("Authenticated via API key + remembered as '{}' (company id={}) — now the active session",
+                key, testContext.getCompanyId());
+    }
+
     @Given("I switch active user to {string}")
     public void i_switch_active_user_to(String key) {
         TestContext.UserSession session = testContext.getUserSession(key);

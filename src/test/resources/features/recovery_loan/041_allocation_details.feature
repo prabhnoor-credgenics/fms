@@ -252,12 +252,13 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
     And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
+    And I authenticate as "creator" slot 1 and remember as "creator1"
     And I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
       | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN}     |
+      | authenticationtoken | {AUTH_TOKEN:creator1}     |
     And I set the request body:
       """
       {
@@ -265,7 +266,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
         "source": "portfolio",
         "allocation_type": "other",
         "allocation_algorithm": "one_to_one",
-        "selected_users": { "{CREATOR_USER_ID}": null }
+        "selected_users": { "{USER_ID:creator0}": null }
       }
       """
     When I send a "POST" request to "/recovery/allocation"
@@ -303,6 +304,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
     And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
+    And I authenticate as "creator" slot 1 and remember as "creator1"
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |

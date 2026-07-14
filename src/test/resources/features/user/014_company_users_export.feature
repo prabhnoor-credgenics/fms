@@ -458,3 +458,589 @@ Feature: Company Users Export — POST /user/company/users/export
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "DELETE" request to "/user/company/users/export"
     Then the response status code should be 405
+
+  # ---------------------------------------------------------------------------
+  # Expanded coverage (return_type/search/hierarchy flags, filters, invalid
+  # enums/NanoIDs/dates, injection, cross-company, method/content-type) —
+  # grounded in company-users-export-api-doc.md.
+  # ---------------------------------------------------------------------------
+
+  @positive @creator
+  Scenario: return_type=s3_link explicitly set returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "return_type": "s3_link" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario Outline: search_type "<search_type>" with search_query returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "search_type": "<search_type>", "search_query": "test" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+    Examples:
+      | search_type        |
+      | user_id            |
+      | name               |
+      | email              |
+      | mobile             |
+      | client_employee_id |
+
+  @positive @creator
+  Scenario Outline: hierarchy/visibility flag "<flag>"=true returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "<flag>": "true" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+    Examples:
+      | flag                   |
+      | include_chief_admin    |
+      | include_descendants    |
+      | include_ascendants     |
+      | neglect_hierarchy      |
+      | include_api_users      |
+      | include_count_of_users |
+
+  @positive @creator
+  Scenario Outline: valid sort_by "<sort_by>" returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "sort_by": "<sort_by>" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+    Examples:
+      | sort_by      |
+      | created_asc  |
+      | created_desc |
+      | updated_asc  |
+      | updated_desc |
+
+  @positive @creator
+  Scenario: page_number and page_size supplied (handler forces disable_paging) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "page_number": 1, "page_size": 50 }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: disable_paging=true returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "disable_paging": "true" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: parent-company flags returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "include_parent_company_users": "true",
+        "include_only_parent_company_users": "false",
+        "fetch_parent_company_details": "false"
+      }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: filters.exclude_profession returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "filters": { "exclude_profession": "advocate,lawyer" } }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: filters client_employee_id/department/coverage_areas/mapped_portfolio_ids returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "filters": {
+          "client_employee_id": "emp001,emp002",
+          "department": "collections",
+          "coverage_areas": "north,south",
+          "mapped_portfolio_ids": "port001,port002"
+        }
+      }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: filters.profile_permission_group returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "filters": { "profile_permission_group": "admin" } }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: filters created/updated date windows returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "filters": {
+          "created_date_start": "2026-01-01",
+          "created_date_end": "2026-06-30",
+          "updated_date_start": "2026-01-01",
+          "updated_date_end": "2026-06-30"
+        }
+      }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: filters.deselected_user_ids (valid NanoID) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "filters": { "deselected_user_ids": "abcd1234efgh5678" } }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: Unknown extra top-level param is allowed (extra=allow) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "totally_unknown_field": "some-value" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: Arbitrary return_type string (free-form str field) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "return_type": "csv" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @creator
+  Scenario: Response body exposes data and message fields (default s3_link) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the response body should contain field "data"
+    And the response body should contain field "message"
+
+  @negative @creator
+  Scenario: Invalid attributes enum returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "attributes": "name,not_a_real_attribute" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+  @negative @creator
+  Scenario: Invalid search_type enum returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "search_type": "phone_number" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+  @negative @creator
+  Scenario: include_only_inactive combined with include_api_users returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "include_only_inactive": "true", "include_api_users": "true" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+  @negative @creator
+  Scenario: filters.usernames not an email or mobile returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "filters": { "usernames": "not-an-email-or-mobile" } }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+  @negative @creator
+  Scenario Outline: filters.<field> with invalid NanoID returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "filters": { "<field>": "bad" } }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+    Examples:
+      | field               |
+      | roles               |
+      | profiles            |
+      | reports_to          |
+      | deselected_user_ids |
+
+  @negative @creator
+  Scenario: filters.exclude_profession invalid enum returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "filters": { "exclude_profession": "astronaut" } }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+  @negative @creator
+  Scenario: Invalid created_date format returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "filters": { "created_date_start": "2026/06/01" } }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+  @negative @creator
+  Scenario: Invalid activity_start_time datetime format returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "data_scope": "activity-sessions", "filters": { "activity_start_time": "2026-06-01" } }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+  @negative @creator
+  Scenario: Invalid StrBool value on include_inactive returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "include_inactive": "maybe" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+  @negative @creator
+  Scenario: Non-numeric page_number returns 400
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "page_number": "abc" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 400
+    And the company users export failure response should be valid
+
+  @positive @security @creator
+  Scenario: SQL injection in search_query is treated as literal (no error) returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "search_type": "name", "search_query": "'; DROP TABLE users;--" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @security @creator
+  Scenario: XSS payload in filters.location is handled safely returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "filters": { "location": "<script>alert(1)</script>" } }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @security @creator
+  Scenario: company_id query param authoritative over differing body company_id returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{UUID}" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @negative @security @creator
+  Scenario: Cross-company scoping — unknown company_id UUID is rejected
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {UUID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{UUID}" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be one of "400,403"
+    And the response body should not be empty
+
+  @negative @creator
+  Scenario Outline: <method> method is not allowed (405)
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    When I send a "<method>" request to "/user/company/users/export"
+    Then the response status code should be 405
+
+    Examples:
+      | method |
+      | PUT    |
+      | PATCH  |
+
+  @negative @creator
+  Scenario: Unsupported Content-Type is rejected
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | text/plain   |
+      | authenticationtoken | {AUTH_TOKEN} |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be one of "400,415"
+    And the response body should not be empty
+
+  @positive @boundary @creator
+  Scenario: Very long search_query returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "search_type": "name", "search_query": "{RANDOM_STRING:500}" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid
+
+  @positive @boundary @creator
+  Scenario: Unicode search_query returns 200
+    Given I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body:
+      """
+      { "company_id": "{COMPANY_ID}", "search_type": "name", "search_query": "名前 testüñ" }
+      """
+    When I send a "POST" request to "/user/company/users/export"
+    Then the response status code should be 200
+    And the company users export success response should be valid

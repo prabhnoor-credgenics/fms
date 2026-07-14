@@ -8,24 +8,12 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-/**
- * Shared response-envelope assertions for the per-feature business validators.
- *
- * <p>Most validators only need the standard envelope checks (a human-readable
- * {@code message}, the {@code success} flag, a structured {@code error.code} /
- * {@code error.data}). Those were previously copy-pasted into every validator;
- * they now live here once. Subclasses inherit the public {@code validate*}
- * methods directly, override them when a feature needs richer assertions, and
- * reuse the {@code protected} primitives inside their own success-envelope checks.
- *
- * <p>The logger resolves via {@code getClass()} so inherited assertions still log
- * under the concrete subclass name.
- */
+
 public abstract class BaseEnvelopeValidator {
 
     protected final Logger logger = LogManager.getLogger(getClass());
 
-    /** Plain failure envelope: a human-readable {@code message} must be present. */
+
     public void validateFailureEnvelope(Response response) {
         JsonPath jp = response.jsonPath();
         SoftAssert sa = new SoftAssert();
@@ -34,7 +22,7 @@ public abstract class BaseEnvelopeValidator {
         logger.info("failure envelope validated");
     }
 
-    /** {@code success == false}, a {@code message}, an {@code error.code}, and a non-empty {@code error.data} list. */
+
     public void validateValidationError(Response response) {
         JsonPath jp = response.jsonPath();
         SoftAssert sa = new SoftAssert();
@@ -49,7 +37,7 @@ public abstract class BaseEnvelopeValidator {
                 errorData == null ? 0 : errorData.size());
     }
 
-    /** {@code success == false} and {@code error.code} equals the expected code. */
+
     public void validateErrorCode(Response response, String expectedCode) {
         JsonPath jp = response.jsonPath();
         SoftAssert sa = new SoftAssert();

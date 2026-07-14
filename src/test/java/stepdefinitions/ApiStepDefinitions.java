@@ -229,6 +229,10 @@ public class ApiStepDefinitions {
             if (value != null && value.contains("{ALLOCATION_MONTH_OFFSET:")) {
                 value = scenarioTestDataResolver.resolveAllocationMonthOffset(value);
             }
+            if (value != null && (value.contains(ContextKeys.NOW_PREFIX)
+                    || value.contains(ContextKeys.CAPTURED_TIME_PREFIX))) {
+                value = scenarioTestDataResolver.resolveTimePlaceholders(value);
+            }
             value = scenarioTestDataResolver.resolveNamedSessionPlaceholders(value);
             storedQueryParams.put(param.getKey(), value);
             request.queryParam(param.getKey(), value);

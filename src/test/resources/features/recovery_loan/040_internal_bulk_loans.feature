@@ -23,6 +23,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @smoke @creator
   Scenario: Fetch the uploaded loan with an attribute level returns it in variable_data
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -41,6 +55,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: All optional fields populated returns the loan
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -70,6 +98,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: attribute_variables only (no attribute_levels) returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -85,6 +127,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: All boolean flags true returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -108,6 +164,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: All boolean flags false (explicit) returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -131,6 +201,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: Valid allocation_month (single-digit month, no leading zero) returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -146,6 +230,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @negative @boundary @creator
   Scenario: Two-digit allocation_month is a valid format but the loan is not allocated there (REC_0007)
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -162,6 +260,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: All attribute_levels members in one request returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -187,6 +299,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: attribute_levels accepted case-insensitively (uppercase coerced) returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -202,6 +328,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: Unknown body field is silently dropped (extra="ignore") returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -217,6 +357,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: Whitespace-padded loan_id is stripped (anystr_strip_whitespace) returns the loan
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -233,6 +387,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: Duplicate loan_ids entries are tolerated returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -249,6 +417,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: Combined — full collections export returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -271,6 +453,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: Combined — calling view with transforms returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -293,6 +489,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: Combined — litigation with nested audit returns 200
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -317,6 +527,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario Outline: Each source enum value "<source>" is accepted (200)
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -347,6 +571,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario Outline: Each attribute_levels member "<level>" is accepted (200)
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -381,6 +619,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator @multistep
   Scenario: Upload then read back asserts the loan is returned with id_info
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -399,6 +651,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @negative @creator
   Scenario: Request without attribute_levels or attribute_variables returns 400 (REC_0002)
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -431,6 +697,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @positive @creator
   Scenario: Mixed existing + non-existent loan_ids returns 200 (unknown ids ignored, valid loan returned)
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -488,6 +768,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @negative @creator
   Scenario: Missing authenticationtoken header is rejected
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -503,6 +797,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @negative @creator
   Scenario: Invalid authenticationtoken is rejected
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -519,6 +827,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @negative @creator
   Scenario: Expired-style authenticationtoken is rejected
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -535,6 +857,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @negative @creator
   Scenario: Missing company_id (org context unresolved) is rejected
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -549,6 +885,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @negative @creator
   Scenario: Unknown (random UUID) company_id is rejected at org resolution
+    Given scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the query parameters:
       | company_id | {UUID} |
@@ -631,6 +981,20 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @negative @boundary @creator
   Scenario: loan_ids over max (51 items) returns 400 (max_items=50, REC_0003)
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    Given I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request body:
+      """
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_16charskey00": 5 } }
+      """
+    When I send a "POST" request to "/recovery/allocation"
+    Then the response status code should be 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -639,7 +1003,59 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      { "loan_ids": ["L1","L2","L3","L4","L5","L6","L7","L8","L9","L10","L11","L12","L13","L14","L15","L16","L17","L18","L19","L20","L21","L22","L23","L24","L25","L26","L27","L28","L29","L30","L31","L32","L33","L34","L35","L36","L37","L38","L39","L40","L41","L42","L43","L44","L45","L46","L47","L48","L49","L50","L51"], "attribute_levels": ["applicant"] }
+      { "loan_ids": [
+        "Loan956697",
+        "Loan690450",
+        "Loan309192",
+        "Loan297799",
+        "Loan710659",
+        "Loan867882",
+        "Loan958601",
+        "Loan048836",
+        "Loan608138",
+        "Loan081511",
+        "Loan806065",
+        "Loan959594",
+        "Loan982068",
+        "Loan068425",
+        "Loan548749",
+        "Loan357139",
+        "Loan478571",
+        "Loan214946",
+        "Loan239570",
+        "Loan358455",
+        "Loan205486",
+        "Loan144858",
+        "Loan055569",
+        "Loan619914",
+        "Loan463454",
+        "Loan539445",
+        "Loan603574",
+        "Loan364888",
+        "Loan728672",
+        "Loan670958",
+        "Loan960333",
+        "Loan624762",
+        "Loan864771",
+        "Loan716531",
+        "Loan256722",
+        "Loan344805",
+        "Loan103383",
+        "Loan692665",
+        "Loan303624",
+        "Loan232140",
+        "Loan750036",
+        "Loan468593",
+        "Loan293508",
+        "Loan026169",
+        "Loan631285",
+        "Loan423745",
+        "Loan531285",
+        "Loan833558",
+        "Loan036362",
+        "Loan787108",
+        "Loan920515"
+      ], "attribute_levels": ["applicant"] }
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
@@ -696,7 +1112,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       { "loan_ids": ["{LOAN_ID}"], "attribute_levels": ["applicant"], "source": 5 }
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
-    Then the response status code should be 500
+    Then the response status code should be 400
     And the internal bulk loans error code should be "REC_0004"
 
   @negative @creator

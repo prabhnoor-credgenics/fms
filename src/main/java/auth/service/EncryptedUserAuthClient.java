@@ -8,11 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * Thin client for the RSA-encrypted user auth endpoints (login + change-password). Both take an
- * RSA/OAEP-SHA1 encrypted, base64 body posted as application/x-www-form-urlencoded — the same scheme
- * the web UI uses. Shared by the step definitions that exercise login / first-login password flows.
- */
+
 public class EncryptedUserAuthClient {
 
     private static final Logger logger = LogManager.getLogger(EncryptedUserAuthClient.class);
@@ -28,7 +24,6 @@ public class EncryptedUserAuthClient {
         this.rsaEncryptionUtil = rsaEncryptionUtil;
     }
 
-    /** POST /user/public/login with an encrypted {username, password, username_type:email} body. */
     public Response login(String username, String password) {
         String loginJson = String.format(
                 "{\"username\":\"%s\",\"password\":\"%s\",\"username_type\":\"email\"}", username, password);
@@ -50,10 +45,7 @@ public class EncryptedUserAuthClient {
         return response;
     }
 
-    /**
-     * PATCH /user/change-password with an encrypted {user_id, new_password, source} body, authenticated
-     * with the supplied token (the acting user's or an admin's).
-     */
+
     public Response changePassword(String userId, String newPassword, String source, String authToken) {
         String payloadJson = String.format(
                 "{\"user_id\":\"%s\",\"new_password\":\"%s\",\"source\":\"%s\"}", userId, newPassword, source);

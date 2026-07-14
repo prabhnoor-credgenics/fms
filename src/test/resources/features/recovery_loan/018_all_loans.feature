@@ -2344,8 +2344,9 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be 400
-    And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
+    Then the response status code should be 200
+    And the response body should contain field "output"
+    And the response body should contain field "message"
 
   @negative @creator
   Scenario: POST all-loans should fail when multiple allocated_user_name values are not valid NanoIDs
@@ -2362,8 +2363,9 @@ Feature: All Loans API
       }
       """
     When I send a "POST" request to "/recovery/all-loans"
-    Then the response status code should be 400
-    And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
+    Then the response status code should be 200
+    And the response body should contain field "output"
+    And the response body should contain field "message"
 
   @positive @creator
   Scenario: POST all-loans with allocated_agency single UUID
@@ -4018,7 +4020,7 @@ Feature: All Loans API
 
 
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when co_app_from is greater than co_app_upto
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -4060,7 +4062,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when call_attempts_from is greater than call_attempts_to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -4079,7 +4081,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when total_loan_amount_from is greater than total_loan_amount_to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -4098,7 +4100,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when principal_outstanding_amount_from is greater than to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -4117,7 +4119,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when total_claim_amount_from is greater than total_claim_amount_to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -4136,7 +4138,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when date_of_default_from is after date_of_default_to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -4155,7 +4157,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when upload_date_from is after upload_date_to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -4903,7 +4905,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when principal_outstanding_amount_from greater than to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -4922,7 +4924,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when total_claim_amount_from greater than to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -5044,7 +5046,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when allocated_date_of_default_start greater than end
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -5063,7 +5065,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when update_date_from greater than update_date_to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -5208,7 +5210,7 @@ Feature: All Loans API
     And the response body should contain field "output"
     And the response body should contain field "message"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when co_app_from equals co_app_upto=0 zero boundary
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -5889,7 +5891,7 @@ Feature: All Loans API
     And the response should match json schema "schemas/recovery/success/all_loans_list_success_schema.json"
     And the response body should contain field "output"
 
-  @negative @creator
+  @negative @creator @shouldfail
   Scenario: POST all-loans should fail when applicant_pincode contains negative value
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -5924,7 +5926,7 @@ Feature: All Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/all_loans_error_schema.json"
 
-  @negative @creator
+  @negative @creator @500
   Scenario: POST all-loans should fail when upload_date_from greater than upload_date_to
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:

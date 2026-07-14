@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 
 
 @CucumberOptions(
-        features = "@rerun/failedrerun.txt",
+        features = "@rerun/failedparallelrerun.txt",
         glue = {
                 "stepdefinitions",
                 "hooks",

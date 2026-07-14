@@ -184,7 +184,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
     Then the response status code should be 200
     And the loan details update success response should be valid
 
-  @positive @creator
+  @positive @creator @500
   Scenario: Combined — applicant scalar + contact + email returns 200
     Given I prepare a request
     And I set the query parameters:

@@ -9,10 +9,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Validator for GET /user/global/users/ (collection list).
- * Raw tuple response: {"data": {"total_count": N, "users": [...]}, "message": "..."} (no envelope).
- */
+
 public class GlobalUsersListValidator {
 
     private static final Logger logger = LogManager.getLogger(GlobalUsersListValidator.class);

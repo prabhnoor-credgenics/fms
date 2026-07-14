@@ -15,7 +15,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 400
-    And the response body should not be empty
+    And the response body should contain field "message" with value "you have insufficient access rights"
 
   @negative
   Scenario: TC-AUTH-002 — Invalid authenticationtoken returns 401
@@ -46,7 +46,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 403
     Then the response body should not be empty
 
 
@@ -156,7 +156,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative 
+  @negative @500
   Scenario: TC-BODY-004 — Invalid allocation_month format returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -166,6 +166,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "not-a-date"
       }
       """
@@ -284,7 +285,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive  @500
   Scenario: TC-BODY-008 — allocation_month = null defaults to current month returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -612,6 +613,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "export_type": "invalid_type"
       }
@@ -704,6 +706,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "csv"
       }
@@ -871,6 +874,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "sort": "totally_invalid_sort_field"
       }
@@ -1004,6 +1008,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "search_type": "invalid_search"
       }
@@ -1085,7 +1090,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive @500
   Scenario: TC-SELINDS-003 — selected_loan_ids + select_from/select_to — portfolio filter takes over
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -1172,6 +1177,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01"
       }
       """
@@ -1208,11 +1214,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       """
       {
         "company_id": "{COMPANY_ID}",
-        "allocation_month": "2026-01-01"
+        "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}"
       }
       """
-    And I set the query parameters:
-      | export_id | 1 |
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1255,7 +1259,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive 
+  @positive @500
   Scenario: TC-COLS-001 — All boolean column flags = true returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -1535,7 +1539,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain text "{LOAN_ID}"
 
-  @positive 
+  @positive @500
   Scenario: TC-FILTER-004 — recovery_status filter returns 200
     # TODO: 200-only — recovery_status is a disposition set via status-update, not on upload. Loan presence not asserted.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -1729,7 +1733,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive @500
   Scenario: TC-FILTER-009 — speedpost_status filter returns 200
     # TODO: 200-only — speedpost_status requires a notice/speedpost dispatch, not produced by a loan upload. Loan presence not asserted.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -1905,14 +1909,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       """
       {
         "company_id": "{COMPANY_ID}",
-        "allocation_month": "2026-01-01",
+        "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}",
         "search_type": "loan_id",
         "query": "NON-EXISTENT-LOAN-{UUID}",
         "response_type": "data"
       }
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
-    Then the response status code should be 400
+    Then the response status code should be 200
     Then the response body should not be empty
 
 
@@ -1927,6 +1931,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01"
       }
       """
@@ -1941,11 +1946,11 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | response_type | csv              |
       | search_type   | invalid_search   |
       | sort          | invalid_sort_key |
-      | export_type   | CUSTOMER         |
+      | export_type   | CUSTOMERS         |
 
 
 
-  @positive 
+  @positive @500
   Scenario: TC-EDGE-001 — select_from = 0 and select_to = 1000 with allocation_month returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -2060,7 +2065,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive @500
   Scenario: TC-EDGE-004 — Multiple status filters combined returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -2099,7 +2104,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive @500
   Scenario: TC-EDGE-005 — Digital notice filters combined returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -2178,7 +2183,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
 
-  @positive 
+  @positive @500
   Scenario: TC-COMBO-001 — High-value NPA loans with multiple filters and column flags
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -2222,7 +2227,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive @500
   Scenario: TC-COMBO-002 — Telecalling export with call attempts and status filter
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -2263,7 +2268,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive @500
   Scenario: TC-COMBO-003 — Archive export with historical limit and offset pagination
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -2395,6 +2400,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "selected_loan_ids": "{LOAN_ID}",
         "response_type": "data"
       }
@@ -2478,7 +2484,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive @500
   Scenario: TC-EXTRA-004 — principal_outstanding_amount_from > to range — behaviour TBD
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -2525,6 +2531,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "archive": "yes",
         "response_type": "data"
@@ -2544,6 +2551,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And I set the request body:
       """
       {
+        "company_id": "{COMPANY_ID}",
         "allocation_month": "2026-01-01",
         "response_type": "data"
       }

@@ -33,7 +33,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       {
         "loan_ids": ["{LOAN_ID}"],
         "source": "portfolio",
-        "allocation_type": "telecalling",
+        "allocation_type": "other",
         "allocation_algorithm": "one_to_one",
         "callback_details": {}
       }
@@ -56,7 +56,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       {
         "loan_ids": ["{LOAN_ID}"],
         "source": "portfolio",
-        "allocation_type": "telecalling",
+        "allocation_type": "other",
         "allocation_algorithm": "load_balancing",
         "callback_details": { "callback_url": "https://example.com/cb", "ref": "batch-1" },
         "workflow_id": 9001,
@@ -85,7 +85,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       {
         "loan_ids": ["{LOAN_ID}"],
         "source": "portfolio",
-        "allocation_type": "telecalling",
+        "allocation_type": "other",
         "allocation_algorithm": "load_balancing",
         "callback_details": {},
         "selected_users": { "abcd1234efgh5678": 50, "ijkl9012mnop3456": null }

@@ -66,14 +66,7 @@ public class ScenarioTestDataResolver {
         );
     }
 
-    /**
-     * Resolve the company the active user actually belongs to, ignoring any scenario-level
-     * company override. Some scenarios set a pseudo company (e.g. {@code "All"}) for the
-     * API-under-test request; that value is not a real member company, so it cannot be used to
-     * look up the user's {@code profile_id} in {@code assigned_companies_dict}. Use this instead
-     * of {@link #resolveCompanyId()} whenever the company id must map to the logged-in user's
-     * own membership (e.g. permission grants).
-     */
+
     public String resolveUserCompanyId() {
         if (testContext.getCompanyId() != null && !testContext.getCompanyId().isBlank()) {
             return testContext.getCompanyId();
@@ -101,6 +94,12 @@ public class ScenarioTestDataResolver {
 
     public String resolveAllocationMonthOffset(String text) {
         return testDataHelper.replaceAllocationMonthOffset(text);
+    }
+
+    public String resolveTimePlaceholders(String text) {
+        String result = testDataHelper.replaceCapturedTimePlaceholders(text);
+        result = testDataHelper.replaceNowPlaceholders(result);
+        return result;
     }
 
     public String resolveVariableId() {
@@ -133,7 +132,32 @@ public class ScenarioTestDataResolver {
         if (result.contains(ContextKeys.CREATOR_USER_ID)) {
             result = result.replace(ContextKeys.CREATOR_USER_ID, resolveCreatorUserId());
         }
+        if (result.contains(ContextKeys.CLIENT_ID)) {
+            result = result.replace(ContextKeys.CLIENT_ID, resolveClientId());
+        }
+        if (result.contains(ContextKeys.CLIENT_SECRET)) {
+            result = result.replace(ContextKeys.CLIENT_SECRET, resolveClientSecret());
+        }
         return result;
+    }
+
+    /**
+     * Resolves {@code {CLIENT_ID}} to the API client id for the active environment,
+     * read from secrets/crypto.properties as {@code <env>_client_id} (e.g. {@code stag_client_id}).
+     * Used to mint API keys via {@code POST /user/public/access-token}.
+     */
+    public String resolveClientId() {
+        String key = configReader.getEnvironment().getValue() + "_client_id";
+        return configReader.getCryptoProperty(key);
+    }
+
+    /**
+     * Resolves {@code {CLIENT_SECRET}} to the API client secret for the active environment,
+     * read from secrets/crypto.properties as {@code <env>_client_secret} (e.g. {@code stag_client_secret}).
+     */
+    public String resolveClientSecret() {
+        String key = configReader.getEnvironment().getValue() + "_client_secret";
+        return configReader.getCryptoProperty(key);
     }
 
     public String resolveCreatorUserId() {

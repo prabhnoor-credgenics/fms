@@ -6,10 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
 
-/**
- * Validator for POST /user/global/users/ (create global user).
- * Raw tuple success: {"data": {"user_id": "..."}, "message": "user account created successfully"}, 201.
- */
+
 public class GlobalUserCreateValidator {
 
     private static final Logger logger = LogManager.getLogger(GlobalUserCreateValidator.class);

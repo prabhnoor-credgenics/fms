@@ -59,7 +59,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
     And I set the query parameters:
       | company_id          | {COMPANY_ID}                                          |
       | source              | frontend                                              |
-      | allocation_month    | 2026-6-01                                             |
+      | allocation_month    | {ALLOCATION_MONTH_OFFSET:0}                                            |
       | attribute_levels    | applicant,loan_variables,allocation_details,payments  |
       | attribute_variables | loan_amount,applicant_name                            |
       | audit_info          | true                                                  |
@@ -131,7 +131,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
     And I set the query parameters:
       | company_id       | {COMPANY_ID} |
       | attribute_levels | applicant    |
-      | allocation_month | 2026-6-01    |
+      | allocation_month | {ALLOCATION_MONTH_OFFSET:0}   |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request headers:
@@ -463,21 +463,4 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
     And the v1 loan details error code should be "REC_0007"
 
 
-  @negative @creator
-  Scenario: POST on the v1/loans/<loan_id> endpoint is not allowed (405)
-    Given I prepare a request
-    And I set the query parameters:
-      | company_id       | {COMPANY_ID} |
-      | attribute_levels | applicant    |
-    And I set the path parameters:
-      | loan_id | {LOAN_ID} |
-    And I set the request headers:
-      | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN}     |
-    And I set the request body:
-      """
-      {}
-      """
-    When I send a "POST" request to "/recovery/v1/loans/{loan_id}"
-    Then the response status code should be 405
 

@@ -7,6 +7,7 @@ import helpers.RandomDataHelper;
 import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import utils.TestDataHelper;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -19,15 +20,18 @@ public class ScenarioDataStepDefinitions {
     private final TestContext testContext;
     private final ConfigReader configReader;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
+    private final TestDataHelper testDataHelper;
 
     public ScenarioDataStepDefinitions(
             TestContext testContext,
             ConfigReader configReader,
-            ScenarioTestDataResolver scenarioTestDataResolver
+            ScenarioTestDataResolver scenarioTestDataResolver,
+            TestDataHelper testDataHelper
     ) {
         this.testContext = testContext;
         this.configReader = configReader;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
+        this.testDataHelper = testDataHelper;
     }
 
     @Given("scenario loan id is unique")
@@ -59,5 +63,21 @@ public class ScenarioDataStepDefinitions {
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         testContext.setScenarioAllocationMonth(allocationMonth);
         logger.info("Scenario allocation month offset {} resolved to: {}", monthOffset, allocationMonth);
+    }
+
+    /**
+     * Captures the current wall-clock time under {@code key} and logs it in every supported format.
+     * The captured instant is stable for the rest of the scenario and can be referenced anywhere a
+     * placeholder is resolved (body, path params, query params) via
+     * {@code {CAPTURED_TIME:<key>:<format>}} — e.g. {@code {CAPTURED_TIME:uploadTime:epoch_seconds}}.
+     * See {@link TestDataHelper#formatEpochMillis(long, String)} for the format-to-return-type table.
+     */
+    @Given("I capture the current time as {string}")
+    public void i_capture_the_current_time_as(String key) {
+        long epochMillis = System.currentTimeMillis();
+        testContext.captureTime(key, epochMillis);
+        logger.info("Captured current time as '{}' (epoch millis {}). All formats:", key, epochMillis);
+        testDataHelper.allTimeFormats(epochMillis)
+                .forEach((format, value) -> logger.info("  {} -> {}", format, value));
     }
 }

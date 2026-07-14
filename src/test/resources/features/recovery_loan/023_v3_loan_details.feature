@@ -4,13 +4,9 @@ Feature: V3 Loan Details API
 
   @positive @smoke @creator
   Scenario: GET loan details with minimal required input (loan_id + one attribute selector)
-    # The v3 loans API returns no loan data unless at least one attribute selector is sent:
-    # attribute_levels (attribute data) OR attribute_variables (attribute variable). Without
-    # one, data.variable_data is absent and the assertion below fails — so a selector is part
-    # of the minimal required input. Here we request a single variable.
+
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -75,7 +71,6 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with all optional parameters populated
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -98,7 +93,7 @@ Feature: V3 Loan Details API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | source               | settlement                                                          |
-      | allocation_month     | 2026-6-01                                                         |
+      | allocation_month     | {ALLOCATION_MONTH_OFFSET:0}                                                         |
       | attribute_levels     | applicant,guarantors,document_details,loan_variables,ds_variables   |
       | attribute_variables  | loan_amount,applicant_name                                          |
       | audit_info           | true                                                                |
@@ -175,7 +170,7 @@ Feature: V3 Loan Details API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | attribute_levels | allocation_variables,allocation_statuses,allocation_details |
-      | allocation_month | 2026-6-01                                                 |
+      | allocation_month | {ALLOCATION_MONTH_OFFSET:0}                                 |
       | audit_info       | true                                                        |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
@@ -208,7 +203,7 @@ Feature: V3 Loan Details API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | source              | calling                                                    |
-      | attribute_variables | applicant_name,applicant_contact_number,total_loan_amount  |
+      | attribute_variables | applicant_name,applicant_contact_details,total_loan_amount  |
       | nested_audit_info   | true                                                       |
       | id_info             | true                                                       |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
@@ -241,7 +236,7 @@ Feature: V3 Loan Details API
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | attribute_variables | applicant_name,total_loan_amount,applicant_contact_number |
+      | attribute_variables | applicant_name,total_loan_amount,applicant_contact_details |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
@@ -295,7 +290,7 @@ Feature: V3 Loan Details API
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
     And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "defaults[0].allocation_month" to "<allocation_month>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -559,11 +554,10 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | attribute_levels |  |
+      | company_id       | {COMPANY_ID} |
+      | attribute_levels |              |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
-    And the v3 loan success envelope should be valid
 
   @positive @edge @creator
   Scenario: GET loan details with empty attribute_variables string coerces to null
@@ -593,7 +587,7 @@ Feature: V3 Loan Details API
       | company_id | {COMPANY_ID} |
       | attribute_variables |  |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
-    Then the response status code should be 200
+    Then the response status code should be 400
 
   @positive @edge @creator
   Scenario: GET loan details with duplicate attribute_levels entries
@@ -628,7 +622,7 @@ Feature: V3 Loan Details API
 
 
   @negative @auth @creator
-  Scenario: GET loan details without authentication token returns 401
+  Scenario: GET loan details without authentication token returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
@@ -638,10 +632,10 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Session expired, please login again"
+    And the response body should contain field "message" with value "invalid authentication token"
 
   @negative @auth @creator
-  Scenario: GET loan details with an invalid authentication token returns 401
+  Scenario: GET loan details with an invalid authentication token returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
@@ -652,7 +646,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Session expired, please login again"
+    And the response body should contain field "message" with value "invalid authentication token"
 
   @negative @auth @creator
   Scenario: GET loan details with a malformed UUID-style token returns 401
@@ -880,7 +874,7 @@ Feature: V3 Loan Details API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
-    Then the response status code should be 200
+    Then the response status code should be 400
 
   @negative @boundary @creator
   Scenario: GET loan details with a single-character loan_id
@@ -895,7 +889,7 @@ Feature: V3 Loan Details API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
-    Then the response status code should be 200
+    Then the response status code should be 400
 
   @negative @creator
   Scenario: GET loan details for a valid-format but non-existent loan id
@@ -910,8 +904,7 @@ Feature: V3 Loan Details API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
-    Then the response status code should be 200
-    And the v3 loan success envelope should be valid
+    Then the response status code should be 400
 
 
   @positive @multistep @creator

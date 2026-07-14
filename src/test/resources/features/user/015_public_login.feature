@@ -87,3 +87,114 @@ Feature: Public Login — POST /user/public/login
       """
     Then the response status code should be 401
     And the public login failure response should be valid
+
+  # ---------------------------------------------------------------------------
+  # Expanded coverage (username-type derivation, unknown user 401s, invalid
+  # enums/formats, injection, method) — grounded in public-login-api-doc.md.
+  # NOTE: wrong-password/lockout/SSO paths need real accounts — see gaps in docs.
+  # ---------------------------------------------------------------------------
+
+  @negative @creator
+  Scenario: Encrypted body that is not valid JSON fails to decode and returns 400
+    When I send an encrypted login request with body:
+      """
+      this is not a json object
+      """
+    Then the response status code should be 400
+    And the public login failure response should be valid
+
+  @negative @creator
+  Scenario: Mobile username_type with a valid-format but unknown mobile returns 401
+    When I send an encrypted login request with body:
+      """
+      { "username": "9{RANDOM_INT:100000000:999999999}", "password": "Whatever@123", "username_type": "mobile" }
+      """
+    Then the response status code should be 401
+    And the public login failure response should be valid
+
+  @negative @creator
+  Scenario: Omitted username_type auto-derived to mobile for an unknown number returns 401
+    When I send an encrypted login request with body:
+      """
+      { "username": "9{RANDOM_INT:100000000:999999999}", "password": "Whatever@123" }
+      """
+    Then the response status code should be 401
+    And the public login failure response should be valid
+
+  @negative @creator
+  Scenario: Omitted username_type that cannot be derived returns 400
+    When I send an encrypted login request with body:
+      """
+      { "username": "!!!###", "password": "Whatever@123" }
+      """
+    Then the response status code should be 400
+    And the public login failure response should be valid
+
+  @negative @creator
+  Scenario: Invalid source enum value returns 400
+    When I send an encrypted login request with body:
+      """
+      { "username": "ghost{RANDOM_STRING:6}@credgenics.com", "password": "Whatever@123", "username_type": "email", "source": "mars" }
+      """
+    Then the response status code should be 400
+    And the public login failure response should be valid
+
+  @negative @creator
+  Scenario: Malformed android_id (not a 16-char hex string) returns 400
+    When I send an encrypted login request with body:
+      """
+      { "username": "ghost{RANDOM_STRING:6}@credgenics.com", "password": "Whatever@123", "username_type": "email", "android_id": "not-a-valid-android-id" }
+      """
+    Then the response status code should be 400
+    And the public login failure response should be valid
+
+  @negative @creator
+  Scenario: Unknown/extra fields are ignored and an unknown user is rejected with 401
+    When I send an encrypted login request with body:
+      """
+      { "username": "ghost{RANDOM_STRING:10}@credgenics.com", "password": "Whatever@123", "username_type": "email", "foo": "bar", "unexpected_field": 123 }
+      """
+    Then the response status code should be 401
+    And the public login failure response should be valid
+
+  @negative @security @creator
+  Scenario: SQL-injection attempt in username is safely rejected with 401
+    When I send an encrypted login request with body:
+      """
+      { "username": "admin' OR '1'='1@credgenics.com", "password": "Whatever@123", "username_type": "email" }
+      """
+    Then the response status code should be 401
+    And the public login failure response should be valid
+
+  @negative @boundary @creator
+  Scenario: Excessively long username is treated as unknown user and returns 401
+    When I send an encrypted login request with body:
+      """
+      { "username": "ghost{RANDOM_STRING:200}@credgenics.com", "password": "Whatever@123", "username_type": "email" }
+      """
+    Then the response status code should be 401
+    And the public login failure response should be valid
+
+  @negative @creator
+  Scenario: Unicode username is treated as unknown user and returns 401
+    When I send an encrypted login request with body:
+      """
+      { "username": "üñîçödé{RANDOM_STRING:4}@credgenics.com", "password": "Whatever@123", "username_type": "email" }
+      """
+    Then the response status code should be 401
+    And the public login failure response should be valid
+
+  @negative @creator
+  Scenario: Valid non-web source (fos_app) with an unknown user returns 401
+    When I send an encrypted login request with body:
+      """
+      { "username": "ghost{RANDOM_STRING:10}@credgenics.com", "password": "Whatever@123", "username_type": "email", "source": "fos_app" }
+      """
+    Then the response status code should be 401
+    And the public login failure response should be valid
+
+  @negative @creator
+  Scenario: Wrong HTTP method on the login route is rejected
+    Given I prepare a request
+    When I send a "GET" request to "/user/public/login"
+    Then the response status code should be one of "405,404"
