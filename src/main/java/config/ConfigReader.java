@@ -4,6 +4,8 @@ import enums.Environment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -15,6 +17,8 @@ public class ConfigReader {
     private static final String ENVIRONMENT_KEY = "environment";
 
     
+    private static final String MAIN_RESOURCES_PATH = "src/main/resources/";
+
     private final Properties properties = new Properties();
     private final Properties cryptoProperties = new Properties();
 
@@ -27,35 +31,24 @@ public class ConfigReader {
     }
 
     private void loadCryptoProperties() {
-        try (InputStream inputStream = getClass()
-                .getClassLoader()
-                .getResourceAsStream(CRYPTO_PROPERTIES_FILE)) {
-
-            if (inputStream == null) {
-                logger.error("Crypto properties file '{}' not found", CRYPTO_PROPERTIES_FILE);
-                throw new RuntimeException("Crypto properties file not found: " + CRYPTO_PROPERTIES_FILE);
-            }
-
+        File file = new File(MAIN_RESOURCES_PATH + CRYPTO_PROPERTIES_FILE);
+        try (InputStream inputStream = new FileInputStream(file)) {
             cryptoProperties.load(inputStream);
-            logger.info("Successfully loaded crypto properties");
-
+            logger.info("Successfully loaded crypto properties from {}", file.getPath());
         } catch (IOException e) {
-            logger.error("Error loading crypto properties file", e);
-            throw new RuntimeException("Failed to load crypto properties file", e);
+            logger.error("Error loading crypto properties file '{}': {}", file.getPath(), e.getMessage(), e);
+            throw new RuntimeException("Failed to load crypto properties file: " + file.getPath(), e);
         }
     }
 
     private void loadGlobalProperties() {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(GLOBAL_PROPERTIES_FILE)) {
-            if (inputStream == null) {
-                logger.error("Properties file '{}' not found in classpath", GLOBAL_PROPERTIES_FILE);
-                throw new RuntimeException("Properties file not found: " + GLOBAL_PROPERTIES_FILE);
-            }
+        File file = new File(MAIN_RESOURCES_PATH + GLOBAL_PROPERTIES_FILE);
+        try (InputStream inputStream = new FileInputStream(file)) {
             properties.load(inputStream);
-            logger.info("Successfully loaded properties from {}", GLOBAL_PROPERTIES_FILE);
+            logger.info("Successfully loaded properties from {}", file.getPath());
         } catch (IOException e) {
-            logger.error("Error loading properties file: {}", e.getMessage(), e);
-            throw new RuntimeException("Failed to load properties file", e);
+            logger.error("Error loading properties file '{}': {}", file.getPath(), e.getMessage(), e);
+            throw new RuntimeException("Failed to load properties file: " + file.getPath(), e);
         }
     }
 
@@ -77,23 +70,16 @@ public class ConfigReader {
         properties.setProperty(ENVIRONMENT_KEY, activeEnvironment);
 
         String envFile = activeEnvironment + ".properties";
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(envFile)) {
-            if (inputStream == null) {
-                logger.error("Environment properties file '{}' not found in classpath", envFile);
-                throw new RuntimeException(
-                        "Environment properties file not found: " + envFile
-                                + ". Create src/main/resources/" + envFile
-                                + " with env-specific keys (base url, emails, passwords, api key company id, …)."
-                );
-            }
+        File file = new File(MAIN_RESOURCES_PATH + envFile);
+        try (InputStream inputStream = new FileInputStream(file)) {
             Properties envProperties = new Properties();
             envProperties.load(inputStream);
             properties.putAll(envProperties);
             logger.info("Successfully loaded environment properties from {} ({} keys)",
-                    envFile, envProperties.size());
+                    file.getPath(), envProperties.size());
         } catch (IOException e) {
-            logger.error("Error loading environment properties file '{}': {}", envFile, e.getMessage(), e);
-            throw new RuntimeException("Failed to load environment properties file: " + envFile, e);
+            logger.error("Error loading environment properties file '{}': {}", file.getPath(), e.getMessage(), e);
+            throw new RuntimeException("Failed to load environment properties file: " + file.getPath(), e);
         }
     }
 
@@ -115,7 +101,7 @@ public class ConfigReader {
 
 
     private String resolvePublicKey(Environment env) {
-        String envKey = env.getValue() + ".public.key";
+        String envKey = env.getValue() + "_public_key";
         String publicKey = cryptoProperties.getProperty(envKey);
 
         if (isBlank(publicKey)) {
@@ -124,9 +110,9 @@ public class ConfigReader {
         }
 
         if (isBlank(publicKey) && (env == Environment.STAG || env == Environment.UAT)) {
-            publicKey = cryptoProperties.getProperty("dev.public.key");
+            publicKey = cryptoProperties.getProperty("dev_public_key");
             if (!isBlank(publicKey)) {
-                logger.warn("{}.public.key not found; using dev.public.key for {}", envKey, env.name());
+                logger.warn("{} not found; using dev_public_key for {}", envKey, env.name());
             }
         }
 
@@ -134,7 +120,7 @@ public class ConfigReader {
             throw new RuntimeException(
                     "RSA public key not found for environment " + env.name()
                             + ". Add '" + envKey + "' to src/main/resources/secrets/crypto.properties "
-                            + "(see dev.public.key / prod.public.key)."
+                            + "(see dev_public_key / prod_public_key)."
             );
         }
         return publicKey.trim();
@@ -147,9 +133,9 @@ public class ConfigReader {
     public String getDbUrl() {
         Environment env = getEnvironment();
         String dbUrlKey = switch (env) {
-            case PROD -> "prod.recovery.db.url";
-            case STAG -> "stag.recovery.db.url";
-            default -> "dev.recovery.db.url";
+            case PROD -> "prod_recovery_db_url";
+            case STAG -> "stag_recovery_db_url";
+            default -> "dev_recovery_db_url";
         };
         String dbURL = getCryptoProperty(dbUrlKey);
         logger.info("Using DB URL for environment {}", env.name());
@@ -159,9 +145,9 @@ public class ConfigReader {
     public String getDbUsername() {
         Environment env = getEnvironment();
         String dbUsernameKey = switch (env) {
-            case PROD -> "prod.recovery.db.username";
-            case STAG -> "stag.recovery.db.username";
-            default -> "dev.recovery.db.username";
+            case PROD -> "prod_recovery_db_username";
+            case STAG -> "stag_recovery_db_username";
+            default -> "dev_recovery_db_username";
         };
         return getCryptoProperty(dbUsernameKey);
     }
@@ -169,9 +155,9 @@ public class ConfigReader {
     public String getDbPassword() {
         Environment env = getEnvironment();
         String dbPasswordKey = switch (env) {
-            case PROD -> "prod.recovery.db.password";
-            case STAG -> "stag.recovery.db.password";
-            default -> "dev.recovery.db.password";
+            case PROD -> "prod_recovery_db_password";
+            case STAG -> "stag_recovery_db_password";
+            default -> "dev_recovery_db_password";
         };
         return getCryptoProperty(dbPasswordKey);
     }
@@ -194,7 +180,7 @@ public class ConfigReader {
 
     public String getBaseUrl() {
         Environment env = getEnvironment();
-        String envKey = env.getValue() + ".base.url";
+        String envKey = env.getValue() + "_base_url";
         String baseUrl = getProperty(envKey);
 
         if (baseUrl == null || baseUrl.isEmpty()) {
@@ -206,69 +192,53 @@ public class ConfigReader {
         return baseUrl;
     }
 
-    public String getAuthToken() {
-        return getProperty("auth.token", "");
-    }
-
-    public int getConnectionTimeout() {
-        return Integer.parseInt(getProperty("api.connection.timeout", "30000"));
-    }
-
-    public int getReadTimeout() {
-        return Integer.parseInt(getProperty("api.read.timeout", "60000"));
-    }
-
     public boolean isRequestLoggingEnabled() {
-        return Boolean.parseBoolean(getProperty("request.logging.enabled", "true"));
+        return Boolean.parseBoolean(getProperty("request_logging_enabled", "true"));
     }
 
     public boolean isResponseLoggingEnabled() {
-        return Boolean.parseBoolean(getProperty("response.logging.enabled", "true"));
+        return Boolean.parseBoolean(getProperty("response_logging_enabled", "true"));
     }
 
     public String getDefaultContentType() {
-        return getProperty("default.content.type", "application/json");
+        return getProperty("default_content_type", "application/json");
     }
 
     public String getDefaultAcceptType() {
-        return getProperty("default.accept.type", "application/json");
+        return getProperty("default_accept_type", "application/json");
     }
 
     public String getLoanId() {
-        return getProperty("loan.id", "");
+        return getProperty("loan_id", "");
     }
 
     public String getCompanyId() {
-        return getProperty("company.id", "");
+        return getProperty("company_id", "");
     }
 
     public String getApiKeyGlobalCompanyId() {
         Environment env = getEnvironment();
-        return getProperty(env.getValue() + ".api.key.global.company.id", "");
+        return getProperty(env.getValue() + "_api_key_global_company_id", "");
     }
 
     public long getMaxResponseTimeMs() {
-        return Long.parseLong(getProperty("api.max.response.time.ms", "5000"));
+        return Long.parseLong(getProperty("api_max_response_time_ms", "5000"));
     }
 
     public String getAllocationMonth() {
-        return getProperty("allocation.month", "");
+        return getProperty("allocation_month", "");
     }
 
     public boolean isUniqueLoanIdPerScenarioEnabled() {
-        return Boolean.parseBoolean(getProperty("test.data.unique.loan.id.per.scenario", "true"));
-    }
-
-    public String getLoanIdPrefix() {
-        return getProperty("test.data.loan.id.prefix", "api_auto");
+        return Boolean.parseBoolean(getProperty("test_data_unique_loan_id_per_scenario", "true"));
     }
 
     public boolean isAuthTokenCacheEnabled() {
-        return Boolean.parseBoolean(getProperty("auth.token.cache.enabled", "true"));
+        return Boolean.parseBoolean(getProperty("auth_token_cache_enabled", "true"));
     }
 
     public int getAuthTokenCacheTtlMinutes() {
-        return Integer.parseInt(getProperty("auth.token.cache.ttl.minutes", "30"));
+        return Integer.parseInt(getProperty("auth_token_cache_ttl_minutes", "30"));
     }
 
     public int getParallelThreadCount() {
@@ -276,7 +246,7 @@ public class ConfigReader {
         if (override != null && !override.isBlank()) {
             return Integer.parseInt(override.trim());
         }
-        return Integer.parseInt(getProperty("parallel.thread.count", "2"));
+        return Integer.parseInt(getProperty("parallel_thread_count", "2"));
     }
 
     
@@ -285,7 +255,7 @@ public class ConfigReader {
         if (override != null && !override.isBlank()) {
             return Integer.parseInt(override.trim());
         }
-        String fromFile = getProperty("parallel.user.pool.size");
+        String fromFile = getProperty("parallel_user_pool_size");
         if (fromFile != null && !fromFile.isBlank()) {
             return Integer.parseInt(fromFile.trim());
         }
@@ -293,29 +263,33 @@ public class ConfigReader {
     }
 
     public boolean isParallelExecutionEnabled() {
-        return Boolean.parseBoolean(getProperty("parallel.execution.enabled", "false"));
+        return Boolean.parseBoolean(getProperty("parallel_execution_enabled", "false"));
+    }
+
+    public boolean isSingleUserMode() {
+        return Boolean.parseBoolean(getProperty("auth_single_user_mode", "false"));
     }
 
 
     public boolean isCiMode() {
-        return Boolean.parseBoolean(System.getProperty("ci.mode", getProperty("ci.mode", "false")));
+        return Boolean.parseBoolean(System.getProperty("ci.mode", getProperty("ci_mode", "false")));
     }
 
     public String getCompanyCreationAliasProfileId() {
-        return getProperty("company.creation.alias_profile_id", "icoPMIUXyTzl");
+        return getProperty("company_creation_alias_profile_id", "icoPMIUXyTzl");
     }
 
     public String getCompanyCreationCountryIsdCode() {
-        return getProperty("company.creation.country_isd_code", "+91");
+        return getProperty("company_creation_country_isd_code", "+91");
     }
 
     public String getCompanyCreationGstNumber() {
-        return getProperty("company.creation.gst_number", "24AAACC1206D1ZM");
+        return getProperty("company_creation_gst_number", "24AAACC1206D1ZM");
     }
 
     public String getCompanyCreationWhitelistedIps() {
         return getProperty(
-                "company.creation.whitelisted_ips",
+                "company_creation_whitelisted_ips",
                 "103.55.60.250,103.55.60.251"
         );
     }

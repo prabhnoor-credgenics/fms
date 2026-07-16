@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExportsPaymentsLogsSuccessResponse",
+  "description": "200 raw tuple for GET {BASE_ROUTE}/exports/payments (list of export-job logs).",
+  "type": "object",
+  "required": ["data", "message", "success"],
+  "properties": {
+    "success": { "const": true },
+    "message": { "type": "string" },
+    "data": {
+      "type": "object",
+      "required": ["exports", "total_count"],
+      "properties": {
+        "exports": { "type": "array" },
+        "total_count": { "type": "integer" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

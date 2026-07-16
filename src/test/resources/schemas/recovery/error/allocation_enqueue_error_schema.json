@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AllocationEnqueueErrorResponse",
+  "description": "Failure envelope for POST {BASE_ROUTE}/allocation/enqueue. Validation (REC_0076) carries Pydantic field errors at error.data; service guards (REC_0015/REC_0077/REC_0004) carry error.code.",
+  "type": "object",
+  "required": ["success", "message"],
+  "properties": {
+    "success": { "const": false },
+    "message": { "type": "string" },
+    "data": { "type": ["object", "array", "null"] },
+    "error": {
+      "type": ["object", "null"],
+      "properties": {
+        "code": { "type": ["string", "null"] },
+        "data": { "type": ["array", "object", "string", "null"] },
+        "detail": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LoanUpdateErrorResponse",
+  "description": "Failure envelope for PATCH {BASE_ROUTE}/loan/<loan_id> (loan not found / bad loan_id format / variable validation).",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": { "type": "string" },
+    "output": { "type": ["string", "null"] },
+    "payload": { "type": ["object", "array", "null"] },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

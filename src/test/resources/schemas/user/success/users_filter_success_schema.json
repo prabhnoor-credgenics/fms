@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UsersFilterSuccessResponse",
+  "description": "Raw (dict, 200) tuple for GET {BASE_ROUTE}/users/filter/. {data:{filters:{...}}, message}.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["filters"],
+      "properties": {
+        "filters": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Assign Default Dispositions — Success Response",
+  "type": "object",
+  "required": ["data", "message", "success"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "description": "Empty object on success"
+    },
+    "message": {
+      "type": "string",
+      "enum": ["Default Dispositions Created"]
+    },
+    "success": {
+      "type": "boolean",
+      "enum": [true]
+    }
+  },
+  "additionalProperties": false
+}

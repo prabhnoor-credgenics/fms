@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanyTableNamesSuccessResponse",
+  "description": "Success envelope for GET {BASE_ROUTE}/company-table-names.",
+  "type": "object",
+  "required": ["success", "data"],
+  "properties": {
+    "success": { "const": true },
+    "message": { "type": ["string", "null"] },
+    "data": {
+      "type": "array",
+      "description": "Company table rows ordered by id (may be empty).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": ["integer", "string", "null"] },
+          "table_name": { "type": ["string", "null"] }
+        },
+        "additionalProperties": true
+      }
+    },
+    "error": { "type": ["null", "object"] }
+  },
+  "additionalProperties": true
+}

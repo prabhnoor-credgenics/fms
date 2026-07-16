@@ -39,7 +39,13 @@ public class CompanyCreationService {
     }
 
     public Response createCompanyStep1() {
-        return postCompanyPayload(payloadBuilder.buildStep1Payload(), 1);
+        Response response = postCompanyPayload(payloadBuilder.buildStep1Payload(), 1);
+        if (response.getStatusCode() == 409) {
+            logger.warn("Step 1 returned 409 (company creation session conflict). Re-preparing test data and retrying.");
+            payloadBuilder.prepareCompanyCreationTestData();
+            response = postCompanyPayload(payloadBuilder.buildStep1Payload(), 1);
+        }
+        return response;
     }
 
     public Response createCompanyStep1WithoutMandatoryField(String fieldName) {

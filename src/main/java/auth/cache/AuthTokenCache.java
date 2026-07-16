@@ -56,6 +56,10 @@ public class AuthTokenCache {
         );
     }
 
+    public void invalidate(Environment env, UserRole role, String userType, int userSlot) {
+        CACHE.remove(new CacheKey(env, role, userType, userSlot));
+    }
+
     public static void clearAll() {
         CACHE.clear();
     }

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExportLoanDataSuccessResponse",
+  "description": "200 data-mode / no-data response for the LoanExport routes (/export/bulk/loan-*): {\"data\":[...],\"message\":\"success|no data found\"}.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": { "type": "array" },
+    "message": { "type": "string" },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

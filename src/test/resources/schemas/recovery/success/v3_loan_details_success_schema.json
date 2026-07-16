@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "V3LoanDetailsSuccessResponse",
+  "type": "object",
+  "required": ["success", "message", "data"],
+  "properties": {
+    "success": {
+      "const": true
+    },
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "required": ["variable_data"],
+      "properties": {
+        "variable_data": {
+          "type": "object",
+          "description": "Keyed by loan_id; each value is the requested attribute map.",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "error": {
+      "type": ["null", "object"]
+    },
+    "message_template": {
+      "type": ["string", "null"]
+    },
+    "message_placeholder": {
+      "type": ["object", "null"]
+    }
+  },
+  "additionalProperties": true
+}

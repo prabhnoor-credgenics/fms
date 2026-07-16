@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InternalCompanyUsersSuccessResponse",
+  "description": "Success envelope for POST {BASE_ROUTE}/internal/company-users/. `data` is an object (users list + optional total_count) when uncompressed, or a base64-encoded LZ4 string when compress_data is truthy.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": ["object", "string"],
+      "description": "Object {users:[...], total_count?} when uncompressed; base64 LZ4 string when compress_data is truthy."
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Data Upload Mappings — GET List Success Response",
+  "type": "object",
+  "required": ["message", "output"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "enum": ["Mappings fetched successfully"]
+    },
+    "output": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["mapping_id", "mapping_name", "mapping_description"],
+        "properties": {
+          "mapping_id":          { "type": "integer" },
+          "mapping_name":        { "type": "string" },
+          "mapping_description": { "type": ["string", "null"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

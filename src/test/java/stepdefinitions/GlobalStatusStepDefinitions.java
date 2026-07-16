@@ -1,26 +1,23 @@
 package stepdefinitions;
 
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.GlobalStatusValidator;
 
 
-public class GlobalStatusStepDefinitions {
+public class GlobalStatusStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(GlobalStatusStepDefinitions.class);
 
-    private final TestContext testContext;
     private final GlobalStatusValidator globalStatusValidator;
 
     public GlobalStatusStepDefinitions(
             TestContext testContext,
             GlobalStatusValidator globalStatusValidator
     ) {
-        this.testContext = testContext;
+        super(testContext);
         this.globalStatusValidator = globalStatusValidator;
     }
 
@@ -34,9 +31,5 @@ public class GlobalStatusStepDefinitions {
     public void global_status_company_id_should_match_requested_company() {
         globalStatusValidator.validateCompanyIdMapping(activeResponse());
         logger.info("Global status company_id mapping validation completed");
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

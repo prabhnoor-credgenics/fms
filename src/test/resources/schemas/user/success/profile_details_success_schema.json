@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProfileDetailsSuccessResponse",
+  "description": "Success envelope for GET /user/profiles/<profile_id> (Branch A and B).",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": ["profile_details"],
+      "properties": {
+        "profile_details": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

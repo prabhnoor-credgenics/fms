@@ -99,7 +99,7 @@ public class UserLoginService {
     private void fetchAndStoreCompanyId(String authToken) {
         String baseUrl = configReader.getBaseUrl();
         Map<String, String> queryParams = new LinkedHashMap<>();
-        queryParams.put("auth_token", LoggingHelper.maskToken(authToken));
+        queryParams.put("auth_token", authToken);
         Map<String, String> headers = new LinkedHashMap<>();
         headers.put("referer", baseUrl + "/user/public/verify/user");
         LoggingHelper.logRequestDetails(
@@ -110,15 +110,7 @@ public class UserLoginService {
                 queryParams,
                 null
         );
-        Response response = given()
-                .baseUri(baseUrl)
-                .header("referer", baseUrl + "/user/public/verify/user")
-                .queryParam("auth_token", authToken)
-                .when()
-                .get("/user/public/verify/user")
-                .then()
-                .extract()
-                .response();
+        Response response = UserProfileService.requestVerifyUser(configReader, authToken);
         LoggingHelper.logResponseDetails(response);
         assertStatus(response, 200, "GET /user/public/verify/user");
 
@@ -131,7 +123,8 @@ public class UserLoginService {
         String companyId = null;
 
         if (assignedCompaniesObj instanceof String) {
-            companyId = (String) assignedCompaniesObj;
+            String s = (String) assignedCompaniesObj;
+            companyId = s.contains(",") ? s.split(",")[0].trim() : s;
         } else if (assignedCompaniesObj instanceof List<?> list && !list.isEmpty()) {
             Object first = list.get(0);
             companyId = first == null ? null : first.toString();

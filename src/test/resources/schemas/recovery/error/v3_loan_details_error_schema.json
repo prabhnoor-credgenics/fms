@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "V3LoanDetailsErrorResponse",
+  "type": "object",
+  "required": ["success", "message", "error"],
+  "properties": {
+    "success": {
+      "const": false
+    },
+    "message": {
+      "type": "string"
+    },
+    "data": {
+      "type": ["null", "object", "array"]
+    },
+    "error": {
+      "type": "object",
+      "required": ["code"],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "data": {
+          "type": ["null", "array", "object", "string"]
+        },
+        "detail": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "message_template": {
+      "type": ["string", "null"]
+    },
+    "message_placeholder": {
+      "type": ["object", "null"]
+    }
+  },
+  "additionalProperties": true
+}

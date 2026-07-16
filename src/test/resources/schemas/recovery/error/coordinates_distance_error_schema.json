@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Coordinates Distance — Error Response",
+  "description": "Plain {message} error for POST /recovery/coordinates/distance (e.g. 'No loans provided').",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

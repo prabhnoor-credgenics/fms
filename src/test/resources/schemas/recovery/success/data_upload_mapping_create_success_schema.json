@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Data Upload Mapping — POST Create Success Response",
+  "type": "object",
+  "required": ["output", "message", "mapping_id"],
+  "properties": {
+    "output": {
+      "type": "string",
+      "enum": ["mapping created"]
+    },
+    "message": {
+      "type": "string",
+      "enum": ["success"]
+    },
+    "mapping_id": {
+      "type": "integer",
+      "description": "Newly created mapping ID"
+    }
+  },
+  "additionalProperties": false
+}

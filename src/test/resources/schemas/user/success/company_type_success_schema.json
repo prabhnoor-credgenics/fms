@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanyTypeSuccessResponse",
+  "description": "Standard envelope for GET /user/company-type (standard_generate_response).",
+  "type": "object",
+  "required": ["success", "data", "message"],
+  "properties": {
+    "id": { "type": ["string", "null"] },
+    "success": { "const": true },
+    "message": { "type": ["string", "null"] },
+    "data": {
+      "type": "object",
+      "description": "User + company-type info; company_type is a list ordered loan/credit line/agency.",
+      "properties": {
+        "company_type": { "type": ["array", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "error_code": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

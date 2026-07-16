@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "output": {},
+    "status": { "type": "string" },
+    "message": { "type": "string", "minLength": 1 },
+    "message_template": { "type": "string" },
+    "message_placeholder": { "type": "object" }
+  },
+  "additionalProperties": true
+}

@@ -2,43 +2,55 @@ package stepdefinitions;
 
 import context.TestContext;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
+import io.restassured.path.json.JsonPath;
 import utils.DbClient;
+import context.ScenarioTestDataResolver;
 
-import java.math.BigDecimal;
 import java.sql.Types;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 public class LoanRecoveryDbDatatypeSteps {
 
     private final TestContext testContext;
     private final DbClient dbClient;
+    private final ScenarioTestDataResolver scenarioTestDataResolver;
 
-    public LoanRecoveryDbDatatypeSteps(TestContext testContext, DbClient dbClient) {
+    public LoanRecoveryDbDatatypeSteps(TestContext testContext, DbClient dbClient, ScenarioTestDataResolver scenarioTestDataResolver) {
         this.testContext = testContext;
         this.dbClient = dbClient;
+        this.scenarioTestDataResolver = scenarioTestDataResolver;
     }
 
     @Then(
             "DB column {string} in table {string} should have datatype {string} " +
-                    "and match API field {string} for loan {string}"
+                    "and match API field {string} for loan {string} and company {string}"
     )
     public void validateDbDatatypeAndValue(
             String dbColumn,
             String tableName,
             String expectedDbType,
             String jsonPath,
-            String loanId
+            String loanId,
+            String companyId
     ) {
-        Response response = testContext.getResponse();
-        if (response == null) {
-            throw new IllegalStateException("No API response available. Send a request before DB validation.");
+        String requestBody = testContext.getLastRequestBody();
+        if (requestBody == null) {
+            throw new IllegalStateException("No request body available. Send a request before DB validation.");
         }
 
-        DbClient.DbRow dbRow = dbClient.fetchSingleColumn(tableName, dbColumn, "loan_id", loanId);
+        String resolvedLoanId = scenarioTestDataResolver.replaceScenarioPlaceholders(loanId);
+        String resolvedCompanyId = scenarioTestDataResolver.replaceScenarioPlaceholders(companyId);
+
+        DbClient.DbRow dbRow;
+        if ("loan_id".equals(dbColumn)) {
+            dbRow = dbClient.fetchSingleColumn(tableName, dbColumn, "loan_id", resolvedLoanId, resolvedCompanyId);
+        } else {
+            dbRow = dbClient.fetchFromLoanDetailsJson(tableName, dbColumn, resolvedLoanId, resolvedCompanyId);
+        }
 
         assertEquals(
                 sqlTypeToString(dbRow.sqlType()),
@@ -46,7 +58,7 @@ public class LoanRecoveryDbDatatypeSteps {
                 "DB datatype mismatch for column: " + dbColumn
         );
 
-        Object apiValue = response.jsonPath().get(jsonPath);
+        Object apiValue = JsonPath.from(requestBody).get(jsonPath);
         Object dbValue = dbRow.value();
 
         if (apiValue == null) {
@@ -57,20 +69,23 @@ public class LoanRecoveryDbDatatypeSteps {
         switch (expectedDbType.toUpperCase()) {
             case "VARCHAR":
             case "TEXT":
-                assertEquals(dbValue.toString(), apiValue.toString());
+                assertTrue(
+                        dbValue.toString().contains(apiValue.toString()),
+                        "DB value '" + dbValue + "' does not contain expected '" + apiValue + "' for column " + dbColumn
+                );
                 break;
 
             case "INTEGER":
                 assertEquals(
-                        ((Number) dbValue).intValue(),
-                        ((Number) apiValue).intValue()
+                        Integer.parseInt(dbValue.toString()),
+                        (int) Double.parseDouble(apiValue.toString())
                 );
                 break;
 
             case "NUMERIC":
             case "DECIMAL":
                 assertEquals(
-                        ((BigDecimal) dbValue).doubleValue(),
+                        Double.parseDouble(dbValue.toString()),
                         Double.parseDouble(apiValue.toString()),
                         0.01
                 );

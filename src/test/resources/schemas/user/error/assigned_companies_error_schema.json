@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AssignedCompaniesErrorResponse",
+  "description": "Error envelope for GET {BASE_ROUTE}/companies/<user_id>.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

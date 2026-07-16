@@ -46,14 +46,14 @@ public class FrameworkConstants {
     public static final String ENDPOINT_LOAN_STAGE_CONFIG = "/recovery/loan-stage/config";
     public static final String ENDPOINT_RECOVERY_EXPORTS = "/recovery/exports";
 
-    public static final String SCHEMA_GLOBAL_STATUS_SUCCESS = "schemas/global_status_success_schema.json";
-    public static final String SCHEMA_GLOBAL_STATUS_ERROR = "schemas/global_status_error_schema.json";
-    public static final String SCHEMA_RECOVERY_VARIABLES_SUCCESS = "schemas/recovery_variables_success_schema.json";
-    public static final String SCHEMA_RECOVERY_VARIABLES_ERROR = "schemas/recovery_variables_error_schema.json";
-    public static final String SCHEMA_LOAN_STAGE_CONFIG_SUCCESS = "schemas/loan_stage_config_success_schema.json";
-    public static final String SCHEMA_LOAN_STAGE_CONFIG_ERROR = "schemas/loan_stage_config_error_schema.json";
-    public static final String SCHEMA_RECOVERY_EXPORTS_SUCCESS = "schemas/recovery_exports_success_schema.json";
-    public static final String SCHEMA_RECOVERY_EXPORTS_ERROR = "schemas/recovery_exports_error_schema.json";
+    public static final String SCHEMA_GLOBAL_STATUS_SUCCESS = "schemas/global_status/success/global_status_success_schema.json";
+    public static final String SCHEMA_GLOBAL_STATUS_ERROR = "schemas/global_status/error/global_status_error_schema.json";
+    public static final String SCHEMA_RECOVERY_VARIABLES_SUCCESS = "schemas/recovery/success/recovery_variables_success_schema.json";
+    public static final String SCHEMA_RECOVERY_VARIABLES_ERROR = "schemas/recovery/error/recovery_variables_error_schema.json";
+    public static final String SCHEMA_LOAN_STAGE_CONFIG_SUCCESS = "schemas/recovery/success/loan_stage_config_success_schema.json";
+    public static final String SCHEMA_LOAN_STAGE_CONFIG_ERROR = "schemas/recovery/error/loan_stage_config_error_schema.json";
+    public static final String SCHEMA_RECOVERY_EXPORTS_SUCCESS = "schemas/recovery/success/recovery_exports_success_schema.json";
+    public static final String SCHEMA_RECOVERY_EXPORTS_ERROR = "schemas/recovery/error/recovery_exports_error_schema.json";
 
     
     public static final String COMPANY_STEP1_TEMPLATE = "test-data/company_creation_step1.json";
@@ -61,21 +61,21 @@ public class FrameworkConstants {
     public static final String COMPANY_STEP3_TEMPLATE = "test-data/company_creation_step3.json";
 
     
-    public static final String SCHEMA_COMPANY_STEP1_SUCCESS = "schemas/company_creation_step1_success_schema.json";
-    public static final String SCHEMA_COMPANY_STEP2_SUCCESS = "schemas/company_creation_step2_success_schema.json";
-    public static final String SCHEMA_COMPANY_STEP3_SUCCESS = "schemas/company_creation_step3_success_schema.json";
-    public static final String SCHEMA_COMPANY_STEP4_SUCCESS = "schemas/company_creation_step4_success_schema.json";
-    public static final String SCHEMA_COMPANY_GET_SUCCESS = "schemas/company_creation_get_success_schema.json";
-    public static final String SCHEMA_COMPANY_STEP1_REQUEST = "schemas/company_creation_step1_request_schema.json";
-    public static final String SCHEMA_COMPANY_STEP2_REQUEST = "schemas/company_creation_step2_request_schema.json";
-    public static final String SCHEMA_COMPANY_STEP3_REQUEST = "schemas/company_creation_step3_request_schema.json";
-    public static final String SCHEMA_COMPANY_STEP4_REQUEST = "schemas/company_creation_step4_request_schema.json";
-    public static final String SCHEMA_COMPANY_ERROR = "schemas/company_creation_error_schema.json";
+    public static final String SCHEMA_COMPANY_STEP1_SUCCESS = "schemas/company_creation/success/company_creation_step1_success_schema.json";
+    public static final String SCHEMA_COMPANY_STEP2_SUCCESS = "schemas/company_creation/success/company_creation_step2_success_schema.json";
+    public static final String SCHEMA_COMPANY_STEP3_SUCCESS = "schemas/company_creation/success/company_creation_step3_success_schema.json";
+    public static final String SCHEMA_COMPANY_STEP4_SUCCESS = "schemas/company_creation/success/company_creation_step4_success_schema.json";
+    public static final String SCHEMA_COMPANY_GET_SUCCESS = "schemas/company_creation/success/company_creation_get_success_schema.json";
+    public static final String SCHEMA_COMPANY_STEP1_REQUEST = "schemas/request/company_creation_step1_request_schema.json";
+    public static final String SCHEMA_COMPANY_STEP2_REQUEST = "schemas/request/company_creation_step2_request_schema.json";
+    public static final String SCHEMA_COMPANY_STEP3_REQUEST = "schemas/request/company_creation_step3_request_schema.json";
+    public static final String SCHEMA_COMPANY_STEP4_REQUEST = "schemas/request/company_creation_step4_request_schema.json";
+    public static final String SCHEMA_COMPANY_ERROR = "schemas/company_creation/error/company_creation_error_schema.json";
 
     
     public static final String PROP_ENVIRONMENT = "environment";
-    public static final String PROP_AUTH_TOKEN = "auth.token";
-    public static final String PROP_BASE_URL = ".base.url";
+    public static final String PROP_AUTH_TOKEN = "auth_token";
+    public static final String PROP_BASE_URL = "_base_url";
 
     
     public static final String LOG_REQUEST_SENT = "Request sent successfully";

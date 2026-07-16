@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConnectionConfigSuccessResponse",
+  "description": "Success envelope for GET /user/connection-config/<connection_id>.",
+  "type": "object",
+  "required": ["message", "data"],
+  "properties": {
+    "message": { "type": ["string", "null"] },
+    "data": {
+      "type": "object",
+      "required": ["connection_type", "data"],
+      "properties": {
+        "connection_type": { "type": ["string", "null"] },
+        "data": {
+          "type": "array",
+          "items": { "type": "object", "additionalProperties": true }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

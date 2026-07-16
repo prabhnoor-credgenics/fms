@@ -37,20 +37,24 @@ public class DbClient {
             String tableName,
             String columnName,
             String whereColumn,
-            String whereValue
+            String whereValue,
+            String companyId
     ) {
         validateSqlIdentifier(tableName, "table");
         validateSqlIdentifier(columnName, "column");
         validateSqlIdentifier(whereColumn, "where column");
 
-        String sql = "SELECT " + columnName + " FROM " + tableName + " WHERE " + whereColumn + " = ?";
+        String sql = "SELECT " + columnName + " FROM " + tableName
+                + " WHERE " + whereColumn + " = ? AND company_id = ?::uuid";
 
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             stmt.setString(1, whereValue);
+            stmt.setString(2, companyId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) {
                     throw new IllegalStateException(
                             "No DB row in " + tableName + " where " + whereColumn + " = " + whereValue
+                                    + " and company_id = " + companyId
                     );
                 }
                 Object value = rs.getObject(columnName);
@@ -62,9 +66,47 @@ public class DbClient {
         }
     }
 
-    public String getSingleValue(String tableName, String columnName, String whereColumn, String whereValue) {
-        DbRow row = fetchSingleColumn(tableName, columnName, whereColumn, whereValue);
-        return row.value() == null ? null : row.value().toString();
+    public DbRow fetchFromLoanDetailsJson(
+            String tableName,
+            String jsonKey,
+            String loanId,
+            String companyId
+    ) {
+        validateSqlIdentifier(tableName, "table");
+
+        String sql = "SELECT jsonb_typeof(loan_details->?), loan_details->>? " +
+                "FROM " + tableName + " WHERE loan_id = ? AND company_id = ?::uuid";
+
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, jsonKey);
+            stmt.setString(2, jsonKey);
+            stmt.setString(3, loanId);
+            stmt.setString(4, companyId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (!rs.next()) {
+                    throw new IllegalStateException(
+                            "No DB row in " + tableName + " where loan_id = " + loanId
+                                    + " and company_id = " + companyId
+                    );
+                }
+                String jsonType = rs.getString(1);
+                String value = rs.getString(2);
+                int sqlType = mapJsonbType(jsonType, value);
+                return new DbRow(value, sqlType);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Query execution failed: " + sql, e);
+        }
+    }
+
+    private int mapJsonbType(String jsonbType, String value) {
+        if (jsonbType == null) return java.sql.Types.NULL;
+        return switch (jsonbType) {
+            case "string" -> java.sql.Types.VARCHAR;
+            case "boolean" -> java.sql.Types.BOOLEAN;
+            case "number" -> value != null && value.contains(".") ? java.sql.Types.NUMERIC : java.sql.Types.INTEGER;
+            default -> java.sql.Types.OTHER;
+        };
     }
 
     private void validateSqlIdentifier(String identifier, String label) {

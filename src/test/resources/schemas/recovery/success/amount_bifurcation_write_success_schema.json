@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Amount Bifurcation Write — Response Schema",
+  "type": "object",
+  "properties": {
+    "data": {},
+    "message": {
+      "type": "string"
+    },
+    "success": {
+      "type": "boolean"
+    }
+  }
+}

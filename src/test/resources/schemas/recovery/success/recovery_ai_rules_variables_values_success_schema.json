@@ -1,0 +1,38 @@
+{
+"$schema": "http://json-schema.org/draft-07/schema#",
+"title": "AIRulesVariablesValuesSuccessResponse",
+"type": "object",
+"required": [
+"message",
+"output",
+"message_template",
+"message_placeholder"
+],
+"properties": {
+"message": {
+"type": "string",
+"enum": ["success"]
+},
+"output": {
+"type": "array",
+"items": {
+"type": "string"
+}
+},
+"additional_mapping": {
+"type": "object",
+"additionalProperties": {
+"type": "string"
+}
+},
+"message_template": {
+"type": "string",
+"enum": ["success"]
+},
+"message_placeholder": {
+"type": "object",
+"additionalProperties": false
+}
+},
+"additionalProperties": false
+}

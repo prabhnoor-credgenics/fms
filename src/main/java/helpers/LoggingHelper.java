@@ -138,19 +138,6 @@ public final class LoggingHelper {
         fileLog("RESPONSE status={} | step={}", response.getStatusCode(), stepLabel());
     }
 
-    public static void logApiExchange(
-            String method,
-            String baseUrl,
-            String endpoint,
-            Map<String, String> headers,
-            Map<String, String> queryParams,
-            String requestBody,
-            Response response
-    ) {
-        logRequestDetails(method, baseUrl, endpoint, headers, queryParams, requestBody);
-        logResponseDetails(response);
-    }
-
     public static void logScenarioFailure(String scenarioName) {
         console("");
         console("========================================");

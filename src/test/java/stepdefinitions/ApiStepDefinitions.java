@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+import auth.manager.AuthManager;
 import base.RestAssuredBase;
 import config.ConfigReader;
 import context.ContextKeys;
@@ -13,7 +14,6 @@ import helpers.LoggingHelper;
 import helpers.PayloadHelper;
 import helpers.ResponseHelper;
 import helpers.SchemaHelper;
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -22,7 +22,6 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.testng.asserts.SoftAssert;
 
 import utils.JsonUtils;
 import utils.ResponseValidator;
@@ -35,8 +34,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.MatcherAssert.assertThat;
+import java.io.File;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.Matchers.equalTo;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -51,6 +50,7 @@ public class ApiStepDefinitions {
     private final ConfigReader configReader;
     private final RestAssuredBase restAssuredBase;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
+    private final AuthManager authManager;
 
     private RequestSpecification request;
     private Response response;
@@ -64,17 +64,86 @@ public class ApiStepDefinitions {
             TestContext testContext,
             ConfigReader configReader,
             RestAssuredBase restAssuredBase,
-            ScenarioTestDataResolver scenarioTestDataResolver
+            ScenarioTestDataResolver scenarioTestDataResolver,
+            AuthManager authManager
     ) {
         this.testContext = testContext;
         this.configReader = configReader;
         this.restAssuredBase = restAssuredBase;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
+        this.authManager = authManager;
+    }
+
+    @Given("I authenticate as {string}")
+    public void i_authenticate_as(String roleName) {
+        enums.UserRole role = switch (roleName.trim().toLowerCase()) {
+            case "creator" -> enums.UserRole.CREATOR;
+            case "approver" -> enums.UserRole.APPROVER;
+            case "chief-admin", "chief_admin", "chiefadmin" -> enums.UserRole.CHIEF_ADMIN;
+            default -> throw new IllegalArgumentException(
+                    "Unknown role '" + roleName + "'. Expected: creator | approver | chief-admin");
+        };
+        testContext.setUserRole(role);
+        authManager.initializeAuthentication(role);
+        logger.info("Switched active authentication to role: {} (token now resolves to this role for {{AUTH_TOKEN}})", role);
+    }
+
+    @When("I wait for {int} seconds")
+    public void i_wait_for_seconds(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000L);
+            logger.info("Waited for {} seconds", seconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    @When("I poll a {string} request to {string} until the response body contains {string}")
+    public void i_poll_until_body_contains(String httpMethod, String endpoint, String expected) {
+        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(expected);
+        int maxAttempts = 3;
+        int delaySeconds = 5;
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            i_send_a_request_to(httpMethod, endpoint);
+            if (activeResponse().getBody().asString().contains(resolved)) {
+                logger.info("Poll matched: body contains '{}' on attempt {}/{}", resolved, attempt, maxAttempts);
+                return;
+            }
+            logger.info("Poll attempt {}/{}: '{}' not present yet", attempt, maxAttempts, resolved);
+            if (attempt < maxAttempts) {
+                i_wait_for_seconds(delaySeconds);
+            }
+        }
+        logger.warn("Poll exhausted: '{}' never appeared after {} attempts", resolved, maxAttempts);
+    }
+
+    @When("I poll a {string} request to {string} until the response body does not contain {string}")
+    public void i_poll_until_body_not_contains(String httpMethod, String endpoint, String unexpected) {
+        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(unexpected);
+        int maxAttempts = 3;
+        int delaySeconds = 5;
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            i_send_a_request_to(httpMethod, endpoint);
+            if (!activeResponse().getBody().asString().contains(resolved)) {
+                logger.info("Poll matched: body no longer contains '{}' on attempt {}/{}", resolved, attempt, maxAttempts);
+                return;
+            }
+            logger.info("Poll attempt {}/{}: '{}' still present", attempt, maxAttempts, resolved);
+            if (attempt < maxAttempts) {
+                i_wait_for_seconds(delaySeconds);
+            }
+        }
+        logger.warn("Poll exhausted: '{}' still present after {} attempts", resolved, maxAttempts);
     }
 
     @Given("I prepare a request")
     public void i_prepare_a_request() {
         request = restAssuredBase.getRequestSpec();
+        storedHeaders.clear();
+        storedQueryParams.clear();
+        storedPathParams.clear();
+        requestBody = null;
+        headersToRemove.clear();
         logger.info("Request specification prepared");
     }
 
@@ -99,18 +168,13 @@ public class ApiStepDefinitions {
                 value = scenarioTestDataResolver.resolveCompanyId();
                 logger.info("Using x-company-id from resolved company id");
             }
+            value = scenarioTestDataResolver.resolveNamedSessionPlaceholders(value);
             if (!"Referer".equals(headerName)) {
                 storedHeaders.put(headerName, value);
                 request.header(headerName, value);
                 logger.info("Added header: {} = {}", headerName, value);
             }
         }
-    }
-
-    @Given("I remove header {string}")
-    public void i_remove_header(String headerName) {
-        headersToRemove.add(headerName.toLowerCase());
-        logger.info("Marked header '{}' for removal on send", headerName);
     }
 
     private void ensureRequestPrepared() {
@@ -150,6 +214,26 @@ public class ApiStepDefinitions {
             if ("company_id".equals(paramNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
                 value = scenarioTestDataResolver.resolveCompanyId();
             }
+            if (ContextKeys.AUTH_TOKEN.equals(value)) {
+                value = testContext.getAuthToken();
+            }
+            if (ContextKeys.LOAN_ID.equals(value)) {
+                value = scenarioTestDataResolver.resolveLoanId();
+            }
+            if (ContextKeys.CREATOR_USER_ID.equals(value)) {
+                value = scenarioTestDataResolver.resolveCreatorUserId();
+            }
+            if (ContextKeys.ALLOCATION_MONTH.equals(value)) {
+                value = scenarioTestDataResolver.resolveAllocationMonth();
+            }
+            if (value != null && value.contains("{ALLOCATION_MONTH_OFFSET:")) {
+                value = scenarioTestDataResolver.resolveAllocationMonthOffset(value);
+            }
+            if (value != null && (value.contains(ContextKeys.NOW_PREFIX)
+                    || value.contains(ContextKeys.CAPTURED_TIME_PREFIX))) {
+                value = scenarioTestDataResolver.resolveTimePlaceholders(value);
+            }
+            value = scenarioTestDataResolver.resolveNamedSessionPlaceholders(value);
             storedQueryParams.put(param.getKey(), value);
             request.queryParam(param.getKey(), value);
             logger.info("Added query parameter: {} = {}", param.getKey(), value);
@@ -177,6 +261,8 @@ public class ApiStepDefinitions {
     @Given("I update JSON field {string} to {string}")
     public void i_update_json_field_to(String jsonPath, String value) {
         updateJsonFieldInternal(jsonPath, value);
+        logger.info(jsonPath);
+        logger.info(value);
     }
 
     @Given("I update JSON field {string} to null")
@@ -301,6 +387,15 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
             throw new IllegalArgumentException("Unsupported HTTP method: " + method);
     }
 
+    if (response.getStatusCode() == 401 && testContext.getUserRole() != null && usedRealAuthToken()) {
+        logger.warn("Got 401 for '{}' - session expired. Re-authenticating and retrying once.", endpoint);
+        authManager.reAuthenticate(testContext.getUserRole());
+        rebuildRequestWithFreshAuth();
+        applyRefererHeader(endpoint);
+        response = executeHttp(method, endpoint);
+        logger.info("Retry response status: {}", response.getStatusCode());
+    }
+
     LocalDateTime responseTime = LocalDateTime.now();
     long endTime = System.currentTimeMillis();
     long duration = endTime - startTime;
@@ -336,30 +431,34 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
     testContext.setApiLogs(apiLogs.toString());
 
-    autoValidateResponseSchema(endpoint, response.getStatusCode());
+    autoValidateResponseSchema(httpMethod, endpoint, response.getStatusCode());
 
     testContext.setResponse(response);
 
     logResponseDetails(response);
 }
     
-        private void autoValidateResponseSchema(String endpoint, int statusCode) {
+        private void autoValidateResponseSchema(String httpMethod, String endpoint, int statusCode) {
         String schemaPath = null;
         boolean isSuccess = statusCode >= 200 && statusCode < 300;
 
         if (endpoint != null && endpoint.contains("/recovery/v1/loan")) {
             if (isSuccess) {
-                schemaPath = "schemas/loan_recovery_success_schema.json";
+                schemaPath = "schemas/recovery/success/loan_recovery_success_schema.json";
             }
-            
-        } else if (endpoint != null && endpoint.contains("/recovery/company")) {
+
+        } else if (endpoint != null && endpoint.contains("/recovery/company")
+                && !endpoint.contains("company-table-names")) {
             if (isSuccess) {
-                schemaPath = "schemas/recovery_company_success_schema.json";
+                boolean isWrite = "PUT".equalsIgnoreCase(httpMethod) || "PATCH".equalsIgnoreCase(httpMethod) || "POST".equalsIgnoreCase(httpMethod);
+                schemaPath = isWrite
+                        ? "schemas/recovery/success/recovery_company_put_success_schema.json"
+                        : "schemas/recovery/success/recovery_company_filtered_success_schema.json";
             }
         }
 
         if (schemaPath != null) {
-            response.then().assertThat().body(matchesJsonSchemaInClasspath(schemaPath));
+            response.then().assertThat().body(matchesJsonSchema(new File("src/test/resources/" + schemaPath)));
             logger.info("Auto schema validation passed for endpoint '{}' using '{}'", endpoint, schemaPath);
         } else {
             logger.info("No auto schema mapping configured for endpoint '{}'", endpoint);
@@ -396,21 +495,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
             logger.info("Response Body: (empty)");
         }
         logger.info("=== End Response Details ===");
-    }
-    @Then("the validation error should contain")
-    public void the_validation_error_should_contain(DataTable table) {
-        SoftAssert softAssert = new SoftAssert();
-        Map<String, String> expected = table.asMap(String.class, String.class);
-        Map<String, String> actual = activeResponse().jsonPath().getMap("error");
-
-        softAssert.assertNotNull(actual, "Error data is null in response");
-        expected.forEach((key, value) -> {
-            softAssert.assertTrue(actual.containsKey(key), "Missing error key: " + key);
-            if (actual.containsKey(key)) {
-                softAssert.assertEquals(actual.get(key), value, "Mismatch for error key: " + key);
-            }
-        });
-        softAssert.assertAll();
     }
 
     @Then("the response status code should be {int}")
@@ -459,9 +543,20 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         AssertionHelper.assertFieldExists(activeResponse(), jsonPath);
     }
 
-    @Then("the response header {string} should be {string}")
-    public void the_response_header_should_be(String headerName, String expectedValue) {
-        ResponseValidator.validateHeader(activeResponse(), headerName, expectedValue);
+    @Then("the response body should contain text {string}")
+    public void the_response_body_should_contain_text(String expected) {
+        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(expected);
+        String body = activeResponse().getBody().asString();
+        Assert.assertTrue(body.contains(resolved),
+                "Expected response body to contain '" + resolved + "' but it did not. Body: " + body);
+    }
+
+    @Then("the response body should not contain text {string}")
+    public void the_response_body_should_not_contain_text(String unexpected) {
+        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(unexpected);
+        String body = activeResponse().getBody().asString();
+        Assert.assertFalse(body.contains(resolved),
+                "Expected response body NOT to contain '" + resolved + "' but it did. Body: " + body);
     }
 
     @Then("the response content type should be {string}")
@@ -493,34 +588,8 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
     @Then("the response should match json schema {string}")
     public void the_response_should_match_json_schema(String schemaPath) {
-        activeResponse().then().assertThat().body(matchesJsonSchemaInClasspath(schemaPath));
+        activeResponse().then().assertThat().body(matchesJsonSchema(new File("src/test/resources/" + schemaPath)));
         logger.info("Response schema validation passed for: {}", schemaPath);
-    }
-
-    @Then("the request body should match json schema {string}")
-    public void the_request_body_should_match_json_schema(String schemaPath) {
-        if (requestBody == null || requestBody.isEmpty()) {
-            throw new IllegalStateException(
-                    "Request body must be set before schema validation. "
-                            + "Use 'I set the request body' or 'I set the request body from file' first."
-            );
-        }
-        assertThat("Request body failed schema validation against " + schemaPath,
-                requestBody, matchesJsonSchemaInClasspath(schemaPath));
-        logger.info("Request body schema validation passed for: {}", schemaPath);
-    }
-
-    @Then("I store the response for later use")
-    public void i_store_the_response_for_later_use() {
-        logger.info("Response stored for later use. Status code: {}", activeResponse().getStatusCode());
-    }
-
-    public Response getResponse() {
-        return activeResponse();
-    }
-
-    public RequestSpecification getRequest() {
-        return request;
     }
 
     private Response activeResponse() {
@@ -553,6 +622,28 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         this.requestBody = updatedBody;
         request.body(updatedBody);
         logger.info("Updated JSON field '{}' to '{}'", jsonPath, processedValue);
+    }
+
+    private boolean usedRealAuthToken() {
+        String realToken = testContext.getAuthToken();
+        if (realToken == null) return false;
+        return storedHeaders.entrySet().stream()
+                .filter(e -> "authenticationtoken".equalsIgnoreCase(e.getKey()))
+                .map(Map.Entry::getValue)
+                .anyMatch(realToken::equals);
+    }
+
+    private void rebuildRequestWithFreshAuth() {
+        String freshToken = testContext.getAuthToken();
+        request = restAssuredBase.getRequestSpec();
+        storedHeaders.replaceAll((k, v) -> "authenticationtoken".equalsIgnoreCase(k) ? freshToken : v);
+        storedHeaders.forEach((k, v) -> request.header(k, v));
+        storedPathParams.forEach((k, v) -> request.pathParam(k, v));
+        storedQueryParams.forEach((k, v) -> request.queryParam(k, v));
+        if (requestBody != null && !requestBody.isBlank()) {
+            request.body(requestBody);
+        }
+        logger.info("Rebuilt request with fresh auth token after 401");
     }
 
     private void rebuildRequestIfHeadersRemoved() {
@@ -594,12 +685,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         if (referer != null && !referer.isBlank()) {
             headers.put("Referer", referer);
         }
-        headers.replaceAll((name, value) -> {
-            if ("authenticationtoken".equalsIgnoreCase(name) && value != null && !value.isBlank()) {
-                return LoggingHelper.maskToken(value);
-            }
-            return value;
-        });
         return headers;
     }
 

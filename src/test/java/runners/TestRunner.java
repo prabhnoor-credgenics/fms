@@ -2,10 +2,10 @@ package runners;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
-
+import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        features = "src/test/resources/features/recovery",
+        features = "src/test/resources/features/",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -20,13 +20,19 @@ import io.cucumber.testng.CucumberOptions;
                 "validators"
         },
         plugin = {
-
                 "pretty",
-                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+                "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+                "hooks.ThreadStatsListener",
+                "rerun:rerun/failedrerun.txt"
         },
-        monochrome = true,
-        tags = "@recovery-company"
-
+        monochrome = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
+
+    @Override
+    @DataProvider(parallel = false)
+    public Object[][] scenarios() {
+        return super.scenarios();
+    }
+
 }

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Final Status — GET Success Response",
+  "description": "Raw (dict, 200) for GET /recovery/final/status/<loan_id>. {output, message}; output is a list of {status_id, module, status_name[, attempts]} records, or {} when none found.",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": ["array", "object"],
+      "description": "List of level-1 status records across modules; {} (empty object) when no statuses found."
+    },
+    "message": {
+      "type": "string",
+      "enum": ["success"]
+    },
+    "message_template": {
+      "type": ["string", "null"]
+    },
+    "message_placeholder": {
+      "type": ["object", "array", "null"]
+    }
+  },
+  "additionalProperties": false
+}

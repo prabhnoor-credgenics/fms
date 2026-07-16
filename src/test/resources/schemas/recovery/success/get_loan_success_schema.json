@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loan Details — GET Success Response",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": "object",
+      "description": "Shape varies by fields param: may contain loan_details, payment_history, notice_tracking_details, communication_details, remarks, reminders, applicant_details, transaction_details"
+    },
+    "message": {
+      "type": "string",
+      "enum": ["success"]
+    }
+  },
+  "additionalProperties": false
+}

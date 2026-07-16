@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PublicAccessTokenErrorResponse",
+  "description": "Error envelope for POST {BASE_ROUTE}/public/access-token.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

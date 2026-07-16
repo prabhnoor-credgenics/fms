@@ -1,13 +1,13 @@
 package context;
 
+import enums.UserRole;
 import io.restassured.response.Response;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Per-scenario state holder. Created once per Cucumber scenario by PicoContainer.
- */
+
 public class TestContext {
 
     private String authToken;
@@ -30,19 +30,47 @@ public class TestContext {
     private Response savedComparisonResponse;
     private String lastRequestBody;
 
-    /** Request/Response logs for Extent failure reporting */
+
     private String apiLogs;
 
-    /** Scenario-specific overrides */
+
     private String scenarioLoanId;
     private String scenarioCompanyId;
     private String scenarioAllocationMonth;
     private String scenarioName;
+    private String scenarioVariableId;
+    private String scenarioMappingId;
 
-    /** Parallel user pool slot */
+
     private int userSlot;
 
+
+    private UserRole userRole;
+
     private final Map<String, String> randomStringCache = new HashMap<>();
+
+
+    private final Map<String, Long> capturedTimes = new HashMap<>();
+
+
+    public record UserSession(String authToken, String companyId, String userId, UserRole role, int slot) {}
+
+
+    private final Map<String, UserSession> namedSessions = new LinkedHashMap<>();
+
+
+    public void rememberUserSession(String key, UserSession session) {
+        namedSessions.put(key, session);
+    }
+
+    public UserSession getUserSession(String key) {
+        return namedSessions.get(key);
+    }
+
+
+    public Map<String, UserSession> getNamedSessions() {
+        return namedSessions;
+    }
 
     public Response getResponse() {
         return response;
@@ -232,6 +260,22 @@ public class TestContext {
         this.scenarioName = scenarioName;
     }
 
+    public String getScenarioVariableId() {
+        return scenarioVariableId;
+    }
+
+    public void setScenarioVariableId(String scenarioVariableId) {
+        this.scenarioVariableId = scenarioVariableId;
+    }
+
+    public String getScenarioMappingId() {
+        return scenarioMappingId;
+    }
+
+    public void setScenarioMappingId(String scenarioMappingId) {
+        this.scenarioMappingId = scenarioMappingId;
+    }
+
     public int getUserSlot() {
         return userSlot;
     }
@@ -240,11 +284,31 @@ public class TestContext {
         this.userSlot = userSlot;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
     public Map<String, String> getRandomStringCache() {
         return randomStringCache;
     }
 
     public void clearRandomStringCache() {
         randomStringCache.clear();
+    }
+
+    public void captureTime(String key, long epochMillis) {
+        capturedTimes.put(key, epochMillis);
+    }
+
+    public Long getCapturedTime(String key) {
+        return capturedTimes.get(key);
+    }
+
+    public Map<String, Long> getCapturedTimes() {
+        return capturedTimes;
     }
 }

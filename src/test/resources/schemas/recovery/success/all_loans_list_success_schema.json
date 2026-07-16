@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          {
+            "type": "object",
+            "required": ["loan_id"],
+            "properties": {
+              "loan_id": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": true
+          }
+        ]
+      }
+    },
+    "message": { "type": "string", "minLength": 1 }
+  },
+  "additionalProperties": true
+}

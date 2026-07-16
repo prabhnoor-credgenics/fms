@@ -62,7 +62,26 @@ public class ScenarioTestDataResolver {
         }
         throw new IllegalStateException(
                 "Company ID is not initialized. Use 'Given scenario company id is ...', "
-                        + "set company.id in properties, or configure {env}.api.key.global.company.id"
+                        + "set company_id in properties, or configure {env}_api_key_global_company_id"
+        );
+    }
+
+
+    public String resolveUserCompanyId() {
+        if (testContext.getCompanyId() != null && !testContext.getCompanyId().isBlank()) {
+            return testContext.getCompanyId();
+        }
+        String fromConfig = configReader.getCompanyId();
+        if (fromConfig != null && !fromConfig.isBlank()) {
+            return fromConfig;
+        }
+        String globalCompanyId = configReader.getApiKeyGlobalCompanyId();
+        if (globalCompanyId != null && !globalCompanyId.isBlank()) {
+            return globalCompanyId;
+        }
+        throw new IllegalStateException(
+                "Active user's company id is not initialized. Authenticate first, "
+                        + "set company_id in properties, or configure {env}_api_key_global_company_id"
         );
     }
 
@@ -73,17 +92,136 @@ public class ScenarioTestDataResolver {
         return configReader.getAllocationMonth();
     }
 
+    public String resolveAllocationMonthOffset(String text) {
+        return testDataHelper.replaceAllocationMonthOffset(text);
+    }
+
+    public String resolveTimePlaceholders(String text) {
+        String result = testDataHelper.replaceCapturedTimePlaceholders(text);
+        result = testDataHelper.replaceNowPlaceholders(result);
+        return result;
+    }
+
+    public String resolveVariableId() {
+        if (testContext.getScenarioVariableId() != null && !testContext.getScenarioVariableId().isBlank()) {
+            return testContext.getScenarioVariableId();
+        }
+        throw new IllegalStateException(
+                "Variable ID is not set. Use 'I store the created variable id from response' after a POST first."
+        );
+    }
+
     public String replaceScenarioPlaceholders(String text) {
         if (text == null) {
             return null;
         }
-        String result = testDataHelper.replacePlaceholders(text);
+        String result = resolveNamedSessionPlaceholders(text);
+        result = testDataHelper.replacePlaceholders(result);
         result = result.replace(ContextKeys.LOAN_ID, resolveLoanId());
         result = result.replace(ContextKeys.COMPANY_ID, resolveCompanyId());
         String allocationMonth = resolveAllocationMonth();
         if (allocationMonth != null && !allocationMonth.isBlank()) {
             result = result.replace(ContextKeys.ALLOCATION_MONTH, allocationMonth);
         }
+        if (result.contains(ContextKeys.VARIABLE_ID)) {
+            result = result.replace(ContextKeys.VARIABLE_ID, resolveVariableId());
+        }
+        if (result.contains(ContextKeys.MAPPING_ID)) {
+            result = result.replace(ContextKeys.MAPPING_ID, resolveMappingId());
+        }
+        if (result.contains(ContextKeys.CREATOR_USER_ID)) {
+            result = result.replace(ContextKeys.CREATOR_USER_ID, resolveCreatorUserId());
+        }
+        if (result.contains(ContextKeys.CLIENT_ID)) {
+            result = result.replace(ContextKeys.CLIENT_ID, resolveClientId());
+        }
+        if (result.contains(ContextKeys.CLIENT_SECRET)) {
+            result = result.replace(ContextKeys.CLIENT_SECRET, resolveClientSecret());
+        }
         return result;
+    }
+
+    /**
+     * Resolves {@code {CLIENT_ID}} to the API client id for the active environment,
+     * read from secrets/crypto.properties as {@code <env>_client_id} (e.g. {@code stag_client_id}).
+     * Used to mint API keys via {@code POST /user/public/access-token}.
+     */
+    public String resolveClientId() {
+        String key = configReader.getEnvironment().getValue() + "_client_id";
+        return configReader.getCryptoProperty(key);
+    }
+
+    /**
+     * Resolves {@code {CLIENT_SECRET}} to the API client secret for the active environment,
+     * read from secrets/crypto.properties as {@code <env>_client_secret} (e.g. {@code stag_client_secret}).
+     */
+    public String resolveClientSecret() {
+        String key = configReader.getEnvironment().getValue() + "_client_secret";
+        return configReader.getCryptoProperty(key);
+    }
+
+    public String resolveCreatorUserId() {
+        if (testContext.getUserId() != null && !testContext.getUserId().isBlank()) {
+            return testContext.getUserId();
+        }
+        throw new IllegalStateException(
+                "Creator user id is not set. Use 'I store the current user id from the user profile' "
+                        + "while authenticated as the creator before referencing {CREATOR_USER_ID}."
+        );
+    }
+
+
+    public String resolveNamedSessionPlaceholders(String text) {
+        if (text == null || text.indexOf('{') < 0) {
+            return text;
+        }
+        String result = text;
+        result = replaceKeyed(result, ContextKeys.AUTH_TOKEN_FOR_PREFIX, "auth token",
+                session -> session.authToken());
+        result = replaceKeyed(result, ContextKeys.COMPANY_ID_FOR_PREFIX, "company id",
+                session -> session.companyId());
+        result = replaceKeyed(result, ContextKeys.USER_ID_FOR_PREFIX, "user id",
+                session -> session.userId());
+        return result;
+    }
+
+
+    private String replaceKeyed(
+            String text,
+            String prefix,
+            String fieldLabel,
+            java.util.function.Function<TestContext.UserSession, String> extractor
+    ) {
+        String result = text;
+        int start;
+        while ((start = result.indexOf(prefix)) >= 0) {
+            int end = result.indexOf('}', start);
+            if (end < 0) {
+                break; // unterminated placeholder; leave the rest as-is
+            }
+            String key = result.substring(start + prefix.length(), end).trim();
+            TestContext.UserSession session = testContext.getUserSession(key);
+            if (session == null) {
+                throw new IllegalStateException(
+                        "No user remembered as '" + key + "'. Use a step like "
+                                + "'I authenticate as \"creator\" slot 1 and remember as \"" + key + "\"' first.");
+            }
+            String value = extractor.apply(session);
+            if (value == null || value.isBlank()) {
+                throw new IllegalStateException(
+                        "Remembered user '" + key + "' has no " + fieldLabel + " captured.");
+            }
+            result = result.substring(0, start) + value + result.substring(end + 1);
+        }
+        return result;
+    }
+
+    public String resolveMappingId() {
+        if (testContext.getScenarioMappingId() != null && !testContext.getScenarioMappingId().isBlank()) {
+            return testContext.getScenarioMappingId();
+        }
+        throw new IllegalStateException(
+                "Mapping ID is not set. Use 'I store the created mapping id from response' after a POST first."
+        );
     }
 }

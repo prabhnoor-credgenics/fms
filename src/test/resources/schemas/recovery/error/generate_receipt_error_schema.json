@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GenerateReceiptErrorResponse",
+  "description": "Failure envelope for POST {BASE_ROUTE}/generate/receipt. Validation REC_RT007 carries Pydantic errors at error.data; REC_RT015 (no template) / REC_RT013 carry error.code.",
+  "type": "object",
+  "required": ["success", "message"],
+  "properties": {
+    "success": { "const": false },
+    "message": { "type": "string" },
+    "data": { "type": ["object", "array", "null"] },
+    "error": {
+      "type": ["object", "null"],
+      "properties": {
+        "code": { "type": ["string", "null"] },
+        "data": { "type": ["array", "object", "string", "null"] },
+        "detail": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

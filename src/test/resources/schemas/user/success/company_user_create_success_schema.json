@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompanyUserCreateSuccessResponse",
+  "description": "Raw tuple for POST {BASE_ROUTE}/company/users/. 201 -> {data:{user_id}, message}; 202 (approval pending) -> {message} with no data.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "data": { "type": ["object", "null"] },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

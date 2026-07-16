@@ -1,26 +1,23 @@
 package stepdefinitions;
 
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.LoanStageConfigValidator;
 
 
-public class LoanStageConfigStepDefinitions {
+public class LoanStageConfigStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(LoanStageConfigStepDefinitions.class);
 
-    private final TestContext testContext;
     private final LoanStageConfigValidator loanStageConfigValidator;
 
     public LoanStageConfigStepDefinitions(
             TestContext testContext,
             LoanStageConfigValidator loanStageConfigValidator
     ) {
-        this.testContext = testContext;
+        super(testContext);
         this.loanStageConfigValidator = loanStageConfigValidator;
     }
 
@@ -34,9 +31,5 @@ public class LoanStageConfigStepDefinitions {
     public void loan_stage_config_company_id_should_match_requested_company() {
         loanStageConfigValidator.validateCompanyIdMapping(activeResponse());
         logger.info("Loan stage config company_id mapping validation completed");
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

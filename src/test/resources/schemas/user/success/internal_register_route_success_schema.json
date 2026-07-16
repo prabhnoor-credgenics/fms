@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InternalRegisterRouteSuccessResponse",
+  "description": "Raw (dict, 200) tuple for POST {BASE_ROUTE}/internal/register-route. {message, service_name, route_map (json string), module_name}.",
+  "type": "object",
+  "required": ["message", "service_name", "route_map", "module_name"],
+  "properties": {
+    "message": { "type": ["string", "null"] },
+    "service_name": { "type": "string" },
+    "route_map": { "type": "string" },
+    "module_name": { "type": "string" }
+  },
+  "additionalProperties": true
+}

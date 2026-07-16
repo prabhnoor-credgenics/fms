@@ -1,0 +1,141 @@
+@api @formula-variables @recovery
+Feature: Formula Allowed Variables API
+
+  Background:
+    Given scenario company id is from configuration
+    And I prepare a request
+
+
+
+  @positive @smoke @creator
+  Scenario: Get formula allowed variables for amount variable type
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+    And I set the query parameters:
+      | company_id    | {COMPANY_ID} |
+      | variable_type | amount       |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/formula_allowed_variables_success_schema.json"
+    And the response body should contain field "data"
+    And the response body should contain field "message"
+
+  @positive @chief-admin
+  Scenario: Get formula allowed variables for number variable type
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+    And I set the query parameters:
+      | company_id    | {COMPANY_ID} |
+      | variable_type | number       |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/formula_allowed_variables_success_schema.json"
+    And the response body should contain field "data"
+
+  @positive @chief-admin
+  Scenario: Get formula allowed variables with variable_level loan
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+    And I set the query parameters:
+      | company_id     | {COMPANY_ID} |
+      | variable_type  | amount       |
+      | variable_level | loan         |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/formula_allowed_variables_success_schema.json"
+    And the response body should contain field "data"
+
+  @positive @chief-admin
+  Scenario: Get formula allowed variables for date variable type
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+    And I set the query parameters:
+      | company_id    | {COMPANY_ID} |
+      | variable_type | date         |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/recovery/success/formula_allowed_variables_success_schema.json"
+    And the response body should contain field "data"
+
+  @positive @performance @chief-admin
+  Scenario: Formula allowed variables GET response time should be within threshold
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+    And I set the query parameters:
+      | company_id    | {COMPANY_ID} |
+      | variable_type | amount       |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 200
+    And the response time should be less than 5000 milliseconds
+
+  @negative @creator
+  Scenario: GET formula allowed variables should fail when variable_type is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 400
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
+
+  @negative @creator
+  Scenario: GET formula allowed variables should fail when company_id is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+    And I set the query parameters:
+      | variable_type | amount |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 400
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
+
+  @negative @creator
+  Scenario: GET formula allowed variables should fail when company_id does not exist
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+    And I set the query parameters:
+      | company_id    | 00000000-0000-0000-0000-000000000000 |
+      | variable_type | amount                               |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 422
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
+
+  @negative @auth @creator
+  Scenario: GET formula allowed variables should fail when authentication token is missing
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I set the request headers:
+      | accept       | application/json, text/plain, */* |
+    And I set the query parameters:
+      | company_id    | {COMPANY_ID} |
+      | variable_type | amount       |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 400
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
+
+  @negative @auth @creator
+  Scenario: GET formula allowed variables should fail with invalid authentication token
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | invalid_token_12345               |
+    And I set the query parameters:
+      | company_id    | {COMPANY_ID} |
+      | variable_type | amount       |
+    When I send a "GET" request to "/recovery/formula/allowed-variables"
+    Then the response status code should be 400
+    And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"

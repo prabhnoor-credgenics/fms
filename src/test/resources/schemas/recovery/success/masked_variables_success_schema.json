@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "output": {
+      "type": ["object", "array", "null"],
+      "properties": {
+        "masked_variables_data": {
+          "type": ["array", "object", "null"]
+        }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": "string", "minLength": 1 },
+    "status": { "type": "string" },
+    "message_template": { "type": "string" },
+    "message_placeholder": { "type": "object" }
+  },
+  "additionalProperties": true
+}

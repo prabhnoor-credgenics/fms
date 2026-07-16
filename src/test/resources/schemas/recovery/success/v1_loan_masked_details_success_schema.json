@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "V1LoanMaskedDetailsSuccessResponse",
+  "description": "Success envelope for GET {BASE_ROUTE}/v1/loans/<loan_id> (external=true → PII masked, not encrypted).",
+  "type": "object",
+  "required": ["success", "message", "data"],
+  "properties": {
+    "success": { "const": true },
+    "message": { "type": "string" },
+    "status_code": { "type": ["integer", "null"] },
+    "data": {
+      "type": "object",
+      "required": ["variable_data"],
+      "properties": {
+        "variable_data": {
+          "type": "object",
+          "description": "Keyed by loan_id; each value is the requested (masked) attribute map.",
+          "additionalProperties": { "type": "object" }
+        },
+        "variable_source_mapping": { "type": ["object", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "error": { "type": ["null", "object"] }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Roles — Success Response",
+  "description": "Observed on staging: RoleAPI returns the raw {data, message} tuple (NOT the standard {id,success,message,error_code} envelope the doc describes). data shape varies by verb (role_id / roles[] / role_details / update_result / rowcount).",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": { "type": ["object", "array"] },
+    "message": { "type": "string" }
+  },
+  "additionalProperties": true
+}

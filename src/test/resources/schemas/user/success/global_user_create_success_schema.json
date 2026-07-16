@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GlobalUserCreateSuccessResponse",
+  "description": "Raw tuple for POST /user/global/users/. 201 -> {data:{user_id}, message}.",
+  "type": "object",
+  "required": ["data", "message"],
+  "properties": {
+    "data": {
+      "type": ["object", "null"],
+      "properties": {
+        "user_id": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

@@ -13,7 +13,6 @@ import validators.business.CompanyCreationValidator;
 
 import helpers.SchemaHelper;
 
-import static constants.FrameworkConstants.SCHEMA_COMPANY_GET_SUCCESS;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP1_REQUEST;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP1_SUCCESS;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP2_REQUEST;
@@ -51,32 +50,15 @@ public class CompanyCreationStepDefinitions {
         companyCreationValidator.assertTrademarkConsistentAcrossSteps();
     }
 
-    @Given("company creation step 1 is completed")
-    public void company_creation_step_1_is_completed() {
-        company_creation_test_data_is_prepared();
-        if (testContext.getCompanyId() == null || testContext.getCompanyId().isBlank()) {
-            Response response = companyCreationService.createCompanyStep1();
-            companyCreationValidator.validateSchema(response, SCHEMA_COMPANY_STEP1_SUCCESS);
-            companyCreationValidator.extractAndStoreStep1(response);
-        } else {
-            logger.info("Step 1 already completed for company_id={}", testContext.getCompanyId());
-        }
-    }
-
     @Given("company creation steps 1 and 2 are completed")
     public void company_creation_steps_1_and_2_are_completed() {
-        company_creation_step_1_is_completed();
+        company_creation_test_data_is_prepared();
+        Response step1 = companyCreationService.createCompanyStep1();
+        companyCreationValidator.validateSchema(step1, SCHEMA_COMPANY_STEP1_SUCCESS);
+        companyCreationValidator.extractAndStoreStep1(step1);
         Response step2 = companyCreationService.createCompanyStep2();
         companyCreationValidator.validateSchema(step2, SCHEMA_COMPANY_STEP2_SUCCESS);
         companyCreationValidator.validateStep2(step2);
-    }
-
-    @Given("company creation steps 1, 2 and 3 are completed")
-    public void company_creation_steps_1_2_and_3_are_completed() {
-        company_creation_steps_1_and_2_are_completed();
-        Response step3 = companyCreationService.createCompanyStep3();
-        companyCreationValidator.validateSchema(step3, SCHEMA_COMPANY_STEP3_SUCCESS);
-        companyCreationValidator.validateStep3(step3);
     }
 
     @When("I create company with validation step 1")
@@ -126,16 +108,6 @@ public class CompanyCreationStepDefinitions {
         companyCreationService.createCompanyStep4();
     }
 
-    @When("I get user company details for the created company")
-    public void i_get_user_company_details_for_the_created_company() {
-        companyCreationService.getUserCompanyDetails();
-    }
-
-    @When("I get recovery company details for the created company")
-    public void i_get_recovery_company_details_for_the_created_company() {
-        companyCreationService.getRecoveryCompanyDetails(true);
-    }
-
     @Then("company creation step 1 should be successful")
     public void company_creation_step_1_should_be_successful() {
         Response response = requireResponse();
@@ -143,8 +115,7 @@ public class CompanyCreationStepDefinitions {
         companyCreationValidator.extractAndStoreStep1(response);
     }
 
-    @Then("company creation request should match json schema {string}")
-    public void company_creation_request_should_match_json_schema(String schemaPath) {
+    private void company_creation_request_should_match_json_schema(String schemaPath) {
         String body = testContext.getLastRequestBody();
         if (body == null || body.isBlank()) {
             throw new IllegalStateException(
@@ -196,13 +167,6 @@ public class CompanyCreationStepDefinitions {
         companyCreationValidator.extractAndStoreStep4(response);
     }
 
-    @Then("the created company details should match test context")
-    public void the_created_company_details_should_match_test_context() {
-        Response response = requireResponse();
-        companyCreationValidator.validateSchema(response, SCHEMA_COMPANY_GET_SUCCESS);
-        companyCreationValidator.validateCreatedCompanyMatchesContext(response);
-    }
-
     @Then("company creation stored identifiers should be present")
     public void company_creation_stored_identifiers_should_be_present() {
         org.testng.Assert.assertNotNull(testContext.getCompanyId(), "company_id");
@@ -213,18 +177,6 @@ public class CompanyCreationStepDefinitions {
                 "Stored identifiers present: company_id={}, trademark={}",
                 testContext.getCompanyId(),
                 testContext.getTrademark()
-        );
-    }
-
-    @Then("company creation final identifiers should be present")
-    public void company_creation_final_identifiers_should_be_present() {
-        company_creation_stored_identifiers_should_be_present();
-        org.testng.Assert.assertNotNull(testContext.getProfileId(), "profile_id");
-        org.testng.Assert.assertNotNull(testContext.getUserId(), "user_id");
-        logger.info(
-                "Final identifiers: profile_id={}, user_id={}",
-                testContext.getProfileId(),
-                testContext.getUserId()
         );
     }
 

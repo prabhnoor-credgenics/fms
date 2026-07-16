@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AllocationDetailsSuccessResponse",
+  "description": "Success envelope for POST {BASE_ROUTE}/allocation/details.",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "message": { "type": "string" },
+    "output": {
+      "type": "array",
+      "description": "One record per active, non-deleted allocation matching the filters (may be empty).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "allocated_user_id": { "type": ["string", "null"] },
+          "loan_id": { "type": ["string", "null"] }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

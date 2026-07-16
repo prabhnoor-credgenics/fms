@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InternalCompanyUsersErrorResponse",
+  "description": "Error envelope for POST {BASE_ROUTE}/internal/company-users/.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": { "type": ["string", "null"] }
+  },
+  "additionalProperties": true
+}

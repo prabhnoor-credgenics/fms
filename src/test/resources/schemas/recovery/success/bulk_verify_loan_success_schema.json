@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BulkVerifyLoanSuccessResponse",
+  "description": "200 raw tuple for POST {BASE_ROUTE}/bulk/verify-loan: verified vs non-verified loan ids.",
+  "type": "object",
+  "required": ["success", "data"],
+  "properties": {
+    "success": { "const": true },
+    "data": {
+      "type": "object",
+      "required": ["verified_loan_ids", "non_verified_loan_ids"],
+      "properties": {
+        "verified_loan_ids": { "type": "array", "items": { "type": "string" } },
+        "non_verified_loan_ids": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

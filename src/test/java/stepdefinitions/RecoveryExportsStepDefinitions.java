@@ -1,26 +1,23 @@
 package stepdefinitions;
 
 import context.TestContext;
-import helpers.ResponseHelper;
 import io.cucumber.java.en.Then;
-import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.RecoveryExportsValidator;
 
 
-public class RecoveryExportsStepDefinitions {
+public class RecoveryExportsStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(RecoveryExportsStepDefinitions.class);
 
-    private final TestContext testContext;
     private final RecoveryExportsValidator recoveryExportsValidator;
 
     public RecoveryExportsStepDefinitions(
             TestContext testContext,
             RecoveryExportsValidator recoveryExportsValidator
     ) {
-        this.testContext = testContext;
+        super(testContext);
         this.recoveryExportsValidator = recoveryExportsValidator;
     }
 
@@ -40,9 +37,5 @@ public class RecoveryExportsStepDefinitions {
     public void recovery_exports_page_should_respect_page_size(int pageSize) {
         recoveryExportsValidator.validatePagination(activeResponse(), pageSize);
         logger.info("Recovery exports pagination validation completed for page_size={}", pageSize);
-    }
-
-    private Response activeResponse() {
-        return ResponseHelper.resolve(null, testContext);
     }
 }

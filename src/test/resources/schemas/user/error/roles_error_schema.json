@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Roles — Error Response",
+  "description": "HandledException handler returns a plain {\"message\": ...} (optionally data.error_payload). Gateway auth/org failures also return {\"message\": ...}.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": { "type": ["string", "null"] },
+    "data": { "type": ["object", "array", "null"] }
+  },
+  "additionalProperties": true
+}

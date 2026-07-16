@@ -6,7 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utils.ResponseValidator;
 
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import java.io.File;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -27,7 +28,7 @@ public class CompanyCreationValidator {
         if (response == null) {
             throw new IllegalStateException("Cannot validate schema: response is null");
         }
-        response.then().assertThat().body(matchesJsonSchemaInClasspath(schemaClasspath));
+        response.then().assertThat().body(matchesJsonSchema(new File("src/test/resources/" + schemaClasspath)));
         logger.info("Schema validation passed: {}", schemaClasspath);
     }
 
