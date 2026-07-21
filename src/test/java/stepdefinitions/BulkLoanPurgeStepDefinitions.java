@@ -19,11 +19,6 @@ public class BulkLoanPurgeStepDefinitions extends BaseStepDefinitions {
         this.bulkLoanPurgeValidator = bulkLoanPurgeValidator;
     }
 
-    @Then("the bulk loan purge success response should be valid")
-    public void the_bulk_loan_purge_success_response_should_be_valid() {
-        bulkLoanPurgeValidator.validatePurgeSuccess(activeResponse());
-        logger.info("bulk loan purge success validation completed");
-    }
 
     @Then("the bulk loan purge forbidden response should be valid")
     public void the_bulk_loan_purge_forbidden_response_should_be_valid() {

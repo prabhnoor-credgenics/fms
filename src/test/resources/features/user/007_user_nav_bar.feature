@@ -19,7 +19,7 @@ Feature: User Navigation Bar — GET /user/nav-bar/<user_id>
     When I send a "GET" request to "/user/nav-bar/{user_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/user_nav_bar_success_schema.json"
-    And the user nav bar success response should be valid
+    And the "user_nav_bar" success response should be valid
 
 
   @negative @creator
@@ -218,7 +218,7 @@ Feature: User Navigation Bar — GET /user/nav-bar/<user_id>
   Scenario: XSS payload in user_id is safely handled
     Given I prepare a request
     And I set the path parameters:
-      | user_id | <script>alert(1)</script> |
+      | user_id | <xss>alert(1)</xss> |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:

@@ -17,7 +17,7 @@ Feature: Company Permissions — GET /user/company/permissions/
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/company_permissions_success_schema.json"
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @positive @creator
   Scenario: inject_meta_data=true (explicit) returns 200
@@ -29,7 +29,7 @@ Feature: Company Permissions — GET /user/company/permissions/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @positive @creator
   Scenario: inject_meta_data=false (raw permission set) returns 200
@@ -41,7 +41,7 @@ Feature: Company Permissions — GET /user/company/permissions/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @positive @creator
   Scenario: inject_meta_data with a junk value is coerced to false and still returns 200
@@ -53,7 +53,7 @@ Feature: Company Permissions — GET /user/company/permissions/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @positive @creator
   Scenario: Trailing-slash-insensitive path returns 200
@@ -64,7 +64,7 @@ Feature: Company Permissions — GET /user/company/permissions/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
 
   @negative @creator
@@ -116,7 +116,7 @@ Feature: Company Permissions — GET /user/company/permissions/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 400
-    And the company permissions failure response should be valid
+    And the "company_permissions" failure response should be valid
 
   # ---------------------------------------------------------------------------
   # Expanded coverage (inject_meta_data coercion, response shape, company_id
@@ -133,7 +133,7 @@ Feature: Company Permissions — GET /user/company/permissions/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @positive @creator
   Scenario: Empty inject_meta_data value falls back to the default and returns 200
@@ -145,7 +145,7 @@ Feature: Company Permissions — GET /user/company/permissions/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @positive @creator
   Scenario: Unknown extra query parameter is tolerated and returns 200
@@ -157,7 +157,7 @@ Feature: Company Permissions — GET /user/company/permissions/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @positive @creator
   Scenario: Success response exposes profile_id, permissions and the success message
@@ -192,19 +192,19 @@ Feature: Company Permissions — GET /user/company/permissions/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @positive @security @creator
   Scenario: XSS-like inject_meta_data is coerced to false and returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id       | {COMPANY_ID}              |
-      | inject_meta_data | <script>alert(1)</script> |
+      | inject_meta_data | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @positive @creator
   Scenario: Unexpected request Content-Type header is ignored on GET and returns 200
@@ -216,7 +216,7 @@ Feature: Company Permissions — GET /user/company/permissions/
       | Content-Type        | application/xml |
     When I send a "GET" request to "/user/company/permissions/"
     Then the response status code should be 200
-    And the company permissions success response should be valid
+    And the "company_permissions" success response should be valid
 
   @negative @creator
   Scenario: Malformed (non-UUID) company_id is rejected at org resolution
@@ -255,7 +255,7 @@ Feature: Company Permissions — GET /user/company/permissions/
   Scenario: XSS payload in company_id is rejected at org resolution
     Given I prepare a request
     And I set the query parameters:
-      | company_id | <script>alert(1)</script> |
+      | company_id | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/permissions/"

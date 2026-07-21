@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VerifyTransactionSuccessResponse",
+  "description": "200 plain envelope for POST {BASE_ROUTE}/bulk/verify-transaction. {success:true, data:{verified_transactions_ids{}, non_verified_transactions_ids{}}} — data are OBJECT MAPS (transaction_id -> client_customer_id), not arrays.",
+  "type": "object",
+  "required": ["success", "data"],
+  "properties": {
+    "success": { "const": true },
+    "data": {
+      "type": "object",
+      "required": ["verified_transactions_ids", "non_verified_transactions_ids"],
+      "properties": {
+        "verified_transactions_ids": {
+          "type": ["object", "null"],
+          "additionalProperties": { "type": "string" }
+        },
+        "non_verified_transactions_ids": {
+          "type": ["object", "null"],
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

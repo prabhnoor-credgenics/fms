@@ -32,7 +32,7 @@ Feature: Final Status API — GET /recovery/final/status/<loan_id>
     When I send a "GET" request to "/recovery/final/status/{loan_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/final_status_success_schema.json"
-    And the final status success response should be valid
+    And the "final_status" success response should be valid
 
   @positive @creator
   Scenario: GET final status with allocation_month=Overall (explicit)
@@ -62,7 +62,7 @@ Feature: Final Status API — GET /recovery/final/status/<loan_id>
       | allocation_month | Overall      |
     When I send a "GET" request to "/recovery/final/status/{loan_id}"
     Then the response status code should be 200
-    And the final status success response should be valid
+    And the "final_status" success response should be valid
 
   @positive @creator
   Scenario: GET final status for a specific allocation_month
@@ -92,7 +92,7 @@ Feature: Final Status API — GET /recovery/final/status/<loan_id>
       | allocation_month | {ALLOCATION_MONTH_OFFSET:0} |
     When I send a "GET" request to "/recovery/final/status/{loan_id}"
     Then the response status code should be 200
-    And the final status success response should be valid
+    And the "final_status" success response should be valid
 
   @positive @multistep @creator
   Scenario: Create a loan then read back its final status
@@ -190,7 +190,7 @@ Feature: Final Status API — GET /recovery/final/status/<loan_id>
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/final/status/{loan_id}"
     Then the response status code should be 200
-    And the final status success response should be valid
+    And the "final_status" success response should be valid
 
   
 

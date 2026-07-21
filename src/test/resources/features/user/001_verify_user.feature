@@ -18,7 +18,7 @@ Feature: Verify User — GET /user/public/verify/user/
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/verify_user_success_schema.json"
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
   @positive @creator
   Scenario: Token verification scoped to a company returns 200
@@ -31,7 +31,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
     And the response body should contain field "company_details"
 
   @positive @creator
@@ -47,7 +47,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | api_method          | GET                 |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
   @positive @creator
   Scenario: is_test_request truthy (suppresses session reset) returns 200
@@ -61,7 +61,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
   @positive @creator
   Scenario: All optional inputs together returns 200
@@ -78,7 +78,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | api_method          | GET                 |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
 
   @positive @creator
@@ -93,7 +93,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
     Examples:
       | key_name | key_value                                       |
@@ -109,7 +109,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 400
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @creator
   Scenario: key_name != authentication_token with empty key_value returns 400
@@ -123,7 +123,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 400
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @creator
   Scenario: Non-UUID auth_token (authentication_token flow) returns 400
@@ -135,7 +135,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 400
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @creator
   Scenario: Invalid (non-UUID) company_id returns 400
@@ -148,7 +148,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 400
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @creator
   Scenario: Unknown (random UUID) company_id is rejected
@@ -214,7 +214,7 @@ Feature: Verify User — GET /user/public/verify/user/
 
     # 7) Verify the user's details via verify-user, looked up by user_id (admin token; asserts 200 internally)
     When I verify the lifecycle user's details by user id
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
   # ---------------------------------------------------------------------------
   # Expanded coverage (auth_token format/boundary, flow selection, unknown
@@ -231,7 +231,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 400
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @boundary @creator
   Scenario: Literal "null" auth_token (default key flow) is rejected as invalid format
@@ -243,7 +243,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 400
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @boundary @creator
   Scenario: Oversized non-UUID auth_token is rejected as invalid format
@@ -255,7 +255,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 400
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @creator
   Scenario: Well-formed but unknown auth_token UUID (platform flow, no session) returns 401
@@ -267,7 +267,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 401
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @creator
   Scenario: No referer selects API-integration flow; a random UUID as API key returns 401
@@ -278,7 +278,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 401
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @creator
   Scenario Outline: Unknown attribute lookup by "<key_name>" returns 401
@@ -292,7 +292,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 401
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
     Examples:
       | key_name | key_value                                 |
@@ -318,7 +318,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | key_value                          |
       | ' OR '1'='1                        |
       | admin'--                           |
-      | <script>alert(1)</script>@x.com    |
+      | <xss>alert(1)</xss>@x.com    |
       | 日本語ユーザー@yopmail.com          |
 
   @negative @creator
@@ -332,7 +332,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 400
-    And the verify user failure response should be valid
+    And the "verify_user" failure response should be valid
 
   @negative @creator
   Scenario: Unknown api_endpoint (missing service route map) returns 404
@@ -373,7 +373,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
   @positive @creator
   Scenario: key_value is normalised (mixed-case email is lowercased) and returns 200
@@ -387,7 +387,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
   @positive @creator
   Scenario: Unknown/extra query parameters are ignored and returns 200
@@ -401,7 +401,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
   @positive @boundary @creator
   Scenario: Any non-empty is_test_request value is truthy and returns 200
@@ -415,7 +415,7 @@ Feature: Verify User — GET /user/public/verify/user/
       | referer             | abc          |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid
 
   @positive @creator
   Scenario: Trailing slash on api_endpoint is normalised and returns 200
@@ -430,4 +430,4 @@ Feature: Verify User — GET /user/public/verify/user/
       | api_method          | GET                 |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
-    And the verify user success response should be valid
+    And the "verify_user" success response should be valid

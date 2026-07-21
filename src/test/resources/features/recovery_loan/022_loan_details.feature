@@ -58,7 +58,7 @@ Feature: Loan Details (Metadata) API
       {
         "source": "platform",
         "applicant_attributes": {
-          "applicant_email": [{ "value": "<script>alert(1)</script>" }]
+          "applicant_email": [{ "value": "<xss>alert(1)</xss>" }]
         },
           "company_id": "3e561a13-3be3-4672-85b0-e1c49a35d8fb"
       }

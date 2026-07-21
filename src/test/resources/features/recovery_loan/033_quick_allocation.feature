@@ -402,7 +402,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @boundary @creator
   Scenario: BOUND-004 — selected_users key at max length 36 passes body validation
@@ -420,7 +420,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @edge @creator
   Scenario: EDGE-001 — Empty attribute_matching array is accepted (default behaviour)
@@ -438,7 +438,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @edge @creator
   Scenario: EDGE-002 — Empty user_filters object is accepted (no filter keys)
@@ -456,7 +456,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @edge @creator
   Scenario: EDGE-003 — user_filters list with duplicate entries is tolerated
@@ -474,7 +474,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @fuzz @creator
   Scenario: EDGE-004 — Fuzz inputs via placeholders (random loan id, random workflow_id) pass validation
@@ -492,7 +492,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
 
   @negative @business @creator
@@ -566,7 +566,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 400
-    And the quick allocation failure response should be valid
+    And the "quick_allocation" failure response should be valid
 
   @manual @negative @business @creator
   Scenario: BIZ-005 — Allocation for a valid-format but non-existent loan id returns a failure envelope
@@ -622,7 +622,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/quick_allocation_success_schema.json"
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-002 — All optional fields populated returns 200
@@ -652,7 +652,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/quick_allocation_success_schema.json"
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-003 — selected_users (entity -> capacity) with a null capacity returns 200
@@ -670,7 +670,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-004 — user_filters with all four allowed keys returns 200
@@ -688,7 +688,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-005 — attribute_matching with the only valid operator '=' returns 200
@@ -706,7 +706,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @creator
   Scenario Outline: HAPPY-006 — Boolean flags disable=<disable> neglect=<neglect> returns 200
@@ -724,7 +724,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
     Examples:
       | disable | neglect |
@@ -749,7 +749,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
   @manual @positive @creator
   Scenario Outline: HAPPY-008 — Each source enum value "<source>" is accepted (200)
@@ -767,7 +767,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
     Examples:
       | source       |
@@ -796,7 +796,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
     Examples:
       | type        | source    |
@@ -821,7 +821,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid
 
     Examples:
       | algo           | type        |
@@ -890,4 +890,4 @@ Feature: Quick Allocation API — POST /recovery/allocation
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    And the quick allocation success response should be valid
+    And the "quick_allocation" success response should be valid

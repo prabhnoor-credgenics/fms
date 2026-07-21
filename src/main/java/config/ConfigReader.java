@@ -92,6 +92,25 @@ public class ConfigReader {
         return value;
     }
 
+    /**
+     * Reads a crypto property without throwing when the key is absent/blank. Returns the trimmed
+     * value or {@code null}. Used by credential resolution, which probes several candidate keys
+     * (module-scoped first, then legacy non-scoped) and needs a silent miss to fall through.
+     */
+    public String getCryptoPropertyOrNull(String key) {
+        String value = cryptoProperties.getProperty(key);
+        return (value == null || value.isBlank()) ? null : value.trim();
+    }
+
+    /**
+     * Module/product used by the module-less authentication step (e.g. the legacy
+     * {@code I authenticate as "creator" slot 0 ...}). Configurable via {@code default_module}
+     * in global.properties; defaults to {@code lending}.
+     */
+    public String getDefaultModule() {
+        return getProperty("default_module", "lending");
+    }
+
     public String getPublicKey() {
         Environment env = getEnvironment();
         String publicKey = resolvePublicKey(env);

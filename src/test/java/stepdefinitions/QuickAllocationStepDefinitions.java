@@ -19,17 +19,7 @@ public class QuickAllocationStepDefinitions extends BaseStepDefinitions {
         this.quickAllocationValidator = quickAllocationValidator;
     }
 
-    @Then("the quick allocation success response should be valid")
-    public void the_quick_allocation_success_response_should_be_valid() {
-        quickAllocationValidator.validateSuccessEnvelope(activeResponse());
-        logger.info("quick allocation success validation completed");
-    }
 
-    @Then("the quick allocation failure response should be valid")
-    public void the_quick_allocation_failure_response_should_be_valid() {
-        quickAllocationValidator.validateFailureEnvelope(activeResponse());
-        logger.info("quick allocation failure validation completed");
-    }
 
     @Then("the quick allocation multi-loan rejection response should be valid")
     public void the_quick_allocation_multi_loan_rejection_response_should_be_valid() {

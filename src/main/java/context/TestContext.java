@@ -44,6 +44,9 @@ public class TestContext {
 
     private int userSlot;
 
+    /** Module/product (e.g. lending, creditline, notice) the active session logged in under. */
+    private String activeModule;
+
 
     private UserRole userRole;
 
@@ -53,7 +56,8 @@ public class TestContext {
     private final Map<String, Long> capturedTimes = new HashMap<>();
 
 
-    public record UserSession(String authToken, String companyId, String userId, UserRole role, int slot) {}
+    public record UserSession(String authToken, String companyId, String userId, UserRole role, int slot,
+                              String module) {}
 
 
     private final Map<String, UserSession> namedSessions = new LinkedHashMap<>();
@@ -282,6 +286,14 @@ public class TestContext {
 
     public void setUserSlot(int userSlot) {
         this.userSlot = userSlot;
+    }
+
+    public String getActiveModule() {
+        return activeModule;
+    }
+
+    public void setActiveModule(String activeModule) {
+        this.activeModule = activeModule;
     }
 
     public UserRole getUserRole() {

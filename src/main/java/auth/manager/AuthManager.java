@@ -41,17 +41,27 @@ public class AuthManager {
 
 
     public void initializeAuthentication(UserRole role, int slot) {
+        initializeAuthentication(role, null, slot);
+    }
+
+    public void initializeAuthentication(UserRole role, String module, int slot) {
         testContext.setUserSlot(slot);
-        initializeAuthentication(role);
+        initializeAuthentication(role, module);
     }
 
     public void initializeAuthentication(UserRole role) {
+        initializeAuthentication(role, (String) null);
+    }
+
+    public void initializeAuthentication(UserRole role, String module) {
+        String effectiveModule = resolveModule(module);
+        testContext.setActiveModule(effectiveModule);
         String userType = configReader.getProperty("user_type");
         Environment env = configReader.getEnvironment();
         int userSlot = testContext.getUserSlot();
 
 
-        AuthTokenCache.CachedSession cached = authTokenCache.getIfValid(env, role, userType, userSlot);
+        AuthTokenCache.CachedSession cached = authTokenCache.getIfValid(env, effectiveModule, role, userType, userSlot);
         if (cached != null) {
             testContext.setAuthToken(cached.authToken());
             if (cached.companyId() != null) {
@@ -61,10 +71,10 @@ public class AuthManager {
         }
 
 
-        String lockKey = env + ":" + role + ":" + userType + ":" + userSlot;
+        String lockKey = env + ":" + effectiveModule + ":" + role + ":" + userType + ":" + userSlot;
         Object lock = LOGIN_LOCKS.computeIfAbsent(lockKey, k -> new Object());
         synchronized (lock) {
-            cached = authTokenCache.getIfValid(env, role, userType, userSlot);
+            cached = authTokenCache.getIfValid(env, effectiveModule, role, userType, userSlot);
             if (cached != null) {
                 testContext.setAuthToken(cached.authToken());
                 if (cached.companyId() != null) {
@@ -74,7 +84,7 @@ public class AuthManager {
             }
 
             switch (userType.toLowerCase()) {
-                case "user" -> userLoginService.performUserLogin(env, role, userSlot);
+                case "user" -> userLoginService.performUserLogin(env, effectiveModule, role, userSlot);
                 case "api_key_single_company" -> apiKeyService.generateSingleCompanyApiKey(env);
                 case "api_key_multiple_companies" -> apiKeyService.loadMultiCompanyApiKey(env);
                 default -> throw new RuntimeException(
@@ -82,8 +92,21 @@ public class AuthManager {
                 );
             }
 
-            authTokenCache.put(env, role, userType, userSlot, testContext.getAuthToken(), testContext.getCompanyId());
+            authTokenCache.put(env, effectiveModule, role, userType, userSlot,
+                    testContext.getAuthToken(), testContext.getCompanyId());
         }
+    }
+
+    /**
+     * A blank module means the caller used the module-less step; fall back to the configured
+     * {@code default_module} so those logins still land on a real credential set (e.g. lending).
+     * Normalised to lowercase to match the credential keys and keep cache keys stable.
+     */
+    private String resolveModule(String module) {
+        String candidate = (module == null || module.isBlank())
+                ? configReader.getDefaultModule()
+                : module;
+        return (candidate == null || candidate.isBlank()) ? null : candidate.trim().toLowerCase();
     }
 
     /**
@@ -105,8 +128,10 @@ public class AuthManager {
         Environment env = configReader.getEnvironment();
         String userType = configReader.getProperty("user_type");
         int userSlot = testContext.getUserSlot();
-        logger.warn("Session expired for role={}, slot={}. Invalidating cache and re-authenticating.", role, userSlot);
-        authTokenCache.invalidate(env, role, userType, userSlot);
-        initializeAuthentication(role);
+        String module = testContext.getActiveModule();
+        logger.warn("Session expired for module={}, role={}, slot={}. Invalidating cache and re-authenticating.",
+                module == null ? "-" : module, role, userSlot);
+        authTokenCache.invalidate(env, module, role, userType, userSlot);
+        initializeAuthentication(role, module);
     }
 }

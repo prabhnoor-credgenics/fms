@@ -19,11 +19,6 @@ public class QuickDeAllocationStepDefinitions extends BaseStepDefinitions {
         this.quickDeAllocationValidator = quickDeAllocationValidator;
     }
 
-    @Then("the quick deallocation success response should be valid")
-    public void the_quick_deallocation_success_response_should_be_valid() {
-        quickDeAllocationValidator.validateSuccessEnvelope(activeResponse());
-        logger.info("quick deallocation success validation completed");
-    }
 
     @Then("the quick deallocation workflow short-circuit response should be valid")
     public void the_quick_deallocation_workflow_short_circuit_response_should_be_valid() {
@@ -31,11 +26,6 @@ public class QuickDeAllocationStepDefinitions extends BaseStepDefinitions {
         logger.info("quick deallocation workflow short-circuit validation completed");
     }
 
-    @Then("the quick deallocation failure response should be valid")
-    public void the_quick_deallocation_failure_response_should_be_valid() {
-        quickDeAllocationValidator.validateFailureEnvelope(activeResponse());
-        logger.info("quick deallocation failure validation completed");
-    }
 
     @Then("the quick deallocation multi-loan rejection response should be valid")
     public void the_quick_deallocation_multi_loan_rejection_response_should_be_valid() {

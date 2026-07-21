@@ -21,7 +21,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/connection_config_success_schema.json"
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: S3 config by id returns 200
@@ -36,7 +36,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: SFTP config by id with decrypted secrets returns 200
@@ -52,7 +52,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: SFTP config by id without secrets returns 200
@@ -68,7 +68,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: Collection form (no connection_id) — all SFTP configs returns 200
@@ -81,7 +81,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: Collection form (no connection_id) — all S3 configs returns 200
@@ -94,7 +94,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
 
   @500 @negative @creator
@@ -107,7 +107,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/"
     Then the response status code should be 400
-    And the connection config failure response should be valid
+    And the "connection_config" failure response should be valid
 
   @500 @negative @creator
   Scenario: Invalid connection_type returns 400
@@ -120,7 +120,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/"
     Then the response status code should be 400
-    And the connection config failure response should be valid
+    And the "connection_config" failure response should be valid
 
 
   @negative @creator
@@ -174,7 +174,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 400
-    And the connection config failure response should be valid
+    And the "connection_config" failure response should be valid
 
   @500 @negative @creator
   Scenario: Item form — invalid connection_type returns 400
@@ -189,7 +189,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 400
-    And the connection config failure response should be valid
+    And the "connection_config" failure response should be valid
 
   @500 @negative @creator
   Scenario: Empty connection_type value returns 400
@@ -202,7 +202,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/"
     Then the response status code should be 400
-    And the connection config failure response should be valid
+    And the "connection_config" failure response should be valid
 
   @500 @negative @creator
   Scenario: connection_type is case-sensitive — uppercase SFTP returns 400
@@ -215,7 +215,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/"
     Then the response status code should be 400
-    And the connection config failure response should be valid
+    And the "connection_config" failure response should be valid
 
   @500 @positive @creator
   Scenario: S3 config by id with decrypted secrets returns 200
@@ -231,7 +231,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: is_encrypted_configuration_required is case-insensitive (TRUE) returns 200
@@ -247,7 +247,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: Non-boolean is_encrypted_configuration_required is treated as false returns 200
@@ -263,7 +263,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: Non-existent connection_id returns 200 with empty data list
@@ -278,7 +278,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
     And the response body should contain field "data.data"
 
   @500 @positive @security @creator
@@ -294,7 +294,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @negative @security @creator
   Scenario: SQL injection in connection_id is sanitised and returns 200
@@ -309,14 +309,14 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @negative @security @creator
   Scenario: XSS payload in connection_id returns 200 without reflecting script
     Given I grant the current user all loan permissions
     And I prepare a request
     And I set the path parameters:
-      | connection_id | <script>alert(1)</script> |
+      | connection_id | <xss>alert(1)</xss> |
     And I set the query parameters:
       | company_id      | {COMPANY_ID} |
       | connection_type | sftp         |
@@ -324,7 +324,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @boundary @creator
   Scenario: Long connection_id returns 200 with empty data list
@@ -339,7 +339,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: Unicode connection_id returns 200 with empty data list
@@ -354,7 +354,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: Unknown extra query parameter is tolerated returns 200
@@ -370,7 +370,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @500 @positive @creator
   Scenario: Success response exposes documented shape and JSON content type
@@ -404,7 +404,7 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
       | Content-Type        | text/plain   |
     When I send a "GET" request to "/user/connection-config/{connection_id}"
     Then the response status code should be 200
-    And the connection config success response should be valid
+    And the "connection_config" success response should be valid
 
   @negative @creator
   Scenario: Item form — missing authenticationtoken header is rejected

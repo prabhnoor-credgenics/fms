@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class AuthTokenCache {
 
-    private record CacheKey(Environment env, UserRole role, String userType, int userSlot) {}
+    private record CacheKey(Environment env, String module, UserRole role, String userType, int userSlot) {}
 
     private record CachedAuth(String authToken, String companyId, Instant expiresAt) {}
 
@@ -27,11 +27,11 @@ public class AuthTokenCache {
         return configReader.isAuthTokenCacheEnabled();
     }
 
-    public CachedSession getIfValid(Environment env, UserRole role, String userType, int userSlot) {
+    public CachedSession getIfValid(Environment env, String module, UserRole role, String userType, int userSlot) {
         if (!isEnabled()) {
             return null;
         }
-        CachedAuth cached = CACHE.get(new CacheKey(env, role, userType, userSlot));
+        CachedAuth cached = CACHE.get(new CacheKey(env, module, role, userType, userSlot));
         if (cached == null || Instant.now().isAfter(cached.expiresAt())) {
             return null;
         }
@@ -40,6 +40,7 @@ public class AuthTokenCache {
 
     public void put(
             Environment env,
+            String module,
             UserRole role,
             String userType,
             int userSlot,
@@ -51,13 +52,13 @@ public class AuthTokenCache {
         }
         Instant expiresAt = Instant.now().plusSeconds(configReader.getAuthTokenCacheTtlMinutes() * 60L);
         CACHE.put(
-                new CacheKey(env, role, userType, userSlot),
+                new CacheKey(env, module, role, userType, userSlot),
                 new CachedAuth(authToken, companyId, expiresAt)
         );
     }
 
-    public void invalidate(Environment env, UserRole role, String userType, int userSlot) {
-        CACHE.remove(new CacheKey(env, role, userType, userSlot));
+    public void invalidate(Environment env, String module, UserRole role, String userType, int userSlot) {
+        CACHE.remove(new CacheKey(env, module, role, userType, userSlot));
     }
 
     public static void clearAll() {

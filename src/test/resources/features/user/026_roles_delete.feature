@@ -92,7 +92,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 422
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @auth @creator @roles-delete
   Scenario: Delete a role without authentication token is rejected
@@ -122,7 +122,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | role_id | abcd1234efgh5678 |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 403
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Delete a role with a non-alphanumeric role_id returns 400
@@ -154,7 +154,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 422
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   # ---------------------------------------------------------------------------
   # Expanded coverage (dependents/assigned conflicts, role_id injection/boundary,
@@ -210,7 +210,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 409
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @multistep @conflict @creator @roles-write
   Scenario: Delete a role that is assigned to an active user returns 409
@@ -249,7 +249,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 409
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @security @creator @roles-write
   Scenario: Delete a role with a SQL-injection style role_id returns 400
@@ -279,7 +279,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,422"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Delete a role with an over-long alphanumeric role_id returns 422
@@ -294,7 +294,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 422
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Delete with an empty role_id collapses to the collection URL and is rejected
@@ -337,7 +337,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | not-a-valid-company-id |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Delete a role with an empty company_id value is rejected
@@ -352,7 +352,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id |  |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @method @creator @roles-write
   Scenario: Using PUT on the role item URL is not allowed

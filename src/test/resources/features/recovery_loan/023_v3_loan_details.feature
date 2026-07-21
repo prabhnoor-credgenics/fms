@@ -65,7 +65,7 @@ Feature: V3 Loan Details API
       | attribute_levels | applicant |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
-    And the v3 loan response should contain data for loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
   @positive @creator
   Scenario: GET loan details with all optional parameters populated
@@ -742,7 +742,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
-    And the v3 loan error code should be "REC_0007"
+    And the response body should contain field "error.code" with value "REC_0007"
 
     Examples:
       | loan_id   |
@@ -764,7 +764,7 @@ Feature: V3 Loan Details API
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
-    And the v3 loan error code should be "REC_0007"
+    And the response body should contain field "error.code" with value "REC_0007"
 
     Examples:
       | loan_id  |
@@ -787,7 +787,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
-    And the v3 loan error code should be "REC_0003"
+    And the response body should contain field "error.code" with value "REC_0003"
 
   @negative @creator
   Scenario Outline: GET loan details with invalid attribute_levels "<attribute_levels>" returns validation error
@@ -804,7 +804,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
-    And the v3 loan error code should be "REC_0003"
+    And the response body should contain field "error.code" with value "REC_0003"
 
     Examples:
       | attribute_levels    |
@@ -827,7 +827,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
-    And the v3 loan error code should be "REC_0003"
+    And the response body should contain field "error.code" with value "REC_0003"
 
     Examples:
       | allocation_month | # reason                          |
@@ -853,7 +853,7 @@ Feature: V3 Loan Details API
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
-    And the v3 loan error code should be "REC_0003"
+    And the response body should contain field "error.code" with value "REC_0003"
 
     Examples:
       | flag                 | value |

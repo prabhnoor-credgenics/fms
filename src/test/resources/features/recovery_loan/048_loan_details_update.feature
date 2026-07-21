@@ -38,7 +38,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/loan_details_patch_success_schema.json"
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
   @positive @creator
   Scenario: Use v2=true instead of source=platform returns 200
@@ -56,7 +56,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
   @positive @creator
   Scenario: Update applicant contact numbers (list) returns 200
@@ -74,7 +74,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
   @positive @creator
   Scenario: Update applicant emails (list) returns 200
@@ -92,7 +92,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
   @negative @creator
   Scenario: Applicant address replace path errors on staging (500)
@@ -128,7 +128,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
   @positive @creator
   Scenario: Update co_applicant_attributes returns 200
@@ -146,7 +146,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
   @positive @creator
   Scenario: Update applicant_references returns 200
@@ -164,7 +164,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
   @positive @creator
   Scenario: Update loan_guarantor_attributes returns 200
@@ -182,7 +182,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
   @positive @creator @500
   Scenario: Combined — applicant scalar + contact + email returns 200
@@ -200,7 +200,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
   @positive @creator
   Scenario: Legacy path — non-platform source without v2 returns 200
@@ -235,7 +235,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    And the loan details update success response should be valid
+    And the "loan_details_update" success response should be valid
 
 
   @negative @creator
@@ -254,7 +254,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 400
-    And the loan details update failure response should be valid
+    And the "loan_details_update" failure response should be valid
 
   @negative @creator
   Scenario: Non-admin with no borrower section is forbidden (403)
@@ -290,7 +290,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 400
-    And the loan details update failure response should be valid
+    And the "loan_details_update" failure response should be valid
 
   @negative @creator
   Scenario: Non-existent loan id returns 400 (Invalid loan id)
@@ -308,7 +308,7 @@ Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 400
-    And the loan details update failure response should be valid
+    And the "loan_details_update" failure response should be valid
 
 
   @negative @creator

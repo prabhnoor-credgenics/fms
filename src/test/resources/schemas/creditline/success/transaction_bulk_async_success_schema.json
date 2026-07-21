@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TransactionBulkAsyncSuccessResponse",
+  "description": "202 ACCEPTED envelope for POST/PATCH {BASE_ROUTE}/v1/bulk/transaction-upload|transaction-update (async). ResponseHandler success with data.request_id.",
+  "type": "object",
+  "required": ["success", "message", "data"],
+  "properties": {
+    "success": { "const": true },
+    "message": { "type": "string" },
+    "status_code": { "type": ["integer", "null"] },
+    "data": {
+      "type": "object",
+      "required": ["request_id"],
+      "properties": {
+        "request_id": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "error": { "type": ["object", "null"] },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

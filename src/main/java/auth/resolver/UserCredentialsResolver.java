@@ -8,7 +8,22 @@ import enums.UserRole;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 
+
+/**
+ * Resolves the email/password for a login from {@code secrets/crypto.properties}.
+ *
+ * <p>Credentials are keyed by {@code (env, module, role, slot)}. The optional <b>module</b>
+ * (a.k.a. product line — e.g. {@code lending}, {@code creditline}, {@code notice}) is a free-form
+ * segment placed right after the env prefix: {@code <env>_<module>_<suffix>}. Resolution tries the
+ * module-scoped key first, then falls back to the legacy non-scoped key {@code <env>_<suffix>} so
+ * accounts that are not module-specific (e.g. a shared chief-admin) keep working.
+ *
+ * <p>All credential values live in {@code secrets/crypto.properties} (never the plain env
+ * {@code *.properties} files) so they can later be sourced from a secrets manager.
+ */
 public class UserCredentialsResolver {
 
     private static final Logger logger = LogManager.getLogger(UserCredentialsResolver.class);
@@ -19,53 +34,88 @@ public class UserCredentialsResolver {
         this.configReader = configReader;
     }
 
+    /** Module-less entry point (legacy callers); resolves with no module scope. */
     public UserCredentials resolve(Environment env, UserRole role, int slot) {
-        String email;
-        String password;
+        return resolve(env, null, role, slot);
+    }
 
-        if (role == UserRole.CHIEF_ADMIN) {
-            email = configReader.getProperty(envKey(env, "cheif_admin_email"));
-            password = configReader.getProperty(envKey(env, "cheif_admin_password"));
-        } else if (role == UserRole.APPROVER) {
-            if (slot == 0) {
-                email = firstNonBlank(
-                        configReader.getProperty(envKey(env, "approver_email")),
-                        configReader.getProperty(envKey(env, "approver_user_0_email"))
-                );
-                password = firstNonBlank(
-                        configReader.getProperty(envKey(env, "approver_password")),
-                        configReader.getProperty(envKey(env, "approver_user_0_password"))
-                );
-            } else {
-                email = configReader.getProperty(envKey(env, "approver_user_" + slot + "_email"));
-                password = configReader.getProperty(envKey(env, "approver_user_" + slot + "_password"));
-            }
-        } else {
+    /**
+     * Resolves credentials for {@code (env, module, role, slot)}. A blank/null {@code module}
+     * skips the module-scoped lookup and uses only the legacy non-scoped keys.
+     */
+    public UserCredentials resolve(Environment env, String module, UserRole role, int slot) {
+        String mod = normalizeModule(module);
+        String email = lookup(env, mod, role, slot, "email");
+        String password = lookup(env, mod, role, slot, "password");
 
-            if (slot == 0) {
-
-                email = firstNonBlank(
-                        configReader.getProperty(envKey(env, "user_email")),
-                        configReader.getProperty(envKey(env, "email"))
-                );
-                password = firstNonBlank(
-                        configReader.getProperty(envKey(env, "user_password")),
-                        configReader.getProperty(envKey(env, "password"))
-                );
-            } else {
-                email = configReader.getProperty(envKey(env, "user_" + slot + "_email"));
-                password = configReader.getProperty(envKey(env, "user_" + slot + "_password"));
-            }
-        }
-
-        validatePresent(email, password, env, role, slot);
-        logger.info("Using credentials for env={}, role={}, slot={} (email={})",
-                env, role, slot, maskEmail(email));
+        validatePresent(email, password, env, mod, role, slot);
+        logger.info("Using credentials for env={}, module={}, role={}, slot={} (email={})",
+                env, mod == null ? "-" : mod, role, slot, maskEmail(email));
         return new UserCredentials(email, password, slot);
     }
 
-    private static String envKey(Environment env, String suffix) {
-        return env.name().toLowerCase() + "_" + suffix;
+    /**
+     * Probes candidate crypto keys for a field ({@code email}/{@code password}): module-scoped
+     * keys first (if a module is given), then the legacy non-scoped keys.
+     */
+    private String lookup(Environment env, String module, UserRole role, int slot, String field) {
+        if (module != null) {
+            for (String suffix : candidateSuffixes(role, slot, field)) {
+                String value = configReader.getCryptoPropertyOrNull(cryptoKey(env, module, suffix));
+                if (value != null) {
+                    return value;
+                }
+            }
+        }
+        for (String suffix : candidateSuffixes(role, slot, field)) {
+            String value = configReader.getCryptoPropertyOrNull(cryptoKey(env, null, suffix));
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Candidate key suffixes for a role/slot, in preference order. {@code field} is
+     * {@code email} or {@code password}.
+     */
+    private static List<String> candidateSuffixes(UserRole role, int slot, String field) {
+        List<String> suffixes = new ArrayList<>();
+        if (role == UserRole.CHIEF_ADMIN) {
+            suffixes.add("cheif_admin_" + field);
+        } else if (role == UserRole.APPROVER) {
+            if (slot == 0) {
+                suffixes.add("approver_" + field);
+                suffixes.add("approver_user_0_" + field);
+            } else {
+                suffixes.add("approver_user_" + slot + "_" + field);
+            }
+        } else { // CREATOR
+            if (slot == 0) {
+                suffixes.add("user_" + field);
+                suffixes.add(field);
+            } else {
+                suffixes.add("user_" + slot + "_" + field);
+            }
+        }
+        return suffixes;
+    }
+
+    private static String cryptoKey(Environment env, String module, String suffix) {
+        String base = env.getValue() + "_";
+        if (module != null) {
+            base += module + "_";
+        }
+        return base + suffix;
+    }
+
+    /** Trim + lowercase; null/blank collapses to {@code null} (no module scope). */
+    private static String normalizeModule(String module) {
+        if (module == null || module.isBlank()) {
+            return null;
+        }
+        return module.trim().toLowerCase();
     }
 
     private static String firstNonBlank(String... values) {
@@ -77,34 +127,32 @@ public class UserCredentialsResolver {
         return null;
     }
 
-    private void validatePresent(String email, String password, Environment env, UserRole role, int slot) {
+    private void validatePresent(String email, String password, Environment env, String module,
+                                 UserRole role, int slot) {
         if (email == null || email.isBlank() || password == null || password.isBlank()) {
-            String hint = credentialPropertyHint(env, role, slot);
-            String envFile = env.name().toLowerCase() + ".properties";
+            String hint = credentialPropertyHint(env, module, role, slot);
             throw new IllegalStateException(
-                    "Missing credentials for env=" + env + ", role=" + role + ". "
-                            + "Configure " + hint + " in src/main/resources/" + envFile + "."
+                    "Missing credentials for env=" + env + ", module=" + (module == null ? "-" : module)
+                            + ", role=" + role + ", slot=" + slot + ". "
+                            + "Configure " + hint + " in src/main/resources/secrets/crypto.properties."
             );
         }
     }
 
     public static String credentialPropertyHint(Environment env, UserRole role, int slot) {
-        String envPrefix = env.name().toLowerCase();
-        if (role == UserRole.CHIEF_ADMIN) {
-            return envPrefix + "_cheif_admin_email / " + envPrefix + "_cheif_admin_password";
+        return credentialPropertyHint(env, null, role, slot);
+    }
+
+    public static String credentialPropertyHint(Environment env, String module, UserRole role, int slot) {
+        String mod = normalizeModule(module);
+        String scoped = firstNonBlank(candidateSuffixes(role, slot, "email").toArray(new String[0]));
+        String scopedPwd = firstNonBlank(candidateSuffixes(role, slot, "password").toArray(new String[0]));
+        String moduleKey = cryptoKey(env, mod, scoped) + " / " + cryptoKey(env, mod, scopedPwd);
+        if (mod == null) {
+            return moduleKey;
         }
-        if (role == UserRole.APPROVER) {
-            if (slot == 0) {
-                return envPrefix + "_approver_email / " + envPrefix + "_approver_password "
-                        + "(or " + envPrefix + "_approver_user_0_email)";
-            }
-            return envPrefix + "_approver_user_" + slot + "_email / " + envPrefix + "_approver_user_" + slot + "_password";
-        }
-        if (slot == 0) {
-            return envPrefix + "_user_email / " + envPrefix + "_user_password "
-                    + "(or " + envPrefix + "_email / " + envPrefix + "_password)";
-        }
-        return envPrefix + "_user_" + slot + "_email / " + envPrefix + "_user_" + slot + "_password";
+        String legacyKey = cryptoKey(env, null, scoped) + " / " + cryptoKey(env, null, scopedPwd);
+        return moduleKey + " (or legacy " + legacyKey + ")";
     }
 
     private static String maskEmail(String email) {

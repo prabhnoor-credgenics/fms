@@ -15,7 +15,7 @@ Feature: User Details — GET /user/users/
     When I send a "GET" request to "/user/users/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/user_details_success_schema.json"
-    And the user details success response should be valid
+    And the "user_details" success response should be valid
 
   @positive @creator
   Scenario: Trailing-slash-insensitive path returns 200
@@ -24,7 +24,7 @@ Feature: User Details — GET /user/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users"
     Then the response status code should be 200
-    And the user details success response should be valid
+    And the "user_details" success response should be valid
 
   @positive @creator
   Scenario: Extraneous query param is ignored and returns 200
@@ -35,7 +35,7 @@ Feature: User Details — GET /user/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/"
     Then the response status code should be 200
-    And the user details success response should be valid
+    And the "user_details" success response should be valid
 
   @positive @creator
   Scenario: user_details carries the user_id field
@@ -160,7 +160,7 @@ Feature: User Details — GET /user/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/"
     Then the response status code should be 200
-    And the user details success response should be valid
+    And the "user_details" success response should be valid
 
   @positive @creator
   Scenario: Multiple extraneous query parameters are ignored and return 200
@@ -173,7 +173,7 @@ Feature: User Details — GET /user/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/"
     Then the response status code should be 200
-    And the user details success response should be valid
+    And the "user_details" success response should be valid
 
   @positive @security @creator
   Scenario: SQL-injection-style query parameter is ignored and returns 200
@@ -184,7 +184,7 @@ Feature: User Details — GET /user/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/"
     Then the response status code should be 200
-    And the user details success response should be valid
+    And the "user_details" success response should be valid
 
   @positive @creator
   Scenario: Unusual Content-Type header on a bodyless GET is ignored
@@ -194,7 +194,7 @@ Feature: User Details — GET /user/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/"
     Then the response status code should be 200
-    And the user details success response should be valid
+    And the "user_details" success response should be valid
 
   @negative @creator
   Scenario: Malformed authenticationtoken containing spaces is rejected
@@ -218,7 +218,7 @@ Feature: User Details — GET /user/users/
   Scenario: XSS-payload authenticationtoken is rejected
     Given I prepare a request
     And I set the request headers:
-      | authenticationtoken | <script>alert(1)</script> |
+      | authenticationtoken | <xss>alert(1)</xss> |
     When I send a "GET" request to "/user/users/"
     Then the response status code should be one of "400,401,403,404"
     And the response body should not be empty

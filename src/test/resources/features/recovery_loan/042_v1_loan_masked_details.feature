@@ -35,8 +35,8 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/v1_loan_masked_details_success_schema.json"
-    And the v1 loan details success response should be valid
-    And the v1 loan details response should contain loan "{LOAN_ID}"
+    And the "v1_loan_details" success response should be valid
+    And the response body should contain text "{LOAN_ID}"
 
   @positive @masking @creator
   Scenario: PII masking is config-dependent — not applied for this test company (raw value returned)
@@ -50,7 +50,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 200
-    And the v1 loan details response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
     And the response body should contain text "MaskProbeName"
 
   @positive @creator
@@ -74,7 +74,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 200
-    And the v1 loan details response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
   @positive @creator
   Scenario: attribute_variables only (comma-separated) returns 200
@@ -266,7 +266,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 400
-    And the v1 loan details error code should be "REC_0002"
+    And the response body should contain field "error.code" with value "REC_0002"
 
   @negative @creator
   Scenario: Empty attribute_levels query value returns 400 (coerced to None → no selector)
@@ -280,7 +280,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 400
-    And the v1 loan details error code should be "REC_0002"
+    And the response body should contain field "error.code" with value "REC_0002"
 
   @negative @creator
   Scenario: Non-existent valid-format loan_id returns 400 (REC_0007)
@@ -294,7 +294,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 400
-    And the v1 loan details error code should be "REC_0007"
+    And the response body should contain field "error.code" with value "REC_0007"
 
 
   @negative @creator
@@ -460,7 +460,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 400
-    And the v1 loan details error code should be "REC_0007"
+    And the response body should contain field "error.code" with value "REC_0007"
 
 
 

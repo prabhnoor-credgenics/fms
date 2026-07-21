@@ -15,7 +15,7 @@ Feature: Company Type — GET /user/company-type
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/company_type_success_schema.json"
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: v2 alias path returns 200
@@ -24,7 +24,7 @@ Feature: Company Type — GET /user/company-type
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/v2/company-type"
     Then the response status code should be 200
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: Response carries the company_type list and success flag
@@ -35,7 +35,7 @@ Feature: Company Type — GET /user/company-type
     Then the response status code should be 200
     And the response body should contain field "data.company_type"
     And the response body should contain field "success"
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: Extraneous query param is ignored and returns 200
@@ -46,7 +46,7 @@ Feature: Company Type — GET /user/company-type
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
 
   @negative @creator
@@ -96,7 +96,7 @@ Feature: Company Type — GET /user/company-type
     And the response body should contain field "data.name"
     And the response body should contain field "data.user_type"
     And the response body should contain field "data.user_level"
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: Response carries the standard envelope fields id, message and error_code
@@ -108,7 +108,7 @@ Feature: Company Type — GET /user/company-type
     And the response body should contain field "id"
     And the response body should contain field "message"
     And the response body should contain field "error_code"
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: Success message field is "success"
@@ -118,7 +118,7 @@ Feature: Company Type — GET /user/company-type
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
     And the response body should contain field "message" with value "success"
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: Response content type is application/json
@@ -137,7 +137,7 @@ Feature: Company Type — GET /user/company-type
     When I send a "GET" request to "/user/v2/company-type"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/company_type_success_schema.json"
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: v2 alias carries the company_type list and success flag
@@ -148,7 +148,7 @@ Feature: Company Type — GET /user/company-type
     Then the response status code should be 200
     And the response body should contain field "data.company_type"
     And the response body should contain field "success"
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: Multiple unknown query params are ignored and return 200
@@ -161,7 +161,7 @@ Feature: Company Type — GET /user/company-type
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @boundary @creator
   Scenario: Very long extraneous query param value is tolerated and returns 200
@@ -172,7 +172,7 @@ Feature: Company Type — GET /user/company-type
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: Unicode extraneous query param value is tolerated and returns 200
@@ -183,7 +183,7 @@ Feature: Company Type — GET /user/company-type
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @security @creator
   Scenario: SQL injection in an extraneous query param is ignored and returns 200
@@ -194,18 +194,18 @@ Feature: Company Type — GET /user/company-type
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @security @creator
   Scenario: XSS payload in an extraneous query param is ignored and returns 200
     Given I prepare a request
     And I set the query parameters:
-      | q | <script>alert(1)</script> |
+      | q | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: Unknown extra request header is tolerated and returns 200
@@ -215,7 +215,7 @@ Feature: Company Type — GET /user/company-type
       | X-Custom-Header     | anything     |
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @positive @creator
   Scenario: Content-Type header on a bodyless GET is tolerated and returns 200
@@ -225,7 +225,7 @@ Feature: Company Type — GET /user/company-type
       | Content-Type        | application/xml |
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
-    And the company type success response should be valid
+    And the "company_type" success response should be valid
 
   @negative @creator
   Scenario: v2 alias with missing authenticationtoken is rejected

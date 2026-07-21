@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TransactionSingleUpdateSuccessResponse",
+  "description": "200 flat envelope for PATCH {BASE_ROUTE}[/v3|v4|v5]/transaction/<client_customer_id>/<transaction_id>. Either {output:\"Transaction successfully updated\",message:\"success\"} or {message:\"no data to update\"}. No success/error keys.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "output": { "type": "string" },
+    "message": { "type": "string" },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

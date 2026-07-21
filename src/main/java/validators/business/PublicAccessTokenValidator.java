@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
 
 
-public class PublicAccessTokenValidator {
+public class PublicAccessTokenValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(PublicAccessTokenValidator.class);
 

@@ -13,6 +13,8 @@ import validators.business.CompanyCreationValidator;
 
 import helpers.SchemaHelper;
 
+import java.util.Map;
+
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP1_REQUEST;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP1_SUCCESS;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP2_REQUEST;
@@ -26,6 +28,20 @@ import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP4_SUCCESS;
 public class CompanyCreationStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(CompanyCreationStepDefinitions.class);
+
+    // step number -> success/request schema classpath (replaces the four SCHEMA_COMPANY_STEPn_* per-step methods)
+    private static final Map<Integer, String> SUCCESS_SCHEMA = Map.of(
+            1, SCHEMA_COMPANY_STEP1_SUCCESS,
+            2, SCHEMA_COMPANY_STEP2_SUCCESS,
+            3, SCHEMA_COMPANY_STEP3_SUCCESS,
+            4, SCHEMA_COMPANY_STEP4_SUCCESS
+    );
+    private static final Map<Integer, String> REQUEST_SCHEMA = Map.of(
+            1, SCHEMA_COMPANY_STEP1_REQUEST,
+            2, SCHEMA_COMPANY_STEP2_REQUEST,
+            3, SCHEMA_COMPANY_STEP3_REQUEST,
+            4, SCHEMA_COMPANY_STEP4_REQUEST
+    );
 
     private final TestContext testContext;
     private final CompanyCreationPayloadBuilder payloadBuilder;
@@ -61,27 +77,29 @@ public class CompanyCreationStepDefinitions {
         companyCreationValidator.validateStep2(step2);
     }
 
-    @When("I create company with validation step 1")
-    public void i_create_company_with_validation_step_1() {
-        companyCreationService.createCompanyStep1();
+    /**
+     * Parameterized replacement for the former four {@code I create company with validation step 1..4}
+     * steps. Steps 2-4 first assert trademark consistency across the wizard (step 1 has just had its
+     * data prepared, so it doesn't). The existing feature text ("... step 1") still matches via {int}.
+     */
+    @When("I create company with validation step {int}")
+    public void i_create_company_with_validation_step(int step) {
+        if (step != 1) {
+            companyCreationValidator.assertTrademarkConsistentAcrossSteps();
+        }
+        switch (step) {
+            case 1 -> companyCreationService.createCompanyStep1();
+            case 2 -> companyCreationService.createCompanyStep2();
+            case 3 -> companyCreationService.createCompanyStep3();
+            case 4 -> companyCreationService.createCompanyStep4();
+            default -> throw new IllegalArgumentException("Unknown company creation step: " + step);
+        }
     }
 
     @When("I create company with validation step 1 without mandatory field {string}")
     public void i_create_company_with_validation_step_1_without_mandatory_field(String fieldName) {
         company_creation_test_data_is_prepared();
         companyCreationService.createCompanyStep1WithoutMandatoryField(fieldName);
-    }
-
-    @When("I create company with validation step 2")
-    public void i_create_company_with_validation_step_2() {
-        companyCreationValidator.assertTrademarkConsistentAcrossSteps();
-        companyCreationService.createCompanyStep2();
-    }
-
-    @When("I create company with validation step 3")
-    public void i_create_company_with_validation_step_3() {
-        companyCreationValidator.assertTrademarkConsistentAcrossSteps();
-        companyCreationService.createCompanyStep3();
     }
 
     @When("I create company with validation step 3 without mandatory admin field {string}")
@@ -102,69 +120,38 @@ public class CompanyCreationStepDefinitions {
         companyCreationService.createCompanyStep3WithoutEmailAndMobile();
     }
 
-    @When("I create company with validation step 4")
-    public void i_create_company_with_validation_step_4() {
-        companyCreationValidator.assertTrademarkConsistentAcrossSteps();
-        companyCreationService.createCompanyStep4();
-    }
-
-    @Then("company creation step 1 should be successful")
-    public void company_creation_step_1_should_be_successful() {
+    /**
+     * Parameterized replacement for the former four {@code company creation step 1..4 should be successful}
+     * steps. Validates the step's success schema, then runs the step-specific extract/validate side-effect.
+     */
+    @Then("company creation step {int} should be successful")
+    public void company_creation_step_should_be_successful(int step) {
         Response response = requireResponse();
-        companyCreationValidator.validateSchema(response, SCHEMA_COMPANY_STEP1_SUCCESS);
-        companyCreationValidator.extractAndStoreStep1(response);
+        companyCreationValidator.validateSchema(response, schemaFor(SUCCESS_SCHEMA, step, "success"));
+        switch (step) {
+            case 1 -> companyCreationValidator.extractAndStoreStep1(response);
+            case 2 -> companyCreationValidator.validateStep2(response);
+            case 3 -> companyCreationValidator.validateStep3(response);
+            case 4 -> companyCreationValidator.extractAndStoreStep4(response);
+            default -> throw new IllegalArgumentException("Unknown company creation step: " + step);
+        }
     }
 
-    private void company_creation_request_should_match_json_schema(String schemaPath) {
+    /**
+     * Parameterized replacement for the former four {@code company creation step 1..4 request should
+     * match json schema} steps.
+     */
+    @Then("company creation step {int} request should match json schema")
+    public void company_creation_step_request_should_match_json_schema(int step) {
         String body = testContext.getLastRequestBody();
         if (body == null || body.isBlank()) {
             throw new IllegalStateException(
                     "No company creation request body in context. Execute a company creation When step first."
             );
         }
+        String schemaPath = schemaFor(REQUEST_SCHEMA, step, "request");
         SchemaHelper.validateRequestBody(body, schemaPath);
         logger.info("Company creation request schema validation passed: {}", schemaPath);
-    }
-
-    @Then("company creation step 1 request should match json schema")
-    public void company_creation_step_1_request_should_match_json_schema() {
-        company_creation_request_should_match_json_schema(SCHEMA_COMPANY_STEP1_REQUEST);
-    }
-
-    @Then("company creation step 2 request should match json schema")
-    public void company_creation_step_2_request_should_match_json_schema() {
-        company_creation_request_should_match_json_schema(SCHEMA_COMPANY_STEP2_REQUEST);
-    }
-
-    @Then("company creation step 3 request should match json schema")
-    public void company_creation_step_3_request_should_match_json_schema() {
-        company_creation_request_should_match_json_schema(SCHEMA_COMPANY_STEP3_REQUEST);
-    }
-
-    @Then("company creation step 4 request should match json schema")
-    public void company_creation_step_4_request_should_match_json_schema() {
-        company_creation_request_should_match_json_schema(SCHEMA_COMPANY_STEP4_REQUEST);
-    }
-
-    @Then("company creation step 2 should be successful")
-    public void company_creation_step_2_should_be_successful() {
-        Response response = requireResponse();
-        companyCreationValidator.validateSchema(response, SCHEMA_COMPANY_STEP2_SUCCESS);
-        companyCreationValidator.validateStep2(response);
-    }
-
-    @Then("company creation step 3 should be successful")
-    public void company_creation_step_3_should_be_successful() {
-        Response response = requireResponse();
-        companyCreationValidator.validateSchema(response, SCHEMA_COMPANY_STEP3_SUCCESS);
-        companyCreationValidator.validateStep3(response);
-    }
-
-    @Then("company creation step 4 should be successful")
-    public void company_creation_step_4_should_be_successful() {
-        Response response = requireResponse();
-        companyCreationValidator.validateSchema(response, SCHEMA_COMPANY_STEP4_SUCCESS);
-        companyCreationValidator.extractAndStoreStep4(response);
     }
 
     @Then("company creation stored identifiers should be present")
@@ -178,6 +165,15 @@ public class CompanyCreationStepDefinitions {
                 testContext.getCompanyId(),
                 testContext.getTrademark()
         );
+    }
+
+    private static String schemaFor(Map<Integer, String> schemas, int step, String kind) {
+        String schema = schemas.get(step);
+        if (schema == null) {
+            throw new IllegalArgumentException(
+                    "No company creation " + kind + " schema for step " + step + " (expected 1-4).");
+        }
+        return schema;
     }
 
     private Response requireResponse() {

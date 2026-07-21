@@ -30,28 +30,44 @@ public class MultiUserAuthStepDefinitions {
 
     @Given("I authenticate as {string} slot {int} and remember as {string}")
     public void i_authenticate_as_slot_and_remember_as(String roleName, int slot, String key) {
-        UserRole role = parseRole(roleName);
+        authenticateAndRemember(parseRole(roleName), null, slot, key);
+    }
 
+    /**
+     * Same as the module-less step but selects credentials for a specific module/product
+     * (e.g. {@code lending}, {@code creditline}, {@code notice}). The module is a free-form
+     * slug placed between the env prefix and the role in the credential key
+     * ({@code <env>_<module>_<role>_email} in secrets/crypto.properties). Because the company id
+     * comes back from that user's own login, {@code {COMPANY_ID}} becomes the module's company.
+     */
+    @Given("I authenticate as {string} for {string} slot {int} and remember as {string}")
+    public void i_authenticate_as_for_module_slot_and_remember_as(
+            String roleName, String module, int slot, String key) {
+        authenticateAndRemember(parseRole(roleName), module, slot, key);
+    }
 
+    private void authenticateAndRemember(UserRole role, String module, int slot, String key) {
         testContext.setUserRole(role);
-        authManager.initializeAuthentication(role, slot);
+        authManager.initializeAuthentication(role, module, slot);
         String token = testContext.getAuthToken();
         String companyId = testContext.getCompanyId();
+        String effectiveModule = testContext.getActiveModule();
 
 
         String userId = null;
         try {
             userId = userProfileService.fetchUserId(token);
         } catch (RuntimeException e) {
-            logger.warn("Could not resolve user id for remembered user '{}' (role={}, slot={}): {}. "
-                    + "{{USER_ID:{}}} will be unavailable.", key, role, slot, e.getMessage(), key);
+            logger.warn("Could not resolve user id for remembered user '{}' (role={}, module={}, slot={}): {}. "
+                    + "{{USER_ID:{}}} will be unavailable.", key, role, effectiveModule, slot, e.getMessage(), key);
         }
 
         // Remember a full snapshot addressable by the friendly key for the rest of the scenario
         // (usable via {AUTH_TOKEN:<key>} / {COMPANY_ID:<key>} / {USER_ID:<key>}).
-        testContext.rememberUserSession(key, new TestContext.UserSession(token, companyId, userId, role, slot));
-        logger.info("Authenticated + remembered user '{}' (role={}, slot={}, companyId={}, userId={}) — now the active user",
-                key, role, slot, companyId, userId);
+        testContext.rememberUserSession(key,
+                new TestContext.UserSession(token, companyId, userId, role, slot, effectiveModule));
+        logger.info("Authenticated + remembered user '{}' (role={}, module={}, slot={}, companyId={}, userId={}) — now the active user",
+                key, role, effectiveModule == null ? "-" : effectiveModule, slot, companyId, userId);
     }
 
 
@@ -76,7 +92,7 @@ public class MultiUserAuthStepDefinitions {
     public void i_authenticate_using_the_api_key_and_remember_as(String key) {
         authManager.initializeApiKeyAuthentication();
         testContext.rememberUserSession(key, new TestContext.UserSession(
-                testContext.getAuthToken(), testContext.getCompanyId(), null, null, 0));
+                testContext.getAuthToken(), testContext.getCompanyId(), null, null, 0, null));
         logger.info("Authenticated via API key + remembered as '{}' (company id={}) — now the active session",
                 key, testContext.getCompanyId());
     }
@@ -94,17 +110,13 @@ public class MultiUserAuthStepDefinitions {
         testContext.setUserId(session.userId());
         testContext.setUserSlot(session.slot());
         testContext.setUserRole(session.role());
-        logger.info("Active user is now '{}' (role={}, slot={})", key, session.role(), session.slot());
+        testContext.setActiveModule(session.module());
+        logger.info("Active user is now '{}' (role={}, module={}, slot={})",
+                key, session.role(), session.module() == null ? "-" : session.module(), session.slot());
     }
 
 
     private static UserRole parseRole(String roleName) {
-        return switch (roleName.trim().toLowerCase()) {
-            case "creator" -> UserRole.CREATOR;
-            case "approver" -> UserRole.APPROVER;
-            case "chief-admin", "chief_admin", "chiefadmin" -> UserRole.CHIEF_ADMIN;
-            default -> throw new IllegalArgumentException(
-                    "Unknown role '" + roleName + "'. Expected: creator | approver | chief-admin");
-        };
+        return UserRole.fromString(roleName);
     }
 }

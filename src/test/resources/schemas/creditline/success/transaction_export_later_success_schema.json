@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TransactionExportLaterSuccessResponse",
+  "description": "200 flat envelope for POST {BASE_ROUTE}/export/export-later/loan-transactions (GROUP 8). Shape {message:\"<html confirmation>\"|\"download link has been sent successfully\", success:true}. Unlike the other flat export responses this one DOES carry a success flag.",
+  "type": "object",
+  "required": ["message", "success"],
+  "properties": {
+    "success": { "type": "boolean" },
+    "message": { "type": "string" },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

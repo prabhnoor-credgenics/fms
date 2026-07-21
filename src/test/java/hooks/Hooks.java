@@ -125,11 +125,16 @@ public class Hooks {
 
                 if (apiLogs != null && !apiLogs.isBlank()) {
 
+                    // HTML-escape the logs before embedding in the Extent report. Request/response
+                    // bodies can contain markup (e.g. XSS-injection test payloads or reflected HTML);
+                    // rendering them raw makes the report itself execute that script when opened.
+                    String safeApiLogs = escapeHtml(apiLogs);
+
                     ExtentCucumberAdapter.getCurrentStep().fail(
                             "<details>" +
                             "<summary><b>API Request / Response Logs</b></summary>" +
                             "<pre style='white-space: pre-wrap; font-family: monospace;'>" +
-                            apiLogs +
+                            safeApiLogs +
                             "</pre>" +
                             "</details>"
                     );
@@ -150,5 +155,22 @@ public class Hooks {
             testContext.clearApiLogs();
             LoggingContext.clear();
         }
+    }
+
+    /**
+     * Minimal HTML escaping so request/response content embedded in the Extent report renders as
+     * literal text instead of executable markup (prevents stored-XSS in the report from test
+     * payloads or reflected HTML). Order matters: escape {@code &} first.
+     */
+    private static String escapeHtml(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#39;");
     }
 }

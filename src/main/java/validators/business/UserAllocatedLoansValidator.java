@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 
 
-public class UserAllocatedLoansValidator {
+public class UserAllocatedLoansValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(UserAllocatedLoansValidator.class);
 

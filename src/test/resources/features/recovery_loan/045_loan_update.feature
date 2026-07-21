@@ -39,7 +39,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/loan_update_success_schema.json"
-    And the loan update success response should be valid
+    And the "loan_update" success response should be valid
 
   @positive @creator
   Scenario: Update multiple loan variables returns 200
@@ -57,7 +57,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 200
-    And the loan update success response should be valid
+    And the "loan_update" success response should be valid
 
   @positive @creator
   Scenario: Update defaults (allocation-month-keyed records) returns 200
@@ -75,7 +75,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 200
-    And the loan update success response should be valid
+    And the "loan_update" success response should be valid
 
   @positive @creator
   Scenario: Update applicant_address (list) returns 200
@@ -93,7 +93,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 200
-    And the loan update success response should be valid
+    And the "loan_update" success response should be valid
 
   @positive @creator
   Scenario: append=true appends list items returns 200
@@ -112,7 +112,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 200
-    And the loan update success response should be valid
+    And the "loan_update" success response should be valid
 
   @positive @creator
   Scenario: append=false (explicit) replaces list fields returns 200
@@ -131,7 +131,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 200
-    And the loan update success response should be valid
+    And the "loan_update" success response should be valid
 
   @negative @creator
   Scenario: Empty body {} is rejected returns 400
@@ -149,7 +149,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 400
-    And the loan update failure response should be valid
+    And the "loan_update" failure response should be valid
 
   @positive @creator
   Scenario: Unknown extra variable is tolerated returns 200
@@ -167,7 +167,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 200
-    And the loan update success response should be valid
+    And the "loan_update" success response should be valid
 
   @positive @creator
   Scenario Outline: source value "<source>" is accepted (enum check is disabled in service) returns 200
@@ -251,7 +251,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 200
-    And the loan update success response should be valid
+    And the "loan_update" success response should be valid
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -280,7 +280,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 400
-    And the loan update failure response should be valid
+    And the "loan_update" failure response should be valid
 
   @positive @creator
   Scenario: Invalid variable value is dropped, nothing left to update returns 200
@@ -298,7 +298,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
       """
     When I send a "PATCH" request to "/recovery/loan/{loan_id}"
     Then the response status code should be 200
-    And the loan update success response should be valid
+    And the "loan_update" success response should be valid
 
 
   @negative @creator

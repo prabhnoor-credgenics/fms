@@ -510,7 +510,7 @@ Feature: Archived loan visibility lifecycle
       | authenticationtoken | {AUTH_TOKEN} |
     When I poll a "GET" request to "/recovery/v3/loans/{loan_id}" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
-    And the v3 loan response should contain data for loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
     # Approver archives the loan
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
@@ -575,7 +575,7 @@ Feature: Archived loan visibility lifecycle
       | authenticationtoken | {AUTH_TOKEN} |
     When I poll a "GET" request to "/recovery/v3/loans/{loan_id}" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
-    And the v3 loan response should contain data for loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
 
   @manual @creator @v1-loan-details
@@ -629,7 +629,7 @@ Feature: Archived loan visibility lifecycle
       | authenticationtoken | {AUTH_TOKEN} |
     When I poll a "GET" request to "/recovery/v1/loans/{loan_id}" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
-    And the v1 loan details response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
     # Approver archives the loan
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
@@ -694,4 +694,4 @@ Feature: Archived loan visibility lifecycle
       | authenticationtoken | {AUTH_TOKEN} |
     When I poll a "GET" request to "/recovery/v1/loans/{loan_id}" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
-    And the v1 loan details response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"

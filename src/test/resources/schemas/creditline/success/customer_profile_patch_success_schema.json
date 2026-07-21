@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CustomerProfilePatchSuccessResponse",
+  "description": "200 flat envelope for PATCH {BASE_ROUTE}/customer/profile/<client_customer_id> (Group 5c). Either {output:\"Customer successfully updated\", message:\"success\"} or {message:\"no data to update\"} — message always present, output optional.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": { "type": "string" },
+    "output": { "type": ["string", "null"] },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

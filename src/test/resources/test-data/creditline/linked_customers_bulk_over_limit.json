@@ -1,0 +1,15 @@
+{
+  "loan_ids": [
+    "LOAN_01", "LOAN_02", "LOAN_03", "LOAN_04", "LOAN_05",
+    "LOAN_06", "LOAN_07", "LOAN_08", "LOAN_09", "LOAN_10",
+    "LOAN_11", "LOAN_12", "LOAN_13", "LOAN_14", "LOAN_15",
+    "LOAN_16", "LOAN_17", "LOAN_18", "LOAN_19", "LOAN_20",
+    "LOAN_21", "LOAN_22", "LOAN_23", "LOAN_24", "LOAN_25",
+    "LOAN_26", "LOAN_27", "LOAN_28", "LOAN_29", "LOAN_30",
+    "LOAN_31", "LOAN_32", "LOAN_33", "LOAN_34", "LOAN_35",
+    "LOAN_36", "LOAN_37", "LOAN_38", "LOAN_39", "LOAN_40",
+    "LOAN_41", "LOAN_42", "LOAN_43", "LOAN_44", "LOAN_45",
+    "LOAN_46", "LOAN_47", "LOAN_48", "LOAN_49", "LOAN_50",
+    "LOAN_51"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreditlineErrorResponse",
+  "description": "Error envelopes returned by credit-line recovery endpoints (ResponseHandler error, flat message/output failure, and validation output.error variants).",
+  "type": "object",
+  "anyOf": [
+    {
+      "description": "ResponseHandler structured error (Groups 1/2/5e/6): {success:false,error:{code,detail,data}}",
+      "required": ["error"],
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": ["string", "null"] },
+        "error": {
+          "type": "object",
+          "properties": {
+            "code": { "type": ["string", "null"] },
+            "detail": { "type": ["string", "null"] },
+            "data": {}
+          }
+        },
+        "message_template": { "type": ["string", "null"] },
+        "message_placeholder": { "type": ["object", "null"] }
+      }
+    },
+    {
+      "description": "Flat failure envelope (Groups 3/4/5a-d/8): {output,message:\"failure\"} or {message}",
+      "required": ["message"],
+      "properties": {
+        "message": { "type": "string" },
+        "output": {},
+        "message_template": { "type": ["string", "null"] },
+        "message_placeholder": { "type": ["object", "null"] }
+      }
+    },
+    {
+      "description": "Validation failure with output.errors map",
+      "required": ["output"],
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": ["string", "null"] },
+        "output": {
+          "type": "object",
+          "properties": {
+            "errors": { "type": ["object", "array", "null"] }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": true
+}

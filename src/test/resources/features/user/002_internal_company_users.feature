@@ -20,7 +20,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/internal_company_users_success_schema.json"
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Explicit attributes (list) with paging and count returns 200
@@ -40,7 +40,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: attributes as comma-separated string returns 200
@@ -54,7 +54,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Search by email returns 200
@@ -68,7 +68,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: include_inactive=true with paging disabled returns 200
@@ -82,7 +82,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: include_api_users=true with count and paging disabled returns 200
@@ -96,7 +96,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Hierarchy flags (descendants true / ascendants false) returns 200
@@ -110,7 +110,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: neglect_hierarchy=true returns 200
@@ -124,7 +124,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: compress_data=true returns 200 (data is a base64 LZ4 string)
@@ -138,7 +138,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Parent-company inclusion flags returns 200
@@ -157,7 +157,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario Outline: sort_by "<sort>" returns 200
@@ -171,7 +171,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
     Examples:
       | sort         |
@@ -192,7 +192,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
     Examples:
       | scope                    |
@@ -215,7 +215,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
     Examples:
       | profession                            |
@@ -246,7 +246,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: filters.usernames (email + mobile) returns 200
@@ -260,7 +260,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: filters roles / profiles / reports_to (NanoIDs) returns 200
@@ -277,7 +277,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: filters location/team/department/coverage/state/employee/portfolio returns 200
@@ -301,7 +301,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Date-range filters (created + updated) returns 200
@@ -323,7 +323,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Audit-date + activity-time ranges returns 200
@@ -346,7 +346,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
 
   @negative @creator
@@ -361,7 +361,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: audit_created_date_start older than 6 months returns 400
@@ -375,7 +375,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: filters.user_ids with invalid NanoID (wrong length) returns 400
@@ -389,7 +389,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: filters.profession with invalid enum value returns 400
@@ -403,7 +403,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @boundary @creator
   Scenario: page_size over max allowed limit returns 400
@@ -417,7 +417,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
 
   @negative @creator
@@ -432,7 +432,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: Non-UUID company_id returns 400
@@ -446,7 +446,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: Empty JSON body returns 400
@@ -460,7 +460,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
 
   @negative @creator
@@ -517,7 +517,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
     Examples:
       | type               |
@@ -539,7 +539,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: include_chief_admin with specific user_ids returns 200
@@ -558,7 +558,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: filters.exclude_profession (post-filter) returns 200
@@ -572,7 +572,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: filters.mapped_portfolio_ids returns 200
@@ -586,7 +586,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Extended attributes (address / territory / reports_to_user) returns 200
@@ -603,7 +603,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: duration_to_seconds and return_type with source query param returns 200
@@ -619,7 +619,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Unknown top-level parameter is accepted (extra=allow) and returns 200
@@ -633,7 +633,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Unknown key inside filters (custom_filters) is accepted and returns 200
@@ -647,7 +647,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @boundary @creator
   Scenario: page_size of 1 returns 200
@@ -661,7 +661,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @boundary @creator
   Scenario: page_number without page_size auto-disables paging and returns 200
@@ -675,7 +675,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Whitespace-padded company_id is stripped and returns 200
@@ -689,7 +689,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @creator
   Scenario: Unicode value in filters.location returns 200
@@ -703,7 +703,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @boundary @creator
   Scenario: Very long search_query returns 200
@@ -717,7 +717,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
   @positive @security @creator
   Scenario Outline: Injection payload in search_query is treated literally and returns 200
@@ -731,12 +731,12 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 200
-    And the internal company users success response should be valid
+    And the "internal_company_users" success response should be valid
 
     Examples:
       | payload                   |
       | ' OR '1'='1               |
-      | <script>alert(1)</script> |
+      | <xss>alert(1)</xss> |
 
   @negative @creator
   Scenario: include_only_inactive combined with include_api_users returns 400
@@ -750,7 +750,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: Invalid sort_by value returns 400
@@ -764,7 +764,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: Invalid data_scope value returns 400
@@ -778,7 +778,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: Invalid search_type value returns 400
@@ -792,7 +792,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: Invalid attributes value returns 400
@@ -806,7 +806,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: filters.exclude_profession with invalid enum returns 400
@@ -820,7 +820,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: filters.usernames with invalid email/mobile returns 400
@@ -834,7 +834,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: filters date with unparseable format returns 400
@@ -848,7 +848,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: filters.roles with invalid NanoID returns 400
@@ -862,7 +862,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: filters.deselected_user_ids with invalid NanoID returns 400
@@ -876,7 +876,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @boundary @creator
   Scenario: Paging explicitly enabled but page_size missing returns 400
@@ -890,7 +890,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
       """
     When I send a "POST" request to "/user/internal/company-users/"
     Then the response status code should be 400
-    And the internal company users failure response should be valid
+    And the "internal_company_users" failure response should be valid
 
   @negative @creator
   Scenario: Foreign (valid but not caller's) company_id is rejected by org check

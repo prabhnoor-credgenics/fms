@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 
 
-public abstract class BaseEnvelopeValidator {
+public abstract class BaseEnvelopeValidator implements EnvelopeValidator {
 
     protected final Logger logger = LogManager.getLogger(getClass());
 

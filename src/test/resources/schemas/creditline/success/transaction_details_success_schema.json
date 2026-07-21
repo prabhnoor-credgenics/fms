@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TransactionDetailsSuccessResponse",
+  "description": "200 OK flat envelope for GET {BASE_ROUTE}/transaction/details/<transaction_id> (GROUP 4a). Flat shape: {output, message:'success'} with no 'success'/'error' keys. 'output' carries the transaction detail payload (object) and may vary with the 'attributes' selector.",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": ["object", "array", "string", "null"]
+    },
+    "message": { "type": "string" },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

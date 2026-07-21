@@ -446,7 +446,7 @@ Feature: Loan allocation visibility lifecycle
       | authenticationtoken | {AUTH_TOKEN} |
     When I poll a "GET" request to "/recovery/v3/loans/{loan_id}" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
-    And the v3 loan response should contain data for loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
     # De-allocate the loan from the creator
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
@@ -478,7 +478,7 @@ Feature: Loan allocation visibility lifecycle
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
-    And the v3 loan response should contain data for loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
 
   @manual @creator @v1-loan-details
@@ -532,7 +532,7 @@ Feature: Loan allocation visibility lifecycle
       | authenticationtoken | {AUTH_TOKEN} |
     When I poll a "GET" request to "/recovery/v1/loans/{loan_id}" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
-    And the v1 loan details response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
     # De-allocate the loan from the creator
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
@@ -564,7 +564,7 @@ Feature: Loan allocation visibility lifecycle
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 200
-    And the v1 loan details response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
 
   @manual @creator

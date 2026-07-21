@@ -17,7 +17,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     When I send a "GET" request to "/user/outgoing-webhook/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/outgoing_webhook_success_schema.json"
-    And the outgoing webhook success response should be valid
+    And the "outgoing_webhook" success response should be valid
 
   @positive @creator
   Scenario: include_disabled=true returns 200
@@ -29,7 +29,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
     Then the response status code should be 200
-    And the outgoing webhook success response should be valid
+    And the "outgoing_webhook" success response should be valid
 
   @positive @creator
   Scenario: include_disabled=false (explicit default, may serve from cache) returns 200
@@ -41,7 +41,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
     Then the response status code should be 200
-    And the outgoing webhook success response should be valid
+    And the "outgoing_webhook" success response should be valid
 
   @positive @creator
   Scenario: is_payload_config_required=true returns 200
@@ -53,7 +53,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
     Then the response status code should be 200
-    And the outgoing webhook success response should be valid
+    And the "outgoing_webhook" success response should be valid
 
   @positive @creator
   Scenario: Both flags true (settings screen — full config) returns 200
@@ -66,7 +66,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
     Then the response status code should be 200
-    And the outgoing webhook success response should be valid
+    And the "outgoing_webhook" success response should be valid
 
   @positive @creator
   Scenario: Item form — a non-matching webhook id returns 200 with empty data (not 404)
@@ -141,7 +141,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
     Then the response status code should be 200
-    And the outgoing webhook success response should be valid
+    And the "outgoing_webhook" success response should be valid
 
   @positive @creator
   Scenario: is_payload_config_required with a non-literal value (1) is treated as false and returns 200
@@ -153,7 +153,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
     Then the response status code should be 200
-    And the outgoing webhook success response should be valid
+    And the "outgoing_webhook" success response should be valid
 
   @positive @creator
   Scenario: Item form with is_payload_config_required=true returns 200
@@ -206,7 +206,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
     Then the response status code should be 200
-    And the outgoing webhook success response should be valid
+    And the "outgoing_webhook" success response should be valid
 
   @positive @smoke @creator
   Scenario: Success response exposes the documented raw shape (message + data)
@@ -259,7 +259,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
   Scenario: XSS payload in company_id is rejected as malformed (400)
     Given I prepare a request
     And I set the query parameters:
-      | company_id | <script>alert(1)</script> |
+      | company_id | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
@@ -295,7 +295,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
-      | webhook_id | <script>alert(1)</script> |
+      | webhook_id | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/{webhook_id}"

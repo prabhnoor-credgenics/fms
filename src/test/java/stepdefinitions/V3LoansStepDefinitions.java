@@ -31,17 +31,6 @@ public class V3LoansStepDefinitions extends BaseStepDefinitions {
         logger.info("v3 loan success envelope validation completed");
     }
 
-    @Then("the v3 loan response should contain data for loan {string}")
-    public void the_v3_loan_response_should_contain_data_for_loan(String loanId) {
-        String resolvedLoanId = scenarioTestDataResolver.replaceScenarioPlaceholders(loanId);
-        logger.info("Active response : {}", activeResponse().asString());
-        v3LoansValidator.validateLoanPresent(activeResponse(), resolvedLoanId);
-        logger.info("v3 loan data-presence validation completed for {}", resolvedLoanId);
-    }
-
-    @Then("the v3 loan error code should be {string}")
-    public void the_v3_loan_error_code_should_be(String expectedCode) {
-        v3LoansValidator.validateErrorEnvelope(activeResponse(), expectedCode);
-        logger.info("v3 loan error code validation completed for {}", expectedCode);
-    }
+    // "response should contain data for loan {string}" -> generic: the response body should contain text "<id>"
+    // "error code should be {string}" -> generic: the response body should contain field "error.code" with value "<code>"
 }

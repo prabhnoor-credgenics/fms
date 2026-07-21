@@ -21,7 +21,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: response_type=data returns 200 (data array)
@@ -38,7 +38,7 @@ Feature: Export Payments — POST /recovery/export/payments
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/export_payments_data_success_schema.json"
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: response_type=link returns 200
@@ -54,7 +54,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: By selected_loan_ids returns 200
@@ -70,7 +70,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: Date range (start + end) returns 200
@@ -86,7 +86,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: Only start_date returns 200
@@ -102,7 +102,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: Only end_date returns 200
@@ -118,7 +118,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: allocation_month specific returns 200
@@ -134,7 +134,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: allocation_month overall returns 200
@@ -150,7 +150,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario Outline: archive "<archive>" returns 200
@@ -166,7 +166,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
     Examples:
       | archive |
@@ -187,7 +187,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
     Examples:
       | search_type              |
@@ -214,7 +214,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
     Examples:
       | sort                   |
@@ -236,7 +236,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: Range selection (select_from + select_to) with deselected returns 200
@@ -252,7 +252,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @positive @creator
   Scenario: user_details metadata returns 200
@@ -268,7 +268,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
   @negative @creator
   Scenario: export_id referencing a non-existent export task returns 400
@@ -285,7 +285,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 400
-    And the export payments failure response should be valid
+    And the "export_payments" failure response should be valid
 
   @negative @creator
   Scenario: Extra portfolio filter fields error on the payment export (500)
@@ -317,7 +317,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 200
-    And the export payments success response should be valid
+    And the "export_payments" success response should be valid
 
 
   @negative @creator
@@ -330,7 +330,7 @@ Feature: Export Payments — POST /recovery/export/payments
       | authenticationtoken | {AUTH_TOKEN}     |
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 400
-    And the export payments failure response should be valid
+    And the "export_payments" failure response should be valid
 
   @negative @creator
   Scenario Outline: Invalid field "<case>" returns 400
@@ -346,7 +346,7 @@ Feature: Export Payments — POST /recovery/export/payments
       """
     When I send a "POST" request to "/recovery/export/payments"
     Then the response status code should be 400
-    And the export payments failure response should be valid
+    And the "export_payments" failure response should be valid
 
     Examples:
       | case                  | body                                        |

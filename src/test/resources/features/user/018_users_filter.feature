@@ -17,7 +17,7 @@ Feature: Users Filter — GET /user/users/filter/
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/users_filter_success_schema.json"
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @positive @creator
   Scenario Outline: single filter "<filter>" returns 200
@@ -29,7 +29,7 @@ Feature: Users Filter — GET /user/users/filter/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
     Examples:
       | filter            |
@@ -52,7 +52,7 @@ Feature: Users Filter — GET /user/users/filter/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @positive @creator
   Scenario: Geography filters (locations + coverage_areas) returns 200
@@ -64,7 +64,7 @@ Feature: Users Filter — GET /user/users/filter/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @negative @creator @500
   Scenario: address_states filter surfaces as a server-class failure
@@ -89,7 +89,7 @@ Feature: Users Filter — GET /user/users/filter/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
 
   @negative @creator @500
@@ -166,7 +166,7 @@ Feature: Users Filter — GET /user/users/filter/
     And the response content type should be "application/json"
     And the response body should contain field "data.filters"
     And the response time should be within configured limit
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @positive @creator
   Scenario: roles filter returns the requested key in data.filters
@@ -179,7 +179,7 @@ Feature: Users Filter — GET /user/users/filter/
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
     And the response body should contain field "data.filters.roles"
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @positive @creator
   Scenario: Allocation panel filter combination returns 200
@@ -191,7 +191,7 @@ Feature: Users Filter — GET /user/users/filter/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @positive @creator
   Scenario: Duplicate filter key in CSV is tolerated (200)
@@ -203,7 +203,7 @@ Feature: Users Filter — GET /user/users/filter/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @positive @creator
   Scenario: neglect_hierarchy=false is still truthy (no coercion) and returns 200
@@ -215,7 +215,7 @@ Feature: Users Filter — GET /user/users/filter/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @positive @creator
   Scenario: neglect_hierarchy combined with filters returns 200
@@ -228,7 +228,7 @@ Feature: Users Filter — GET /user/users/filter/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @positive @creator
   Scenario: Unknown extra query parameter is ignored (200)
@@ -240,7 +240,7 @@ Feature: Users Filter — GET /user/users/filter/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
     Then the response status code should be 200
-    And the users filter success response should be valid
+    And the "users_filter" success response should be valid
 
   @negative @creator
   Scenario: Malformed (non-UUID) company_id is rejected with 400
@@ -279,7 +279,7 @@ Feature: Users Filter — GET /user/users/filter/
   Scenario: XSS payload in company_id is rejected with 400
     Given I prepare a request
     And I set the query parameters:
-      | company_id | <script>alert(1)</script> |
+      | company_id | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"

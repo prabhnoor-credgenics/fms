@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class UserVariablesValidator {
+public class UserVariablesValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(UserVariablesValidator.class);
 

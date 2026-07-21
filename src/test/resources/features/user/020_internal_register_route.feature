@@ -23,7 +23,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/internal_register_route_success_schema.json"
-    And the internal register route success response should be valid
+    And the "internal_register_route" success response should be valid
 
   @positive @creator
   Scenario: Register a nested route tree with path variables returns 200
@@ -41,7 +41,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 200
-    And the internal register route success response should be valid
+    And the "internal_register_route" success response should be valid
 
 
   @negative @creator
@@ -56,7 +56,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: Missing route_map returns 400
@@ -70,7 +70,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: Missing module_name returns 400
@@ -84,7 +84,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: Empty JSON body returns 400
@@ -98,7 +98,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: route_map of the wrong type (string instead of object) returns 400
@@ -112,7 +112,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: service_name with a disallowed leading character returns 400
@@ -126,7 +126,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   # ---------------------------------------------------------------------------
   # Expanded coverage (idempotent upsert, required/null/type validation, invalid
@@ -150,7 +150,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 200
-    And the internal register route success response should be valid
+    And the "internal_register_route" success response should be valid
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -165,7 +165,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 200
-    And the internal register route success response should be valid
+    And the "internal_register_route" success response should be valid
 
   @positive @creator
   Scenario: Unknown extra fields are ignored and the request returns 200
@@ -186,7 +186,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 200
-    And the internal register route success response should be valid
+    And the "internal_register_route" success response should be valid
 
   @positive @creator
   Scenario: Success response echoes stored route map and documented fields
@@ -256,7 +256,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: Null route_map returns 400
@@ -270,7 +270,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: Null module_name returns 400
@@ -284,7 +284,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: route_map of the wrong type (array instead of object) returns 400
@@ -298,7 +298,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: route_map of the wrong type (number instead of object) returns 400
@@ -312,7 +312,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @security @creator
   Scenario: SQL injection attempt in service_name is rejected as an invalid value (400)
@@ -326,7 +326,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @security @creator
   Scenario: XSS payload in service_name is rejected as an invalid value (400)
@@ -336,7 +336,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      { "service_name": "<script>alert(1)</script>", "module_name": "M", "route_map": {"ping": {"__methods": {"GET": {"submodules": {}, "endpoint": "ping"}}}} }
+      { "service_name": "<xss>alert(1)</xss>", "module_name": "M", "route_map": {"ping": {"__methods": {"GET": {"submodules": {}, "endpoint": "ping"}}}} }
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be one of "400,401,403,404"
@@ -350,7 +350,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      { "service_name": "apiautomation_test_{RANDOM_STRING:6}", "module_name": "<script>alert(1)</script>", "route_map": {"ping": {"__methods": {"GET": {"submodules": {}, "endpoint": "ping"}}}} }
+      { "service_name": "apiautomation_test_{RANDOM_STRING:6}", "module_name": "<xss>alert(1)</xss>", "route_map": {"ping": {"__methods": {"GET": {"submodules": {}, "endpoint": "ping"}}}} }
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be one of "400,401,403,404"
@@ -368,7 +368,7 @@ Feature: Internal Register Route — POST /user/internal/register-route
       """
     When I send a "POST" request to "/user/internal/register-route"
     Then the response status code should be 400
-    And the internal register route failure response should be valid
+    And the "internal_register_route" failure response should be valid
 
   @negative @creator
   Scenario: Empty string service_name is handled deterministically

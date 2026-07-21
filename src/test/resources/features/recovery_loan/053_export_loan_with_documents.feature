@@ -35,7 +35,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @positive @creator
   Scenario: inc_doc_links + doc_detail_columns, response_type=link returns 200
@@ -51,7 +51,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @positive @creator
   Scenario: inc_doc_links + doc_detail_columns, response_type=data returns 200
@@ -68,7 +68,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/export_loan_data_success_schema.json"
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @positive @creator
   Scenario Outline: inc_doc_links "<flag>" returns 200
@@ -84,7 +84,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
     Examples:
       | flag  |
@@ -105,7 +105,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @positive @creator
   Scenario: By selected_loan_ids returns 200
@@ -121,7 +121,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @negative @creator
   Scenario: Enabling all column toggles together errors on staging (500)
@@ -153,7 +153,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @positive @creator
   Scenario: historical_loan_limit=true returns 200
@@ -169,7 +169,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @positive @creator
   Scenario Outline: allocation_month "<month>" returns 200
@@ -185,7 +185,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
     Examples:
       | month      |
@@ -206,7 +206,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
     Examples:
       | archive |
@@ -227,7 +227,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @positive @creator
   Scenario Outline: export_type "<export_type>" returns 200
@@ -243,7 +243,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
     Examples:
       | export_type                |
@@ -269,7 +269,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @positive @creator
   Scenario: Range selection with deselected returns 200
@@ -285,7 +285,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 200
-    And the export loan with documents success response should be valid
+    And the "export_loan_with_documents" success response should be valid
 
   @negative @creator
   Scenario: export_id referencing a non-existent export task returns 400
@@ -302,7 +302,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 400
-    And the export loan with documents failure response should be valid
+    And the "export_loan_with_documents" failure response should be valid
 
   @negative @creator
   Scenario: Extra portfolio filter fields error on the export (500)
@@ -351,7 +351,7 @@ Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-doc
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-documents"
     Then the response status code should be 400
-    And the export loan with documents failure response should be valid
+    And the "export_loan_with_documents" failure response should be valid
 
     Examples:
       | case                  | body                       |

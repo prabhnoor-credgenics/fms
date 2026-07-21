@@ -18,7 +18,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/assigned_companies_success_schema.json"
-    And the assigned companies success response should be valid
+    And the "assigned_companies" success response should be valid
 
   @positive @creator
   Scenario: Self lookup with source=delete_user returns 200
@@ -32,7 +32,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 200
-    And the assigned companies success response should be valid
+    And the "assigned_companies" success response should be valid
 
   @positive @creator
   Scenario: Self lookup with an arbitrary source tag returns 200
@@ -46,7 +46,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 200
-    And the assigned companies success response should be valid
+    And the "assigned_companies" success response should be valid
 
   @negative @creator @500
   Scenario: A 16-char but non-existent user_id surfaces as a server-class failure
@@ -71,7 +71,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 400
-    And the assigned companies failure response should be valid
+    And the "assigned_companies" failure response should be valid
 
   @negative @creator
   Scenario: Missing authenticationtoken header is rejected
@@ -107,7 +107,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 400
-    And the assigned companies failure response should be valid
+    And the "assigned_companies" failure response should be valid
 
   @negative @boundary @creator
   Scenario: user_id of 15 characters returns 400
@@ -118,7 +118,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 400
-    And the assigned companies failure response should be valid
+    And the "assigned_companies" failure response should be valid
 
   @negative @boundary @security @creator
   Scenario: 16-char user_id that sanitizes below 16 returns 400
@@ -129,7 +129,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 400
-    And the assigned companies failure response should be valid
+    And the "assigned_companies" failure response should be valid
 
   @negative @creator
   Scenario: Empty user_id resolves to the collection URL which has no verb
@@ -160,13 +160,13 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 400
-    And the assigned companies failure response should be valid
+    And the "assigned_companies" failure response should be valid
 
   @negative @security @creator @500
   Scenario: A 16-char XSS payload passes the length check but is an unknown user_id
     Given I prepare a request
     And I set the path parameters:
-      | user_id | <script>alertxyz |
+      | user_id | <xss>alertxyz |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
@@ -224,7 +224,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 200
-    And the assigned companies success response should be valid
+    And the "assigned_companies" success response should be valid
 
   @positive @security @creator
   Scenario: Self lookup with XSS in source is logged only and returns 200
@@ -233,12 +233,12 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
     And I set the path parameters:
       | user_id | {CREATOR_USER_ID} |
     And I set the query parameters:
-      | source | <script>alert(1)</script> |
+      | source | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 200
-    And the assigned companies success response should be valid
+    And the "assigned_companies" success response should be valid
 
   @positive @boundary @creator
   Scenario: Self lookup with a unicode source value returns 200
@@ -252,7 +252,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 200
-    And the assigned companies success response should be valid
+    And the "assigned_companies" success response should be valid
 
   @positive @boundary @creator
   Scenario: Self lookup with a very long source value returns 200
@@ -266,7 +266,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 200
-    And the assigned companies success response should be valid
+    And the "assigned_companies" success response should be valid
 
   @positive @creator
   Scenario: Self lookup ignores an unknown query parameter and returns 200
@@ -280,7 +280,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 200
-    And the assigned companies success response should be valid
+    And the "assigned_companies" success response should be valid
 
   @positive @creator
   Scenario: Self lookup ignores an unsupported Content-Type header on GET
@@ -293,7 +293,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
       | content-type        | application/xml |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 200
-    And the assigned companies success response should be valid
+    And the "assigned_companies" success response should be valid
 
   @negative @security @creator
   Scenario: SQL injection in the authenticationtoken is rejected

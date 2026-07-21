@@ -16,7 +16,7 @@ Feature: User Variables — GET /user/variables/
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/user_variables_success_schema.json"
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
   @positive @creator
   Scenario Outline: include_user_level_variables=<flag> returns 200
@@ -28,7 +28,7 @@ Feature: User Variables — GET /user/variables/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
     Examples:
       | flag  |
@@ -45,7 +45,7 @@ Feature: User Variables — GET /user/variables/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
   @positive @creator
   Scenario: Both flags true returns 200
@@ -58,7 +58,7 @@ Feature: User Variables — GET /user/variables/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
 
   @negative @creator
@@ -118,7 +118,7 @@ Feature: User Variables — GET /user/variables/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
   @positive @creator
   Scenario Outline: Non-boolean include_user_level_variables value "<flag>" is tolerated and returns 200
@@ -130,7 +130,7 @@ Feature: User Variables — GET /user/variables/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
     Examples:
       | flag  |
@@ -149,7 +149,7 @@ Feature: User Variables — GET /user/variables/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
   @positive @creator
   Scenario: variable_type passed as query param is ignored (not a GET filter) and returns 200
@@ -161,7 +161,7 @@ Feature: User Variables — GET /user/variables/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
   @positive @security @creator
   Scenario: Injection strings in flag params are coerced to false and return 200
@@ -169,12 +169,12 @@ Feature: User Variables — GET /user/variables/
     And I set the query parameters:
       | company_id                    | {COMPANY_ID}              |
       | include_user_level_variables  | ' OR '1'='1               |
-      | include_all_default_variables | <script>alert(1)</script> |
+      | include_all_default_variables | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
   @positive @creator
   Scenario: Request Content-Type header is irrelevant on a bodyless GET and returns 200
@@ -186,7 +186,7 @@ Feature: User Variables — GET /user/variables/
       | Content-Type        | text/plain   |
     When I send a "GET" request to "/user/variables/"
     Then the response status code should be 200
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
   @positive @creator
   Scenario: Response exposes documented shape (data.variables and success message)
@@ -200,7 +200,7 @@ Feature: User Variables — GET /user/variables/
     And the response content type should be "application/json"
     And the response body should contain field "data.variables"
     And the response body should contain text "variables fetched successfully"
-    And the user variables success response should be valid
+    And the "user_variables" success response should be valid
 
   @negative @security @creator
   Scenario Outline: Malformed or hostile company_id "<label>" is rejected
@@ -217,7 +217,7 @@ Feature: User Variables — GET /user/variables/
       | label         | value                         |
       | non-uuid text | not-a-valid-uuid              |
       | sql injection | ' OR '1'='1                   |
-      | xss payload   | <script>alert(1)</script>     |
+      | xss payload   | <xss>alert(1)</xss>     |
       | long unicode  | 名前テスト-{RANDOM_STRING:200} |
 
   @negative @creator

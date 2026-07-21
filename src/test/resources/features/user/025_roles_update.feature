@@ -46,7 +46,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/roles_success_schema.json"
-    And the roles success response should be valid
+    And the "roles" success response should be valid
 
   @positive @creator @roles-write
   Scenario: Update a role's description returns 200
@@ -90,7 +90,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 200
-    And the roles success response should be valid
+    And the "roles" success response should be valid
 
   @negative @creator @roles-write
   Scenario: Update a role to report to itself returns 400
@@ -174,7 +174,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Update a role with a non-alphanumeric role_id returns 400
@@ -216,7 +216,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 422
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   # ---------------------------------------------------------------------------
   # Expanded coverage (auth, invalid field values/types, reserved name conflict,
@@ -260,7 +260,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Update a role with a non-alphanumeric role_name returns 400
@@ -280,7 +280,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @security @creator @roles-write
   Scenario: Update a role with special characters in role_name returns 400
@@ -300,7 +300,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @security @creator @roles-write
   Scenario: Update a role with a SQL injection attempt in role_name returns 400
@@ -320,7 +320,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Update a role with a wrong-length reports_to_role_id returns 400
@@ -340,7 +340,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Update a role with a non-alphanumeric reports_to_role_id returns 400
@@ -360,7 +360,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Update a role with a wrong-length reports_to_user_id returns 400
@@ -380,7 +380,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Update a role with an invalid tenant_type value returns 400
@@ -400,7 +400,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Update a role to a reserved role_name returns 409

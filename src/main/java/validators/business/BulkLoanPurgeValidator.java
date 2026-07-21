@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 
 
 
-public class BulkLoanPurgeValidator {
+public class BulkLoanPurgeValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(BulkLoanPurgeValidator.class);
 

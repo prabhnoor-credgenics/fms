@@ -1,9 +1,0 @@
-file:src/test/resources/features/recovery_loan/008_ai_rules_variables.feature:440
-file:src/test/resources/features/recovery_loan/019_linked_loans.feature:204
-file:src/test/resources/features/recovery_loan/030_export_bulk_loan_details.feature:160
-file:src/test/resources/features/recovery_loan/031_get_loan.feature:88
-file:src/test/resources/features/recovery_loan/033_quick_allocation.feature:60:805
-file:src/test/resources/features/recovery_loan/042_v1_loan_masked_details.feature:57:129
-file:src/test/resources/features/recovery_loan/048_loan_details_update.feature:188
-file:src/test/resources/features/user/011_profiles_list.feature:96
-file:src/test/resources/features/user/020_internal_register_route.feature:10:29:48:62:76:90:104:118

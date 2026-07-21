@@ -605,7 +605,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @negative @boundary @creator
   Scenario: BOUND-004 — selected_users key at max length 36 (value null) passes body validation
@@ -638,7 +638,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 400
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @edge @creator
   Scenario: EDGE-001 — Empty user_filters object is accepted (no filter keys)
@@ -671,7 +671,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @edge @creator
   Scenario: EDGE-002 — user_filters list with duplicate entries is tolerated
@@ -703,7 +703,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @fuzz @creator
   Scenario: EDGE-003 — Fuzz inputs via placeholders (random loan id, random workflow_id) pass validation
@@ -721,7 +721,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
 
   @negative @business @creator
@@ -841,7 +841,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 400
-    And the quick deallocation failure response should be valid
+    And the "quick_deallocation" failure response should be valid
 
   @manual @negative @business @creator
   Scenario: BIZ-006 — De-allocation for a valid-format but non-existent loan id returns a failure envelope
@@ -893,7 +893,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/quick_deallocation_success_schema.json"
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-002 — All optional fields populated returns 200
@@ -934,7 +934,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/quick_deallocation_success_schema.json"
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-003 — selected_users with multiple null-valued entity ids returns 200
@@ -967,7 +967,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-004 — user_filters with all four allowed keys returns 200
@@ -999,7 +999,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-005 — Agency de-allocation with parent_company_id returns 200
@@ -1031,7 +1031,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-006 — allocation_type omitted defaults to "other" and returns 200
@@ -1063,7 +1063,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario Outline: HAPPY-007 — Each source enum value "<source>" is accepted (200)
@@ -1095,7 +1095,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
     Examples:
       | source       |
@@ -1139,7 +1139,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
     Examples:
       | type        | source    |
@@ -1237,4 +1237,4 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid

@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.Map;
 
 
-public class UsersFilterValidator {
+public class UsersFilterValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(UsersFilterValidator.class);
 

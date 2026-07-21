@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
 
 
-public class AssignedCompaniesValidator {
+public class AssignedCompaniesValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(AssignedCompaniesValidator.class);
 

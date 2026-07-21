@@ -74,19 +74,9 @@ public class ApiStepDefinitions {
         this.authManager = authManager;
     }
 
-    @Given("I authenticate as {string}")
-    public void i_authenticate_as(String roleName) {
-        enums.UserRole role = switch (roleName.trim().toLowerCase()) {
-            case "creator" -> enums.UserRole.CREATOR;
-            case "approver" -> enums.UserRole.APPROVER;
-            case "chief-admin", "chief_admin", "chiefadmin" -> enums.UserRole.CHIEF_ADMIN;
-            default -> throw new IllegalArgumentException(
-                    "Unknown role '" + roleName + "'. Expected: creator | approver | chief-admin");
-        };
-        testContext.setUserRole(role);
-        authManager.initializeAuthentication(role);
-        logger.info("Switched active authentication to role: {} (token now resolves to this role for {{AUTH_TOKEN}})", role);
-    }
+    // NOTE: the module-less "I authenticate as {string}" step was removed (0 feature usages); the
+    // canonical auth vocabulary is MultiUserAuthStepDefinitions' "... slot {int} and remember as {string}"
+    // (and the "for {module}" variant). Role parsing is unified in enums.UserRole.fromString(...).
 
     @When("I wait for {int} seconds")
     public void i_wait_for_seconds(int seconds) {

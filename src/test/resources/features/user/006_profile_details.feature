@@ -19,7 +19,7 @@ Feature: Profile Details — GET /user/profiles/<profile_id>
     When I send a "GET" request to "/user/profiles/{profile_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/profile_details_success_schema.json"
-    And the profile details success response should be valid
+    And the "profile_details" success response should be valid
 
 
   @negative @creator
@@ -34,7 +34,7 @@ Feature: Profile Details — GET /user/profiles/<profile_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/{profile_id}"
     Then the response status code should be 400
-    And the profile details failure response should be valid
+    And the "profile_details" failure response should be valid
 
     Examples:
       | profile_type |
@@ -195,7 +195,7 @@ Feature: Profile Details — GET /user/profiles/<profile_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/{profile_id}"
     Then the response status code should be 400
-    And the profile details failure response should be valid
+    And the "profile_details" failure response should be valid
 
     Examples:
       | profile_type |
@@ -256,7 +256,7 @@ Feature: Profile Details — GET /user/profiles/<profile_id>
     Examples:
       | profile_id            |
       | ' OR '1'='1           |
-      | <script>alert(1)</script> |
+      | <xss>alert(1)</xss> |
       | プロファイル             |
       | not a uuid at all     |
       | {RANDOM_STRING:512}   |

@@ -248,7 +248,7 @@
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 200
 #    And the response should match json schema "schemas/recovery/success/bulk_loan_purge_success_schema.json"
-#    And the bulk loan purge success response should be valid
+#    And the "bulk_loan_purge" success response should be valid
 #
 #  @manual @rpc-required @destructive @positive @creator @500
 #  Scenario: DELETE bulk loan with multiple disposable ids returns 200
@@ -265,7 +265,7 @@
 #      """
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 200
-#    And the bulk loan purge success response should be valid
+#    And the "bulk_loan_purge" success response should be valid
 #
 #  @manual @rpc-required @destructive @positive @creator @500
 #  Scenario: DELETE bulk loan for a valid-format but non-existent id returns 200 (no 404 for unknown id)
@@ -283,7 +283,7 @@
 #      """
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 200
-#    And the bulk loan purge success response should be valid
+#    And the "bulk_loan_purge" success response should be valid
 #
 #  @manual @rpc-required @destructive @boundary @creator @500
 #  Scenario: DELETE bulk loan with exactly 500 disposable ids is allowed (boundary) and returns 200
@@ -297,7 +297,7 @@
 #    And I set the request body from file "test-data/bulk_loan_purge_500_ids.json"
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 200
-#    And the bulk loan purge success response should be valid
+#    And the "bulk_loan_purge" success response should be valid
 #
 #  @manual @rpc-required @destructive @edge @creator @500
 #  Scenario: DELETE bulk loan with duplicate disposable ids returns 200
@@ -314,7 +314,7 @@
 #      """
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 200
-#    And the bulk loan purge success response should be valid
+#    And the "bulk_loan_purge" success response should be valid
 #
 #  @manual @rpc-required @destructive @edge @creator @500
 #  Scenario: DELETE bulk loan twice with the same disposable id is idempotent (200 both times)
@@ -343,7 +343,7 @@
 #      """
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 200
-#    And the bulk loan purge success response should be valid
+#    And the "bulk_loan_purge" success response should be valid
 #
 #  @manual @rpc-required @destructive @edge @creator @500
 #  Scenario: DELETE bulk loan with an empty-string id element returns 200 (non-empty list passes handler check)

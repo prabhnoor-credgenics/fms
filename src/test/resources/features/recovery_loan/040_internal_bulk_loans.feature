@@ -50,8 +50,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/internal_bulk_loans_success_schema.json"
-    And the internal bulk loans success response should be valid
-    And the internal bulk loans response should contain loan "{LOAN_ID}"
+    And the "internal_bulk_loans" success response should be valid
+    And the response body should contain text "{LOAN_ID}"
 
   @positive @creator
   Scenario: All optional fields populated returns the loan
@@ -94,7 +94,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/internal_bulk_loans_success_schema.json"
-    And the internal bulk loans response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
   @positive @creator
   Scenario: attribute_variables only (no attribute_levels) returns 200
@@ -256,7 +256,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the internal bulk loans error code should be "REC_0007"
+    And the response body should contain field "error.code" with value "REC_0007"
 
   @positive @creator
   Scenario: All attribute_levels members in one request returns 200
@@ -383,7 +383,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 200
-    And the internal bulk loans response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
   @positive @creator
   Scenario: Duplicate loan_ids entries are tolerated returns 200
@@ -413,7 +413,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 200
-    And the internal bulk loans response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
   @positive @creator
   Scenario: Combined — full collections export returns 200
@@ -645,7 +645,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 200
-    And the internal bulk loans response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
     And the response body should contain text "{LOAN_ID}"
 
 
@@ -677,7 +677,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the internal bulk loans error code should be "REC_0002"
+    And the response body should contain field "error.code" with value "REC_0002"
 
   @negative @creator
   Scenario: Non-existent valid-format loan_id returns 400 (REC_0007)
@@ -693,7 +693,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the internal bulk loans error code should be "REC_0007"
+    And the response body should contain field "error.code" with value "REC_0007"
 
   @positive @creator
   Scenario: Mixed existing + non-existent loan_ids returns 200 (unknown ids ignored, valid loan returned)
@@ -723,7 +723,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 200
-    And the internal bulk loans response should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
   @negative @creator @fuzz
   Scenario: Fuzz random loan_id is well-formed but unknown returns 400 (REC_0007)
@@ -739,7 +739,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the internal bulk loans error code should be "REC_0007"
+    And the response body should contain field "error.code" with value "REC_0007"
 
   @negative @creator
   Scenario Outline: loan_id containing forbidden character "<ch>" is rejected (REC_0007)
@@ -755,7 +755,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the internal bulk loans error code should be "REC_0007"
+    And the response body should contain field "error.code" with value "REC_0007"
 
     Examples:
       | ch |
@@ -928,7 +928,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the internal bulk loans error code should be "REC_0007"
+    And the response body should contain field "error.code" with value "REC_0007"
 
 
   @negative @creator
@@ -1113,7 +1113,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the internal bulk loans error code should be "REC_0004"
+    And the response body should contain field "error.code" with value "REC_0004"
 
   @negative @creator
   Scenario: attribute_levels invalid member returns 400 (REC_0003)

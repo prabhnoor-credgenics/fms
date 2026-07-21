@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class RolesValidator {
+public class RolesValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(RolesValidator.class);
 

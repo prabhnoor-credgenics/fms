@@ -41,7 +41,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 202
     And the response should match json schema "schemas/recovery/success/allocation_enqueue_success_schema.json"
-    And the allocation enqueue success response should be valid
+    And the "allocation_enqueue" success response should be valid
 
   @positive @creator
   Scenario: All optional fields populated enqueues the allocation (202)
@@ -70,7 +70,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       """
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 202
-    And the allocation enqueue success response should be valid
+    And the "allocation_enqueue" success response should be valid
 
   @positive @creator
   Scenario: selected_users (entity→capacity map) enqueues the allocation (202)
@@ -93,7 +93,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       """
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 202
-    And the allocation enqueue success response should be valid
+    And the "allocation_enqueue" success response should be valid
 
   @positive @creator
   Scenario: user_filters with all four allowed keys enqueues the allocation (202)
@@ -116,7 +116,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       """
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 202
-    And the allocation enqueue success response should be valid
+    And the "allocation_enqueue" success response should be valid
 
   @positive @creator
   Scenario: attribute_matching with operator "=" enqueues the allocation (202)
@@ -139,7 +139,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       """
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 202
-    And the allocation enqueue success response should be valid
+    And the "allocation_enqueue" success response should be valid
 
   @positive @creator
   Scenario: All boolean flags true enqueues the allocation (202)
@@ -325,7 +325,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       """
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 202
-    And the allocation enqueue success response should be valid
+    And the "allocation_enqueue" success response should be valid
 
 
   @positive @boundary @creator
@@ -450,7 +450,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       """
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 400
-    And the allocation enqueue error code should be "REC_0015"
+    And the response body should contain field "error.code" with value "REC_0015"
 
 
   @negative @creator

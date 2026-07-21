@@ -17,7 +17,7 @@ Feature: Company Details — GET /user/company/
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/company_details_success_schema.json"
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — single key returns 200
@@ -29,7 +29,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — multiple keys (CSV) returns 200
@@ -41,7 +41,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — tenancy / config fields returns 200
@@ -53,7 +53,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — address block returns 200
@@ -65,7 +65,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
 
   @negative @creator
@@ -77,7 +77,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 400
-    And the company details failure response should be valid
+    And the "company_details" failure response should be valid
 
   @negative @creator
   Scenario: Unknown (random UUID) company_id is rejected
@@ -135,7 +135,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — branding & currency fields returns 200
@@ -147,7 +147,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — auth / security configuration returns 200
@@ -159,7 +159,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — data-purging / test-company fields returns 200
@@ -171,7 +171,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — webhook fields returns 200
@@ -183,7 +183,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — unknown column name is tolerated and returns 200
@@ -195,7 +195,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — empty keys value returns 200
@@ -207,7 +207,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @positive @creator
   Scenario: Projection — explicit company_id in keys returns 200
@@ -219,7 +219,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
     And the response body should contain text "company_id"
 
   @positive @creator
@@ -266,7 +266,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 200
-    And the company details success response should be valid
+    And the "company_details" success response should be valid
 
   @negative @creator
   Scenario: Empty company_id value is rejected
@@ -288,7 +288,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 400
-    And the company details failure response should be valid
+    And the "company_details" failure response should be valid
 
   @negative @security @creator
   Scenario: SQL injection payload in company_id is rejected
@@ -299,13 +299,13 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 400
-    And the company details failure response should be valid
+    And the "company_details" failure response should be valid
 
   @negative @security @creator
   Scenario: XSS payload in company_id is rejected
     Given I prepare a request
     And I set the query parameters:
-      | company_id | <script>alert(1)</script> |
+      | company_id | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
@@ -321,7 +321,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 400
-    And the company details failure response should be valid
+    And the "company_details" failure response should be valid
 
   @negative @creator
   Scenario: Unicode company_id is rejected
@@ -332,7 +332,7 @@ Feature: Company Details — GET /user/company/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
     Then the response status code should be 400
-    And the company details failure response should be valid
+    And the "company_details" failure response should be valid
 
   @negative @creator
   Scenario: Unsupported HTTP method on the company URL is rejected
