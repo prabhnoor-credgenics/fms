@@ -1,4 +1,5 @@
 {
   "source": "api",
-  "amount_recovered": 1500
+  "amount_recovered": 1500,
+  "total_loan_amount": 60000
 }

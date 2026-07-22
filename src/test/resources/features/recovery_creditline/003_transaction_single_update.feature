@@ -200,7 +200,7 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
       | txn  | TXN_{LOAN_ID}  |
     And I set the request body:
       """
-      { "source": "api", "amount_recovered": "not_a_number" }
+      { "source": "api", "total_loan_amount": "not_a_number" }
       """
     When I send a "PATCH" request to "/recovery/transaction/{cust}/{txn}"
     Then the response status code should be 400

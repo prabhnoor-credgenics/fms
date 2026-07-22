@@ -1,0 +1,252 @@
+{
+  "applicant_aadhar_number": "123456789012",
+  "applicant_address": [
+    {
+      "applicant_address_text": "H no 1, Delhi, India",
+      "applicant_city": "City1",
+      "applicant_state": "Punjab1",
+      "applicant_pincode": "122016",
+      "applicant_landmark": "Landmark1",
+      "applicant_address_latitude": "98765456.99",
+      "applicant_address_longitude": "87656789.99",
+      "applicant_address_type": "Home1"
+    },
+    {
+      "applicant_address_text": "H no 1, New Delhi, India",
+      "applicant_city": "New City1",
+      "applicant_state": "Delhi",
+      "applicant_pincode": "110016",
+      "applicant_landmark": "Landmark1",
+      "applicant_address_latitude": "98765456.99",
+      "applicant_address_longitude": "87656789.99",
+      "applicant_address_type": "Business1"
+    }
+  ],
+  "applicant_cibil_score": "750",
+  "applicant_contact_details": [
+    { "applicant_contact_number_type": "Home", "applicant_contact_number": "9988007799" },
+    { "applicant_contact_number_type": "Office", "applicant_contact_number": "9988998891" }
+  ],
+  "applicant_dob": "1991-12-01",
+  "applicant_email_details": [
+    { "applicant_email_type": "Personal", "applicant_email": "Applicant@yopmail.com" },
+    { "applicant_email_type": "Official", "applicant_email": "Applicants@yopmail.com" }
+  ],
+  "applicant_gender": "M",
+  "applicant_language": "english",
+  "applicant_legal_heir": "Wife",
+  "applicant_monthly_income": "100000",
+  "applicant_name": "Borrower Singh",
+  "applicant_notice_reference_number": "RFN987654321",
+  "applicant_occupation": "QA Engineer",
+  "applicant_pan_number": "QWERT8765A",
+  "applicant_photo_link": "https://www.youtube.com/",
+  "applicant_prefix": "Mr.",
+  "backed_by_security": "TRUE",
+  "business_name": "Car Garage",
+  "center_name": "qwe1",
+  "channel_partner": "Maruti",
+  "chassis_number": "9876545678IUHGFGHJK87656",
+  "client_customer_id": "Client_Customer_Id_1",
+  "client_loan_sanction_date": "2023-01-01",
+  "co_applicant": [
+    {
+      "co_applicant_contact_details": [
+        { "co_applicant_contact_number_type": "Office", "co_applicant_contact_number": "8765432190" },
+        { "co_applicant_contact_number_type": "Business", "co_applicant_contact_number": "9765432190" }
+      ],
+      "co_applicant_gender": "Female",
+      "co_applicant_dob": "1980-01-01",
+      "co_applicant_language": "hin",
+      "co_applicant_notice_reference_number": "CORFN987654321",
+      "co_applicant_email_details": [
+        { "co_applicant_email": "shivam.tyagi1@credgenics.com", "co_applicant_email_type": "Personal" },
+        { "co_applicant_email": "shivam1.tyagi1@credgenics.com", "co_applicant_email_type": "Official" }
+      ],
+      "co_applicant_photo_link": "https://www.rediff.com/",
+      "co_applicant_address": [
+        {
+          "co_applicant_city": "Co_City00",
+          "co_applicant_address_type": "Office1",
+          "co_applicant_state": "Co_State00",
+          "co_applicant_pincode": "110010",
+          "co_applicant_address_latitude": "98765454.99",
+          "co_applicant_address_longitude": "76543222.88",
+          "co_applicant_address_text": "Hno-20"
+        },
+        {
+          "co_applicant_city": "Co1_City00",
+          "co_applicant_address_type": "OfficeOffice1",
+          "co_applicant_state": "Co1_State00",
+          "co_applicant_pincode": "210010",
+          "co_applicant_address_latitude": "88765454.99",
+          "co_applicant_address_longitude": "86543222.88",
+          "co_applicant_address_text": "BHno-20"
+        }
+      ],
+      "co_applicant_name": "Co Borrower Singh",
+      "co_applicant_legal_heir": "Son",
+      "co_applicant_prefix": "Mrs.",
+      "co_applicant_type": "Friend"
+    },
+    {
+      "co_applicant_contact_details": [
+        { "co_applicant_contact_number_type": "Business", "co_applicant_contact_number": "9765432190" }
+      ],
+      "co_applicant_gender": "F",
+      "co_applicant_dob": "1981-01-01",
+      "co_applicant_language": "tamil",
+      "co_applicant_notice_reference_number": "CORFN2987654321",
+      "co_applicant_email_details": [
+        { "co_applicant_email": "shivam.tyagi21@credgenics.com", "co_applicant_email_type": "Official" }
+      ],
+      "co_applicant_photo_link": "https://www.rediff.com/",
+      "co_applicant_address": [
+        {
+          "co_applicant_city": "Co_City10",
+          "co_applicant_address_type": "Office11",
+          "co_applicant_state": "Co_State10",
+          "co_applicant_pincode": "110011",
+          "co_applicant_address_latitude": "98765554.99",
+          "co_applicant_address_longitude": "76543322.88",
+          "co_applicant_address_text": "Hno-30"
+        }
+      ],
+      "co_applicant_name": "Co Borrower 2 Singh",
+      "co_applicant_legal_heir": "Daughter",
+      "co_applicant_prefix": "Mrs.",
+      "co_applicant_type": "Wife"
+    }
+  ],
+  "credit_account_holder_name": "Ramu Singh",
+  "credit_account_holder_type": "Self",
+  "credit_account_number": "766273000000",
+  "credit_bank_ifsc_code": "IFSC9087871",
+  "credit_bank_name": "HDFC",
+  "defaults": [
+    {
+      "advance_payment": "10",
+      "total_outstanding_amount": "10098.98",
+      "allocation_month": "{ALLOCATION_MONTH}",
+      "settlement_amount": "9098.98",
+      "expected_emi_principal_amount": "98.98",
+      "expected_emi_interest_amount": "9.98",
+      "expected_emi": "108.96",
+      "other_penalty": "20.98",
+      "client_amount_recovered": "1000.98",
+      "date_of_default": "2023-01-01",
+      "total_claim_amount": "10098.98",
+      "late_fee": "5.98",
+      "default_emi_number": "1",
+      "principal_outstanding_amount": "1098.98",
+      "utilisation": "1"
+    }
+  ],
+  "document_details": [
+    {
+      "document_number": "DN987654321",
+      "document_amount": "1000.98",
+      "security_mode": "Protected",
+      "document_date": "2023-01-01",
+      "document_dishonour_date": "2023-01-01",
+      "document_bounce_bank_account_number": "98765432101",
+      "document_bounce_charges": "11.98",
+      "document_bounce_memo_date": "2024-11-01",
+      "document_presented_in_account": "Aadhar Card",
+      "document_signature_city": "Gurugram",
+      "document_signature_state": "Haryana",
+      "document_signature_pincode": "122016",
+      "document_sequence_number": "POIU98761",
+      "document_bounce_memo_reference_number": "DBMRFN987654321",
+      "document_bounce_memo_return_date": "2024-11-01",
+      "document_umrn": "UMRN987654321",
+      "document_signature_address_text": "Building no - 1",
+      "document_micr": "MICR987654",
+      "document_bank_ifsc_code": "IFSC9087871",
+      "document_bounce_bank_ifsc_code": "IFSC9087871",
+      "document_presented_zone": "Haryana",
+      "document_signature_name": "Divyam",
+      "document_bank_name": "HDFC",
+      "document_bounce_bank_name": "HDFC",
+      "document_bounce_bank_address": "h no 1, New Delhi, Delhi",
+      "reason_of_document_bounce": "late pay",
+      "document_bounce_memo_branch_address": "Haryana"
+    }
+  ],
+  "emi_amount": "109.96",
+  "engine_number": "POIUYTREWQ98765",
+  "group_id": "L2",
+  "interest_on_loan": "10.11",
+  "loan_branch": "Sector - 20",
+  "loan_end_date": "2024-04-01",
+  "loan_guarantor": [
+    {
+      "loan_guarantor_gender": "Male",
+      "loan_guarantor_contact_details": [
+        { "loan_guarantor_contact_type": "Home", "loan_guarantor_contact_number": "9876543290" }
+      ],
+      "loan_guarantor_address": [
+        {
+          "loan_guarantor_address_text": "h no 1, Noida,UP",
+          "loan_guarantor_pincode": "201301",
+          "loan_guarantor_address_type": "Home",
+          "loan_guarantor_city": "Noida",
+          "loan_guarantor_state": "UP"
+        }
+      ],
+      "loan_guarantor_legal_heir": "Son",
+      "loan_guarantor_prefix": "Mr.",
+      "loan_guarantor_email_details": [
+        { "loan_guarantor_email_type": "Self", "loan_guarantor_email": "loanguarantor@yopmail.com" }
+      ],
+      "loan_guarantor_name": "LGN Divyam"
+    }
+  ],
+  "loan_nbfc_cin": "12",
+  "loan_nbfc_name": "Bajaj Finance",
+  "loan_region": "North India",
+  "loan_regional_manager_contact_email": "atul_loan_regionail@yopmail.com,vibhor_loan_regional@yopmail.com",
+  "loan_regional_manager_contact_number": "9876543201,8765432091",
+  "loan_regional_manager_name": "Naveen",
+  "loan_source_branch_address": "B no 1, Gurugram,Haryana",
+  "loan_tenure": "10",
+  "loan_type": "Bike",
+  "loan_zone": "Gurugram",
+  "make_and_model": "2022-11-01",
+  "merchant_name": "TVS",
+  "notice_date": "2024-10-01",
+  "notice_delivery_partner": "India Post",
+  "payment_link": "https://www.youtube.com/",
+  "product_type": "Bike",
+  "rbi_stage": "Initial",
+  "references": [
+    {
+      "reference_contact_details": [
+        { "contact_number": "9988007791", "reference_contact_number_type": "Home" }
+      ],
+      "reference_gender": "Male",
+      "relation_with_applicant": "Son",
+      "reference_address": [
+        {
+          "reference_city": "Noida",
+          "reference_address_type": "Home",
+          "reference_address_text": "h no 1, Noida,UP",
+          "reference_state": "UP",
+          "reference_pincode": "201301"
+        }
+      ],
+      "reference_email_details": [
+        { "reference_email": "reference_user1@yopmai.com", "reference_email_type": "Personal" }
+      ],
+      "reference_pan_number": "ERTYUI4321P",
+      "name": "Arjun"
+    }
+  ],
+  "security_type": "Secured",
+  "tags": "Tags_Loan_1",
+  "tenure_finished": "TRUE",
+  "total_loan_amount": "9098.98",
+  "transaction_id": "{LOAN_ID}",
+  "newtextt87": "newtextt88",
+  "source": "quick_upload"
+}
