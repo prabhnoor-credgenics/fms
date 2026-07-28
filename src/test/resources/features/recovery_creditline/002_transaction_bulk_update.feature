@@ -17,7 +17,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body from file "test-data/creditline/transaction_bulk_upload.json"
@@ -28,7 +28,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @negative @creditline
   Scenario: Invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -40,7 +40,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @negative @creditline
   Scenario: Missing company_id returns 403
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/transaction_bulk_upload.json"
@@ -52,10 +52,10 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @positive @smoke @creditline
   Scenario: Valid bulk transaction update returns 202 with a request_id
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -69,10 +69,10 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @positive @creditline
   Scenario: Minimal body (only transaction_data) returns 202
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -88,10 +88,10 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @positive @creditline
   Scenario Outline: upload_type accepts each valid value and returns 202
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -112,7 +112,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @negative @creditline
   Scenario: Missing transaction_data returns 400 validation error
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -127,7 +127,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @negative @creditline
   Scenario: Null transaction_data returns 400 validation error
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -140,7 +140,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @negative @creditline
   Scenario: Empty transaction_data array returns 400 (min_length 1)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -155,7 +155,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @negative @creditline
   Scenario: Invalid upload_type value returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -168,7 +168,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @negative @creditline
   Scenario: transaction_data of the wrong type (object not array) returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -186,7 +186,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
   @negative @creditline @boundary
   Scenario: More than 1000 transactions in one request returns 400 (max_length 1000)
     # TODO: verify on staging — needs a 1001-row payload; asserting the documented max_length limit.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -200,10 +200,10 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
 
   @positive @creditline @async
   Scenario: Rows with missing per-row keys still return 202 (row validation is async, not synchronous)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:

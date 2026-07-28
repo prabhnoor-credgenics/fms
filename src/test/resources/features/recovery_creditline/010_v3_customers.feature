@@ -24,7 +24,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id       | {COMPANY_ID}       |
       | attribute_levels | customer_variables |
@@ -37,7 +37,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
 
   @negative @creditline
   Scenario: Invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id       | {COMPANY_ID}       |
       | attribute_levels | customer_variables |
@@ -52,7 +52,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
   @negative @creditline
   Scenario: Missing company_id returns 400
     # GET detail-fetch endpoints return 400 for missing company_id (only bulk upload/update return 403).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | attribute_levels | customer_variables |
     And I set the request headers:
@@ -65,22 +65,25 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
 
   # ---------- Happy path (multi-step chain: upload creates the customer, then read back) ----------
 
-  @positive @smoke @creditline @env-blocked
+  @positive @smoke @creditline @multistep
   Scenario: Upload a transaction then fetch customer details returns 200 success
-    # TODO: verify on staging — upload is async, so the customer may not be materialised immediately
-    # (creditline company data/config dependent; read-back intermittently 5xx like the other fetch endpoints).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
+    # Step 1 — create the customer synchronously (client_customer_id = CUST_{LOAN_ID})
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    And I set the request body from file "test-data/creditline/transaction_bulk_upload.json"
-    When I send a "POST" request to "/recovery/v1/bulk/transaction-upload"
-    Then the response status code should be 202
-    And the response body should contain field "data.request_id"
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
+    And I update JSON field "client_customer_id" to "CUST_{LOAN_ID}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 201
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -97,27 +100,31 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
     And the response body should contain field "data"
     And the response should match json schema "schemas/creditline/success/v3_customers_success_schema.json"
 
-  @positive @creditline @env-blocked
+  @positive @creditline @multistep
   Scenario: Fetch customer details with attribute_variables selector returns 200 success
-    # TODO: verify on staging — async read-back of the just-uploaded customer (data/config dependent).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
+    # Step 1 — create the customer synchronously (client_customer_id = CUST_{LOAN_ID})
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    And I set the request body from file "test-data/creditline/transaction_bulk_upload.json"
-    When I send a "POST" request to "/recovery/v1/bulk/transaction-upload"
-    Then the response status code should be 202
-    And the response body should contain field "data.request_id"
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
+    And I update JSON field "client_customer_id" to "CUST_{LOAN_ID}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 201
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | company_id          | {COMPANY_ID}      |
-      | attribute_variables | total_loan_amount |
+      | attribute_variables | customer_total_claim_amount |
     And I set the path parameters:
       | customer_id | CUST_{LOAN_ID} |
     And I wait for 5 seconds
@@ -128,21 +135,25 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
 
   # ---------- transactions sub-path variant ----------
 
-  @positive @creditline @env-blocked
+  @positive @creditline @multistep
   Scenario: Upload a transaction then fetch the transaction sub-path returns 200 success
-    # TODO: verify on staging — depends on the async upload having materialised the transaction.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
+    # Step 1 — create the customer + transaction synchronously (CUST_{LOAN_ID} / {LOAN_ID})
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    And I set the request body from file "test-data/creditline/transaction_bulk_upload.json"
-    When I send a "POST" request to "/recovery/v1/bulk/transaction-upload"
-    Then the response status code should be 202
-    And the response body should contain field "data.request_id"
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
+    And I update JSON field "client_customer_id" to "CUST_{LOAN_ID}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 201
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -151,7 +162,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
       | attribute_levels | transaction_variables |
     And I set the path parameters:
       | customer_id    | CUST_{LOAN_ID} |
-      | transaction_id | TXN_{LOAN_ID}  |
+      | transaction_id | {LOAN_ID}      |
     And I wait for 5 seconds
     When I send a "GET" request to "/recovery/v3/customers/{customer_id}/transactions/{transaction_id}"
     Then the response status code should be 200
@@ -162,7 +173,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
 
   @negative @creditline
   Scenario: Unknown customer_id returns 400 REC_0007 INVALID_IDS
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -177,7 +188,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
 
   @negative @creditline
   Scenario: Unknown transaction_id on the sub-path returns 400 REC_0007 INVALID_IDS
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -195,7 +206,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
 
   @negative @creditline
   Scenario: Invalid attribute_levels value returns 400 REC_0003
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -212,7 +223,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
   Scenario Outline: attribute_levels accepts each valid CreditLineAttributeLevels value (no REC_0003)
     # Valid enum members do not trip REC_0003; an unknown id then yields REC_0007 (still 400) — the
     # point of this outline is that the level itself is accepted, not rejected as REC_0003.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -239,7 +250,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
   Scenario: Neither attribute_levels nor attribute_variables returns 400 REC_0002
     # The missing-selector check fires before the id check: 400 REC_0002
     # "Missing attribute variables or attribute level".
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -255,7 +266,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
 
   @positive @creditline
   Scenario Outline: source query param accepts each valid enum value (unknown id -> 400 REC_0007, source not rejected)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -284,7 +295,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
 
   @positive @creditline
   Scenario: Valid allocation_month format is accepted (unknown id -> 400 REC_0007)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -301,7 +312,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
   @negative @creditline @boundary
   Scenario: Malformed allocation_month returns 400 validation error
     # allocation_month must match ^20\d\d-(1[0-2]|[1-9])-01 ; a day other than 01 is rejected.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:

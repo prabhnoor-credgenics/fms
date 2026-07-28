@@ -23,7 +23,7 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -37,7 +37,7 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
 
   @negative @creditline
   Scenario: Invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -52,7 +52,7 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
 
   @negative @creditline
   Scenario: Missing company_id returns 403
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the path parameters:
@@ -65,31 +65,27 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
 
   # ---------- Happy path (multi-step: create the transaction, then update it) ----------
 
-  @positive @smoke @creditline @env-blocked
+  @positive @smoke @creditline @multistep
   Scenario: Update an existing transaction returns 200 "Transaction successfully updated"
-    # TODO: verify on staging — creditline company data/async dependent (returns 200 {message:"no data
-    # to update"}). The bulk upload is async; even with a 5s wait the CUST/TXN row is not persisted by
-    # the time the PATCH runs, so the endpoint returns a 200 "no data to update" flat success instead of
-    # "Transaction successfully updated". Non-deterministic async read-back — see §6 rule 5.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
-    # Step 1 — create CUST_{LOAN_ID}/TXN_{LOAN_ID} via the bulk upload endpoint
+    And I switch active user to "creatorc0"
+    # Step 1 — create CUST_{LOAN_ID}/{LOAN_ID} synchronously via the single-upload endpoint
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    And I set the request body:
-      """
-      { "transaction_data": [ { "client_customer_id": "CUST_{LOAN_ID}", "transaction_id": "TXN_{LOAN_ID}", "total_loan_amount": 50000, "amount_recovered": 1000 } ] }
-      """
-    When I send a "POST" request to "/recovery/v1/bulk/transaction-upload"
-    Then the response status code should be 202
-    And the response body should contain field "data.request_id"
-    # Step 2 — PATCH the just-created transaction (wait for async upload to persist)
-    And I wait for 5 seconds
-    Given I prepare a request
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
+    And I update JSON field "client_customer_id" to "CUST_{LOAN_ID}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 201
+    # Step 2 — PATCH the just-created transaction (cust=CUST_{LOAN_ID}, txn={LOAN_ID})
+    And I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
@@ -97,7 +93,7 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
       | cust | CUST_{LOAN_ID} |
-      | txn  | TXN_{LOAN_ID}  |
+      | txn  | {LOAN_ID}      |
     And I set the request body from file "test-data/creditline/transaction_single_update.json"
     When I send a "PATCH" request to "/recovery/transaction/{cust}/{txn}"
     Then the response status code should be 200
@@ -109,7 +105,7 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
 
   @negative @creditline
   Scenario Outline: Unknown ids return 400 "transaction not found" for every path variant
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -134,7 +130,7 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
 
   @negative @creditline
   Scenario: Empty body returns 400 "Please provide data"
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -154,7 +150,7 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
   @negative @creditline
   Scenario: Bad path param returns 400
     # TODO: verify on staging — malformed client_customer_id / transaction_id path segments.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -167,29 +163,27 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  @negative @creditline @env-blocked
+  @negative @creditline @multistep
   Scenario: Invalid field value fails data validation with 400
-    # TODO: verify on staging — creditline company data/async dependent (returns 200 {message:"no data
-    # to update"}). Triggering "Data Validation Failed" (output.errors) requires the uploaded transaction
-    # to already be persisted, but the bulk upload is async and the row is not present when the PATCH runs
-    # (even with a 5s wait), so the wrongly-typed value is never validated. Non-deterministic — see §6 rule 5.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
+    # Step 1 — create the transaction synchronously so the PATCH has a persisted row to validate
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    And I set the request body:
-      """
-      { "transaction_data": [ { "client_customer_id": "CUST_{LOAN_ID}", "transaction_id": "TXN_{LOAN_ID}", "total_loan_amount": 50000 } ] }
-      """
-    When I send a "POST" request to "/recovery/v1/bulk/transaction-upload"
-    Then the response status code should be 202
-    And the response body should contain field "data.request_id"
-    And I wait for 5 seconds
-    Given I prepare a request
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
+    And I update JSON field "client_customer_id" to "CUST_{LOAN_ID}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 201
+    # Step 2 — PATCH with a wrongly-typed value → data validation fails
+    And I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
@@ -197,7 +191,7 @@ Feature: Credit-line Single Transaction Update — PATCH /recovery[/v3|v4|v5]/tr
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
       | cust | CUST_{LOAN_ID} |
-      | txn  | TXN_{LOAN_ID}  |
+      | txn  | {LOAN_ID}      |
     And I set the request body:
       """
       { "source": "api", "total_loan_amount": "not_a_number" }

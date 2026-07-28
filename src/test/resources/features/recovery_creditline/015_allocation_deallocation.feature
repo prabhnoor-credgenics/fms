@@ -14,7 +14,7 @@ Feature: Credit-line Allocation / Deallocation — POST /recovery/allocation, /r
 
   @negative @creditline
   Scenario: Allocation without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -28,7 +28,7 @@ Feature: Credit-line Allocation / Deallocation — POST /recovery/allocation, /r
 
   @negative @creditline
   Scenario: Allocation with invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | invalid_token_12345 |
     And I set the query parameters:
@@ -43,7 +43,7 @@ Feature: Credit-line Allocation / Deallocation — POST /recovery/allocation, /r
 
   @negative @creditline
   Scenario: Allocation without company_id returns 403
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -58,7 +58,7 @@ Feature: Credit-line Allocation / Deallocation — POST /recovery/allocation, /r
 
   @negative @creditline
   Scenario: Allocation with empty body returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -73,7 +73,7 @@ Feature: Credit-line Allocation / Deallocation — POST /recovery/allocation, /r
 
   @negative @creditline
   Scenario: Deallocation without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -90,17 +90,17 @@ Feature: Credit-line Allocation / Deallocation — POST /recovery/allocation, /r
   Scenario: Allocate a credit-line transaction to a user returns 200
     # TODO: verify on staging — creditline company data/config dependent (needs an allocatable
     # transaction and a target user in the credit-line company).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["CUST_{LOAN_ID}"], "user_id": "usr_dummy_id" }
+      { "source" : "api", "loan_ids": ["CUST_{LOAN_ID}"], "user_id": "usr_dummy_id" }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -109,17 +109,17 @@ Feature: Credit-line Allocation / Deallocation — POST /recovery/allocation, /r
   @positive @creditline @env-blocked
   Scenario: Bulk allocate credit-line transactions returns 200
     # TODO: verify on staging — creditline company data/config dependent.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["CUST_{LOAN_ID}"], "user_id": "usr_dummy_id" }
+      { "source" : "api","loan_ids": ["CUST_{LOAN_ID}"], "user_id": "usr_dummy_id" }
       """
     When I send a "POST" request to "/recovery/allocation/bulk"
     Then the response status code should be 200

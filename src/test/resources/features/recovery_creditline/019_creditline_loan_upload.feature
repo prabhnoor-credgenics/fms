@@ -38,7 +38,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @negative @creditline @creator
   Scenario: Upload without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -51,7 +51,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @negative @creditline @creator
   Scenario: Upload with an invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -65,7 +65,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @negative @creditline @creator
   Scenario: Upload with company_id query parameter missing returns 403
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request headers:
@@ -81,10 +81,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @positive @smoke @creditline @creator
   Scenario: Valid single transaction upload returns 201
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -100,10 +100,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @positive @creditline @creator
   Scenario: Minimal transaction upload (only identity + one default) returns 201
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -124,10 +124,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @positive @creditline @creator
   Scenario Outline: Upload honours each replace-flag combination and returns 201
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id            | {COMPANY_ID}            |
       | replace_previous_data | <replace_previous_data> |
@@ -152,7 +152,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @negative @creditline @creator
   Scenario: URI id and payload transaction_id mismatch returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -166,7 +166,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @negative @creditline @creator
   Scenario: Null transaction_id in payload returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -180,7 +180,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @negative @creditline @creator @boundary
   Scenario: transaction_id exceeding max length of 64 returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -194,10 +194,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @positive @creditline @creator @boundary
   Scenario: transaction_id containing allowed special characters is accepted (201)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -215,7 +215,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @text @special-characters @negative @creditline @creator
   Scenario Outline: Id-like text fields reject disallowed special characters (enforced)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -234,7 +234,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @text @negative @creditline @creator @boundary
   Scenario Outline: Text fields with an enforced max length reject over-length values (400)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -255,7 +255,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @text @negative @creditline @creator
   Scenario Outline: Text field rejects numeric-only values (400)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -274,7 +274,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @boolean @negative @creditline @creator
   Scenario Outline: Boolean field rejects non-boolean values (400)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -294,7 +294,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @mobile @negative @creditline @creator
   Scenario Outline: Mobile number rejects invalid formats (400)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -315,7 +315,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @email @negative @creditline @creator
   Scenario Outline: Email rejects invalid formats (400)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -336,7 +336,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @pincode @negative @creditline @creator
   Scenario: Pincode rejects non-numeric value (400)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -350,7 +350,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @date @negative @creditline @creator
   Scenario Outline: Date field rejects invalid date formats (400)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -376,10 +376,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @text @special-characters @positive @creditline @creator
   Scenario Outline: Text fields accept values containing allowed special characters (201)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -430,10 +430,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
   @datatype-validation @text @special-characters @positive @creditline @creator @not-enforced
   Scenario Outline: Descriptive text fields accept disallowed special characters (not enforced, 201)
     # TODO: verify on staging — quick upload does not enforce the char-set rule on these fields (returns 201).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -465,10 +465,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
   @datatype-validation @text @positive @creditline @creator @not-enforced @boundary
   Scenario Outline: Text fields accept over-length values (max length not enforced, 201)
     # TODO: verify on staging — quick upload does not enforce max length on these fields (returns 201).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -512,10 +512,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
   @datatype-validation @integer @amount @percentage @positive @creditline @creator @not-enforced
   Scenario Outline: Numeric fields accept decimal / negative / out-of-range values (not enforced, 201)
     # TODO: verify on staging — quick upload does not enforce integer/amount/percentage/CIBIL rules (returns 201).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -549,10 +549,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
   @datatype-validation @pincode @url @positive @creditline @creator @not-enforced
   Scenario Outline: Pincode length and URL format are not enforced (accepted, 201)
     # TODO: verify on staging — quick upload accepts wrong-length pincodes and malformed URLs (returns 201).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -577,10 +577,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @text @positive @creditline @creator
   Scenario Outline: Optional text field accepts null (201)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -610,10 +610,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @text @positive @creditline @creator
   Scenario Outline: Optional text field accepts empty string (201)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -640,13 +640,12 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
   # Multi-step: upload then read the transaction back
   # ============================================================================
 
-  @positive @creditline @creator @multistep @env-blocked
+  @positive @creditline @creator @multistep
   Scenario: Upload a transaction then read it back via transaction details
-    # TODO: verify on staging — creditline company data/config dependent; upload + read-back chain.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:

@@ -27,7 +27,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-customer without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request body from file "test-data/creditline/verify_customer.json"
     When I send a "POST" request to "/recovery/bulk/verify-customer"
     Then the response status code should be 400
@@ -36,7 +36,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-customer with an invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | invalid_token_12345 |
     And I set the request body from file "test-data/creditline/verify_customer.json"
@@ -50,7 +50,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-transaction without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request body from file "test-data/creditline/verify_transaction.json"
     When I send a "POST" request to "/recovery/bulk/verify-transaction"
     Then the response status code should be 400
@@ -59,7 +59,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-transaction with an invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | invalid_token_12345 |
     And I set the request body from file "test-data/creditline/verify_transaction.json"
@@ -73,7 +73,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @positive @smoke @creditline
   Scenario: verify-customer with an unknown id returns 200 with the id in non_verified_loan_ids
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -90,7 +90,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @positive @creditline
   Scenario: verify-customer accepts optional allocation_month and archive and returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/verify_customer.json"
@@ -105,10 +105,10 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
     # TODO: verify on staging — transaction upload is async, so the freshly-uploaded client_customer_id
     # may still land in non_verified_loan_ids if the queue worker has not processed it yet. The stable
     # assertion is the 200 + verified/non_verified shape; the "appears in verified" claim is timing-dependent.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -137,7 +137,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @positive @smoke @creditline
   Scenario: verify-transaction with an unknown txn/cust pair returns 200 with maps
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -154,7 +154,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @positive @creditline
   Scenario: verify-transaction accepts optional allocation_month and archive and returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/verify_transaction.json"
@@ -168,10 +168,10 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
   Scenario: Upload a transaction, then verify-transaction for the created txn/cust pair returns 200
     # TODO: verify on staging — upload is async, so the freshly-uploaded pair may still land in
     # non_verified_transactions_ids until the queue worker processes it. Stable assertion: 200 + map shape.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -200,7 +200,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-customer without company_id returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -215,7 +215,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
   Scenario: verify-customer with null company_id returns 500
     # TODO: verify on staging — a null company_id is NOT rejected by quart_schema validation (400);
     # it flows downstream and the UUID lookup crashes, so staging returns 500 {"message":"An unexpected error occurred"}.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/verify_customer.json"
@@ -226,7 +226,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-customer without loan_ids returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -239,7 +239,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-customer with an empty loan_ids list returns 400 (min_length 1)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -252,7 +252,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-customer with loan_ids of the wrong type (object not array) returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -266,7 +266,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
   @negative @creditline @boundary
   Scenario: verify-customer with more than 10000 loan_ids returns 400 (max_length 10000)
     # TODO: verify on staging — needs a 10001-element loan_ids payload; asserting the documented max_length limit.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/verify_customer_over_limit.json"
@@ -280,7 +280,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-transaction without company_id returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -295,7 +295,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
   Scenario: verify-transaction with null company_id returns 500
     # TODO: verify on staging — a null company_id is NOT rejected by quart_schema validation (400);
     # it flows downstream and the UUID lookup crashes, so staging returns 500 {"message":"An unexpected error occurred"}.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/verify_transaction.json"
@@ -308,7 +308,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
   Scenario: verify-transaction without transactions returns 200 (transactions is optional, not enforced)
     # TODO: verify on staging — not enforced: `transactions` is optional, so a bare {company_id} body is
     # accepted with 200. Observed shape: {success:true, data:{verified_transactions_ids:{}, non_verified_transactions_ids:null}}.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -327,7 +327,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
   Scenario: verify-transaction with an empty transactions map returns 200 (empty map is not rejected)
     # TODO: verify on staging — not enforced: an empty transactions map is accepted with 200.
     # Observed shape: {success:true, data:{verified_transactions_ids:{}, non_verified_transactions_ids:{}}}.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -343,7 +343,7 @@ Feature: Credit-line Bulk Verify — POST /recovery/bulk/verify-customer & POST 
 
   @negative @creditline
   Scenario: verify-transaction with transactions of the wrong type (array not object) returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:

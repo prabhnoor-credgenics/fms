@@ -27,7 +27,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @negative @creditline
   Scenario: GET without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -39,7 +39,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @negative @creditline
   Scenario: GET with invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -54,7 +54,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
   Scenario: GET without company_id returns 400
     # Reconciled: GET customer/profile (perm-exempt) returns 400 for a missing company_id,
     # not 403 (only the bulk upload/update endpoints return 403 — contract §6 rule 1).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the path parameters:
@@ -67,10 +67,10 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @positive @smoke @creditline
   Scenario: Fetch the profile of a freshly created customer returns 200 with success and output
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     # step 1 — create the customer via a transaction upload
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -100,7 +100,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @negative @creditline
   Scenario: GET an unknown client_customer_id returns 400 Invalid client customer id
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -116,10 +116,10 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @positive @creditline
   Scenario Outline: GET honours allocation_month and loan_details_meta_data query params (200)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -157,7 +157,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @negative @creditline
   Scenario: PATCH without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body from file "test-data/creditline/customer_profile_patch.json"
@@ -170,7 +170,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @negative @creditline
   Scenario: PATCH without company_id returns 403
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/customer_profile_patch.json"
@@ -184,10 +184,10 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @positive @smoke @creditline
   Scenario: Update a customer variable on a freshly created customer returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     # step 1 — create the customer via a transaction upload
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -215,10 +215,10 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @positive @creditline
   Scenario Outline: PATCH honours the append query param (200)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -250,10 +250,10 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @negative @creditline
   Scenario: PATCH with an empty body returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -272,10 +272,10 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
 
   @negative @creditline
   Scenario: PATCH an unknown client_customer_id returns 400 customer not found
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:

@@ -13,7 +13,7 @@ Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/p
 
   @negative @creditline
   Scenario: Export loans without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -27,7 +27,7 @@ Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/p
 
   @negative @creditline
   Scenario: Export loans with invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | invalid_token_12345 |
     And I set the query parameters:
@@ -45,10 +45,10 @@ Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/p
   @positive @smoke @creditline @env-blocked
   # TODO: verify on staging — creditline company data/config dependent (export returns 403)
   Scenario: Export credit-line portfolio (link) returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
@@ -64,10 +64,10 @@ Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/p
   @positive @creditline @env-blocked
   # TODO: verify on staging — creditline company data/config dependent (export returns 403)
   Scenario: Export credit-line payments returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:

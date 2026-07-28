@@ -11,7 +11,7 @@ Feature: Credit-line Portfolio Listing — GET /recovery/all-loans
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | accept | application/json, text/plain, */* |
     And I set the query parameters:
@@ -23,7 +23,7 @@ Feature: Credit-line Portfolio Listing — GET /recovery/all-loans
 
   @negative @creditline
   Scenario: Invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | invalid_token_12345               |
@@ -35,7 +35,7 @@ Feature: Credit-line Portfolio Listing — GET /recovery/all-loans
 
   @negative @creditline
   Scenario: Missing company_id returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
@@ -48,12 +48,12 @@ Feature: Credit-line Portfolio Listing — GET /recovery/all-loans
   @positive @smoke @creditline @env-blocked
   # TODO: verify on staging — creditline company data/config dependent (portfolio read returns 403)
   Scenario: GET all-loans for the credit-line company returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
-      | authenticationtoken | {AUTH_TOKEN}                      |
+      | authenticationtoken | {AUTH_TOKEN : creatorc0}                      |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID : creatorc0} |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
     And the response body should not be empty
@@ -62,12 +62,12 @@ Feature: Credit-line Portfolio Listing — GET /recovery/all-loans
   @positive @creditline @env-blocked
   # TODO: verify on staging — creditline company data/config dependent (portfolio read returns 403)
   Scenario Outline: GET all-loans paginated returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
-      | authenticationtoken | {AUTH_TOKEN}                      |
+      | authenticationtoken | {AUTH_TOKEN : creatorc0}                      |
     And I set the query parameters:
-      | company_id  | {COMPANY_ID}  |
+      | company_id  | {COMPANY_ID : creatorc0}  |
       | page_number | <page_number> |
       | page_size   | <page_size>   |
     When I send a "GET" request to "/recovery/all-loans"

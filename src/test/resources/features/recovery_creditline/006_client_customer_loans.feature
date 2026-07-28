@@ -18,7 +18,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | CUST_{LOAN_ID} |
     And I set the query parameters:
@@ -31,7 +31,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
 
   @negative @creditline
   Scenario: Invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | CUST_{LOAN_ID} |
     And I set the query parameters:
@@ -47,7 +47,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
   Scenario: Missing company_id returns 400
     # Reconcile: GROUP 4c is a plain detail-fetch endpoint; missing company_id returns 400
     # (not 403 — only the bulk upload/update endpoints return 403 for a missing company_id).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | CUST_{LOAN_ID} |
     And I set the request headers:
@@ -60,13 +60,13 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
 
   @positive @smoke @creditline
   Scenario: Upload a transaction for a customer then fetch that customer's loans returns 200 success
-    # Step 1 — create a transaction for CUST_{LOAN_ID} (upload needs loan permission; grant it to creator0).
+    # Step 1 — create a transaction for CUST_{LOAN_ID} (upload needs loan permission; grant it to creatorc0).
     # TODO: verify on staging — upload is async (202 + request_id); the worker may not have persisted the
     # row by the time the GET runs, so the transaction_id text assertion below may need a settle/poll.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -98,7 +98,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
   @positive @creditline
   Scenario: Fetch loans with default allocation_month (param omitted) returns 200 success
     # No allocation_month supplied — backend defaults to the current month (YYYY-M-01).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | CUST_{LOAN_ID} |
     And I set the request headers:
@@ -114,7 +114,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
 
   @positive @creditline @boundary
   Scenario Outline: allocation_month accepts current / previous / next month and returns 200 success
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | CUST_{LOAN_ID} |
     And I set the request headers:
@@ -137,7 +137,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
 
   @positive @creditline
   Scenario: Fetch loans for an unknown client_customer_id returns 200 with an empty output list
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | CUST_UNKNOWN_{RANDOM_STRING:10} |
     And I set the request headers:
@@ -157,7 +157,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
   Scenario: Literal "undefined" client_customer_id returns 200 with an empty output list
     # TODO: verify on staging — sentinel string sent by frontends; expected to resolve as an unknown
     # customer (empty list, 200) rather than a hard error.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | undefined |
     And I set the request headers:
@@ -173,7 +173,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
   @negative @creditline
   Scenario: Literal "null" client_customer_id returns 200 with an empty output list
     # TODO: verify on staging — sentinel string; expected to resolve as an unknown customer (empty list, 200).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | null |
     And I set the request headers:

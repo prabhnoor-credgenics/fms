@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 
 
 @CucumberOptions(
-        features = "@rerun/failedrerun.txt",
+        features = "@rerun/failedparallelrerun.txt",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -23,7 +23,7 @@ import io.cucumber.testng.CucumberOptions;
                 "pretty",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
                 "hooks.ThreadStatsListener",
-                "rerun:rerun/failedparallelrerun.txt"
+                "rerun:rerun/failedrerun.txt"
         },
 monochrome = true,
         tags = "not @500"

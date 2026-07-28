@@ -13,7 +13,7 @@ Feature: Credit-line Payments — GET /recovery/payments/<loan_id>, POST /recove
 
   @negative @creditline
   Scenario: GET payments without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -25,7 +25,7 @@ Feature: Credit-line Payments — GET /recovery/payments/<loan_id>, POST /recove
 
   @negative @creditline
   Scenario: GET payments with invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | invalid_token_12345 |
     And I set the query parameters:
@@ -38,7 +38,7 @@ Feature: Credit-line Payments — GET /recovery/payments/<loan_id>, POST /recove
 
   @negative @creditline
   Scenario: GET payments without company_id returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the path parameters:
@@ -49,7 +49,7 @@ Feature: Credit-line Payments — GET /recovery/payments/<loan_id>, POST /recove
 
   @negative @creditline
   Scenario: Payment upload without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -63,34 +63,64 @@ Feature: Credit-line Payments — GET /recovery/payments/<loan_id>, POST /recove
 
   # ---------- Happy path (needs an existing credit-line transaction) ----------
 
-  @positive @creditline @env-blocked
+  @positive @creditline @multistep
   Scenario: GET payments for an existing credit-line transaction returns 200
-    # TODO: verify on staging — creditline company data/config dependent (needs an existing transaction).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
+    And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+    And I grant the current user all loan permissions
+    And I switch active user to "creatorc0"
+    # Step 1 — create the transaction synchronously (transaction_id = {LOAN_ID})
+    And I set the query parameters:
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
+    And I set the request headers:
+      | authenticationtoken | {AUTH_TOKEN} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 201
+    # Step 2 — read payments for that transaction
+    And I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
-      | loan_id | TXN_{LOAN_ID} |
+      | loan_id | {LOAN_ID} |
     When I send a "GET" request to "/recovery/payments/{loan_id}"
     Then the response status code should be 200
     And the response body should not be empty
 
-  @positive @creditline @env-blocked
+  @positive @creditline @multistep
   Scenario: Upload a payment against an existing credit-line transaction returns 200
-    # TODO: verify on staging — creditline company data/config dependent (needs an existing transaction).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
+    # Step 1 — create the transaction synchronously (transaction_id = {LOAN_ID})
+    And I set the query parameters:
+      | company_id            | {COMPANY_ID} |
+      | replace_previous_data | false        |
+      | replace_given_data    | false        |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be 201
+    # Step 2 — upload a payment against that transaction
+    And I prepare a request
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_id": "TXN_{LOAN_ID}", "amount_paid": 500, "payment_date": "{ALLOCATION_MONTH_OFFSET:0}" }
+      { "loan_id": "{LOAN_ID}", "amount_paid": 500, "payment_date": "{ALLOCATION_MONTH_OFFSET:0}" }
       """
     When I send a "POST" request to "/recovery/v1/payment-upload"
     Then the response status code should be 200

@@ -16,7 +16,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | CUST_{LOAN_ID} |
       | transaction_id     | TXN_{LOAN_ID}  |
@@ -29,7 +29,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
 
   @negative @creditline
   Scenario: Invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | CUST_{LOAN_ID} |
       | transaction_id     | TXN_{LOAN_ID}  |
@@ -45,7 +45,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
   Scenario: Missing company_id returns 400
     # Observed on staging: this GET endpoint returns 400 (not 403) when company_id is absent.
     # Only the bulk upload/update endpoints return 403 for a missing company_id (contract §6.1).
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | CUST_{LOAN_ID} |
       | transaction_id     | TXN_{LOAN_ID}  |
@@ -61,10 +61,10 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
   Scenario: Upload a transaction then fetch its customer transaction profile returns 200 success
     # TODO: verify on staging — the upload is async (202 + request_id); the profile may not be
     # queryable immediately. If the read-back is not yet resolvable, expect a 400 "Invalid transaction id".
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     # --- step 1: upload the transaction so the profile has something to resolve ---
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -97,7 +97,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
 
   @negative @creditline
   Scenario: Unknown client_customer_id and transaction_id return 400 Invalid transaction id
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | CUST_NOPE_{LOAN_ID} |
       | transaction_id     | TXN_NOPE_{LOAN_ID}  |
@@ -112,7 +112,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
 
   @negative @creditline
   Scenario: Valid client_customer_id but unknown transaction_id returns 400 Invalid transaction id
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | CUST_{LOAN_ID}     |
       | transaction_id     | TXN_UNKNOWN_{UUID} |
@@ -127,7 +127,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
 
   @negative @creditline @boundary
   Scenario: Random UUID ids that do not exist return 400 Invalid transaction id
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | {UUID} |
       | transaction_id     | {UUID} |
@@ -145,7 +145,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
   @negative @creditline
   Scenario: Undefined transaction_id path segment returns 400 Invalid transaction id
     # transaction_id path parameter left as the literal token "undefined".
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | CUST_{LOAN_ID} |
       | transaction_id     | undefined      |
@@ -160,7 +160,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
 
   @negative @creditline
   Scenario: Null-literal transaction_id path segment returns 400 Invalid transaction id
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | CUST_{LOAN_ID} |
       | transaction_id     | null           |
@@ -175,7 +175,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
 
   @negative @creditline
   Scenario: Undefined client_customer_id path segment returns 400 Invalid transaction id
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | undefined     |
       | transaction_id     | TXN_{LOAN_ID} |
@@ -190,7 +190,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
 
   @negative @creditline
   Scenario: Null-literal client_customer_id path segment returns 400 Invalid transaction id
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | null          |
       | transaction_id     | TXN_{LOAN_ID} |

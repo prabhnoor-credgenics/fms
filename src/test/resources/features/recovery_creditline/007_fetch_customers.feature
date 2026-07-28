@@ -20,7 +20,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/fetch/customers"
@@ -30,7 +30,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @negative @creditline
   Scenario: Invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -42,7 +42,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
   @negative @creditline
   Scenario: Missing company_id returns 400 "invalid company id"
     # Observed on staging: this GET endpoint returns 400 (not 403) with message "invalid company id".
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/fetch/customers"
@@ -54,7 +54,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @positive @smoke @creditline
   Scenario: Fetch customers with no filters returns 200 with a list of customer ids
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -67,9 +67,9 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   # ---------- events filter (Scenario Outline over valid values) ----------
 
-  @positive @creditline
+  @positive @creditline @500
   Scenario Outline: events filter accepts each valid value and returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | events     | <events>     |
@@ -96,7 +96,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @negative @creditline
   Scenario: Invalid event value returns 400 "Invalid event provided"
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID}    |
       | events     | not_a_valid_event |
@@ -112,7 +112,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @positive @creditline
   Scenario: status "open" is accepted and returns 200 (forced to "" for credit line)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | status     | open         |
@@ -125,7 +125,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @negative @creditline
   Scenario: Invalid status value returns 400 "status is invalid"
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID}  |
       | status     | not_a_status  |
@@ -140,7 +140,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @negative @creditline
   Scenario: Non-numeric start_time returns 400 "start_time is incorrect"
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID}   |
       | start_time | not_an_epoch   |
@@ -154,7 +154,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @negative @creditline
   Scenario: Non-numeric end_time returns 400 "end_time is incorrect"
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | end_time   | not_an_epoch |
@@ -168,11 +168,11 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   # ---------- time-range filters (positive) ----------
 
-  @positive @creditline @env-blocked
+  @positive @creditline @env-blocked @424
   # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
   # Providing start_time/end_time triggers a downstream calling-details fetch that fails on this staging company.
   Scenario: start_time/end_time range using {NOW:epoch_seconds} returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID}       |
       | start_time | 1577836800         |
@@ -184,11 +184,11 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response message should be "success"
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
-  @positive @creditline @env-blocked
+  @positive @creditline @env-blocked @424
   # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
   # Providing start_time/end_time triggers a downstream calling-details fetch that fails on this staging company.
   Scenario: start_time/end_time range using a captured time returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I capture the current time as "fetchTime"
     And I set the query parameters:
       | company_id | {COMPANY_ID}                          |
@@ -201,11 +201,11 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response message should be "success"
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
-  @positive @creditline @env-blocked
+  @positive @creditline @env-blocked @424
   # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
   # Providing start_time triggers a downstream calling-details fetch that fails on this staging company.
   Scenario: start_time alone (open-ended range) returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | start_time | 1577836800   |
@@ -216,11 +216,11 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response message should be "success"
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
-  @positive @creditline @env-blocked
+  @positive @creditline @env-blocked @424
   # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
   # Providing end_time triggers a downstream calling-details fetch that fails on this staging company.
   Scenario: end_time alone using {NOW:epoch_seconds} returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID}        |
       | end_time   | {NOW:epoch_seconds} |
@@ -233,11 +233,11 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   # ---------- combined filters ----------
 
-  @positive @creditline @env-blocked
+  @positive @creditline @env-blocked @424
   # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
   # Providing start_time/end_time triggers a downstream calling-details fetch that fails on this staging company.
   Scenario: events + time range combined returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID}        |
       | events     | loan,communication  |

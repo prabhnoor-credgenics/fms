@@ -25,7 +25,7 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
 
   @negative @creditline
   Scenario: Bulk export without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body from file "test-data/creditline/loan_export_transaction.json"
@@ -36,7 +36,7 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
 
   @negative @creditline
   Scenario: Bulk export with an invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -48,7 +48,7 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
 
   @negative @creditline
   Scenario: Bulk export with missing company_id returns 403
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/loan_export_transaction.json"
@@ -58,7 +58,7 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
 
   @negative @creditline
   Scenario: Export-now without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body from file "test-data/creditline/loan_export_transaction.json"
@@ -69,7 +69,7 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
 
   @negative @creditline
   Scenario: Export-later without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body from file "test-data/creditline/loan_export_transaction_later.json"
@@ -84,10 +84,10 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
   Scenario: Bulk export with response_type=link returns 200 (link or no-data-found)
     # Flat 200: either {data:[],message:"no data found"} when the company has no matching
     # transactions, or {output:"<S3 url>",message:"success"}. Assert on the always-present message.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -101,10 +101,10 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
   @positive @creditline
   Scenario: Bulk export with response_type=data returns 200
     # Flat 200: {data:[rows],message:"success"} with rows, or {data:[],message:"no data found"} when empty.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -118,10 +118,10 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
 
   @positive @creditline
   Scenario: Bulk export with explicit export_type=transaction and archive flag returns 200
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -139,10 +139,10 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
 
   @positive @smoke @creditline
   Scenario: Export-now returns 200 (always a link / no-data-found)
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -158,10 +158,10 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
   @positive @smoke @creditline
   Scenario: Export-later with export_type=portfolio_transaction_data returns 200 success:true
     # Flat 200 with a success flag: {message:"<html confirmation>"|"download link has been sent successfully", success:true}.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -182,10 +182,10 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
     # TODO: verify on staging — not enforced. The doc-implied "Invalid export type" 400 guard does
     # NOT fire here: export_type="transaction" is accepted by export-later and the request falls
     # through to the portfolio-data export flow, returning 200 {message:"<html confirmation>",success:true}.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -204,10 +204,10 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
     # maximum of 5000 loans at a time.") requires seeding > 5000 selected_loan_ids, which is
     # impractical in this suite. With one placeholder id the request is under the limit and returns
     # 200 {data:[],message:"no data found"} (no matching data). The documented 400 limit stays untested.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -228,10 +228,10 @@ Feature: Credit-line Transaction Exports — POST /recovery/export/{bulk,export-
     # NOTE: export_type defaults to "customer" when omitted, so this exports customer (not transaction)
     # data — it does NOT error. Included to document the silent fallback.
     # TODO: verify on staging — confirm 200 and that the export contents are customer-scoped.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
-    And I switch active user to "creator0"
+    And I switch active user to "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:

@@ -1,1 +1,3 @@
-file:src/test/resources/features/_scratch_xss_verify.feature:3
+file:src/test/resources/features/recovery_creditline/005_customer_transactions.feature:59:93:157:158
+file:src/test/resources/features/recovery_creditline/010_v3_customers.feature:104
+file:src/test/resources/features/recovery_creditline/017_payments.feature:67:97

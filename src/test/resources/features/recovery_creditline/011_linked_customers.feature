@@ -25,7 +25,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
 
   @negative @creditline
   Scenario: GET without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | loan_id    | LOAN_{LOAN_ID} |
@@ -36,7 +36,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
 
   @negative @creditline
   Scenario: GET with invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | loan_id    | LOAN_{LOAN_ID} |
@@ -49,7 +49,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   @negative @creditline
   Scenario: GET without company_id returns 400
     # Observed on staging: missing company_id returns 400 (not 403) on this endpoint.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | loan_id | LOAN_{LOAN_ID} |
     And I set the request headers:
@@ -62,7 +62,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
 
   @positive @smoke @creditline
   Scenario: GET with loan_id on a credit-line company returns 400 REC_0008 INVALID_COMPANY_TYPE
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | loan_id    | LOAN_{LOAN_ID} |
@@ -75,7 +75,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
 
   @positive @creditline
   Scenario: GET with client_customer_id on a credit-line company returns 400 REC_0008 INVALID_COMPANY_TYPE
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id         | {COMPANY_ID}   |
       | client_customer_id | CUST_{LOAN_ID} |
@@ -91,7 +91,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   @negative @creditline
   Scenario: GET with BOTH loan_id and client_customer_id returns 400 REC_0053
     # TODO: verify on staging — serializer XOR error expected before the company-type gate.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id         | {COMPANY_ID}   |
       | loan_id            | LOAN_{LOAN_ID} |
@@ -106,7 +106,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   @negative @creditline
   Scenario: GET with NEITHER loan_id nor client_customer_id returns 400 REC_0053
     # TODO: verify on staging — serializer XOR error expected before the company-type gate.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -124,7 +124,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
 
   @negative @creditline
   Scenario: POST without authenticationtoken header returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -138,7 +138,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
 
   @negative @creditline
   Scenario: POST with invalid authenticationtoken returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -154,7 +154,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   @negative @creditline
   Scenario: POST without company_id returns 400
     # Observed on staging: missing company_id returns 400 (not 403) on this endpoint.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
@@ -169,7 +169,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
 
   @positive @smoke @creditline
   Scenario: POST with loan_ids on a credit-line company returns 400 REC_0008 INVALID_COMPANY_TYPE
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -185,7 +185,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
 
   @positive @creditline
   Scenario: POST with client_customer_ids on a credit-line company returns 400 REC_0008 INVALID_COMPANY_TYPE
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -204,7 +204,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   @negative @creditline
   Scenario: POST with BOTH loan_ids and client_customer_ids returns 400 REC_0053
     # TODO: verify on staging — serializer XOR error expected before the company-type gate.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -221,7 +221,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   @negative @creditline
   Scenario: POST with NEITHER list returns 400 REC_0053
     # TODO: verify on staging — serializer XOR error expected before the company-type gate.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -238,7 +238,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   @negative @creditline @boundary
   Scenario: POST with an empty loan_ids list returns 400 REC_0053 (min_length 1)
     # TODO: verify on staging — serializer min_length error expected before the company-type gate.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -255,7 +255,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   @negative @creditline @boundary
   Scenario: POST with more than 50 loan_ids returns 400 REC_0053 (max_length 50)
     # TODO: verify on staging — serializer max_length error expected before the company-type gate.
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -268,7 +268,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
 
   @negative @creditline
   Scenario: POST with an empty body returns 400
-    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
