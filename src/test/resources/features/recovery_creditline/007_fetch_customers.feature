@@ -1,22 +1,13 @@
 @api @creditline @creditline-fetch-customers @recovery
 Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
-  # Credit-line product (company_type == "credit line"). Flat-envelope read endpoint
-  # (auth login + org check, no loan permission required). Returns the list of
-  # client_customer_id strings matching the filters.
-  #   query (all optional): start_time / end_time (epoch seconds),
-  #     status (only "open" is honored; forced to "" for credit line),
-  #     events (CSV, default "loan,communication"; allowed values all|loan|communication|notice).
-  #   Success 200 flat {output:[cust_ids], message:"success"}.
-  #   Errors 400: {message:"status is invalid"} for a bad status;
-  #     {output:"Invalid event provided", message:"failure"} for a bad event;
-  #     {output:"start_time is incorrect"|"end_time is incorrect", message:"failure"} for bad epochs.
+
 
   Background:
     Given I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
 
-  # ---------- Auth & permission ----------
+
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
@@ -41,7 +32,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @negative @creditline
   Scenario: Missing company_id returns 400 "invalid company id"
-    # Observed on staging: this GET endpoint returns 400 (not 403) with message "invalid company id".
+  
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -50,7 +41,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response message should be "invalid company id"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- Happy path (GET needs no loan permission) ----------
+
 
   @positive @smoke @creditline
   Scenario: Fetch customers with no filters returns 200 with a list of customer ids
@@ -65,7 +56,6 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response body should contain field "output"
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
-  # ---------- events filter (Scenario Outline over valid values) ----------
 
   @positive @creditline @500
   Scenario Outline: events filter accepts each valid value and returns 200
@@ -86,8 +76,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
       | communication      |
       | loan,communication |
 
-    # TODO: verify on staging — creditline company data/config dependent (returns 500 "something went wrong").
-    # The "notice" event (and "all", which includes it) triggers a notice-details fetch that fails on this staging company.
+  
     @env-blocked
     Examples:
       | events             |
@@ -108,7 +97,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response body should contain field "output" with value "Invalid event provided"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- status filter ----------
+
 
   @positive @creditline
   Scenario: status "open" is accepted and returns 200 (forced to "" for credit line)
@@ -166,11 +155,10 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response body should contain field "output" with value "end_time is incorrect"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- time-range filters (positive) ----------
+
 
   @positive @creditline @env-blocked @424
-  # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
-  # Providing start_time/end_time triggers a downstream calling-details fetch that fails on this staging company.
+ 
   Scenario: start_time/end_time range using {NOW:epoch_seconds} returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
@@ -185,8 +173,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
   @positive @creditline @env-blocked @424
-  # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
-  # Providing start_time/end_time triggers a downstream calling-details fetch that fails on this staging company.
+
   Scenario: start_time/end_time range using a captured time returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I capture the current time as "fetchTime"

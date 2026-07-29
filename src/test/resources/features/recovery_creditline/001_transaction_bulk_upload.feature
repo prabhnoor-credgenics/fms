@@ -1,17 +1,11 @@
 @api @creditline @creditline-transaction-upload @recovery
 Feature: Credit-line Transaction Bulk Upload — POST /recovery/v1/bulk/transaction-upload
-  # Credit-line product (company_type == "credit line"). Async endpoint: a valid envelope returns
-  # 202 + data.request_id; per-row validation happens later in the queue worker, so row-shape
-  # errors are NOT returned synchronously. Only upload_type + transaction_data are validated inline.
-  # Body serializer: BulkTransactionUpload (upload_type?, transaction_data[] min 1 / max 1000).
 
-  Background:
+  Background: 
     Given scenario loan id is unique
     And I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
-
-  # ---------- Auth & permission ----------
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
@@ -45,8 +39,6 @@ Feature: Credit-line Transaction Bulk Upload — POST /recovery/v1/bulk/transact
     When I send a "POST" request to "/recovery/v1/bulk/transaction-upload"
     Then the response status code should be 403
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
-
-  # ---------- Happy path ----------
 
   @positive @smoke @creditline
   Scenario: Valid bulk transaction upload returns 202 with a request_id
@@ -100,13 +92,11 @@ Feature: Credit-line Transaction Bulk Upload — POST /recovery/v1/bulk/transact
     Then the response status code should be 202
     And the response should match json schema "schemas/creditline/success/transaction_bulk_async_success_schema.json"
 
-    Examples:
+    Examples: 
       | upload_type           |
       | default               |
       | replace_previous_data |
       | replace_given_data    |
-
-  # ---------- Required-field / body validation (synchronous: REC_BT0001) ----------
 
   @negative @creditline
   Scenario: Missing transaction_data returns 400 validation error
@@ -179,11 +169,8 @@ Feature: Credit-line Transaction Bulk Upload — POST /recovery/v1/bulk/transact
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- Boundary ----------
-
   @negative @creditline @boundary
   Scenario: More than 1000 transactions in one request returns 400 (max_length 1000)
-    # TODO: verify on staging — needs a 1001-row payload; asserting the documented max_length limit.
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -193,8 +180,6 @@ Feature: Credit-line Transaction Bulk Upload — POST /recovery/v1/bulk/transact
     When I send a "POST" request to "/recovery/v1/bulk/transaction-upload"
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
-
-  # ---------- Async behaviour note ----------
 
   @positive @creditline @async
   Scenario: Rows with missing per-row keys still return 202 (row validation is async, not synchronous)
