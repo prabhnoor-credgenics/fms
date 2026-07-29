@@ -1,15 +1,11 @@
 @api @creditline @creditline-exports @recovery
 Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/payments
-  # Shared export endpoints in credit-line context. Empty portfolio still returns 200
-  # ("no data found" or a presigned link). Requires export_loans:read permission for happy paths.
 
-  Background:
+  Background: 
     Given scenario company id is from configuration
     And I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
-
-  # ---------- Auth & permission ----------
 
   @negative @creditline
   Scenario: Export loans without authenticationtoken header returns 400
@@ -40,10 +36,7 @@ Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/p
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- Happy path ----------
-
   @positive @smoke @creditline @env-blocked
-  # TODO: verify on staging — creditline company data/config dependent (export returns 403)
   Scenario: Export credit-line portfolio (link) returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
@@ -62,7 +55,6 @@ Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/p
     And the response body should contain field "message"
 
   @positive @creditline @env-blocked
-  # TODO: verify on staging — creditline company data/config dependent (export returns 403)
   Scenario: Export credit-line payments returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"

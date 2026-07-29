@@ -189,8 +189,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
   @positive @creditline @env-blocked @424
-  # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
-  # Providing start_time triggers a downstream calling-details fetch that fails on this staging company.
+
   Scenario: start_time alone (open-ended range) returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
@@ -204,8 +203,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
   @positive @creditline @env-blocked @424
-  # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
-  # Providing end_time triggers a downstream calling-details fetch that fails on this staging company.
+
   Scenario: end_time alone using {NOW:epoch_seconds} returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
@@ -218,11 +216,10 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response message should be "success"
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
-  # ---------- combined filters ----------
+
 
   @positive @creditline @env-blocked @424
-  # TODO: verify on staging — creditline company data/config dependent (returns 424 "Unable to get calling details").
-  # Providing start_time/end_time triggers a downstream calling-details fetch that fails on this staging company.
+
   Scenario: events + time range combined returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:

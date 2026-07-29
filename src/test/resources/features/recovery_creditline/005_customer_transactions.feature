@@ -1,27 +1,18 @@
 @api @creditline @creditline-customer-transactions @recovery
 Feature: Credit-line Customer Transactions — GET /recovery/customer/transactions
-  # Credit-line product (company_type == "credit line"). GROUP 4b. Flat envelope
-  # {output:[...], message:"success"}; login + org only, NO loan permission required for the GET.
-  # This is a CREDIT-LINE-ONLY endpoint: a non-credit-line company gets
-  #   400 {output:"Not a Credit Line company", message:"failure"}.
-  # That branch is NOT testable here — the creditline slot logs into a credit-line company, so we can
-  # only ever exercise the credit-line (200) path. The 400 gate is documented for completeness only.
-  # Query params: client_customer_id (customer to fetch transactions for), allocation_month (default "Overall").
 
-  Background:
+  Background: 
     Given scenario loan id is unique
     And I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
 
-  # ---------- Auth & permission ----------
-
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
-      | company_id         | {COMPANY_ID}    |
-      | client_customer_id | CUST_{LOAN_ID}  |
+      | company_id         | {COMPANY_ID}   |
+      | client_customer_id | CUST_{LOAN_ID} |
     When I send a "GET" request to "/recovery/customer/transactions"
     Then the response status code should be 400
     And the response message should be "invalid authentication token"
@@ -31,8 +22,8 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
   Scenario: Invalid authenticationtoken returns 400
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
-      | company_id         | {COMPANY_ID}    |
-      | client_customer_id | CUST_{LOAN_ID}  |
+      | company_id         | {COMPANY_ID}   |
+      | client_customer_id | CUST_{LOAN_ID} |
     And I set the request headers:
       | authenticationtoken | invalid_token_12345 |
     When I send a "GET" request to "/recovery/customer/transactions"
@@ -41,8 +32,6 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
 
   @negative @creditline
   Scenario: Missing company_id returns 400
-    # Observed on staging: this GET returns 400 {"message":"invalid company id"} (not 403 — only the
-    # bulk upload/update return 403 for a missing company_id).
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -53,15 +42,12 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And the response message should be "invalid company id"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- Happy path (multi-step chain: upload a transaction, then read it back) ----------
-
   @positive @smoke @creditline @multistep
   Scenario: Upload a transaction then fetch it via customer/transactions returns 200 with a list
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
     And I switch active user to "creatorc0"
-    # Step 1 — create the customer synchronously (client_customer_id = CUST_{LOAN_ID})
     And I set the query parameters:
       | company_id            | {COMPANY_ID} |
       | replace_previous_data | false        |
@@ -74,7 +60,6 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And I update JSON field "client_customer_id" to "CUST_{LOAN_ID}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
-    # Step 2 — read back the transactions for that customer
     And I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -87,15 +72,12 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And the response body should contain field "output"
     And the response should match json schema "schemas/creditline/success/customer_transactions_success_schema.json"
 
-  # ---------- allocation_month variants ----------
-
   @positive @creditline @multistep
   Scenario: Default allocation_month ("Overall") when the param is omitted returns 200 with a list
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
     And I switch active user to "creatorc0"
-    # Step 1 — create the customer synchronously
     And I set the query parameters:
       | company_id            | {COMPANY_ID} |
       | replace_previous_data | false        |
@@ -108,7 +90,6 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And I update JSON field "client_customer_id" to "CUST_{LOAN_ID}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
-    # Step 2 — read back with default allocation_month (param omitted)
     And I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -126,7 +107,6 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
     And I switch active user to "creatorc0"
-    # Step 1 — create the customer synchronously
     And I set the query parameters:
       | company_id            | {COMPANY_ID} |
       | replace_previous_data | false        |
@@ -139,29 +119,25 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And I update JSON field "client_customer_id" to "CUST_{LOAN_ID}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
-    # Step 2 — read back with the given allocation_month
     And I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | company_id         | {COMPANY_ID}      |
-      | client_customer_id | CUST_{LOAN_ID}    |
+      | company_id         | {COMPANY_ID}       |
+      | client_customer_id | CUST_{LOAN_ID}     |
       | allocation_month   | <allocation_month> |
     When I send a "GET" request to "/recovery/customer/transactions"
     Then the response status code should be 200
     And the response message should be "success"
     And the response should match json schema "schemas/creditline/success/customer_transactions_success_schema.json"
 
-    Examples:
+    Examples: 
       | allocation_month |
       | Overall          |
       | 2026-7-01        |
 
-  # ---------- Missing / unknown customer ----------
-
   @positive @creditline
   Scenario: Missing client_customer_id returns 200 with an empty result
-    # No customer filter → endpoint still resolves; expect a successful flat list envelope.
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -173,16 +149,13 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And the response should match json schema "schemas/creditline/success/customer_transactions_success_schema.json"
 
   @positive @creditline @env-blocked @500
-  # TODO: verify on staging — creditline company data/config dependent. Supplying a specific
-  # (nonexistent) client_customer_id returns 500 {"message":"something went wrong"} instead of a 200
-  # empty list; the customer-lookup path errors for unseeded ids on this creditline company.
   Scenario: Unknown client_customer_id returns 200 with an empty list
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | company_id         | {COMPANY_ID}                       |
-      | client_customer_id | NO_SUCH_CUSTOMER_{LOAN_ID}         |
+      | company_id         | {COMPANY_ID}               |
+      | client_customer_id | NO_SUCH_CUSTOMER_{LOAN_ID} |
     When I send a "GET" request to "/recovery/customer/transactions"
     Then the response status code should be 200
     And the response message should be "success"
