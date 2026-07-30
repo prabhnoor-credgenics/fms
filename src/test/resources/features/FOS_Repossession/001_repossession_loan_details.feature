@@ -1,13 +1,7 @@
 @api @repossession @loan-details
 Feature: Repossession Loan Details API — GET /repossession/loan-details
 
-#  Background:
-#    Given scenario company id is from configuration
-#    And I prepare a request
 
-  # ─────────────────────────────────────────────
-  # POSITIVE — happy path & valid variations
-  # ─────────────────────────────────────────────
 
   @positive @smoke @creator
   Scenario: TC-POS-001 — Valid request with default pagination returns 200
@@ -148,9 +142,7 @@ Feature: Repossession Loan Details API — GET /repossession/loan-details
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/success/repossession_loan_details_success_schema.json"
 
-  # ─────────────────────────────────────────────
-  # NEGATIVE — authentication
-  # ─────────────────────────────────────────────
+
 
   @negative
   Scenario: TC-AUTH-001 — Missing authenticationtoken header returns 401
@@ -196,9 +188,7 @@ Feature: Repossession Loan Details API — GET /repossession/loan-details
     When I send a "GET" request to "/repossession/loan-details"
     Then the response status code should be one of "400, 401"
 
-  # ─────────────────────────────────────────────
-  # NEGATIVE — company_id
-  # ─────────────────────────────────────────────
+
 
   @negative @creator
   Scenario: TC-COMP-001 — Missing company_id returns 403
@@ -260,9 +250,7 @@ Feature: Repossession Loan Details API — GET /repossession/loan-details
     When I send a "GET" request to "/repossession/loan-details"
     Then the response status code should be one of "422"
 
-  # ─────────────────────────────────────────────
-  # NEGATIVE — pagination validation
-  # ─────────────────────────────────────────────
+
 
   @negative @creator
   Scenario Outline: TC-PAGE-001 — Invalid page_number "<page>" returns 400
@@ -308,9 +296,6 @@ Feature: Repossession Loan Details API — GET /repossession/loan-details
       | not-a-num |
       | 5001      |
 
-  # ─────────────────────────────────────────────
-  # NEGATIVE — search_by validation
-  # ─────────────────────────────────────────────
 
   @negative @creator
   Scenario: TC-SRCH-001 — Invalid search_by field returns 400
@@ -357,9 +342,6 @@ Feature: Repossession Loan Details API — GET /repossession/loan-details
     Then the response status code should be one of "200, 400"
     And the response body should not be empty
 
-  # ─────────────────────────────────────────────
-  # NEGATIVE — HTTP method
-  # ─────────────────────────────────────────────
 
   @negative @creator
   Scenario: TC-METH-001 — POST on GET endpoint returns  405
