@@ -1,6 +1,6 @@
 @api @user @first-login @change-password
 Feature: First-login password set by chief admin — create user + PATCH /user/change-password + login
-
+  
   A chief admin creates a fresh global user with a random email, then sets that user's password via
   PATCH /user/change-password (RSA-encrypted body, same scheme as login) carrying
   {user_id, new_password, source:"first_login"}, authenticated with the CHIEF ADMIN's token. The
@@ -8,7 +8,7 @@ Feature: First-login password set by chief admin — create user + PATCH /user/c
   carries no user-specific identifiers. The created user then logs in for the first time with that
   new password.
 
-  Background:
+  Background: 
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
 
   @positive @smoke @first-login
@@ -18,12 +18,6 @@ Feature: First-login password set by chief admin — create user + PATCH /user/c
     And I log in as the created user with password "User@123"
     Then the response status code should be 200
     And the public login success response should be valid
-
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (success shape, password-policy accept boundaries, injection
-  # end-to-end, negative login) — grounded in public-login/password docs.
-  # NOTE: change-password policy-violation negatives need a non-asserting step (gap in docs).
-  # ---------------------------------------------------------------------------
 
   @positive @first-login @change-password
   Scenario: Change-password returns the documented success message and status

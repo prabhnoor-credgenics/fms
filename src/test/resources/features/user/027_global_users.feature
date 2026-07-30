@@ -1,15 +1,9 @@
 @api @user @global-users
 Feature: Global Users — GET (list) and POST (create) /user/global/users/
 
-
-  Background:
-    # chief-admin is the caller for the endpoint; its own company is the pseudo value "All"
-    # (not a real UUID), so we also source a real member-company UUID from a creator session
-    # and reference it via {COMPANY_ID:creator0} in assigned_companies. chief-admin is
-    # authenticated last so it remains the active caller.
+  Background: 
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
-
 
   @positive @smoke @chief-admin
   Scenario: Minimal (defaults, no query params) returns 200 with list envelope
@@ -38,7 +32,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
   Scenario: Pagination (page_number + page_size) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | page_number | 1  |
+      | page_number |  1 |
       | page_size   | 25 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -72,7 +66,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-    Examples:
+    Examples: 
       | search_type        |
       | user_id            |
       | name               |
@@ -104,7 +98,6 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-
   @negative @boundary @chief-admin
   Scenario: search_type outside the allowed set returns 400
     Given I prepare a request
@@ -122,7 +115,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
   Scenario: page_size over the max allowed limit (5000) returns 400
     Given I prepare a request
     And I set the query parameters:
-      | page_number | 1    |
+      | page_number |    1 |
       | page_size   | 5001 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -185,7 +178,6 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 403
     And the global users failure response should be valid
 
-
   @positive @smoke @chief-admin @global-user-create
   Scenario: Create a super user (email) in caller's company returns 201
     Given I prepare a request
@@ -216,7 +208,6 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 201
     And the global user create response should be valid
-
 
   @negative @chief-admin @global-user-create
   Scenario: Empty JSON body returns 400
@@ -342,14 +333,13 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
   # (required fields, invalid formats/enums, domain rules, method/content-type,
   # RBAC) — grounded in global-users-get-api-doc.md + global-users-post-api-doc.md.
   # ---------------------------------------------------------------------------
-
   @positive @chief-admin
   Scenario: disable_paging=false with explicit paging returns 200
     Given I prepare a request
     And I set the query parameters:
       | disable_paging | false |
-      | page_number    | 2     |
-      | page_size      | 25    |
+      | page_number    |     2 |
+      | page_size      |    25 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
       | referer             | abc          |
@@ -361,7 +351,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
   Scenario: page_size at the max allowed limit (5000) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | page_number | 1    |
+      | page_number |    1 |
       | page_size   | 5000 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -430,7 +420,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-    Examples:
+    Examples: 
       | role        |
       | chief admin |
       | super admin |

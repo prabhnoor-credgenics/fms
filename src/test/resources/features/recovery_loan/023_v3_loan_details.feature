@@ -40,7 +40,7 @@ Feature: V3 Loan Details API
  
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -111,7 +111,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with all boolean flags false (explicit defaults)
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -147,7 +147,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with calculation-function level forces data_type_conversion
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -180,7 +180,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with nested_audit_info triggers post-processing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -214,7 +214,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with comma-separated attribute_variables
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -245,7 +245,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with a free-form trigger label
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -273,13 +273,13 @@ Feature: V3 Loan Details API
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
 
-  # --- Boundary-valid allocation_month (day must be 01; month 1..12; year 20xx) ---
+
 
   @positive @boundary @creator
   Scenario Outline: GET loan details accepts boundary-valid allocation_month "<allocation_month>"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -319,7 +319,7 @@ Feature: V3 Loan Details API
   Scenario Outline: GET loan details accepts source "<source>"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -366,7 +366,7 @@ Feature: V3 Loan Details API
   Scenario Outline: GET loan details accepts case-insensitive source "<source>"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -404,7 +404,7 @@ Feature: V3 Loan Details API
   Scenario Outline: GET loan details accepts attribute_levels "<attribute_level>"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -454,7 +454,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details accepts multiple comma-separated attribute_levels
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -487,7 +487,7 @@ Feature: V3 Loan Details API
   Scenario Outline: GET loan details accepts boolean flag <flag>=<value>
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -533,7 +533,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with empty attribute_levels string coerces to null
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -563,7 +563,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with empty attribute_variables string coerces to null
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -594,7 +594,7 @@ Feature: V3 Loan Details API
     # TODO: verify on staging — doc is silent on dedup behaviour; expecting tolerant 200.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -666,7 +666,7 @@ Feature: V3 Loan Details API
    
     Given I authenticate as "approver" slot 0 and remember as "approver0"
     And scenario loan id is unique
-    # --- upload a fresh loan as the creator (keyed placeholders keep the approver active) ---
+
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -681,7 +681,7 @@ Feature: V3 Loan Details API
     And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
-    # --- now GET as the non-creator (approver), which is the point of this scenario ---
+   
     And I switch active user to "approver0"
     And I prepare a request
     And I set the request headers:
@@ -911,7 +911,7 @@ Feature: V3 Loan Details API
   Scenario: GET full attribute set then GET a narrowed variable both succeed
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -956,7 +956,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details responds within the time threshold
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first, then the scenario validates the response below ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |

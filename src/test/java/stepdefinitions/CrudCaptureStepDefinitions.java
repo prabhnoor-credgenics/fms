@@ -7,16 +7,7 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/**
- * Generic, reusable steps to capture an id from the last response into one of the existing
- * scenario id slots so it can be referenced later in the same scenario:
- *   - "... as variable id"  -> {VARIABLE_ID}  (TestContext.scenarioVariableId)
- *   - "... as mapping id"   -> {MAPPING_ID}   (TestContext.scenarioMappingId)
- *
- * Used to chain create -> read-back -> update -> delete for user-service CRUD resources
- * (roles, profiles, users) without adding resource-specific capture steps. The JSON path is
- * resolved against the active response body (e.g. "data.role_id", "data.roles[0].role_id").
- */
+
 public class CrudCaptureStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(CrudCaptureStepDefinitions.class);

@@ -108,10 +108,6 @@ Feature: Profile Details — GET /user/profiles/<profile_id>
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (auth, company_id, method, profile_type/flag variants,
-  # profile_id injection, path quirks) — grounded in profiles-profile-id-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @negative @creator
   Scenario: Invalid authenticationtoken is rejected

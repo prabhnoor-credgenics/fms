@@ -118,9 +118,7 @@ Feature: Company Users Export — POST /user/company/users/export
 
   @negative @creator
   Scenario: include_only_inactive=true alone returns 400
-    # Observed on staging: the export handler auto-sets include_inactive=true (no deselected_user_ids),
-    # so include_only_inactive=true alone conflicts → 400 "Only one of 'include_inactive'/'include_api_users'
-    # and 'include_only_inactive' can be true at a time."
+   
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |

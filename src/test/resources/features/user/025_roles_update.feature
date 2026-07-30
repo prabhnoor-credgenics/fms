@@ -218,10 +218,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
     Then the response status code should be 422
     And the roles failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (auth, invalid field values/types, reserved name conflict,
-  # company_id negatives, method/content-type, success envelope) — grounded in roles-crud-api-doc.md.
-  # ---------------------------------------------------------------------------
+
 
   @negative @auth @creator @roles-update
   Scenario: Update a role with an invalid authentication token is rejected

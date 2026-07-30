@@ -1,13 +1,5 @@
 @api @loan-recovery @allocation-month @all-loans
 Feature: Loan Upload and Get Loan Across Allocation Months
-  # Matrix of upload-month x get-month combinations, executed by the creator only.
-  # A loan is uploaded via POST /recovery/v1/loan/{loan_id} with a relative allocation_month
-  # offset (-1 previous, 0 current, 1 future) and then fetched via GET /recovery/all-loans
-  # filtered by allocation_month (relative offset or the literal "overall").
-  # The all-loans GET is scoped with search_type=loan_id + query={LOAN_ID} so the presence
-  # assertion is deterministic and unaffected by pagination.
-  # A loan is expected to be returned only when the queried allocation_month matches the
-  # month it was uploaded in, or when querying "overall"; otherwise it must be absent.
 
   Background:
     Given scenario loan id is unique

@@ -156,10 +156,6 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
     Then the response status code should be 422
     And the roles failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (dependents/assigned conflicts, role_id injection/boundary,
-  # auth/company negatives, method/path, success envelope) — grounded in roles-crud-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @negative @multistep @conflict @creator @roles-write
   Scenario: Delete a non-leaf role that has a child role reporting to it returns 409

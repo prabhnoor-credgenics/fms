@@ -1,8 +1,6 @@
 @api @user @roles-list
 Feature: Roles — GET /user/roles/ (list roles)
 
-  
-
   @positive @smoke @creator @roles-list
   Scenario: List roles returns 200 with a roles array
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -91,11 +89,6 @@ Feature: Roles — GET /user/roles/ (list roles)
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 200
     And the response time should be less than 5000 milliseconds
-
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (response shape, API-key auth, company_id negatives,
-  # extra params, method/path) — grounded in roles-crud-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @positive @schema @creator @roles-list
   Scenario: List roles response exposes the documented data.roles array
@@ -217,8 +210,8 @@ Feature: Roles — GET /user/roles/ (list roles)
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | page       | 1            |
-      | limit      | 5            |
+      | page       |            1 |
+      | limit      |            5 |
       | foo        | bar          |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 200
