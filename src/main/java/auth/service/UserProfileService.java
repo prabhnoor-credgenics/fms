@@ -66,7 +66,7 @@ public class UserProfileService {
             dict = jp.getMap("data.output.assigned_companies_dict");
         }
         if (dict != null && !dict.isEmpty()) {
-            // Prefer the entry for the requested company; fall back to the first usable entry.
+          
             Object entry = (companyId != null) ? dict.get(companyId) : null;
             String pid = profileIdOf(entry);
             if (pid != null) {
