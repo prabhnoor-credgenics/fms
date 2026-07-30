@@ -266,11 +266,7 @@ Feature: Roles — POST /user/roles/ (create role)
     Then the response status code should be 409
     And the roles failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (tenant_type, extra fields, invalid reports_to, reserved
-  # names, injection/type validation, method/content-type) — grounded in roles-crud-api-doc.md.
-  # ---------------------------------------------------------------------------
-
+  
   @positive @creator @roles-write
   Scenario: Create a role with a valid non-default tenant_type returns 201
     Given I grant the current user all loan permissions

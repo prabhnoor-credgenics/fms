@@ -1,17 +1,14 @@
 @api @user @public-access-token
 Feature: Public Access Token — POST /user/public/access-token
 
-  Background:
+  Background: 
     Given I authenticate as "creator" slot 0 and remember as "creator0"
-
 
   @positive @creator
   Scenario: Valid client credentials mint an API key
-    # client_id / client_secret come from secrets/crypto.properties (<env>_client_id / <env>_client_secret).
     Given I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
-    # Referer is auto-set by the framework to baseUrl + endpoint (matches the working cURL).
     And I set the request body:
       """
       { "client_id": "{CLIENT_ID}", "client_secret": "{CLIENT_SECRET}", "token_expiry_duration": 3600 }
@@ -23,7 +20,6 @@ Feature: Public Access Token — POST /user/public/access-token
 
   @negative @creator
   Scenario: Unknown client_id is rejected
-    # TODO: verify on staging — retrieve_client_id_details may surface as 400 or 404 for an unknown client.
     Given I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
@@ -118,7 +114,6 @@ Feature: Public Access Token — POST /user/public/access-token
   # extra fields, method/content-type, injection, response shape) —
   # grounded in public-access-token-api-doc.md.
   # ---------------------------------------------------------------------------
-
   @negative @creator
   Scenario: Valid client_id with a wrong client_secret is rejected
     Given I prepare a request

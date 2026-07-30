@@ -721,11 +721,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (filters, pagination boundaries, response shape, invalid
-  # enums/NanoIDs, injection, method) — grounded in company-users-api-doc.md.
-  # ---------------------------------------------------------------------------
-
+  
   @positive @creator
   Scenario: neglect_hierarchy=true bypasses hierarchy scoping and returns 200
     Given I prepare a request

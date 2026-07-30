@@ -76,11 +76,6 @@ Feature: User Navigation Bar — GET /user/nav-bar/<user_id>
     When I send a "POST" request to "/user/nav-bar/{user_id}"
     Then the response status code should be 405
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (auth, company_id/user_id negatives, method/route,
-  # injection, boundary, path quirks) — grounded in nav-bar-user-id-api-doc.md.
-  # ---------------------------------------------------------------------------
-
   @negative @security @creator
   Scenario: Invalid authenticationtoken is rejected
     Given I prepare a request

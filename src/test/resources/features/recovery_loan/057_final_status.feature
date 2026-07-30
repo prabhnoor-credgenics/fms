@@ -7,7 +7,7 @@ Feature: Final Status API — GET /recovery/final/status/<loan_id>
   Scenario: GET final status with no allocation_month defaults to Overall
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    # --- upload a fresh loan first so the status fetch has a resolvable allocation month ---
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |

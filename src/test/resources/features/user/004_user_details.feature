@@ -1,11 +1,8 @@
 @api @user @user-details
 Feature: User Details — GET /user/users/
 
-
-
-  Background:
+  Background: 
     Given I authenticate as "creator" slot 0 and remember as "creator0"
-
 
   @positive @smoke @creator
   Scenario: Fetch logged-in user details returns 200
@@ -46,7 +43,6 @@ Feature: User Details — GET /user/users/
     Then the response status code should be 200
     And the response body should contain field "data.user_details.user_id"
 
-
   @negative @creator
   Scenario: Missing authenticationtoken header is rejected
     Given I prepare a request
@@ -72,7 +68,6 @@ Feature: User Details — GET /user/users/
     Then the response status code should be 400
     And the response body should not be empty
 
-
   @negative @creator
   Scenario: POST on the collection URL is not allowed (405)
     Given I prepare a request
@@ -85,11 +80,6 @@ Feature: User Details — GET /user/users/
       """
     When I send a "POST" request to "/user/users/"
     Then the response status code should be 405
-
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (response shape, extra params ignored, auth negatives,
-  # method) — grounded in users-api-doc.md (GET /user/users/ = own profile).
-  # ---------------------------------------------------------------------------
 
   @positive @creator
   Scenario: Response exposes documented profile fields

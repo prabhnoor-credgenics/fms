@@ -1,11 +1,8 @@
 @api @user @internal-company-users
 Feature: Internal Company Users — POST /user/internal/company-users/
 
-
-
-  Background:
+  Background: 
     Given I authenticate as "creator" slot 0 and remember as "creator0"
-
 
   @positive @smoke @creator
   Scenario: Minimal (only company_id) returns 200
@@ -173,7 +170,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     Then the response status code should be 200
     And the internal company users success response should be valid
 
-    Examples:
+    Examples: 
       | sort         |
       | created_asc  |
       | created_desc |
@@ -194,7 +191,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     Then the response status code should be 200
     And the internal company users success response should be valid
 
-    Examples:
+    Examples: 
       | scope                    |
       | users                    |
       | session-summary          |
@@ -217,19 +214,19 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     Then the response status code should be 200
     And the internal company users success response should be valid
 
-    Examples:
-      | profession                            |
-      | advocate                              |
-      | area manager                          |
-      | collection manager                    |
-      | field executive                       |
-      | field collection manager              |
-      | field and telecalling executive       |
-      | field and telecalling supervisor      |
-      | lawyer                                |
-      | telecalling                           |
-      | telecalling supervisor                |
-      | other                                 |
+    Examples: 
+      | profession                       |
+      | advocate                         |
+      | area manager                     |
+      | collection manager               |
+      | field executive                  |
+      | field collection manager         |
+      | field and telecalling executive  |
+      | field and telecalling supervisor |
+      | lawyer                           |
+      | telecalling                      |
+      | telecalling supervisor           |
+      | other                            |
 
   @positive @creator
   Scenario: filters.user_ids + deselected_user_ids returns 200
@@ -348,7 +345,6 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     Then the response status code should be 200
     And the internal company users success response should be valid
 
-
   @negative @creator
   Scenario: include_only_inactive combined with include_inactive returns 400
     Given I prepare a request
@@ -419,7 +415,6 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     Then the response status code should be 400
     And the internal company users failure response should be valid
 
-
   @negative @creator
   Scenario: Missing company_id (mandatory body field) returns 400
     Given I prepare a request
@@ -462,7 +457,6 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     Then the response status code should be 400
     And the internal company users failure response should be valid
 
-
   @negative @creator
   Scenario: Missing authenticationtoken header is rejected
     Given I prepare a request
@@ -504,7 +498,6 @@ Feature: Internal Company Users — POST /user/internal/company-users/
   # Expanded coverage (search_type matrix, filters, pagination, invalid enums,
   # method/content-type, injection) — grounded in internal-company-users-api-doc.md.
   # ---------------------------------------------------------------------------
-
   @positive @creator
   Scenario Outline: search_type "<type>" with a query returns 200
     Given I prepare a request
@@ -519,7 +512,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     Then the response status code should be 200
     And the internal company users success response should be valid
 
-    Examples:
+    Examples: 
       | type               |
       | user_id            |
       | name               |
@@ -733,7 +726,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     Then the response status code should be 200
     And the internal company users success response should be valid
 
-    Examples:
+    Examples: 
       | payload                   |
       | ' OR '1'='1               |
       | <script>alert(1)</script> |
@@ -919,7 +912,7 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     When I send a "<method>" request to "/user/internal/company-users/"
     Then the response status code should be 405
 
-    Examples:
+    Examples: 
       | method |
       | PUT    |
       | PATCH  |
