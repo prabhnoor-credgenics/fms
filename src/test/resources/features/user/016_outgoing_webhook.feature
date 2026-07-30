@@ -1,11 +1,8 @@
 @api @user @outgoing-webhook
 Feature: Outgoing Webhook — GET /user/outgoing-webhook/
 
-
-
-  Background:
+  Background: 
     Given I authenticate as "creator" slot 0 and remember as "creator0"
-
 
   @positive @smoke @creator
   Scenario: Minimal — enabled webhooks (collection) returns 200
@@ -80,7 +77,6 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     When I send a "GET" request to "/user/outgoing-webhook/{webhook_id}"
     Then the response status code should be 200
 
-
   @negative @creator
   Scenario: Missing authenticationtoken header is rejected
     Given I prepare a request
@@ -103,8 +99,6 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
 
   @negative @creator
   Scenario: Missing company_id query param is rejected with 403
-    # Observed on staging: this permission-gated endpoint returns 403 (not 400) when company_id is absent
-    # — the permission/org check fails before handler-level parameter validation.
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -114,8 +108,6 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
 
   @negative @creator
   Scenario: Unknown (well-formed) UUID company_id is rejected with 422
-    # Observed on staging: a well-formed but non-existent company_id UUID resolves to 422 (org lookup
-    # found no such company), distinct from a malformed/non-UUID company_id which is 400.
     Given I prepare a request
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
@@ -124,12 +116,6 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     When I send a "GET" request to "/user/outgoing-webhook/"
     Then the response status code should be 422
     And the response body should not be empty
-
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (flag coercion, item-form flags, response shape,
-  # company_id negatives, webhook_id injection, method) —
-  # grounded in outgoing-webhook-api-doc.md. Collection: GET/POST; item: GET/PATCH/DELETE.
-  # ---------------------------------------------------------------------------
 
   @positive @creator
   Scenario: include_disabled with a non-literal value (TRUE) is treated as false and returns 200
@@ -148,7 +134,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     Given I prepare a request
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
-      | is_payload_config_required | 1            |
+      | is_payload_config_required |            1 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
@@ -201,7 +187,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | foo        | bar          |
-      | page       | 1            |
+      | page       |            1 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"

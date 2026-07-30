@@ -44,8 +44,7 @@ Feature: Public Login — POST /user/public/login
 
   @negative @creator @500
   Scenario: Empty username returns 500
-    # Observed on staging: an empty username surfaces as a 500 (same username-derivation path as the
-    # missing-username case) rather than a clean 400. Tagged @500 so the default suite skips it.
+  
     When I send an encrypted login request with body:
       """
       { "username": "", "password": "Whatever@123" }
@@ -88,11 +87,7 @@ Feature: Public Login — POST /user/public/login
     Then the response status code should be 401
     And the public login failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (username-type derivation, unknown user 401s, invalid
-  # enums/formats, injection, method) — grounded in public-login-api-doc.md.
-  # NOTE: wrong-password/lockout/SSO paths need real accounts — see gaps in docs.
-  # ---------------------------------------------------------------------------
+
 
   @negative @creator
   Scenario: Encrypted body that is not valid JSON fails to decode and returns 400
