@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["success", "message", "response_code", "data"],
+  "properties": {
+    "success": { "type": "boolean" },
+    "message": { "type": "string", "minLength": 1 },
+    "response_code": { "type": "string", "minLength": 1 },
+    "data": {
+      "type": "object",
+      "required": ["total_count", "loan_details"],
+      "properties": {
+        "total_count": { "type": "integer", "minimum": 0 },
+        "loan_details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["loan_id"],
+            "properties": {
+              "loan_id":                  { "type": "string", "minLength": 1 },
+              "applicant_name":           { "type": ["string", "null"] },
+              "allocated_user":           { "type": ["string", "null"] },
+              "asset_category":           { "type": ["string", "null"] },
+              "loan_asset_count":         { "type": ["integer", "null"], "minimum": 0 },
+              "loan_eligibility_date":    { "type": ["string", "null"] },
+              "repossession_status":      { "type": ["string", "null"] },
+              "total_due_amount":         { "type": ["number", "null"] },
+              "total_outstanding_amount": { "type": ["number", "null"] },
+              "total_stockyard_fees":     { "type": ["number", "null"] },
+              "total_transit_fees":       { "type": ["number", "null"] }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
