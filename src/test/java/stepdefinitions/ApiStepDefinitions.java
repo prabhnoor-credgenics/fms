@@ -14,6 +14,7 @@ import helpers.LoggingHelper;
 import helpers.PayloadHelper;
 import helpers.ResponseHelper;
 import helpers.SchemaHelper;
+import helpers.ValueExpressionHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -635,11 +636,14 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         String processedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
         String processedValue = value;
         if (processedValue != null) {
-            processedValue = scenarioTestDataResolver.replaceScenarioPlaceholders(processedValue);
+            processedValue = ValueExpressionHelper.resolve(
+                    processedValue,
+                    scenarioTestDataResolver::replaceScenarioPlaceholders
+            );
             if (PayloadHelper.isNullToken(processedValue) || "null".equalsIgnoreCase(processedType)) {
                 processedValue = null;
                 processedType = "null";
-            } else {
+            } else if (!ValueExpressionHelper.looksLikeConcatExpression(value)) {
                 processedValue = PayloadHelper.stripSurroundingQuotes(processedValue);
             }
         } else if (!"null".equalsIgnoreCase(processedType)) {
