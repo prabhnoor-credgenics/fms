@@ -77,7 +77,14 @@ public class JsonUtils {
             return null;
         }
 
-        String value = rawValue == null ? "" : rawValue.trim();
+        String value;
+        if (rawValue == null) {
+            value = "";
+        } else if (isStringLikeType(normalized)) {
+            value = rawValue;
+        } else {
+            value = rawValue.trim();
+        }
         try {
             return switch (normalized) {
                 case "string", "str", "text" -> value;
@@ -113,6 +120,13 @@ public class JsonUtils {
         return "string".equals(normalizedType)
                 || "str".equals(normalizedType)
                 || "text".equals(normalizedType);
+    }
+
+    private static boolean isStringLikeType(String normalizedType) {
+        return isStringType(normalizedType)
+                || "auto".equals(normalizedType)
+                || "any".equals(normalizedType)
+                || "coerce".equals(normalizedType);
     }
 
     private static Boolean parseBooleanStrict(String value) {
