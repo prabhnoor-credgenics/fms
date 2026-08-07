@@ -35,11 +35,6 @@ public class GlobalUsersStepDefinitions {
         createValidator.validateSuccessShape(activeResponse());
     }
 
-    @Then("the global users failure response should be valid")
-    public void the_global_users_failure_response_should_be_valid() {
-        listValidator.validateFailureEnvelope(activeResponse());
-    }
-
     private Response activeResponse() {
         return ResponseHelper.resolve(null, testContext);
     }

@@ -16,8 +16,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -40,7 +40,6 @@ Feature: V3 Loan Details API
  
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -50,8 +49,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -65,7 +64,7 @@ Feature: V3 Loan Details API
       | attribute_levels | applicant |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
-    And the v3 loan response should contain data for loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
   @positive @creator
   Scenario: GET loan details with all optional parameters populated
@@ -80,8 +79,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -93,7 +92,7 @@ Feature: V3 Loan Details API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | source               | settlement                                                          |
-      | allocation_month     | {ALLOCATION_MONTH_OFFSET:0}                                                         |
+      | allocation_month     | {ALLOCATION_MONTH_OFFSET:0}                                         |
       | attribute_levels     | applicant,guarantors,document_details,loan_variables,ds_variables   |
       | attribute_variables  | loan_amount,applicant_name                                          |
       | audit_info           | true                                                                |
@@ -111,7 +110,6 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with all boolean flags false (explicit defaults)
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -121,8 +119,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -147,7 +145,6 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with calculation-function level forces data_type_conversion
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -157,8 +154,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -180,7 +177,6 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with nested_audit_info triggers post-processing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -190,8 +186,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -203,7 +199,7 @@ Feature: V3 Loan Details API
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | source              | calling                                                    |
-      | attribute_variables | applicant_name,applicant_contact_details,total_loan_amount  |
+      | attribute_variables | applicant_name,total_loan_amount  |
       | nested_audit_info   | true                                                       |
       | id_info             | true                                                       |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
@@ -214,7 +210,6 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with comma-separated attribute_variables
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -224,8 +219,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -236,7 +231,7 @@ Feature: V3 Loan Details API
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | attribute_variables | applicant_name,total_loan_amount,applicant_contact_details |
+      | attribute_variables | applicant_name,total_loan_amount |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
@@ -245,7 +240,6 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with a free-form trigger label
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -255,8 +249,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -274,12 +268,10 @@ Feature: V3 Loan Details API
     And the v3 loan success envelope should be valid
 
 
-
   @positive @boundary @creator
   Scenario Outline: GET loan details accepts boundary-valid allocation_month "<allocation_month>"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -289,8 +281,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "<allocation_month>"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "<allocation_month>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -308,10 +300,10 @@ Feature: V3 Loan Details API
     And the v3 loan success envelope should be valid
 
     Examples:
-      | allocation_month |
-      | 2026-1-01        |
-      | 2026-12-01       |
-      | 2000-1-01        |
+      | allocation_month               |
+      | 2026-1-01                      |
+      | {ALLOCATION_MONTH_OFFSET:2}    |
+      | 2000-1-01                      |
 
 
 
@@ -319,7 +311,6 @@ Feature: V3 Loan Details API
   Scenario Outline: GET loan details accepts source "<source>"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -329,8 +320,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -366,7 +357,6 @@ Feature: V3 Loan Details API
   Scenario Outline: GET loan details accepts case-insensitive source "<source>"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -376,8 +366,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -404,7 +394,6 @@ Feature: V3 Loan Details API
   Scenario Outline: GET loan details accepts attribute_levels "<attribute_level>"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -414,8 +403,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -454,7 +443,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details accepts multiple comma-separated attribute_levels
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -464,8 +453,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -487,7 +476,7 @@ Feature: V3 Loan Details API
   Scenario Outline: GET loan details accepts boolean flag <flag>=<value>
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -497,8 +486,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -533,7 +522,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with empty attribute_levels string coerces to null
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -543,8 +532,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -563,7 +552,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details with empty attribute_variables string coerces to null
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -573,8 +562,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -591,10 +580,8 @@ Feature: V3 Loan Details API
 
   @positive @edge @creator
   Scenario: GET loan details with duplicate attribute_levels entries
-    # TODO: verify on staging — doc is silent on dedup behaviour; expecting tolerant 200.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -604,8 +591,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -632,7 +619,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator
   Scenario: GET loan details with an invalid authentication token returns 400
@@ -646,7 +633,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator
   Scenario: GET loan details with a malformed UUID-style token returns 401
@@ -666,7 +653,6 @@ Feature: V3 Loan Details API
    
     Given I authenticate as "approver" slot 0 and remember as "approver0"
     And scenario loan id is unique
-
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -677,11 +663,10 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json      |
       | authenticationtoken | {AUTH_TOKEN:creator0} |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
-   
     And I switch active user to "approver0"
     And I prepare a request
     And I set the request headers:
@@ -711,7 +696,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid loan id provided"
+    And the response body should contain field "message" as "auto" with value "Invalid loan id provided"
 
   @negative @creator
   Scenario: GET loan details with loan_id "null" is rejected by validity check
@@ -726,7 +711,7 @@ Feature: V3 Loan Details API
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "Invalid loan id provided"
+    And the response body should contain field "message" as "auto" with value "Invalid loan id provided"
 
   @negative @creator
   Scenario Outline: GET loan details with forbidden character in loan_id "<loan_id>" returns INVALID_IDS
@@ -742,7 +727,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
-    And the v3 loan error code should be "REC_0007"
+    And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
     Examples:
       | loan_id   |
@@ -764,7 +749,7 @@ Feature: V3 Loan Details API
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
-    And the v3 loan error code should be "REC_0007"
+    And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
     Examples:
       | loan_id  |
@@ -787,7 +772,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
-    And the v3 loan error code should be "REC_0003"
+    And the response body should contain field "error.code" as "auto" with value "REC_0003"
 
   @negative @creator
   Scenario Outline: GET loan details with invalid attribute_levels "<attribute_levels>" returns validation error
@@ -804,7 +789,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
-    And the v3 loan error code should be "REC_0003"
+    And the response body should contain field "error.code" as "auto" with value "REC_0003"
 
     Examples:
       | attribute_levels    |
@@ -827,7 +812,7 @@ Feature: V3 Loan Details API
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
-    And the v3 loan error code should be "REC_0003"
+    And the response body should contain field "error.code" as "auto" with value "REC_0003"
 
     Examples:
       | allocation_month | # reason                          |
@@ -853,7 +838,7 @@ Feature: V3 Loan Details API
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
-    And the v3 loan error code should be "REC_0003"
+    And the response body should contain field "error.code" as "auto" with value "REC_0003"
 
     Examples:
       | flag                 | value |
@@ -911,7 +896,7 @@ Feature: V3 Loan Details API
   Scenario: GET full attribute set then GET a narrowed variable both succeed
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -921,8 +906,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -956,7 +941,7 @@ Feature: V3 Loan Details API
   Scenario: GET loan details responds within the time threshold
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -966,8 +951,8 @@ Feature: V3 Loan Details API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request

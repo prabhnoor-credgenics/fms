@@ -2,7 +2,6 @@ package utils;
 
 import org.apache.logging.log4j.ThreadContext;
 
-
 public final class LoggingContext {
 
     public static final String SCENARIO_NAME = "scenarioName";

@@ -6,8 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.asserts.SoftAssert;
 
-
-public class OutgoingWebhookValidator {
+public class OutgoingWebhookValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(OutgoingWebhookValidator.class);
 

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VerifyCustomerSuccessResponse",
+  "description": "200 plain envelope for POST {BASE_ROUTE}/bulk/verify-customer. {success:true, data:{verified_loan_ids[], non_verified_loan_ids[]}} — for credit line loan_ids are client_customer_ids.",
+  "type": "object",
+  "required": ["success", "data"],
+  "properties": {
+    "success": { "const": true },
+    "data": {
+      "type": "object",
+      "required": ["verified_loan_ids", "non_verified_loan_ids"],
+      "properties": {
+        "verified_loan_ids": { "type": "array", "items": { "type": "string" } },
+        "non_verified_loan_ids": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

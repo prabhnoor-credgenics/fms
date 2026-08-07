@@ -15,8 +15,8 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -35,7 +35,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @positive @creator
   Scenario: Allocated users with FOS + calling, response_type=link returns 200
@@ -51,7 +51,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @positive @creator
   Scenario: Allocated users, response_type=data returns 200
@@ -68,7 +68,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/export_loan_data_success_schema.json"
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @positive @creator
   Scenario Outline: include_allocated_users "<flag>" returns 200
@@ -84,7 +84,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
     Examples:
       | flag  |
@@ -105,7 +105,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @negative @creator
   Scenario: Enabling all column toggles together errors on staging (500)
@@ -137,7 +137,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @positive @creator
   Scenario: Column-count overrides returns 200
@@ -153,7 +153,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @positive @creator
   Scenario: historical_loan_limit=true returns 200
@@ -169,7 +169,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @positive @creator
   Scenario Outline: allocation_month "<month>" returns 200
@@ -185,7 +185,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
     Examples:
       | month      |
@@ -206,7 +206,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
     Examples:
       | archive |
@@ -227,7 +227,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @positive @creator
   Scenario Outline: export_type "<export_type>" returns 200
@@ -243,7 +243,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
     Examples:
       | export_type                |
@@ -269,7 +269,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @positive @creator
   Scenario: Range selection with deselected returns 200
@@ -285,7 +285,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 200
-    And the export loan with allocated users success response should be valid
+    And the "export_loan_with_allocated_users" success response should be valid
 
   @negative @creator
   Scenario: export_id referencing a non-existent export task returns 400
@@ -302,7 +302,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 400
-    And the export loan with allocated users failure response should be valid
+    And the "export_loan_with_allocated_users" failure response should be valid
 
   @negative @creator
   Scenario: Extra portfolio filter fields error on the export (500)
@@ -351,7 +351,7 @@ Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-wi
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-with-allocated-users"
     Then the response status code should be 400
-    And the export loan with allocated users failure response should be valid
+    And the "export_loan_with_allocated_users" failure response should be valid
 
     Examples:
       | case                  | body                       |

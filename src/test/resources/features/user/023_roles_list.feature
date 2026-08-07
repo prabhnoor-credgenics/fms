@@ -1,6 +1,8 @@
 @api @user @roles-list
 Feature: Roles — GET /user/roles/ (list roles)
 
+  
+
   @positive @smoke @creator @roles-list
   Scenario: List roles returns 200 with a roles array
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -38,7 +40,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator @roles-list
   Scenario: List roles with an invalid authentication token is rejected
@@ -51,7 +53,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @creator @roles-list
   Scenario: List roles without company_id is rejected
@@ -62,7 +64,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | authenticationtoken | {AUTH_TOKEN}     |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-list
   Scenario: List roles with a malformed company_id is rejected
@@ -75,7 +77,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id | not-a-uuid |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @positive @performance @creator @roles-list
   Scenario: List roles responds within the time threshold
@@ -89,6 +91,7 @@ Feature: Roles — GET /user/roles/ (list roles)
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 200
     And the response time should be less than 5000 milliseconds
+
 
   @positive @schema @creator @roles-list
   Scenario: List roles response exposes the documented data.roles array
@@ -140,7 +143,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id |  |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-list
   Scenario: List roles for a well-formed but unauthorized company_id is rejected
@@ -152,7 +155,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id | {UUID} |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be one of "400,403,422"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @security @injection @creator @roles-list
   Scenario: List roles with a SQL injection payload in company_id is rejected
@@ -164,7 +167,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id | ' OR '1'='1 |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @security @xss @creator @roles-list
   Scenario: List roles with an XSS payload in company_id is rejected
@@ -173,7 +176,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id | <script>alert(1)</script> |
+      | company_id | <xss>alert(1)</xss> |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be one of "400,403"
     And the response body should not be empty
@@ -188,7 +191,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id | {RANDOM_STRING:200} |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @security @unicode @creator @roles-list
   Scenario: List roles with a unicode company_id is rejected
@@ -200,7 +203,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id | 你好-мир-🎉 |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @positive @creator @roles-list
   Scenario: List roles ignores unknown and unsupported query parameters
@@ -210,8 +213,8 @@ Feature: Roles — GET /user/roles/ (list roles)
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | page       |            1 |
-      | limit      |            5 |
+      | page       | 1            |
+      | limit      | 5            |
       | foo        | bar          |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 200

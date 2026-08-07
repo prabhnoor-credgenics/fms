@@ -7,8 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.V3LoansValidator;
 
-
-
 public class V3LoansStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(V3LoansStepDefinitions.class);
@@ -31,17 +29,4 @@ public class V3LoansStepDefinitions extends BaseStepDefinitions {
         logger.info("v3 loan success envelope validation completed");
     }
 
-    @Then("the v3 loan response should contain data for loan {string}")
-    public void the_v3_loan_response_should_contain_data_for_loan(String loanId) {
-        String resolvedLoanId = scenarioTestDataResolver.replaceScenarioPlaceholders(loanId);
-        logger.info("Active response : {}", activeResponse().asString());
-        v3LoansValidator.validateLoanPresent(activeResponse(), resolvedLoanId);
-        logger.info("v3 loan data-presence validation completed for {}", resolvedLoanId);
-    }
-
-    @Then("the v3 loan error code should be {string}")
-    public void the_v3_loan_error_code_should_be(String expectedCode) {
-        v3LoansValidator.validateErrorEnvelope(activeResponse(), expectedCode);
-        logger.info("v3 loan error code validation completed for {}", expectedCode);
-    }
 }

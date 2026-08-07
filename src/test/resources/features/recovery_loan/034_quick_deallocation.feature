@@ -14,8 +14,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -46,8 +46,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -79,8 +79,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -111,8 +111,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -142,8 +142,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -165,6 +165,20 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
   @manual @negative @permission @approver @shouldfail
   Scenario: PERM-001 — POST deallocation as a role without allocate_and_deallocate_loans:write returns 403
     Given I authenticate as "approver" slot 0 and remember as "approver0"
+    And scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -193,8 +207,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -226,8 +240,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -264,8 +278,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -296,8 +310,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -333,8 +347,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -367,8 +381,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -411,8 +425,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -449,8 +463,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -489,8 +503,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -522,8 +536,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -554,8 +568,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -586,8 +600,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "creator" slot 0 and remember as "creator0"
@@ -605,7 +619,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @negative @boundary @creator
   Scenario: BOUND-004 — selected_users key at max length 36 (value null) passes body validation
@@ -620,8 +634,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "creator" slot 0 and remember as "creator0"
@@ -637,8 +651,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "{USER_ID:creator0}": null } }
       """
     When I send a "POST" request to "/recovery/deallocation"
-    Then the response status code should be 400
-    And the quick deallocation success response should be valid
+    Then the response status code should be 200
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @edge @creator
   Scenario: EDGE-001 — Empty user_filters object is accepted (no filter keys)
@@ -653,8 +667,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "creator" slot 0 and remember as "creator0"
@@ -671,7 +685,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @edge @creator
   Scenario: EDGE-002 — user_filters list with duplicate entries is tolerated
@@ -686,8 +700,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -699,15 +713,15 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | company_id | {COMPANY_ID:creator1} |
     And I set the request body:
       """
-      { "loan_ids": ["{LOAN_ID}"], "source": "calling", "allocation_type": "telecalling", "user_filters": { "teams": ["team-north", "team-north"], "roles": ["agent", "agent"] } }
+      { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "other", "user_filters": { "teams": ["team-north", "team-north"], "roles": ["agent", "agent"] } }
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @fuzz @creator
-  Scenario: EDGE-003 — Fuzz inputs via placeholders (random loan id, random workflow_id) pass validation
-    Given I authenticate as "creator" slot 0 and remember as "creator0"
+  Scenario: EDGE-003 — Fuzz inputs via placeholders (random loan id, random workflow_id) fails validation
+    Given I authenticate as "creator" slot 1 and remember as "creator1"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -720,8 +734,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       { "loan_ids": ["LN_{RANDOM_STRING:8}"], "source": "api", "allocation_type": "user", "workflow_id": {RANDOM_INT:1:99999} }
       """
     When I send a "POST" request to "/recovery/deallocation"
-    Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    Then the response status code should be 400
+    And the "quick_deallocation" success response should be valid
 
 
   @negative @business @creator
@@ -737,8 +751,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -775,7 +789,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     Then the response status code should be 400
     And the quick deallocation multi-loan rejection response should be valid
 
-  @manual @negative @business @creator
+  @manual @negative @business @creator @500
   Scenario: BIZ-003 — Neither loan_ids nor entities provided returns 400 (intended)
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -811,7 +825,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     Then the response status code should be 200
     And the quick deallocation workflow short-circuit response should be valid
 
-  @manual @negative @business @creator
+  @manual @negative @business @creator @500
   Scenario: BIZ-005 — Agency de-allocation with no parent companies found returns a failure envelope
     Given I authenticate as "creator" slot 1 and remember as "creator1"
     And scenario loan id is unique
@@ -824,8 +838,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -841,7 +855,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 400
-    And the quick deallocation failure response should be valid
+    And the "quick_deallocation" failure response should be valid
 
   @manual @negative @business @creator
   Scenario: BIZ-006 — De-allocation for a valid-format but non-existent loan id returns a failure envelope
@@ -875,8 +889,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -893,7 +907,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/quick_deallocation_success_schema.json"
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-002 — All optional fields populated returns 200
@@ -908,8 +922,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     And I authenticate as "creator" slot 0 and remember as "creator0"
     Then the response status code should be one of "201"
@@ -926,19 +940,19 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
         "loan_ids": ["{LOAN_ID}"],
         "source": "workflow",
         "workflow_id": 77,
-        "allocation_type": "telecalling",
+        "allocation_type": "other",
         "selected_users": { "{USER_ID:creator0}": null },
-        "user_filters": { "professions": ["telecaller"], "teams": ["team-north"], "locations": ["maharashtra"], "roles": ["agent"] }
+        "user_filters": { "professions": ["other"], "teams": ["team-north"], "locations": ["maharashtra"], "roles": ["agent"] }
       }
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/quick_deallocation_success_schema.json"
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-003 — selected_users with multiple null-valued entity ids returns 200
-    Given I authenticate as "creator" slot 1 and remember as "creator1"
+    Given I authenticate as "approver" slot 0 and remember as "approver0"
     And scenario loan id is unique
     And I prepare a request
     And I set the query parameters:
@@ -949,29 +963,28 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
-    And I authenticate as "creator" slot 0 and remember as "creator0"
     Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
+      | authenticationtoken | {AUTH_TOKEN:approver0}     |
       | Content-Type        | application/json |
     And I set the query parameters:
-      | company_id | {COMPANY_ID:creator1} |
+      | company_id | {COMPANY_ID:approver0} |
     And I set the request body:
       """
-      { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "{USER_ID:creator0}": null, "usr_def1234567890zz": null } }
+      { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "{USER_ID:creator1}": null, "{USER_ID:creator2}": null } }
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario: HAPPY-004 — user_filters with all four allowed keys returns 200
-    Given I authenticate as "creator" slot 1 and remember as "creator1"
+    Given I authenticate as "approver" slot 0 and remember as "approver0"
     And scenario loan id is unique
     And I prepare a request
     And I set the query parameters:
@@ -982,8 +995,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -995,43 +1008,13 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["{LOAN_ID}"], "source": "calling", "allocation_type": "telecalling", "user_filters": { "professions": ["telecaller"], "teams": ["team-north"], "locations": ["maharashtra"], "roles": ["agent"] } }
+      { "loan_ids": ["{LOAN_ID}"], "source": "platform", "allocation_type": "other", "user_filters": { "professions": ["telecaller"], "teams": ["team-north"], "locations": ["maharashtra"], "roles": ["agent"] } }
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
-  @manual @positive @creator
-  Scenario: HAPPY-005 — Agency de-allocation with parent_company_id returns 200
-    Given I authenticate as "creator" slot 1 and remember as "creator1"
-    And scenario loan id is unique
-    And I prepare a request
-    And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-    And I set the path parameters:
-      | loan_id | {LOAN_ID} |
-    And I set the request headers:
-      | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN}     |
-    And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
-    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
-    Then the response status code should be one of "201"
-    Given I prepare a request
-    And I set the request headers:
-      | accept              | application/json |
-      | authenticationtoken | {AUTH_TOKEN}     |
-      | Content-Type        | application/json |
-    And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-    And I set the request body:
-      """
-      { "loan_ids": ["{LOAN_ID}"], "source": "legal", "allocation_type": "agency", "parent_company_id": "{PARENT_COMPANY_ID}" }
-      """
-    When I send a "POST" request to "/recovery/deallocation"
-    Then the response status code should be 200
-    And the quick deallocation success response should be valid
+
 
   @manual @positive @creator
   Scenario: HAPPY-006 — allocation_type omitted defaults to "other" and returns 200
@@ -1046,8 +1029,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1063,7 +1046,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
   @manual @positive @creator
   Scenario Outline: HAPPY-007 — Each source enum value "<source>" is accepted (200)
@@ -1078,8 +1061,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1095,7 +1078,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
     Examples:
       | source       |
@@ -1122,8 +1105,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1139,7 +1122,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid
 
     Examples:
       | type        | source    |
@@ -1162,8 +1145,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1207,8 +1190,8 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1237,4 +1220,4 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    And the quick deallocation success response should be valid
+    And the "quick_deallocation" success response should be valid

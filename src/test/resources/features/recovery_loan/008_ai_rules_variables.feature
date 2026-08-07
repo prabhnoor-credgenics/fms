@@ -39,7 +39,7 @@ Feature: AI Rules Variables
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator
   Scenario: API should fail with invalid authentication token
@@ -62,7 +62,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
 
   @negative2 @creator
   Scenario: API should fail when company_id does not exist
@@ -75,7 +75,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
@@ -88,7 +88,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"
 
   @negative @creator
   Scenario: API should fail when company_id query parameter is missing
@@ -99,7 +99,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
 
   @negative @creator @500
   Scenario: API should fail when company_id does not exist
@@ -112,7 +112,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "forbidden: invalid company id"
+    And the response body should contain field "message" as "auto" with value "forbidden: invalid company id"
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
@@ -125,7 +125,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"
 
 
 
@@ -408,7 +408,7 @@ Feature: AI Rules Variables
       | key        | recovery_status                      |
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator
   Scenario: Variables values API should fail with invalid authentication token
@@ -434,7 +434,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
 
   @negative @creator @500
   Scenario: Variables values API should fail when key is missing
@@ -447,7 +447,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "key: field is required"
+    And the response body should contain field "message" as "auto" with value "key: field is required"
 
   @negative @creator
   Scenario: Variables values API should fail when company_id does not exist
@@ -461,7 +461,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
     Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
 
   @negative @creator
   Scenario: Variables values API should fail when company_id is invalid UUID format
@@ -475,7 +475,7 @@ Feature: AI Rules Variables
     When I send a "GET" request to "/recovery/ai-rules/variables/values"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"
 
   @negative @creator
   Scenario: Variables values API should return empty output for invalid key
@@ -490,7 +490,7 @@ Feature: AI Rules Variables
     Then the response status code should be 200
     And the response message should be "success"
     And the response should match json schema "schemas/recovery/success/recovery_ai_rules_variables_values_success_schema.json"
-    And the response body should contain field "output" with value "empty"
+    And the response body should contain field "output" as "auto" with value "empty"
 
   @negative @creator @bug @500
   Scenario: Variables values API with should fail when invalid company_type

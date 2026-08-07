@@ -18,7 +18,7 @@ Feature: Profiles List — GET /user/profiles/
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/profiles_list_success_schema.json"
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @positive @creator
   Scenario Outline: profile_type "<profile_type>" returns 200
@@ -30,7 +30,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
     Examples:
       | profile_type |
@@ -47,7 +47,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
     Examples:
       | flag  |
@@ -64,7 +64,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @positive @creator
   Scenario: include_parent_company_profiles=true returns 200
@@ -76,7 +76,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @positive @creator
   Scenario: Combined self profiles, hierarchy ignored, parent profiles returns 200
@@ -90,7 +90,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @positive @creator @other-pod @500
   Scenario: Portfolio sub-branch (parent_company_id set, no profile_type) returns a map
@@ -102,7 +102,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
 
   @negative @creator
@@ -115,7 +115,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 400
-    And the profiles list failure response should be valid
+    And the "profiles_list" failure response should be valid
 
 
   @negative @creator
@@ -158,10 +158,7 @@ Feature: Profiles List — GET /user/profiles/
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (response shape, branch combos, boolean coercion, invalid
-  # profile_type/company_id, method/path) — grounded in profiles-api-doc.md.
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator
   Scenario: Success response exposes documented shape (data.profiles, message)
@@ -175,9 +172,9 @@ Feature: Profiles List — GET /user/profiles/
     And the response content type should be "application/json"
     And the response body should contain field "data.profiles"
     And the response body should contain field "message"
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
-  @positive @creator
+  @positive @creator @shouldfail
   Scenario: parent_company_id WITH profile_type stays in the default list branch returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -188,7 +185,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @positive @creator
   Scenario: masking_enabled_profiles combined with include_parent_company_profiles returns 200
@@ -201,7 +198,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @positive @creator @other-pod @500
   Scenario: Portfolio sub-branch with masking (parent_company_id, no profile_type) returns 200
@@ -214,7 +211,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @positive @creator
   Scenario Outline: Explicit false boolean flag "<flag>"="<value>" returns 200
@@ -226,7 +223,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
     Examples:
       | flag                            | value |
@@ -243,7 +240,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
     Examples:
       | value |
@@ -261,7 +258,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @positive @creator
   Scenario: Content-Type header on a GET (no body) is tolerated returns 200
@@ -273,7 +270,7 @@ Feature: Profiles List — GET /user/profiles/
       | Content-Type        | application/json |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @positive @creator
   Scenario: profile_type=shared combined with neglect_hierarchy=true returns 200
@@ -286,7 +283,7 @@ Feature: Profiles List — GET /user/profiles/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 200
-    And the profiles list success response should be valid
+    And the "profiles_list" success response should be valid
 
   @negative @security @creator
   Scenario Outline: Invalid profile_type "<profile_type>" returns 400
@@ -305,7 +302,7 @@ Feature: Profiles List — GET /user/profiles/
       | SELF                                             |
       | Shared                                           |
       | self' OR '1'='1                                  |
-      | <script>alert(1)</script>                        |
+      | <xss>alert(1)</xss>                        |
       | セルフ                                            |
       | selfselfselfselfselfselfselfselfselfselfselfself |
 

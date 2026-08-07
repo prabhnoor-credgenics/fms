@@ -6,8 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.QuickDeAllocationValidator;
 
-
-
 public class QuickDeAllocationStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(QuickDeAllocationStepDefinitions.class);
@@ -19,22 +17,10 @@ public class QuickDeAllocationStepDefinitions extends BaseStepDefinitions {
         this.quickDeAllocationValidator = quickDeAllocationValidator;
     }
 
-    @Then("the quick deallocation success response should be valid")
-    public void the_quick_deallocation_success_response_should_be_valid() {
-        quickDeAllocationValidator.validateSuccessEnvelope(activeResponse());
-        logger.info("quick deallocation success validation completed");
-    }
-
     @Then("the quick deallocation workflow short-circuit response should be valid")
     public void the_quick_deallocation_workflow_short_circuit_response_should_be_valid() {
         quickDeAllocationValidator.validateWorkflowShortCircuit(activeResponse());
         logger.info("quick deallocation workflow short-circuit validation completed");
-    }
-
-    @Then("the quick deallocation failure response should be valid")
-    public void the_quick_deallocation_failure_response_should_be_valid() {
-        quickDeAllocationValidator.validateFailureEnvelope(activeResponse());
-        logger.info("quick deallocation failure validation completed");
     }
 
     @Then("the quick deallocation multi-loan rejection response should be valid")

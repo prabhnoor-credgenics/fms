@@ -17,7 +17,6 @@ import validators.business.PublicLoginValidator;
 
 import static io.restassured.RestAssured.given;
 
-
 public class PublicLoginStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(PublicLoginStepDefinitions.class);
@@ -49,7 +48,8 @@ public class PublicLoginStepDefinitions {
     @When("I send an encrypted login request as {string}")
     public void i_send_an_encrypted_login_request_as(String roleName) {
         UserRole role = parseRole(roleName);
-        UserCredentials creds = userCredentialsResolver.resolve(configReader.getEnvironment(), role, 0);
+        UserCredentials creds = userCredentialsResolver.resolve(
+                configReader.getEnvironment(), configReader.getDefaultModule(), role, 0);
         String loginJson = String.format(
                 "{\"username\":\"%s\",\"password\":\"%s\",\"username_type\":\"email\"}",
                 creds.email(), creds.password());
@@ -104,27 +104,11 @@ public class PublicLoginStepDefinitions {
         logger.info("Login request sent; status={}", response.getStatusCode());
     }
 
-    @Then("the public login success response should be valid")
-    public void the_public_login_success_response_should_be_valid() {
-        validator.validateSuccessEnvelope(activeResponse());
-    }
-
-    @Then("the public login failure response should be valid")
-    public void the_public_login_failure_response_should_be_valid() {
-        validator.validateFailureEnvelope(activeResponse());
-    }
-
     private Response activeResponse() {
         return ResponseHelper.resolve(null, testContext);
     }
 
     private static UserRole parseRole(String roleName) {
-        return switch (roleName.trim().toLowerCase()) {
-            case "creator" -> UserRole.CREATOR;
-            case "approver" -> UserRole.APPROVER;
-            case "chief-admin", "chief_admin", "chiefadmin" -> UserRole.CHIEF_ADMIN;
-            default -> throw new IllegalArgumentException(
-                    "Unknown role '" + roleName + "'. Expected: creator | approver | chief-admin");
-        };
+        return UserRole.fromString(roleName);
     }
 }

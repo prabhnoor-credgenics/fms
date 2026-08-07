@@ -1,6 +1,5 @@
 package enums;
 
-
 public enum Environment {
     DEV("dev"),
     UAT("uat"),

@@ -1,0 +1,11 @@
+{
+  "upload_type": "default",
+  "transaction_data": [
+    {
+      "client_customer_id": "CUST_{LOAN_ID}",
+      "transaction_id": "TXN_{LOAN_ID}",
+      "total_loan_amount": 50000,
+      "amount_recovered": 1000
+    }
+  ]
+}

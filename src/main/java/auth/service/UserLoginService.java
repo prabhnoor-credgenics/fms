@@ -40,7 +40,11 @@ public class UserLoginService {
     }
 
     public void performUserLogin(Environment env, UserRole role, int userSlot) {
-        UserCredentials credentials = userCredentialsResolver.resolve(env, role, userSlot);
+        performUserLogin(env, null, role, userSlot);
+    }
+
+    public void performUserLogin(Environment env, String module, UserRole role, int userSlot) {
+        UserCredentials credentials = userCredentialsResolver.resolve(env, module, role, userSlot);
 
         String loginJson = String.format(
                 "{\"username\":\"%s\",\"password\":\"%s\",\"username_type\":\"email\"}",
@@ -91,7 +95,8 @@ public class UserLoginService {
         }
         testContext.setAuthToken(authToken);
         testContext.setUserSlot(userSlot);
-        logger.info("User logged in for env={}, role={}, slot={}", env, role, userSlot);
+        logger.info("User logged in for env={}, module={}, role={}, slot={}",
+                env, module == null ? "-" : module, role, userSlot);
 
         fetchAndStoreCompanyId(authToken);
     }

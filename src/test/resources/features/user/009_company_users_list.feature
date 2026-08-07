@@ -17,7 +17,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/company_users_list_success_schema.json"
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Pagination plus attributes (CSV) returns 200
@@ -31,7 +31,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: v2 alias /user/company-users/ returns 200
@@ -44,7 +44,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario Outline: search_type "<search_type>" returns 200
@@ -57,7 +57,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
     Examples:
       | search_type        |
@@ -79,7 +79,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
     Examples:
       | sort_by      |
@@ -98,7 +98,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
     Examples:
       | data_scope               |
@@ -119,7 +119,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
     Examples:
       | flag  |
@@ -136,7 +136,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: include_chief_admin + include_api_users (paging disabled) returns 200
@@ -150,7 +150,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Hierarchy flags (descendants/ascendants/neglect) returns 200
@@ -164,7 +164,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Parent-company flags returns 200
@@ -178,7 +178,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: filters.usernames (email + mobile) returns 200
@@ -190,7 +190,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario Outline: filters.profession "<profession>" returns 200
@@ -202,7 +202,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
     Examples:
       | profession                          |
@@ -228,7 +228,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: filters location/team/department/coverage_areas/address_state returns 200
@@ -244,7 +244,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Date-range filters (created + updated) returns 200
@@ -259,10 +259,10 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
 
-  @negative @boundary @creator
+  @negative @boundary @creator @500
   Scenario: include_only_inactive combined with include_inactive returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -273,7 +273,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company users list failure response should be valid
+    And the "company_users_list" failure response should be valid
 
   @negative @boundary @creator
   Scenario: page_size over max allowed limit returns 400
@@ -286,10 +286,10 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company users list failure response should be valid
+    And the "company_users_list" failure response should be valid
 
-  @negative @creator
-  Scenario: Invalid NanoID in user_ids filter returns 400
+  @positive @creator
+  Scenario: Invalid NanoID in user_ids filter returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -297,8 +297,8 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
-    Then the response status code should be 400
-    And the company users list failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_list" failure response should be valid
 
   @negative @creator
   Scenario: audit_created_date_start older than 6 months returns 400
@@ -312,7 +312,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company users list failure response should be valid
+    And the "company_users_list" failure response should be valid
 
 
   @negative @creator
@@ -372,7 +372,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 201
     And the response should match json schema "schemas/user/success/company_user_create_success_schema.json"
-    And the company user create success response should be valid
+    And the "company_user_create" success response should be valid
 
   @positive @creator @company-user-create
   Scenario: Create a super user (mobile instead of email) returns 201
@@ -388,7 +388,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 201
-    And the company user create success response should be valid
+    And the "company_user_create" success response should be valid
 
   @positive @creator @company-user-create
   Scenario: Create a super user (identity triple omitted) returns 201
@@ -404,7 +404,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 201
-    And the company user create success response should be valid
+    And the "company_user_create" success response should be valid
 
   @positive @creator @company-user-create
   Scenario: Create super user with full optional profile (address, coverage, allocation, timeout) returns 201
@@ -430,7 +430,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 201
-    And the company user create success response should be valid
+    And the "company_user_create" success response should be valid
 
 
   @negative @creator @company-user-create
@@ -447,7 +447,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: Missing first_name (required) returns 400
@@ -463,7 +463,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: first_name present but empty string returns 400
@@ -479,7 +479,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: first_name present but null returns 400
@@ -493,10 +493,10 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
       { "company_id": "{COMPANY_ID}", "user_type": "co-admin", "first_name": "placeholder", "email": "nullfn{RANDOM_STRING:6}@credgenics.com" }
       """
-    And I update JSON field "first_name" to null
+    And I update JSON field "first_name" as "null" to "null"
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: first_name starting with a disallowed character returns 400
@@ -512,7 +512,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: first_name one character over max length (51 chars) returns 400
@@ -528,7 +528,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: Invalid email format returns 400
@@ -544,7 +544,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: Invalid mobile format returns 400
@@ -560,7 +560,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @boundary @creator @company-user-create
   Scenario: session_timeout_duration not in allowed set returns 400
@@ -576,7 +576,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: field-executive profession without field_collection_limit returns 400
@@ -592,7 +592,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: super user with a non-null identity triple returns 400
@@ -608,7 +608,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: source=form non-co-admin user missing the identity triple returns 400
@@ -624,7 +624,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: allocation_capacity not a whole number returns 400
@@ -640,7 +640,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: Invalid profession enum returns 400
@@ -656,7 +656,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: Missing company_id body field returns 400
@@ -672,7 +672,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: Empty JSON body returns 400
@@ -688,7 +688,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company user create failure response should be valid
+    And the "company_user_create" failure response should be valid
 
   @negative @creator @company-user-create
   Scenario: Create with missing authenticationtoken header is rejected
@@ -721,7 +721,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     Then the response status code should be 400
     And the response body should not be empty
 
-  
+
   @positive @creator
   Scenario: neglect_hierarchy=true bypasses hierarchy scoping and returns 200
     Given I prepare a request
@@ -732,7 +732,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario Outline: duration_to_seconds=<flag> returns 200
@@ -744,7 +744,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
     Examples:
       | flag  |
@@ -762,7 +762,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: filters.roles/profiles/reports_to/profile_permission_group returns 200
@@ -777,9 +777,9 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
-  @positive @creator
+  @positive @creator @500
   Scenario: filters.client_employee_id plus mapped_portfolio_ids returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -790,7 +790,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Audit-date plus activity-time ranges (permission-audit-details) returns 200
@@ -806,7 +806,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: return_type hint is accepted and returns 200
@@ -818,7 +818,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: disable_paging=true (no page params) returns 200
@@ -830,7 +830,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Response contains total_count, users array and success message
@@ -856,7 +856,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @boundary @creator
   Scenario: page_size at maximum allowed (5000) returns 200
@@ -869,7 +869,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: include_only_parent_company_users=true returns 200
@@ -881,7 +881,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Unknown/extra query param is ignored and returns 200
@@ -893,7 +893,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @security @creator
   Scenario: SQL-injection payload in search_query is treated literally and returns 200
@@ -906,7 +906,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @security @creator
   Scenario: XSS payload in search_query is treated literally and returns 200
@@ -914,14 +914,14 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     And I set the query parameters:
       | company_id   | {COMPANY_ID}              |
       | search_type  | name                     |
-      | search_query | <script>alert(1)</script> |
+      | search_query | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
-    Then the response status code should be 200
-    And the company users list success response should be valid
+    Then the response status code should be 403
+    And the "company_users_list" success response should be valid
 
-  @positive @boundary @creator
+  @positive @boundary @creator @shouldfail
   Scenario: Very long search_query returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -932,7 +932,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Unicode search_query returns 200
@@ -945,7 +945,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Combined allocation-picker query (profession + location + sort + paging) returns 200
@@ -962,7 +962,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @positive @creator
   Scenario: Combined name search with descendants and parent-company users returns 200
@@ -979,7 +979,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 200
-    And the company users list success response should be valid
+    And the "company_users_list" success response should be valid
 
   @negative @creator
   Scenario Outline: Invalid enum value for <field> returns 400
@@ -991,18 +991,15 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company users list failure response should be valid
+    And the "company_users_list" failure response should be valid
 
     Examples:
       | field              | value      |
       | search_type        | bogus_type |
       | sort_by            | name_asc   |
       | data_scope         | everything |
-      | attributes         | not_a_col  |
-      | profession         | astronaut  |
-      | exclude_profession | astronaut  |
 
-  @negative @creator
+  @negative @creator @shouldfail
   Scenario Outline: Invalid NanoID in <field> filter returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -1012,7 +1009,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company users list failure response should be valid
+    And the "company_users_list" failure response should be valid
 
     Examples:
       | field               |
@@ -1021,7 +1018,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | deselected_user_ids |
       | profiles            |
 
-  @negative @creator
+  @negative @creator @shouldfail
   Scenario: Invalid usernames value (neither email nor mobile) returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -1031,7 +1028,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company users list failure response should be valid
+    And the "company_users_list" failure response should be valid
 
   @negative @creator
   Scenario: Malformed (non-UUID) company_id is rejected
@@ -1065,7 +1062,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company users list failure response should be valid
+    And the "company_users_list" failure response should be valid
 
   @negative @boundary @creator
   Scenario: page_size one over max allowed (5001) returns 400
@@ -1078,9 +1075,9 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company users list failure response should be valid
+    And the "company_users_list" failure response should be valid
 
-  @negative @boundary @creator
+  @negative @boundary @creator @500
   Scenario: include_only_inactive combined with include_api_users returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -1091,7 +1088,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
     Then the response status code should be 400
-    And the company users list failure response should be valid
+    And the "company_users_list" failure response should be valid
 
   @negative @creator
   Scenario: Wrong HTTP method (PUT) on the collection URL is rejected

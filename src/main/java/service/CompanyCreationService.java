@@ -16,7 +16,6 @@ import java.util.Objects;
 import static constants.FrameworkConstants.ENDPOINT_RECOVERY_COMPANY;
 import static constants.FrameworkConstants.ENDPOINT_USER_COMPANY;
 
-
 public class CompanyCreationService {
 
     private static final Logger logger = LogManager.getLogger(CompanyCreationService.class);
@@ -76,7 +75,6 @@ public class CompanyCreationService {
         return postCompanyPayload(payloadBuilder.buildStep4Payload(), 4);
     }
 
-
     public Response getUserCompanyDetails() {
         requireCompanyId();
         Map<String, String> queryParams = new LinkedHashMap<>();
@@ -99,7 +97,6 @@ public class CompanyCreationService {
         storeAndLogResponse(response, "GET " + ENDPOINT_USER_COMPANY);
         return response;
     }
-
 
     public Response getRecoveryCompanyDetails(boolean bifurcationPrefix) {
         requireCompanyId();

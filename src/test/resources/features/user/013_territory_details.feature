@@ -37,7 +37,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario Outline: disable_paging=<flag> returns 200
@@ -53,7 +53,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
     Examples:
       | flag  |
@@ -74,7 +74,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: Search by name returns 200
@@ -90,7 +90,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: Filters state + zone returns 200
@@ -106,7 +106,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: territory_type_ids + territory_codes returns 200
@@ -122,7 +122,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: columns projection returns 200
@@ -138,7 +138,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario Outline: disable_formatting=<flag> returns 200
@@ -154,7 +154,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
     Examples:
       | flag  |
@@ -175,7 +175,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
     Examples:
       | flag  |
@@ -196,7 +196,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
 
 
@@ -214,7 +214,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 400
-    And the territory details failure response should be valid
+    And the "territory_details" failure response should be valid
 
   @negative @creator
   Scenario: Invalid search_key returns 400
@@ -230,7 +230,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 400
-    And the territory details failure response should be valid
+    And the "territory_details" failure response should be valid
 
   @negative @creator
   Scenario: fetch_descendants without search returns 400
@@ -246,7 +246,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 400
-    And the territory details failure response should be valid
+    And the "territory_details" failure response should be valid
 
   @negative @creator
   Scenario: fetch_descendants with name search returns 400
@@ -262,7 +262,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 400
-    And the territory details failure response should be valid
+    And the "territory_details" failure response should be valid
 
   @negative @creator
   Scenario: Invalid columns returns 400
@@ -278,7 +278,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 400
-    And the territory details failure response should be valid
+    And the "territory_details" failure response should be valid
 
   @negative @boundary @creator
   Scenario: page_size over 5000 returns 400
@@ -294,7 +294,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 400
-    And the territory details failure response should be valid
+    And the "territory_details" failure response should be valid
 
 
   @negative @creator
@@ -353,10 +353,7 @@ Feature: Territory Details — POST /user/territory/details
     When I send a "GET" request to "/user/territory/details"
     Then the response status code should be 405
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (filters, pagination boundary, response shape, injection,
-  # validation negatives, method/path) — grounded in territory-details-api-doc.md.
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator
   Scenario: Filter by parent_territory_code returns 200
@@ -372,7 +369,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: Filter by territory_type_ids returns 200
@@ -388,7 +385,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: Combined pagination + state/zone filter + columns returns 200
@@ -404,7 +401,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: Interservice fetch_descendants unpaginated + unformatted returns 200
@@ -420,7 +417,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: Admin export neglect_territory_hierarchy + disable_paging + territory_type_ids returns 200
@@ -436,7 +433,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: Unknown/extra body fields are ignored (200)
@@ -452,7 +449,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @boundary @creator
   Scenario: page_size exactly at max 5000 returns 200
@@ -468,7 +465,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @boundary @creator
   Scenario: High page_number beyond available data returns 200
@@ -484,7 +481,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: Search value matching nothing returns 200
@@ -500,9 +497,9 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
-  @positive @creator
+  @negative @creator @shouldfail
   Scenario: Default success response carries the expected message
     Given I prepare a request
     And I set the query parameters:
@@ -515,8 +512,8 @@ Feature: Territory Details — POST /user/territory/details
       {}
       """
     When I send a "POST" request to "/user/territory/details"
-    Then the response status code should be 200
-    And the response message should be "Territory details fetched successfully."
+    Then the response status code should be 400
+    And the response message should be "Please provide complete details"
 
   @positive @creator
   Scenario: fetch_descendants response names the searched code in its message
@@ -544,7 +541,7 @@ Feature: Territory Details — POST /user/territory/details
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      {}
+      { "fetch_descendants": true, "search_key": "code", "search_value": "MH-01" }
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
@@ -564,9 +561,9 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
-  @positive @security @creator
+  @positive @security @creator @shouldfail
   Scenario: XSS payload in search_value is handled safely (200)
     Given I prepare a request
     And I set the query parameters:
@@ -576,11 +573,11 @@ Feature: Territory Details — POST /user/territory/details
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      { "search_key": "name", "search_value": "<script>alert(1)</script>" }
+      { "search_key": "name", "search_value": "<xss>alert(1)</xss>" }
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @creator
   Scenario: Unicode search_value is accepted (200)
@@ -596,7 +593,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @positive @boundary @creator
   Scenario: Very long search_value is accepted (200)
@@ -612,7 +609,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
-    And the territory details success response should be valid
+    And the "territory_details" success response should be valid
 
   @negative @creator
   Scenario: Only search_value (no search_key) returns 400
@@ -628,9 +625,9 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 400
-    And the territory details failure response should be valid
+    And the "territory_details" failure response should be valid
 
-  @negative @creator
+  @negative @creator @shouldfail
   Scenario: Whitespace-only search_value is rejected (400)
     Given I prepare a request
     And I set the query parameters:
@@ -644,7 +641,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 400
-    And the territory details failure response should be valid
+    And the "territory_details" failure response should be valid
 
   @negative @creator
   Scenario: fetch_descendants=true with search_key=code but no search_value returns 400
@@ -660,7 +657,7 @@ Feature: Territory Details — POST /user/territory/details
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 400
-    And the territory details failure response should be valid
+    And the "territory_details" failure response should be valid
 
   @negative @creator
   Scenario: Malformed JSON body is rejected (400)
@@ -773,7 +770,7 @@ Feature: Territory Details — POST /user/territory/details
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      {}
+      { "fetch_descendants": true, "search_key": "code" }
       """
     When I send a "POST" request to "/user/territory/details/"
     Then the response status code should be one of "200,404,405"

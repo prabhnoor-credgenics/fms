@@ -16,7 +16,6 @@ public class AuthManager {
 
     private static final Logger logger = LogManager.getLogger(AuthManager.class);
 
-
     private static final ConcurrentHashMap<String, Object> LOGIN_LOCKS = new ConcurrentHashMap<>();
 
     private final ConfigReader configReader;
@@ -39,19 +38,27 @@ public class AuthManager {
         this.authTokenCache = authTokenCache;
     }
 
-
     public void initializeAuthentication(UserRole role, int slot) {
+        initializeAuthentication(role, null, slot);
+    }
+
+    public void initializeAuthentication(UserRole role, String module, int slot) {
         testContext.setUserSlot(slot);
-        initializeAuthentication(role);
+        initializeAuthentication(role, module);
     }
 
     public void initializeAuthentication(UserRole role) {
+        initializeAuthentication(role, (String) null);
+    }
+
+    public void initializeAuthentication(UserRole role, String module) {
+        String effectiveModule = resolveModule(module);
+        testContext.setActiveModule(effectiveModule);
         String userType = configReader.getProperty("user_type");
         Environment env = configReader.getEnvironment();
         int userSlot = testContext.getUserSlot();
 
-
-        AuthTokenCache.CachedSession cached = authTokenCache.getIfValid(env, role, userType, userSlot);
+        AuthTokenCache.CachedSession cached = authTokenCache.getIfValid(env, effectiveModule, role, userType, userSlot);
         if (cached != null) {
             testContext.setAuthToken(cached.authToken());
             if (cached.companyId() != null) {
@@ -60,11 +67,10 @@ public class AuthManager {
             return;
         }
 
-
-        String lockKey = env + ":" + role + ":" + userType + ":" + userSlot;
+        String lockKey = env + ":" + effectiveModule + ":" + role + ":" + userType + ":" + userSlot;
         Object lock = LOGIN_LOCKS.computeIfAbsent(lockKey, k -> new Object());
         synchronized (lock) {
-            cached = authTokenCache.getIfValid(env, role, userType, userSlot);
+            cached = authTokenCache.getIfValid(env, effectiveModule, role, userType, userSlot);
             if (cached != null) {
                 testContext.setAuthToken(cached.authToken());
                 if (cached.companyId() != null) {
@@ -74,7 +80,7 @@ public class AuthManager {
             }
 
             switch (userType.toLowerCase()) {
-                case "user" -> userLoginService.performUserLogin(env, role, userSlot);
+                case "user" -> userLoginService.performUserLogin(env, effectiveModule, role, userSlot);
                 case "api_key_single_company" -> apiKeyService.generateSingleCompanyApiKey(env);
                 case "api_key_multiple_companies" -> apiKeyService.loadMultiCompanyApiKey(env);
                 default -> throw new RuntimeException(
@@ -82,18 +88,18 @@ public class AuthManager {
                 );
             }
 
-            authTokenCache.put(env, role, userType, userSlot, testContext.getAuthToken(), testContext.getCompanyId());
+            authTokenCache.put(env, effectiveModule, role, userType, userSlot,
+                    testContext.getAuthToken(), testContext.getCompanyId());
         }
     }
 
-    /**
-     * Authenticates the active session using a pre-issued API key instead of a user login.
-     * Loads {@code <env>_api_key} (from secrets/crypto.properties) into the auth token and
-     * {@code <env>_api_key_global_company_id} into the company id, so subsequent requests send
-     * the API key via {@code {AUTH_TOKEN}} and target the global company via {@code {COMPANY_ID}}.
-     * Bypasses the token cache and user-slot machinery — the API key is environment-scoped, not
-     * per-user. Requires {@code <env>_api_key} to be present in secrets/crypto.properties.
-     */
+    private String resolveModule(String module) {
+        String candidate = (module == null || module.isBlank())
+                ? configReader.getDefaultModule()
+                : module;
+        return (candidate == null || candidate.isBlank()) ? null : candidate.trim().toLowerCase();
+    }
+
     public void initializeApiKeyAuthentication() {
         Environment env = configReader.getEnvironment();
         apiKeyService.loadMultiCompanyApiKey(env);
@@ -105,8 +111,10 @@ public class AuthManager {
         Environment env = configReader.getEnvironment();
         String userType = configReader.getProperty("user_type");
         int userSlot = testContext.getUserSlot();
-        logger.warn("Session expired for role={}, slot={}. Invalidating cache and re-authenticating.", role, userSlot);
-        authTokenCache.invalidate(env, role, userType, userSlot);
-        initializeAuthentication(role);
+        String module = testContext.getActiveModule();
+        logger.warn("Session expired for module={}, role={}, slot={}. Invalidating cache and re-authenticating.",
+                module == null ? "-" : module, role, userSlot);
+        authTokenCache.invalidate(env, module, role, userType, userSlot);
+        initializeAuthentication(role, module);
     }
 }

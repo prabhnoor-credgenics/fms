@@ -15,6 +15,7 @@ import io.cucumber.java.Scenario;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import helpers.LoggingHelper;
+import helpers.RecoveryVariableCleanupHelper;
 import utils.DbClient;
 import utils.LoggingContext;
 
@@ -28,6 +29,7 @@ public class Hooks {
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final ParallelUserAllocator parallelUserAllocator;
     private final ConfigReader configReader;
+    private final RecoveryVariableCleanupHelper recoveryVariableCleanupHelper;
 
     public Hooks(
             TestContext testContext,
@@ -35,7 +37,8 @@ public class Hooks {
             DbClient dbClient,
             ScenarioTestDataResolver scenarioTestDataResolver,
             ParallelUserAllocator parallelUserAllocator,
-            ConfigReader configReader
+            ConfigReader configReader,
+            RecoveryVariableCleanupHelper recoveryVariableCleanupHelper
     ) {
         this.testContext = testContext;
         this.authManager = authManager;
@@ -43,6 +46,7 @@ public class Hooks {
         this.scenarioTestDataResolver = scenarioTestDataResolver;
         this.parallelUserAllocator = parallelUserAllocator;
         this.configReader = configReader;
+        this.recoveryVariableCleanupHelper = recoveryVariableCleanupHelper;
     }
 
     @Before(order = 0)
@@ -52,7 +56,6 @@ public class Hooks {
         testContext.setScenarioName(scenario.getName());
 
         parallelUserAllocator.allocateForCurrentThread(testContext);
-
 
         Integer slotOverride = parseSlotTag(scenario.getSourceTagNames());
         if (slotOverride != null) {
@@ -95,7 +98,6 @@ public class Hooks {
         authManager.initializeAuthentication(role);
     }
 
-
     private static Integer parseSlotTag(Collection<String> tags) {
         final String prefix = "@slot-";
         for (String tag : tags) {
@@ -116,6 +118,21 @@ public class Hooks {
     public void tearDown(Scenario scenario) {
 
         try {
+            
+            boolean touchedVariables =
+                    (testContext.getScenarioVariableName() != null
+                            && !testContext.getScenarioVariableName().isBlank())
+                    || (testContext.getScenarioVariableId() != null
+                            && !testContext.getScenarioVariableId().isBlank())
+                    || scenario.getSourceTagNames().contains("@mandatory-variable")
+                    || scenario.getSourceTagNames().contains("@recovery-variables")
+                    || scenario.getSourceTagNames().contains("@additional-variable")
+                    || scenario.getSourceTagNames().contains("@recovery")
+                    || scenario.getSourceTagNames().contains("@allocation-enqueue")
+                    || scenario.getSourceTagNames().contains("@loan-upload");
+            if (touchedVariables) {
+                recoveryVariableCleanupHelper.markGeneratedVariablesNonMandatoryBestEffort();
+            }
 
             if (scenario.isFailed()) {
 
@@ -125,11 +142,13 @@ public class Hooks {
 
                 if (apiLogs != null && !apiLogs.isBlank()) {
 
+                    String safeApiLogs = escapeHtml(apiLogs);
+
                     ExtentCucumberAdapter.getCurrentStep().fail(
                             "<details>" +
                             "<summary><b>API Request / Response Logs</b></summary>" +
                             "<pre style='white-space: pre-wrap; font-family: monospace;'>" +
-                            apiLogs +
+                            safeApiLogs +
                             "</pre>" +
                             "</details>"
                     );
@@ -150,5 +169,17 @@ public class Hooks {
             testContext.clearApiLogs();
             LoggingContext.clear();
         }
+    }
+
+    private static String escapeHtml(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#39;");
     }
 }

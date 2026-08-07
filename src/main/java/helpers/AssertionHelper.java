@@ -7,7 +7,6 @@ import org.hamcrest.Matchers;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
 public final class AssertionHelper {
 
     private static final Logger LOGGER = LogManager.getLogger(AssertionHelper.class);
@@ -16,7 +15,6 @@ public final class AssertionHelper {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    
     public static void assertStatusCodeOneOf(Response response, String csvCodes) {
         if (response == null) {
             throw new IllegalArgumentException("response must not be null");
@@ -41,7 +39,6 @@ public final class AssertionHelper {
         LOGGER.info("Status code {} is valid (one of: {})", actual, csvCodes);
     }
 
-    
     public static void assertFieldExists(Response response, String jsonPath) {
         Object value = response.jsonPath().get(jsonPath);
         assertThat("Field " + jsonPath + " should exist", value, Matchers.notNullValue());

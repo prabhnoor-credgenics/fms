@@ -8,11 +8,9 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-
-public abstract class BaseEnvelopeValidator {
+public abstract class BaseEnvelopeValidator implements EnvelopeValidator {
 
     protected final Logger logger = LogManager.getLogger(getClass());
-
 
     public void validateFailureEnvelope(Response response) {
         JsonPath jp = response.jsonPath();
@@ -21,7 +19,6 @@ public abstract class BaseEnvelopeValidator {
         sa.assertAll();
         logger.info("failure envelope validated");
     }
-
 
     public void validateValidationError(Response response) {
         JsonPath jp = response.jsonPath();
@@ -36,7 +33,6 @@ public abstract class BaseEnvelopeValidator {
         logger.info("validation-error envelope validated (error.data items: {})",
                 errorData == null ? 0 : errorData.size());
     }
-
 
     public void validateErrorCode(Response response, String expectedCode) {
         JsonPath jp = response.jsonPath();

@@ -10,11 +10,9 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-
 public class UserProfileService {
 
     private static final Logger logger = LogManager.getLogger(UserProfileService.class);
-
 
     private static final String[] USER_ID_PATHS = {
             "output.user_id",
@@ -35,7 +33,6 @@ public class UserProfileService {
         this.configReader = configReader;
     }
 
-
     public String fetchUserId(String authToken) {
         if (authToken == null || authToken.isBlank()) {
             throw new IllegalStateException(
@@ -55,7 +52,6 @@ public class UserProfileService {
                 "Could not find a user id in the verify/user response. Tried the known paths.");
     }
 
-
     public String fetchProfileId(String authToken, String companyId) {
         if (authToken == null || authToken.isBlank()) {
             throw new IllegalStateException("Cannot fetch profile id: auth token is blank. Authenticate first.");
@@ -66,7 +62,7 @@ public class UserProfileService {
             dict = jp.getMap("data.output.assigned_companies_dict");
         }
         if (dict != null && !dict.isEmpty()) {
-          
+            
             Object entry = (companyId != null) ? dict.get(companyId) : null;
             String pid = profileIdOf(entry);
             if (pid != null) {
@@ -93,11 +89,9 @@ public class UserProfileService {
         return null;
     }
 
-
     private Response verifyUser(String authToken) {
         return requestVerifyUser(configReader, authToken);
     }
-
 
     static Response requestVerifyUser(ConfigReader configReader, String authToken) {
         String baseUrl = configReader.getBaseUrl();

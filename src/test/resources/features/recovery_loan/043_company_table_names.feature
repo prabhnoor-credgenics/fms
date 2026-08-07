@@ -14,7 +14,7 @@ Feature: Company Table Names — GET /recovery/company-table-names
     When I send a "GET" request to "/recovery/company-table-names"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/company_table_names_success_schema.json"
-    And the company table names success response should be valid
+    And the "company_table_names" success response should be valid
 
   @positive @creator
   Scenario: include_disabled=true (enabled + disabled tables) returns 200
@@ -27,7 +27,7 @@ Feature: Company Table Names — GET /recovery/company-table-names
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/company-table-names"
     Then the response status code should be 200
-    And the company table names success response should be valid
+    And the "company_table_names" success response should be valid
 
   @positive @creator
   Scenario: include_disabled=false (only enabled tables) returns 200
@@ -40,7 +40,7 @@ Feature: Company Table Names — GET /recovery/company-table-names
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/company-table-names"
     Then the response status code should be 200
-    And the company table names success response should be valid
+    And the "company_table_names" success response should be valid
 
   @positive @creator @multistep
   Scenario: Two consecutive reads are consistent (idempotent read) — both 200
@@ -52,7 +52,7 @@ Feature: Company Table Names — GET /recovery/company-table-names
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/company-table-names"
     Then the response status code should be 200
-    And the company table names success response should be valid
+    And the "company_table_names" success response should be valid
     And I prepare a request
     And I set the query parameters:
       | company_id       | {COMPANY_ID} |
@@ -61,7 +61,7 @@ Feature: Company Table Names — GET /recovery/company-table-names
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/company-table-names"
     Then the response status code should be 200
-    And the company table names success response should be valid
+    And the "company_table_names" success response should be valid
 
   @positive @creator
   Scenario Outline: include_disabled is parsed leniently — value "<value>" still returns 200
@@ -74,7 +74,7 @@ Feature: Company Table Names — GET /recovery/company-table-names
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/company-table-names"
     Then the response status code should be 200
-    And the company table names success response should be valid
+    And the "company_table_names" success response should be valid
 
     Examples:
       | value |
@@ -99,7 +99,7 @@ Feature: Company Table Names — GET /recovery/company-table-names
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/company-table-names"
     Then the response status code should be 200
-    And the company table names success response should be valid
+    And the "company_table_names" success response should be valid
 
   @positive @creator
   Scenario: Unknown query param is ignored — returns 200
@@ -112,7 +112,7 @@ Feature: Company Table Names — GET /recovery/company-table-names
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/company-table-names"
     Then the response status code should be 200
-    And the company table names success response should be valid
+    And the "company_table_names" success response should be valid
 
   @positive @approver
   Scenario: A non-creator role (approver) may read the company tables — no permission submodule
@@ -124,7 +124,7 @@ Feature: Company Table Names — GET /recovery/company-table-names
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/company-table-names"
     Then the response status code should be 200
-    And the company table names success response should be valid
+    And the "company_table_names" success response should be valid
 
 
   @negative @creator

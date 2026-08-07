@@ -41,7 +41,6 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.Assert;
 
-
 public class ApiStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(ApiStepDefinitions.class);
@@ -54,7 +53,6 @@ public class ApiStepDefinitions {
 
     private RequestSpecification request;
     private Response response;
-    private String requestBody;
     private final Set<String> headersToRemove = new HashSet<>();
     private final LinkedHashMap<String, String> storedHeaders = new LinkedHashMap<>();
     private final Map<String, String> storedPathParams = new HashMap<>();
@@ -72,20 +70,6 @@ public class ApiStepDefinitions {
         this.restAssuredBase = restAssuredBase;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
         this.authManager = authManager;
-    }
-
-    @Given("I authenticate as {string}")
-    public void i_authenticate_as(String roleName) {
-        enums.UserRole role = switch (roleName.trim().toLowerCase()) {
-            case "creator" -> enums.UserRole.CREATOR;
-            case "approver" -> enums.UserRole.APPROVER;
-            case "chief-admin", "chief_admin", "chiefadmin" -> enums.UserRole.CHIEF_ADMIN;
-            default -> throw new IllegalArgumentException(
-                    "Unknown role '" + roleName + "'. Expected: creator | approver | chief-admin");
-        };
-        testContext.setUserRole(role);
-        authManager.initializeAuthentication(role);
-        logger.info("Switched active authentication to role: {} (token now resolves to this role for {{AUTH_TOKEN}})", role);
     }
 
     @When("I wait for {int} seconds")
@@ -142,7 +126,7 @@ public class ApiStepDefinitions {
         storedHeaders.clear();
         storedQueryParams.clear();
         storedPathParams.clear();
-        requestBody = null;
+        clearRequestBody();
         headersToRemove.clear();
         logger.info("Request specification prepared");
     }
@@ -184,12 +168,26 @@ public class ApiStepDefinitions {
         }
     }
 
+    private String currentRequestBody() {
+        return testContext.getRequestBody();
+    }
+
+    private void applyRequestBody(String body) {
+        testContext.setRequestBody(body);
+        if (request != null && body != null) {
+            request.body(body);
+        }
+    }
+
+    private void clearRequestBody() {
+        testContext.setRequestBody(null);
+    }
+
     @Given("I set the request body:")
     public void i_set_the_request_body(String body) {
         ensureRequestPrepared();
         String processedBody = replacePlaceholdersInBody(body);
-        this.requestBody = processedBody;
-        request.body(processedBody);
+        applyRequestBody(processedBody);
         logger.info("Request body set: {}", processedBody);
     }
 
@@ -199,8 +197,7 @@ public class ApiStepDefinitions {
         String jsonBody = FileHelper.readResourceAsString(filePath);
         String processedBody = replacePlaceholdersInBody(jsonBody);
         SchemaHelper.autoValidateRequestSchema(filePath, processedBody);
-        this.requestBody = processedBody;
-        request.body(processedBody);
+        applyRequestBody(processedBody);
         logger.info("Request body loaded from file '{}' and placeholders replaced", filePath);
     }
 
@@ -258,16 +255,34 @@ public class ApiStepDefinitions {
         }
     }
 
-    @Given("I update JSON field {string} to {string}")
-    public void i_update_json_field_to(String jsonPath, String value) {
-        updateJsonFieldInternal(jsonPath, value);
-        logger.info(jsonPath);
-        logger.info(value);
+    @Given("I update JSON field {string} as {string} to {string}")
+    public void i_update_json_field_as_type_to(String jsonPath, String type, String value) {
+        updateJsonFieldTypedInternal(jsonPath, type, value);
     }
 
-    @Given("I update JSON field {string} to null")
-    public void i_update_json_field_to_null(String jsonPath) {
-        updateJsonFieldInternal(jsonPath, null);
+    @Given("I update JSON field {string} as {string} to:")
+    public void i_update_json_field_as_type_to_docstring(String jsonPath, String type, String docString) {
+        updateJsonFieldTypedInternal(jsonPath, type, docString);
+    }
+
+    @Given("I update JSON field {string} from captured {string}")
+    public void i_update_json_field_from_captured(String jsonPath, String key) {
+        String existingBody = currentRequestBody();
+        if (existingBody == null || existingBody.isEmpty()) {
+            throw new IllegalStateException(
+                    "Request body must be set before updating JSON field from captured value.");
+        }
+        if (!testContext.hasCapturedValue(key)) {
+            throw new IllegalStateException(
+                    "Nothing captured as '" + key + "'. Store/capture it earlier in the scenario.");
+        }
+        Object value = testContext.getCapturedObject(key);
+        String processedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+        applyRequestBody(JsonHelper.updateField(existingBody, processedPath, value));
+        logger.info("Updated JSON field '{}' from captured '{}' ({}) [thread={}]",
+                processedPath, key,
+                value == null ? "null" : value.getClass().getSimpleName(),
+                Thread.currentThread().getName());
     }
 
     @When("I send a {string} request to {string}")
@@ -292,11 +307,13 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
             resolvedEndpoint,
             headersForLogging(referer),
             storedQueryParams.isEmpty() ? null : new LinkedHashMap<>(storedQueryParams),
-            requestBody
+            currentRequestBody()
     );
 
-    if (requestBody != null && !requestBody.isBlank()) {
-        testContext.setLastRequestBody(requestBody);
+    String bodyForSend = currentRequestBody();
+    if (bodyForSend != null && !bodyForSend.isBlank()) {
+        request.body(bodyForSend);
+        testContext.setLastRequestBody(bodyForSend);
     }
 
     logger.info("Sending {} request to endpoint: {}", method, endpoint);
@@ -309,7 +326,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
     StringBuilder apiLogs = new StringBuilder();
 
-    // REQUEST LOGGING
     apiLogs.append("========== REQUEST ==========\n");
 
     apiLogs.append("REQUEST TIME: ")
@@ -355,12 +371,11 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
             .append(fullUrl)
             .append("\n");
 
-    if (requestBody != null && !requestBody.isEmpty()) {
+    if (bodyForSend != null && !bodyForSend.isEmpty()) {
         apiLogs.append("\nREQUEST BODY:\n");
-        apiLogs.append(requestBody).append("\n");
+        apiLogs.append(bodyForSend).append("\n");
     }
 
-    // EXECUTE REQUEST
     switch (method) {
 
         case GET:
@@ -402,7 +417,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
     logger.info("Response received with status code: {}", response.getStatusCode());
 
-    // RESPONSE LOGGING
     apiLogs.append("\n========== RESPONSE ==========\n");
 
     apiLogs.append("RESPONSE TIME: ")
@@ -465,13 +479,11 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         }
     }
 
-   
     private void logResponseDetails(Response response) {
         logger.info("=== API Response Details ===");
         logger.info("Status Code: {}", response.getStatusCode());
         logger.info("Status Line: {}", response.getStatusLine());
 
-       
         logger.info("Response Headers:");
         response.getHeaders().forEach(header ->
             logger.info("  {}: {}", header.getName(), header.getValue())
@@ -509,7 +521,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
         String responseBody = response.getBody().asString();
 
-        // Handle HTML wrapped JSON response
         if (responseBody.startsWith("<html>")) {
             responseBody = responseBody
                     .replace("<html>", "")
@@ -533,9 +544,19 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         AssertionHelper.assertStatusCodeOneOf(activeResponse(), statusCodes);
     }
 
-    @Then("the response body should contain field {string} with value {string}")
-    public void the_response_body_should_contain_field_with_value(String jsonPath, String expectedValue) {
-        ResponseValidator.validateJsonField(activeResponse(), jsonPath, expectedValue);
+    @Then("the response body should contain field {string} as {string} with value {string}")
+    public void the_response_body_should_contain_field_as_type_with_value(
+            String jsonPath, String type, String expectedValue) {
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+        String resolvedType = scenarioTestDataResolver.replaceScenarioPlaceholders(type);
+        String resolvedValue = scenarioTestDataResolver.replaceScenarioPlaceholders(expectedValue);
+        ResponseValidator.validateJsonFieldTyped(activeResponse(), resolvedPath, resolvedType, resolvedValue);
+    }
+
+    @Then("the response body should contain field {string} as {string} with value:")
+    public void the_response_body_should_contain_field_as_type_with_value_docstring(
+            String jsonPath, String type, String docString) {
+        the_response_body_should_contain_field_as_type_with_value(jsonPath, type, docString);
     }
 
     @Then("the response body should contain field {string}")
@@ -602,26 +623,31 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         );
     }
 
-    private void updateJsonFieldInternal(String jsonPath, String value) {
-        if (requestBody == null || requestBody.isEmpty()) {
+    private void updateJsonFieldTypedInternal(String jsonPath, String type, String value) {
+        String existingBody = currentRequestBody();
+        if (existingBody == null || existingBody.isEmpty()) {
             throw new IllegalStateException(
                     "Request body must be set before updating JSON field. "
                             + "Use 'I set the request body' or 'I set the request body from file' first."
             );
         }
+        String processedType = scenarioTestDataResolver.replaceScenarioPlaceholders(type).trim();
+        String processedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
         String processedValue = value;
         if (processedValue != null) {
             processedValue = scenarioTestDataResolver.replaceScenarioPlaceholders(processedValue);
-            if (PayloadHelper.isNullToken(processedValue)) {
+            if (PayloadHelper.isNullToken(processedValue) || "null".equalsIgnoreCase(processedType)) {
                 processedValue = null;
+                processedType = "null";
             } else {
                 processedValue = PayloadHelper.stripSurroundingQuotes(processedValue);
             }
+        } else if (!"null".equalsIgnoreCase(processedType)) {
+            processedType = "null";
         }
-        String updatedBody = JsonHelper.updateField(requestBody, jsonPath, processedValue);
-        this.requestBody = updatedBody;
-        request.body(updatedBody);
-        logger.info("Updated JSON field '{}' to '{}'", jsonPath, processedValue);
+        applyRequestBody(JsonHelper.updateFieldTyped(existingBody, processedPath, processedType, processedValue));
+        logger.info("Updated JSON field '{}' as {} to '{}' [thread={}]",
+                processedPath, processedType, processedValue, Thread.currentThread().getName());
     }
 
     private boolean usedRealAuthToken() {
@@ -640,8 +666,9 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         storedHeaders.forEach((k, v) -> request.header(k, v));
         storedPathParams.forEach((k, v) -> request.pathParam(k, v));
         storedQueryParams.forEach((k, v) -> request.queryParam(k, v));
-        if (requestBody != null && !requestBody.isBlank()) {
-            request.body(requestBody);
+        String body = currentRequestBody();
+        if (body != null && !body.isBlank()) {
+            request.body(body);
         }
         logger.info("Rebuilt request with fresh auth token after 401");
     }
@@ -658,8 +685,9 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         }
         storedPathParams.forEach((k, v) -> request.pathParam(k, v));
         storedQueryParams.forEach((k, v) -> request.queryParam(k, v));
-        if (requestBody != null && !requestBody.isEmpty()) {
-            request.body(requestBody);
+        String body = currentRequestBody();
+        if (body != null && !body.isEmpty()) {
+            request.body(body);
         }
         logger.info("Rebuilt request excluding headers: {}", headersToRemove);
         headersToRemove.clear();

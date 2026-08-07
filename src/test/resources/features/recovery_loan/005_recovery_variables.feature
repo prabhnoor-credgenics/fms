@@ -21,11 +21,6 @@ Feature: Recovery Variables API
     And the response should match json schema "schemas/recovery/success/recovery_variables_success_schema.json"
     And the response body should contain field "output"
     And the response body should contain field "message"
-   # And recovery variables response mandatory fields should be valid
-   # And recovery variables should match requested company
-   # And recovery variables computed variables should be included
-  #  And recovery variables meta data should be included
-  #  And the response time should be within configured limit
 
   @positive @meta-data @creator
   Scenario: Get recovery variables with include_meta_data false
@@ -257,6 +252,7 @@ Feature: Recovery Variables API
   @positive @smoke @create @creator
   Scenario: Create a new text variable with minimum required fields
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -265,7 +261,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autotest{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text"
       }
       """
@@ -280,6 +276,7 @@ Feature: Recovery Variables API
   @positive @create @creator
   Scenario: Create an amount variable with optional fields
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -288,7 +285,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autoamt{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "amount",
         "description": "Automation test amount variable",
         "is_mandatory": false,
@@ -303,6 +300,7 @@ Feature: Recovery Variables API
   @positive @create @creator
   Scenario: Create a text variable with dropdown values
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -311,7 +309,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autodrop{RANDOM_STRING:6}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text",
         "is_dropdown": true,
         "dropdown_values": ["opt_one", "opt_two", "opt_three"]
@@ -325,6 +323,7 @@ Feature: Recovery Variables API
   @positive @create @creator
   Scenario: Create a number variable with is_mandatory true
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -333,13 +332,14 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autonumber{RANDOM_STRING:6}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "number",
         "is_mandatory": true,
         "description": "Automation test mandatory number variable"
       }
       """
     When I send a "POST" request to "/recovery/variables"
+    Then the response status code should be 201
     And the response should match json schema "schemas/recovery/success/recovery_variables_write_success_schema.json"
     And recovery variables create response should be valid
     And I prepare a request
@@ -351,7 +351,7 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    And I find and store variable id for name "autonumber{RANDOM_STRING:6}" from variables response
+    And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -391,6 +391,7 @@ Feature: Recovery Variables API
   @negative @create @creator
   Scenario: POST should fail when variable_type is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -399,7 +400,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autotest{RANDOM_STRING:8}"
+        "variable_name": "{VARIABLE_NAME}"
       }
       """
     When I send a "POST" request to "/recovery/variables"
@@ -447,6 +448,7 @@ Feature: Recovery Variables API
   @negative @create @creator
   Scenario: POST should fail when variable_type is invalid
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -455,7 +457,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autotest{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "invalid_type"
       }
       """
@@ -466,6 +468,7 @@ Feature: Recovery Variables API
   @negative @create @creator
   Scenario: POST should fail when is_dropdown is true but dropdown_values is empty
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -474,7 +477,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autotest{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text",
         "is_dropdown": true,
         "dropdown_values": []
@@ -487,6 +490,7 @@ Feature: Recovery Variables API
   @negative @create @creator
   Scenario: POST should fail when is_derivable is true but calculation_formula is absent
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -495,7 +499,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autotest{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "number",
         "is_derivable": true
       }
@@ -507,6 +511,7 @@ Feature: Recovery Variables API
   @negative @auth @create @creator
   Scenario: POST should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept       | application/json, text/plain, */* |
       | Content-Type | application/json                  |
@@ -514,7 +519,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autotest{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text"
       }
       """
@@ -525,6 +530,7 @@ Feature: Recovery Variables API
   @negative @auth @create @creator
   Scenario: POST should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | invalid_token_12345               |
@@ -533,7 +539,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autotest{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text"
       }
       """
@@ -546,6 +552,7 @@ Feature: Recovery Variables API
   @positive @update @creator
   Scenario: Update variable description via PATCH
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -554,7 +561,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autopatch{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text",
         "description": "initial description"
       }
@@ -569,7 +576,7 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
+    And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -592,6 +599,7 @@ Feature: Recovery Variables API
   @positive @update @creator
   Scenario: Update variable is_mandatory flag via PATCH
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -600,7 +608,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autopatch{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "number",
         "is_mandatory": false
       }
@@ -615,7 +623,7 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
+    And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -653,6 +661,7 @@ Feature: Recovery Variables API
   @positive @update @creator
   Scenario: Disable dropdown on variable via PATCH clears dropdown values
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -661,7 +670,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autopatch{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text",
         "is_dropdown": true,
         "dropdown_values": ["val_a", "val_b"]
@@ -677,7 +686,7 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
+    And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -718,6 +727,7 @@ Feature: Recovery Variables API
   @negative @update @creator
   Scenario: PATCH should fail when trying to set is_derivable to true
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -726,7 +736,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autopatch{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "number",
         "is_mandatory": false
       }
@@ -741,7 +751,7 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
+    And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -762,6 +772,7 @@ Feature: Recovery Variables API
   @negative @update @creator
   Scenario: PATCH should fail when trying to set calculation_formula
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -770,7 +781,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autopatch{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "number"
       }
       """
@@ -784,7 +795,7 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    And I find and store variable id for name "autopatch{RANDOM_STRING:8}" from variables response
+    And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -844,6 +855,7 @@ Feature: Recovery Variables API
   @positive @delete @chief-admin
   Scenario: Delete a variable that was just created
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -852,7 +864,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autodel{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text"
       }
       """
@@ -866,7 +878,7 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    And I find and store variable id for name "autodel{RANDOM_STRING:8}" from variables response
+    And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -1000,6 +1012,7 @@ Feature: Recovery Variables API
   @negative @server-error @expected-200 @creator
   Scenario: POST should handle an invalid calculation_formula for a derivable variable
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1008,7 +1021,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autoerr{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "number",
         "is_derivable": true,
         "calculation_formula": "((dpd + * / "
@@ -1021,6 +1034,7 @@ Feature: Recovery Variables API
   @negative @server-error @expected-200 @creator
   Scenario: POST should handle is_dropdown sent as a string instead of a boolean
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1029,7 +1043,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autoerr{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text",
         "is_dropdown": "yes",
         "dropdown_values": ["a", "b"]
@@ -1042,6 +1056,7 @@ Feature: Recovery Variables API
   @negative @server-error @expected-200 @creator
   Scenario: PATCH should handle dropdown_values sent as an object instead of an array
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
       | authenticationtoken  | {AUTH_TOKEN}                      |
@@ -1050,7 +1065,7 @@ Feature: Recovery Variables API
       """
       {
         "company_id": "{COMPANY_ID}",
-        "variable_name": "autoerr{RANDOM_STRING:8}",
+        "variable_name": "{VARIABLE_NAME}",
         "variable_type": "text",
         "is_dropdown": true,
         "dropdown_values": ["x", "y"]
@@ -1066,7 +1081,7 @@ Feature: Recovery Variables API
       | include_computed_variables | false        |
       | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
-    And I find and store variable id for name "autoerr{RANDOM_STRING:8}" from variables response
+    And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
       | accept               | application/json, text/plain, */* |
@@ -1109,4 +1124,51 @@ Feature: Recovery Variables API
       | include_all_variables | {malformed-boolean} |
     When I send a "GET" request to "/recovery/variables/categorisation"
     Then the response status code should be 200
+    And the response body should not be empty
+
+
+  @negative @server-error @expected-200 @creator
+  Scenario: PATCH should handle dropdown_values sent as an object instead of an array
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And scenario variable name is unique
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_name": "{VARIABLE_NAME}",
+        "variable_type": "text",
+        "is_dropdown": true,
+        "dropdown_values": ["x", "y"]
+      }
+      """
+    When I send a "POST" request to "/recovery/variables"
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+    And I set the query parameters:
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | false        |
+      | include_meta_data          | false        |
+    When I send a "GET" request to "/recovery/variables"
+    And I find and store variable id for name "{VARIABLE_NAME}" from variables response
+    And I prepare a request
+    And I set the request headers:
+      | accept               | application/json, text/plain, */* |
+      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | Content-Type         | application/json                  |
+    And I set the request body:
+      """
+      {
+        "company_id": "{COMPANY_ID}",
+        "variable_id": "{VARIABLE_ID}",
+        "dropdown_values": {"unexpected": "object"}
+      }
+      """
+    When I send a "PATCH" request to "/recovery/variables"
+    Then the response status code should be 400
     And the response body should not be empty

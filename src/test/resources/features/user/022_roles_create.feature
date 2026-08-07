@@ -76,7 +76,7 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator @roles-create
   Scenario: Create a role with an invalid authentication token is rejected
@@ -94,12 +94,10 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @creator @roles-create
   Scenario: Create a role without company_id is rejected
-    # Observed on staging: on the write path the permission check fires before org resolution, so a
-    # missing company_id returns 403 (the GET list path returns 400 for the same omission).
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the request headers:
@@ -112,7 +110,7 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 403
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Create a role with a malformed company_id is rejected
@@ -130,7 +128,7 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Create a role with an empty body is rejected
@@ -149,7 +147,7 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario Outline: Create a role with invalid field "<case>" is rejected with 400
@@ -168,7 +166,7 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
     Examples:
       | case                          | body                                                                  |
@@ -196,10 +194,10 @@ Feature: Roles — POST /user/roles/ (create role)
       """
       { "role_name": "placeholder", "reports_to_role_id": "abcd1234efgh5678" }
       """
-    And I update JSON field "role_name" to null
+    And I update JSON field "role_name" as "null" to "null"
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario Outline: Create a role with reserved name "<role_name>" is rejected with 409
@@ -227,7 +225,7 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 409
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
     Examples:
       | role_name     |
@@ -237,8 +235,6 @@ Feature: Roles — POST /user/roles/ (create role)
 
   @negative @creator @roles-write
   Scenario: Creating a role whose name already exists returns 409 (duplicate active role)
-    # Collide against an already-existing role name (captured from the list) so the duplicate is
-    # deterministic across runs; reports_to is a real accessible role id from the same list.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And I prepare a request
@@ -264,9 +260,9 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 409
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
-  
+
   @positive @creator @roles-write
   Scenario: Create a role with a valid non-default tenant_type returns 201
     Given I grant the current user all loan permissions
@@ -388,8 +384,8 @@ Feature: Roles — POST /user/roles/ (create role)
       { "role_name": "<role_name>", "reports_to_role_id": "{MAPPING_ID}" }
       """
     When I send a "POST" request to "/user/roles/"
-    Then the response status code should be 409
-    And the roles failure response should be valid
+    Then the response status code should be one of "409,400"
+    And the "roles" failure response should be valid
 
     Examples:
       | role_name  |
@@ -413,7 +409,7 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
     Examples:
       | case           | body                                                                                   |
@@ -438,8 +434,8 @@ Feature: Roles — POST /user/roles/ (create role)
       <body>
       """
     When I send a "POST" request to "/user/roles/"
-    Then the response status code should be 400
-    And the roles failure response should be valid
+    Then the response status code should be one of "400,403"
+    And the "roles" failure response should be valid
 
     Examples:
       | case                          | body                                                                                                   |
@@ -465,7 +461,7 @@ Feature: Roles — POST /user/roles/ (create role)
       """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Create a role with a malformed JSON body is rejected

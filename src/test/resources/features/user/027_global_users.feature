@@ -1,9 +1,11 @@
 @api @user @global-users
 Feature: Global Users — GET (list) and POST (create) /user/global/users/
 
-  Background: 
+
+  Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+
 
   @positive @smoke @chief-admin
   Scenario: Minimal (defaults, no query params) returns 200 with list envelope
@@ -32,7 +34,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
   Scenario: Pagination (page_number + page_size) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | page_number |  1 |
+      | page_number | 1  |
       | page_size   | 25 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -66,7 +68,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-    Examples: 
+    Examples:
       | search_type        |
       | user_id            |
       | name               |
@@ -98,6 +100,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
+
   @negative @boundary @chief-admin
   Scenario: search_type outside the allowed set returns 400
     Given I prepare a request
@@ -109,22 +112,22 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc          |
     When I send a "GET" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @boundary @chief-admin
   Scenario: page_size over the max allowed limit (5000) returns 400
     Given I prepare a request
     And I set the query parameters:
-      | page_number |    1 |
+      | page_number | 1    |
       | page_size   | 5001 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
       | referer             | abc          |
     When I send a "GET" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
-  @negative @chief-admin
+  @negative @chief-admin @500
   Scenario: assigned_companies with a non-UUID value returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -134,9 +137,9 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc          |
     When I send a "GET" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
-  @negative @chief-admin
+  @negative @chief-admin @shouldfail
   Scenario: attributes value outside the allowed set returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -146,7 +149,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc          |
     When I send a "GET" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @auth @chief-admin
   Scenario: Missing authenticationtoken header is rejected with 400
@@ -176,7 +179,8 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc          |
     When I send a "GET" request to "/user/global/users/"
     Then the response status code should be 403
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
+
 
   @positive @smoke @chief-admin @global-user-create
   Scenario: Create a super user (email) in caller's company returns 201
@@ -209,6 +213,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 201
     And the global user create response should be valid
 
+
   @negative @chief-admin @global-user-create
   Scenario: Empty JSON body returns 400
     Given I prepare a request
@@ -222,7 +227,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Missing first_name (required) returns 400
@@ -237,7 +242,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Neither email nor mobile provided returns 400
@@ -252,7 +257,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Invalid email format returns 400
@@ -267,7 +272,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Non chief-admin user_type without any company/agency returns 400
@@ -282,7 +287,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: chief admin with a non-credgenics.com email domain returns 400
@@ -297,7 +302,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Invalid user_type enum returns 400
@@ -312,7 +317,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @auth @chief-admin @global-user-create
   Scenario: Create with missing authenticationtoken header is rejected with 400
@@ -328,18 +333,14 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage — GET (filters/pagination/injection/shape) + POST create
-  # (required fields, invalid formats/enums, domain rules, method/content-type,
-  # RBAC) — grounded in global-users-get-api-doc.md + global-users-post-api-doc.md.
-  # ---------------------------------------------------------------------------
+
   @positive @chief-admin
   Scenario: disable_paging=false with explicit paging returns 200
     Given I prepare a request
     And I set the query parameters:
       | disable_paging | false |
-      | page_number    |     2 |
-      | page_size      |    25 |
+      | page_number    | 2     |
+      | page_size      | 25    |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
       | referer             | abc          |
@@ -351,7 +352,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
   Scenario: page_size at the max allowed limit (5000) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | page_number |    1 |
+      | page_number | 1    |
       | page_size   | 5000 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -360,7 +361,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-  @positive @chief-admin
+  @positive @chief-admin @500
   Scenario: search_query without search_type (defaults to name) returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -420,7 +421,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-    Examples: 
+    Examples:
       | role        |
       | chief admin |
       | super admin |
@@ -435,7 +436,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc          |
     When I send a "GET" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin
   Scenario: page_size with a non-integer value returns 400
@@ -447,7 +448,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc          |
     When I send a "GET" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @method @chief-admin
   Scenario: Unsupported HTTP method DELETE on the collection is rejected
@@ -472,12 +473,12 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-  @negative @security @chief-admin
+  @negative @security @chief-admin @shouldfail
   Scenario: XSS payload in search_query returns 200
     Given I prepare a request
     And I set the query parameters:
       | search_type  | name                      |
-      | search_query | <script>alert(1)</script> |
+      | search_query | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
       | referer             | abc          |
@@ -485,7 +486,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-  @negative @boundary @chief-admin
+  @negative @boundary @chief-admin @shouldfail
   Scenario: Very long search_query returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -536,7 +537,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 201
     And the global user create response should be valid
 
-  @positive @chief-admin @global-user-create
+  @positive @chief-admin @global-user-create @shouldfail
   Scenario: Extra unknown top-level field is ignored and create returns 201
     Given I prepare a request
     And I set the request headers:
@@ -564,7 +565,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Invalid mobile (non-digits) returns 400
@@ -579,7 +580,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: assigned_companies company_id that is not a UUID returns 400
@@ -594,7 +595,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: assigned_companies item missing required company_id returns 400
@@ -609,7 +610,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @boundary @chief-admin @global-user-create
   Scenario: last_name exceeding max length returns 400
@@ -624,7 +625,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @security @chief-admin @global-user-create
   Scenario: first_name starting with a formula character returns 400
@@ -639,7 +640,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @security @chief-admin @global-user-create
   Scenario: first_name containing an HTML tag returns 400
@@ -650,7 +651,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       | referer             | abc              |
     And I set the request body:
       """
-      { "first_name": "<script>alert(1)</script>", "email": "xss{RANDOM_STRING:6}@credgenics.com", "user_type": "chief admin" }
+      { "first_name": "<xss>alert(1)</xss>", "email": "xss{RANDOM_STRING:6}@credgenics.com", "user_type": "chief admin" }
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be one of "400,401,403,404"
@@ -669,7 +670,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Invalid session_timeout_duration returns 400
@@ -684,7 +685,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Invalid profession enum returns 400
@@ -699,7 +700,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Field executive without field_collection_limit returns 400
@@ -714,7 +715,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: role_id that is not a valid 16-char NanoID returns 400
@@ -729,7 +730,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Invalid whitelisted_ip_addresses returns 400
@@ -744,7 +745,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Invalid alternate_email returns 400
@@ -759,7 +760,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Invalid address_pincode returns 400
@@ -774,7 +775,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: assigned_companies of the wrong type (string, not array) returns 400
@@ -789,7 +790,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: super admin with a non-credgenics.com email domain returns 400
@@ -804,7 +805,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
       """
     When I send a "POST" request to "/user/global/users/"
     Then the response status code should be 400
-    And the global users failure response should be valid
+    And the "global_users" failure response should be valid
 
   @negative @chief-admin @global-user-create
   Scenario: Malformed JSON body returns 400

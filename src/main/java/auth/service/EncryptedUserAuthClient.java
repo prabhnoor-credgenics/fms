@@ -8,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 import static io.restassured.RestAssured.given;
 
-
 public class EncryptedUserAuthClient {
 
     private static final Logger logger = LogManager.getLogger(EncryptedUserAuthClient.class);
@@ -44,7 +43,6 @@ public class EncryptedUserAuthClient {
         logger.info("Login for '{}': status={}", username, response.getStatusCode());
         return response;
     }
-
 
     public Response changePassword(String userId, String newPassword, String source, String authToken) {
         String payloadJson = String.format(

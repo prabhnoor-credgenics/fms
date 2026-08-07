@@ -14,16 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * Orchestration steps for the full user-lifecycle scenario: create a company user bound to a
- * previously-created role, then (as chief admin) set/reset its password, log in as the user, and
- * verify its details via GET /user/public/verify/user/ by user_id.
- *
- * The role is created in the Gherkin with the generic steps and its id stored as the scenario
- * "variable id" ({VARIABLE_ID}); this class consumes that plus the creator's profile_id /
- * reports_to_user_id to assemble the create-user identity triple. The created email + user_id are
- * held for the downstream password/login/verify steps.
- */
 public class UserLifecycleStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(UserLifecycleStepDefinitions.class);
@@ -63,7 +53,7 @@ public class UserLifecycleStepDefinitions {
 
     @When("I create a permission profile")
     public void i_create_a_permission_profile() {
-        // Active user here is the creator (with permissions granted in the Gherkin).
+        
         String creatorToken = testContext.getAuthToken();
         String companyId = testContext.getCompanyId();
         if (creatorToken == null || creatorToken.isBlank() || companyId == null || companyId.isBlank()) {
@@ -113,7 +103,7 @@ public class UserLifecycleStepDefinitions {
 
     @When("I create a company user assigned the created role")
     public void i_create_a_company_user_assigned_the_created_role() {
-        // Active user here is the creator (from the Gherkin role-create steps).
+        
         String creatorToken = testContext.getAuthToken();
         String companyId = testContext.getCompanyId();
         if (creatorToken == null || creatorToken.isBlank() || companyId == null || companyId.isBlank()) {
@@ -126,7 +116,7 @@ public class UserLifecycleStepDefinitions {
         }
 
         String reportsToUserId = userProfileService.fetchUserId(creatorToken);
-        // Prefer the profile created earlier in the scenario; fall back to the creator's own profile.
+        
         String profileId = createdProfileId != null && !createdProfileId.isBlank()
                 ? createdProfileId
                 : userProfileService.fetchProfileId(creatorToken, companyId);
@@ -143,8 +133,7 @@ public class UserLifecycleStepDefinitions {
                 .header("authenticationtoken", creatorToken)
                 .header("Content-Type", "application/json")
                 .header("accept", "application/json, text/plain, */*")
-                // Kong gateway requires a Referer matching the API host; without it the route
-                // rejects the call with 401 "Invalid API key provided".
+                
                 .header("Referer", configReader.getBaseUrl() + COMPANY_USERS_PATH)
                 .queryParam("company_id", companyId)
                 .body(body)

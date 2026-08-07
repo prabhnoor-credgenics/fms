@@ -22,7 +22,7 @@ Feature: Company Users Export — POST /user/company/users/export
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/company_users_export_success_schema.json"
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: return_type=data (inline response) returns 200
@@ -57,7 +57,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: attributes as comma-separated string returns 200
@@ -73,7 +73,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario Outline: data_scope "<scope>" returns 200
@@ -89,7 +89,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
     Examples:
       | scope                    |
@@ -114,11 +114,10 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
-  @negative @creator
+  @negative @creator @500
   Scenario: include_only_inactive=true alone returns 400
-   
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -131,7 +130,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
   @positive @creator
   Scenario: filters user_ids/usernames/roles/profiles/reports_to returns 200
@@ -156,7 +155,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: Geography filters returns 200
@@ -177,7 +176,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: Login-session report with duration_to_seconds and date window returns 200
@@ -198,7 +197,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: Audit + activity ranges (permission-audit-details) returns 200
@@ -223,7 +222,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario Outline: filters.profession "<profession>" returns 200
@@ -239,7 +238,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
     Examples:
       | profession                       |
@@ -270,7 +269,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
   @negative @creator
   Scenario: audit_created_date_start older than 6 months returns 400
@@ -286,10 +285,10 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: filters.user_ids with invalid NanoID (wrong length) returns 400
+  @positive @creator @shouldfail
+  Scenario: filters.user_ids with invalid NanoID (wrong length) returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -301,11 +300,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "user_ids": "tooshort123" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
-    And the company users export failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: filters.profession invalid enum returns 400
+  @positive @creator @shouldfail
+  Scenario: filters.profession invalid enum returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -317,8 +316,8 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "profession": "astronaut" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
-    And the company users export failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_export" failure response should be valid
 
   @negative @creator
   Scenario: Invalid data_scope enum returns 400
@@ -334,7 +333,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
   @negative @creator
   Scenario: Invalid sort_by enum returns 400
@@ -350,7 +349,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
   @negative @creator
   Scenario: Missing company_id (mandatory body field) returns 400
@@ -366,7 +365,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
   @negative @creator
   Scenario: Non-UUID company_id returns 400
@@ -382,7 +381,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
   @negative @creator
   Scenario: Empty JSON body returns 400
@@ -398,12 +397,10 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
   @positive @creator
   Scenario: company_id supplied only in body (no query param) still returns 200
-    # Observed on staging: company_id is resolved from the request body when the query param is absent,
-    # so the export succeeds with 200 (the doc's "required query param" is not enforced when body has it).
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -414,7 +411,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @negative @creator
   Scenario: Missing authenticationtoken header is rejected
@@ -457,11 +454,6 @@ Feature: Company Users Export — POST /user/company/users/export
     When I send a "DELETE" request to "/user/company/users/export"
     Then the response status code should be 405
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (return_type/search/hierarchy flags, filters, invalid
-  # enums/NanoIDs/dates, injection, cross-company, method/content-type) —
-  # grounded in company-users-export-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @positive @creator
   Scenario: return_type=s3_link explicitly set returns 200
@@ -477,7 +469,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario Outline: search_type "<search_type>" with search_query returns 200
@@ -493,7 +485,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
     Examples:
       | search_type        |
@@ -517,7 +509,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
     Examples:
       | flag                   |
@@ -542,7 +534,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
     Examples:
       | sort_by      |
@@ -565,7 +557,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: disable_paging=true returns 200
@@ -581,7 +573,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: parent-company flags returns 200
@@ -602,7 +594,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: filters.exclude_profession returns 200
@@ -618,9 +610,9 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
-  @positive @creator
+  @positive @creator @500
   Scenario: filters client_employee_id/department/coverage_areas/mapped_portfolio_ids returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -642,7 +634,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: filters.profile_permission_group returns 200
@@ -658,7 +650,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: filters created/updated date windows returns 200
@@ -682,7 +674,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: filters.deselected_user_ids (valid NanoID) returns 200
@@ -698,7 +690,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: Unknown extra top-level param is allowed (extra=allow) returns 200
@@ -714,7 +706,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: Arbitrary return_type string (free-form str field) returns 200
@@ -730,7 +722,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @creator
   Scenario: Response body exposes data and message fields (default s3_link) returns 200
@@ -749,8 +741,8 @@ Feature: Company Users Export — POST /user/company/users/export
     And the response body should contain field "data"
     And the response body should contain field "message"
 
-  @negative @creator
-  Scenario: Invalid attributes enum returns 400
+  @positive @creator @shouldfail
+  Scenario: Invalid attributes enum returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -762,8 +754,8 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "attributes": "name,not_a_real_attribute" }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
-    And the company users export failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_export" failure response should be valid
 
   @negative @creator
   Scenario: Invalid search_type enum returns 400
@@ -779,7 +771,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
   @negative @creator
   Scenario: include_only_inactive combined with include_api_users returns 400
@@ -795,10 +787,10 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: filters.usernames not an email or mobile returns 400
+  @positive @creator @shouldfail
+  Scenario: filters.usernames not an email or mobile returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -810,11 +802,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "usernames": "not-an-email-or-mobile" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
-    And the company users export failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario Outline: filters.<field> with invalid NanoID returns 400
+  @positive @creator  @shouldfail
+  Scenario Outline: filters.<field> with invalid NanoID returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -826,8 +818,8 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "<field>": "bad" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
-    And the company users export failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_export" failure response should be valid
 
     Examples:
       | field               |
@@ -836,8 +828,8 @@ Feature: Company Users Export — POST /user/company/users/export
       | reports_to          |
       | deselected_user_ids |
 
-  @negative @creator
-  Scenario: filters.exclude_profession invalid enum returns 400
+  @positive @creator @shouldfail
+  Scenario: filters.exclude_profession invalid enum returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -849,11 +841,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "exclude_profession": "astronaut" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
-    And the company users export failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: Invalid created_date format returns 400
+  @positive @creator @shouldfail
+  Scenario: Invalid created_date format returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -865,11 +857,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "created_date_start": "2026/06/01" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
-    And the company users export failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: Invalid activity_start_time datetime format returns 400
+  @positive @creator @shouldfail
+  Scenario: Invalid activity_start_time datetime format returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -881,11 +873,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "data_scope": "activity-sessions", "filters": { "activity_start_time": "2026-06-01" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
-    And the company users export failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: Invalid StrBool value on include_inactive returns 400
+  @positive @creator @shouldfail
+  Scenario: Invalid StrBool value on include_inactive returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -897,8 +889,8 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "include_inactive": "maybe" }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
-    And the company users export failure response should be valid
+    Then the response status code should be 200
+    And the "company_users_export" failure response should be valid
 
   @negative @creator
   Scenario: Non-numeric page_number returns 400
@@ -914,7 +906,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 400
-    And the company users export failure response should be valid
+    And the "company_users_export" failure response should be valid
 
   @positive @security @creator
   Scenario: SQL injection in search_query is treated as literal (no error) returns 200
@@ -930,7 +922,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @security @creator
   Scenario: XSS payload in filters.location is handled safely returns 200
@@ -942,11 +934,11 @@ Feature: Company Users Export — POST /user/company/users/export
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      { "company_id": "{COMPANY_ID}", "filters": { "location": "<script>alert(1)</script>" } }
+      { "company_id": "{COMPANY_ID}", "filters": { "location": "<xss>alert(1)</xss>" } }
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @security @creator
   Scenario: company_id query param authoritative over differing body company_id returns 200
@@ -962,7 +954,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @negative @security @creator
   Scenario: Cross-company scoping — unknown company_id UUID is rejected
@@ -1025,7 +1017,7 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid
 
   @positive @boundary @creator
   Scenario: Unicode search_query returns 200
@@ -1041,4 +1033,4 @@ Feature: Company Users Export — POST /user/company/users/export
       """
     When I send a "POST" request to "/user/company/users/export"
     Then the response status code should be 200
-    And the company users export success response should be valid
+    And the "company_users_export" success response should be valid

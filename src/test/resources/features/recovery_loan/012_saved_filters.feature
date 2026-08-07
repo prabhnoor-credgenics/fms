@@ -35,7 +35,7 @@ Feature: Saved Filter API
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
 
   @negative @creator
   Scenario: API should fail when company_id does not exist
@@ -48,7 +48,7 @@ Feature: Saved Filter API
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
@@ -61,4 +61,4 @@ Feature: Saved Filter API
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"

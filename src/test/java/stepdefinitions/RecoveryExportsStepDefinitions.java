@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.RecoveryExportsValidator;
 
-
 public class RecoveryExportsStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(RecoveryExportsStepDefinitions.class);

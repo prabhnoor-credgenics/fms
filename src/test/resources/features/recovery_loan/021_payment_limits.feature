@@ -81,7 +81,7 @@ Feature: Payment Limits API
     When I send a "POST" request to "/recovery/loan/payment-limits"
     Then the response status code should be one of "400"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
 
   @negative @creator
   Scenario: POST payment limits should fail when payment_method is missing
@@ -100,7 +100,7 @@ Feature: Payment Limits API
     When I send a "POST" request to "/recovery/loan/payment-limits"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Provide payment_method"
+    And the response body should contain field "message" as "auto" with value "Provide payment_method"
 
   @negative @creator
   Scenario: POST payment limits should fail when no loan IDs are provided
@@ -120,7 +120,7 @@ Feature: Payment Limits API
     When I send a "POST" request to "/recovery/loan/payment-limits"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Provide loan id"
+    And the response body should contain field "message" as "auto" with value "Provide loan id"
 
   @negative @creator
   Scenario: POST payment limits should fail for an invalid payment_method
@@ -140,7 +140,7 @@ Feature: Payment Limits API
     When I send a "POST" request to "/recovery/loan/payment-limits"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid payment method provided"
+    And the response body should contain field "message" as "auto" with value "Invalid payment method provided"
 
   @negative @auth @creator @bug
   Scenario: POST payment limits should fail when authentication token is missing
@@ -159,7 +159,7 @@ Feature: Payment Limits API
     When I send a "POST" request to "/recovery/loan/payment-limits"
    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator @bug
   Scenario: POST payment limits should fail with an invalid authentication token
@@ -179,7 +179,7 @@ Feature: Payment Limits API
     When I send a "POST" request to "/recovery/loan/payment-limits"
      Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator @bug
   Scenario: POST payment limits should fail with an invalid loan_id

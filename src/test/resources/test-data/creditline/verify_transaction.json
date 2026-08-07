@@ -1,0 +1,6 @@
+{
+  "company_id": "{COMPANY_ID}",
+  "transactions": { "TXN_{LOAN_ID}": "CUST_{LOAN_ID}" },
+  "allocation_month": "overall",
+  "archive": false
+}

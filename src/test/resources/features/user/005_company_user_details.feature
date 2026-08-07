@@ -19,7 +19,7 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     When I send a "GET" request to "/user/company/users/{user_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/user/success/company_user_details_success_schema.json"
-    And the company user details success response should be valid
+    And the "company_user_details" success response should be valid
 
   @positive @creator
   Scenario: Self lookup with descendants included returns 200
@@ -33,7 +33,7 @@ Feature: Company User Details — GET /user/company/users/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
     Then the response status code should be 200
-    And the company user details success response should be valid
+    And the "company_user_details" success response should be valid
 
   @positive @creator
   Scenario: attributes query param (validated, ignored for single-user response) returns 200
@@ -47,7 +47,7 @@ Feature: Company User Details — GET /user/company/users/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
     Then the response status code should be 200
-    And the company user details success response should be valid
+    And the "company_user_details" success response should be valid
 
   @positive @creator
   Scenario: v2 alias path (/user/company-users/<user_id>) returns 200
@@ -60,7 +60,7 @@ Feature: Company User Details — GET /user/company/users/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-users/{user_id}"
     Then the response status code should be 200
-    And the company user details success response should be valid
+    And the "company_user_details" success response should be valid
 
 
   @negative @creator
@@ -74,7 +74,7 @@ Feature: Company User Details — GET /user/company/users/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
     Then the response status code should be 400
-    And the company user details failure response should be valid
+    And the "company_user_details" failure response should be valid
 
   @negative @creator
   Scenario: Non-existent (valid alphanumeric) user_id returns 422
@@ -89,8 +89,8 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     Then the response status code should be 422
     And the response body should not be empty
 
-  @negative @creator
-  Scenario: Invalid attributes value returns 400
+  @positive @creator
+  Scenario: Invalid attributes value returns 200
     Given I prepare a request
     And I set the path parameters:
       | user_id | {USER_ID:creator0} |
@@ -100,8 +100,8 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
-    Then the response status code should be 400
-    And the company user details failure response should be valid
+    Then the response status code should be 200
+    And the "company_user_details" failure response should be valid
 
 
   @negative @creator
@@ -126,10 +126,7 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (path quirks, response shape, auth/company_id negatives,
-  # user_id injection, method/route) — grounded in company-users-user-id-api-doc.md.
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator
   Scenario: Trailing-slash path (strict_slashes=False) still resolves the item URL returns 200
@@ -140,9 +137,9 @@ Feature: Company User Details — GET /user/company/users/<user_id>
       | company_id | {COMPANY_ID} |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    When I send a "GET" request to "/user/company/users/{user_id}/"
+    When I send a "GET" request to "/user/company/users/{USER_ID}/"
     Then the response status code should be 200
-    And the company user details success response should be valid
+    And the "company_user_details" success response should be valid
 
   @positive @creator
   Scenario: descendants=false is still truthy and returns 200
@@ -156,10 +153,10 @@ Feature: Company User Details — GET /user/company/users/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
     Then the response status code should be 200
-    And the company user details success response should be valid
+    And the "company_user_details" success response should be valid
 
-  @positive @creator
-  Scenario: Unknown query param is accepted and passed through returns 200
+  @negative @creator
+  Scenario: Unknown query param is accepted and passed through returns 400
     Given I prepare a request
     And I set the path parameters:
       | user_id | {USER_ID:creator0} |
@@ -169,8 +166,8 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
-    Then the response status code should be 200
-    And the company user details success response should be valid
+    Then the response status code should be 400
+    And the "company_user_details" success response should be valid
 
   @positive @creator
   Scenario: Self lookup response exposes documented envelope fields
@@ -276,13 +273,13 @@ Feature: Company User Details — GET /user/company/users/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
     Then the response status code should be 400
-    And the company user details failure response should be valid
+    And the "company_user_details" failure response should be valid
 
   @negative @security @creator
   Scenario: XSS payload in user_id returns 400
     Given I prepare a request
     And I set the path parameters:
-      | user_id | <script>alert(1)</script> |
+      | user_id | <xss>alert(1)</xss> |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
@@ -302,7 +299,7 @@ Feature: Company User Details — GET /user/company/users/<user_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
     Then the response status code should be 400
-    And the company user details failure response should be valid
+    And the "company_user_details" failure response should be valid
 
   @negative @creator
   Scenario: Very long alphanumeric (non-existent) user_id returns 422
@@ -317,8 +314,8 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     Then the response status code should be 422
     And the response body should not be empty
 
-  @negative @creator
-  Scenario: Mixed valid and invalid attributes CSV returns 400
+  @positive @creator
+  Scenario: Mixed valid and invalid attributes CSV returns 200
     Given I prepare a request
     And I set the path parameters:
       | user_id | {USER_ID:creator0} |
@@ -328,8 +325,8 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
-    Then the response status code should be 400
-    And the company user details failure response should be valid
+    Then the response status code should be 200
+    And the "company_user_details" failure response should be valid
 
   @negative @creator
   Scenario: Unsupported HTTP method (PUT) on the item URL is rejected

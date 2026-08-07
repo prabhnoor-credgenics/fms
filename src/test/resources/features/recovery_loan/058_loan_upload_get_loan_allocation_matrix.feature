@@ -17,8 +17,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:-1}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:-1}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -46,8 +46,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:-1}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:-1}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -75,8 +75,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:-1}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:-1}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -104,8 +104,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:-1}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:-1}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -133,8 +133,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -162,8 +162,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -191,8 +191,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -220,8 +220,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -249,8 +249,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:1}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:1}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -278,8 +278,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:1}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:1}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -307,8 +307,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:1}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:1}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request
@@ -336,8 +336,8 @@ Feature: Loan Upload and Get Loan Across Allocation Months
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:1}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:1}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "200,201"
     Given I prepare a request

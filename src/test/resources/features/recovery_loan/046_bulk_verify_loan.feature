@@ -15,8 +15,8 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -36,7 +36,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/bulk_verify_loan_success_schema.json"
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @positive @creator
   Scenario: Multiple loan_ids returns 200
@@ -52,7 +52,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @positive @creator
   Scenario: allocation_month "Overall" verifies the uploaded loan across all months
@@ -68,7 +68,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan response should verify loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
   @positive @creator
   Scenario: Specific allocation_month returns 200
@@ -84,7 +84,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @positive @creator
   Scenario: archive=true returns 200
@@ -100,7 +100,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @positive @creator
   Scenario: archive=false (explicit) returns 200
@@ -116,7 +116,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @positive @creator
   Scenario: Duplicate loan_ids are tolerated returns 200
@@ -132,7 +132,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @positive @creator
   Scenario: A non-existent id lands in non_verified (still 200)
@@ -148,7 +148,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @positive @creator
   Scenario: Sibling route /bulk/verify-customer returns 200
@@ -164,7 +164,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-customer"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @positive @creator
   Scenario: Combined — month + archive + many ids returns 200
@@ -180,7 +180,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @positive @creator
   Scenario: Body company_id different from session is ignored (session company used) returns 200
@@ -196,7 +196,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
 
   @negative @creator
@@ -213,7 +213,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 400
-    And the bulk verify loan failure response should be valid
+    And the "bulk_verify_loan" failure response should be valid
 
   @negative @creator
   Scenario Outline: Invalid request "<case>" returns 400
@@ -229,7 +229,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 400
-    And the bulk verify loan failure response should be valid
+    And the "bulk_verify_loan" failure response should be valid
 
     Examples:
       | case                      | body                                                       |
@@ -301,7 +301,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
       """
     When I send a "POST" request to "/recovery/bulk/verify-loan"
     Then the response status code should be 200
-    And the bulk verify loan success response should be valid
+    And the "bulk_verify_loan" success response should be valid
 
   @negative @creator
   Scenario: Unknown (random UUID) company_id query param is rejected at org resolution

@@ -29,7 +29,7 @@ Feature: Payment Control
     When I send a "GET" request to "/recovery/payment-controls"
     Then the response status code should be 403
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "you have insufficient access rights"
+    And the response body should contain field "message" as "auto" with value "you have insufficient access rights"
 
   @negative @creator
   Scenario: API should fail when company_id does not exist
@@ -42,7 +42,7 @@ Feature: Payment Control
     When I send a "GET" request to "/recovery/payment-controls"
     Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
@@ -55,4 +55,4 @@ Feature: Payment Control
     When I send a "GET" request to "/recovery/payment-controls"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"

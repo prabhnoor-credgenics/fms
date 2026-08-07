@@ -6,7 +6,6 @@ import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 public class UserProfileStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(UserProfileStepDefinitions.class);
@@ -21,7 +20,7 @@ public class UserProfileStepDefinitions {
 
     @Given("I store the current user id from the user profile")
     public void i_store_the_current_user_id_from_the_user_profile() {
-        // Resolve the id for whoever is currently active, then store it as the active user id.
+        
         String userId = userProfileService.fetchUserId(testContext.getAuthToken());
         testContext.setUserId(userId);
         logger.info("Stored current user id '{}' for role {}", userId, testContext.getUserRole());

@@ -9,7 +9,6 @@ import io.cucumber.plugin.event.TestStepFinished;
 import io.cucumber.plugin.event.TestStepStarted;
 import utils.LoggingContext;
 
-
 public class CucumberStepTracker implements ConcurrentEventListener {
 
     @Override

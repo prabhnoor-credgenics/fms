@@ -81,7 +81,6 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 200
     And the role mutation response should be valid
-    # second delete of the now-inactive role -> no longer accessible -> 422
     And I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -92,7 +91,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 422
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @auth @creator @roles-delete
   Scenario: Delete a role without authentication token is rejected
@@ -106,12 +105,10 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @creator @roles-write
   Scenario: Delete a role without company_id is rejected
-    # Observed on staging: on the write path the permission check fires before org resolution, so a
-    # missing company_id returns 403 (the GET paths return 400 for the same omission).
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And I prepare a request
@@ -122,7 +119,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | role_id | abcd1234efgh5678 |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 403
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Delete a role with a non-alphanumeric role_id returns 400
@@ -138,7 +135,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid role_id provided"
+    And the response body should contain field "message" as "auto" with value "invalid role_id provided"
 
   @negative @creator @roles-write
   Scenario: Delete a syntactically-valid but unknown role_id returns 422
@@ -154,7 +151,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 422
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
 
   @negative @multistep @conflict @creator @roles-write
@@ -206,7 +203,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 409
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @multistep @conflict @creator @roles-write
   Scenario: Delete a role that is assigned to an active user returns 409
@@ -245,7 +242,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 409
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @security @creator @roles-write
   Scenario: Delete a role with a SQL-injection style role_id returns 400
@@ -275,7 +272,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,422"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Delete a role with an over-long alphanumeric role_id returns 422
@@ -290,7 +287,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 422
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Delete with an empty role_id collapses to the collection URL and is rejected
@@ -300,7 +297,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the path parameters:
-      | role_id |  |
+      | role_id | " " |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
@@ -333,7 +330,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | not-a-valid-company-id |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @roles-write
   Scenario: Delete a role with an empty company_id value is rejected
@@ -348,7 +345,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id |  |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @method @creator @roles-write
   Scenario: Using PUT on the role item URL is not allowed

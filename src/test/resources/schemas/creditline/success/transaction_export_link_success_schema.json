@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TransactionExportLinkSuccessResponse",
+  "description": "200 flat envelope for POST {BASE_ROUTE}/export/bulk/loan-transactions (response_type link/data) and POST {BASE_ROUTE}/export/export-now/loan-transactions (GROUP 8). Shape varies with data volume: empty => {data:[],message:\"no data found\"}; link => {output:\"<S3 url>\",message:\"success\"}; data => {data:[rows],message:\"success\"}. message is always present; output OR data may be present. No success/error keys.",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "output": { "type": "string" },
+    "data": { "type": "array" },
+    "message": { "type": "string" },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

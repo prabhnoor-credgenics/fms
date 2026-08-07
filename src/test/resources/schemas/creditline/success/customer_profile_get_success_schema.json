@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CustomerProfileGetSuccessResponse",
+  "description": "200 flat envelope for GET {BASE_ROUTE}/customer/profile/<client_customer_id> (Group 5b). Flat shape {output:<customer_details>, message:\"success\"} — no success/error keys.",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "message": { "type": "string" },
+    "output": { "type": ["object", "array"] },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

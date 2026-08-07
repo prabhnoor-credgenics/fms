@@ -97,9 +97,9 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "NBFC-LOAN-001"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
-    When I send a "POST" request to "/recovery/v1/loan"
+    And I update JSON field "loan_id" as "auto" to "NBFC-LOAN-001"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
@@ -125,8 +125,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -155,8 +155,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -185,8 +185,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -215,8 +215,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -245,8 +245,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -275,8 +275,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -305,8 +305,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -335,8 +335,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -365,8 +365,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -397,8 +397,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -426,8 +426,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -456,8 +456,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -486,8 +486,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -508,7 +508,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-MONTH-001 — allocation_month "2026-1-01" (single-digit month) is valid
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -518,8 +517,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -549,8 +548,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "2025-12-01"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "2025-12-01"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -580,8 +579,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "2026-1-01"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "2026-1-01"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -660,8 +659,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -681,7 +680,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-DATE-002 — end_date with valid Unix timestamp filters up to that date
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -691,11 +689,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
-    # Capture the moment the loan was created/uploaded, then filter up to that instant.
     And I capture the current time as "uploadTime"
     Given I prepare a request
     And I set the request headers:
@@ -705,7 +702,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the query parameters:
       | company_id | {COMPANY_ID}                             |
       | fields     | loan,payment                             |
-      | end_date   | {CAPTURED_TIME:uploadTime:epoch_seconds} |
+      | end_date | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -714,7 +711,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-DATE-003 — start_date and end_date range both applied
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -724,8 +720,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I capture the current time as "uploadTime"
@@ -737,8 +733,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | fields     | all        |
-      | start_date | {CAPTURED_TIME:uploadTime:epoch_seconds} |
-      | end_date   | {CAPTURED_TIME:uploadTime:epoch_seconds} |
+      | start_date | {CAPTURED_TIME_OFFSET:uploadTime:-5:minutes:epoch_seconds} |
+      | end_date | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -757,8 +753,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I capture the current time as "uploadTime"
@@ -789,8 +785,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I capture the current time as "uploadTime"
@@ -855,8 +851,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -885,8 +881,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -934,8 +930,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1034,8 +1030,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1065,8 +1061,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I capture the current time as "uploadTime"
@@ -1088,7 +1084,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-EDGE-003 — end_date present overrides end_time alias
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1098,8 +1093,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I capture the current time as "uploadTime"
@@ -1111,7 +1106,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | fields   | loan,payment |
-      | end_date | {CAPTURED_TIME:uploadTime:epoch_seconds}   |
+      | end_date | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds}   |
       | end_time | 999999999    |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
@@ -1121,7 +1116,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-EDGE-004 — fields=all with allocation_month and date range combined
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1131,8 +1125,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I capture the current time as "uploadTime"
@@ -1145,8 +1139,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | company_id | {COMPANY_ID} |
       | fields           | all        |
       | allocation_month | 2026-1-01  |
-      | start_date       | {CAPTURED_TIME:uploadTime:epoch_seconds} |
-      | end_date         | {CAPTURED_TIME:uploadTime:epoch_seconds} |
+      | start_date       | {CAPTURED_TIME_OFFSET:uploadTime:-5:minutes:epoch_seconds} |
+      | end_date         | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1155,7 +1149,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-EDGE-005 — Only unknown fields token in fields returns empty output
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1165,8 +1158,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1185,7 +1178,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-EDGE-006 — reminders filtered by start_date and end_date
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1195,8 +1187,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I capture the current time as "uploadTime"
@@ -1208,8 +1200,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | fields     | reminders  |
-      | start_date | {CAPTURED_TIME:uploadTime:epoch_seconds} |
-      | end_date   | {CAPTURED_TIME:uploadTime:epoch_seconds} |
+      | start_date | {CAPTURED_TIME_OFFSET:uploadTime:-5:minutes:epoch_seconds} |
+      | end_date   | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1220,7 +1212,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FLOW-001 — GET loan then verify output contains expected top-level keys
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1230,8 +1221,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1250,7 +1241,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FLOW-002 — GET with fields=loan then GET with fields=payment — both return 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1260,8 +1250,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1280,6 +1270,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | fields | payment |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
@@ -1301,8 +1292,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "2026-10-01"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "2026-10-01"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1332,8 +1323,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "2026-9-01"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "2026-9-01"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1363,8 +1354,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1384,7 +1375,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-EXTRA-004 — Same start_date and end_date (single point in time) returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1394,8 +1384,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I capture the current time as "uploadTime"
@@ -1407,8 +1397,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | fields     | loan,payment |
-      | start_date | {CAPTURED_TIME:uploadTime:epoch_seconds}   |
-      | end_date   | {CAPTURED_TIME:uploadTime:epoch_seconds}   |
+      | start_date | {CAPTURED_TIME_OFFSET:uploadTime:-5:minutes:epoch_seconds}   |
+      | end_date   | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds}    |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty

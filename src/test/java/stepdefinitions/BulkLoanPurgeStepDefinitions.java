@@ -6,8 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.BulkLoanPurgeValidator;
 
-
-
 public class BulkLoanPurgeStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(BulkLoanPurgeStepDefinitions.class);
@@ -17,12 +15,6 @@ public class BulkLoanPurgeStepDefinitions extends BaseStepDefinitions {
     public BulkLoanPurgeStepDefinitions(TestContext testContext, BulkLoanPurgeValidator bulkLoanPurgeValidator) {
         super(testContext);
         this.bulkLoanPurgeValidator = bulkLoanPurgeValidator;
-    }
-
-    @Then("the bulk loan purge success response should be valid")
-    public void the_bulk_loan_purge_success_response_should_be_valid() {
-        bulkLoanPurgeValidator.validatePurgeSuccess(activeResponse());
-        logger.info("bulk loan purge success validation completed");
     }
 
     @Then("the bulk loan purge forbidden response should be valid")

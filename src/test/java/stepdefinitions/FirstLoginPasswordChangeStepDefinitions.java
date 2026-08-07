@@ -12,16 +12,6 @@ import org.apache.logging.log4j.Logger;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * Steps for the admin-driven first-login password flow.
- *
- * A chief admin creates a fresh global user (random email), then sets that user's password via
- * PATCH /user/change-password with an RSA-encrypted body (same scheme as /user/public/login) carrying
- * {@code {user_id, new_password, source:"first_login"}}, authenticated with the CHIEF ADMIN's token
- * (from the Background auth). The created user then logs in for the first time with that new password.
- * The email is generated here (not passed from the Gherkin), and the user_id comes from the create
- * response, so the scenario carries no user-specific identifiers.
- */
 public class FirstLoginPasswordChangeStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(FirstLoginPasswordChangeStepDefinitions.class);
@@ -34,7 +24,6 @@ public class FirstLoginPasswordChangeStepDefinitions {
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final EncryptedUserAuthClient authClient;
 
-    // Set by the create step, consumed by the change-password + login steps.
     private String createdEmail;
     private String createdUserId;
 
@@ -105,9 +94,7 @@ public class FirstLoginPasswordChangeStepDefinitions {
         testContext.setResponse(response);
 
         boolean success = status >= 200 && status < 300;
-        // Idempotency: if the password is already the requested value the endpoint rejects it as
-        // "same as the previous password" (USER_022). The postcondition — the user's password IS the
-        // requested value — still holds, and the following login proves it, so treat it as success.
+        
         boolean alreadySet = status == 400 && body != null
                 && (body.contains("USER_022") || body.toLowerCase().contains("same as the previous password"));
         if (!success && !alreadySet) {

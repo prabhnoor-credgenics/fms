@@ -20,8 +20,6 @@ Feature: Global Status API
     And the response body should contain field "data"
     And the response body should contain field "message"
     And the response body should contain field "success"
-  #  And global status response mandatory fields should be valid
-  #  And global status company_id should match requested company
     And the response time should be within configured limit
 
   @positive @performance @creator

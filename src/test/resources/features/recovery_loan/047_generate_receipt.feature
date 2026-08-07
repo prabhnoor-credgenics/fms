@@ -22,7 +22,7 @@ Feature: Generate Receipt — POST /recovery/generate/receipt
     When I send a "POST" request to "/recovery/generate/receipt"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/generate_receipt_error_schema.json"
-    And the generate receipt error code should be "REC_RT015"
+    And the response body should contain field "error.code" as "auto" with value "REC_RT015"
 
   @positive @creator
   Scenario: With callback_details enqueues the receipt (202)
@@ -38,7 +38,7 @@ Feature: Generate Receipt — POST /recovery/generate/receipt
       """
     When I send a "POST" request to "/recovery/generate/receipt"
     Then the response status code should be 400
-    And the generate receipt error code should be "REC_RT015"
+    And the response body should contain field "error.code" as "auto" with value "REC_RT015"
 
   @positive @creator
   Scenario: is_preview true enqueues the receipt (202)
@@ -54,7 +54,7 @@ Feature: Generate Receipt — POST /recovery/generate/receipt
       """
     When I send a "POST" request to "/recovery/generate/receipt"
     Then the response status code should be 400
-    And the generate receipt error code should be "REC_RT015"
+    And the response body should contain field "error.code" as "auto" with value "REC_RT015"
 
   @positive @creator
   Scenario: is_preview false (explicit) enqueues the receipt (202)
@@ -70,7 +70,7 @@ Feature: Generate Receipt — POST /recovery/generate/receipt
       """
     When I send a "POST" request to "/recovery/generate/receipt"
     Then the response status code should be 400
-    And the generate receipt error code should be "REC_RT015"
+    And the response body should contain field "error.code" as "auto" with value "REC_RT015"
 
   @positive @creator
   Scenario: Cancellation receipt (is_cancelled true) enqueues the receipt (202)
@@ -86,7 +86,7 @@ Feature: Generate Receipt — POST /recovery/generate/receipt
       """
     When I send a "POST" request to "/recovery/generate/receipt"
     Then the response status code should be 400
-    And the generate receipt error code should be "REC_RT015"
+    And the response body should contain field "error.code" as "auto" with value "REC_RT015"
 
   @positive @creator
   Scenario Outline: receipt_source "<source>" enqueues the receipt (202)
@@ -102,7 +102,7 @@ Feature: Generate Receipt — POST /recovery/generate/receipt
       """
     When I send a "POST" request to "/recovery/generate/receipt"
     Then the response status code should be 400
-    And the generate receipt error code should be "REC_RT015"
+    And the response body should contain field "error.code" as "auto" with value "REC_RT015"
 
     Examples:
       | source   |

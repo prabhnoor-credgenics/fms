@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 public final class RandomDataHelper {
 
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -15,9 +14,11 @@ public final class RandomDataHelper {
 
     private static final String LOAN_ID_PREFIX = "Loan";
     private static final String COMPANY_NAME_PREFIX = "Company";
+    private static final String VARIABLE_NAME_PREFIX = "variable";
 
     private static final Set<String> ISSUED_LOAN_IDS = ConcurrentHashMap.newKeySet();
     private static final Set<String> ISSUED_COMPANY_NAMES = ConcurrentHashMap.newKeySet();
+    private static final Set<String> ISSUED_VARIABLE_NAMES = ConcurrentHashMap.newKeySet();
 
     private static final String[] FIRST_NAMES = {
             "Aarav", "Vihaan", "Aditya", "Vivaan", "Arjun", "Sai", "Reyansh", "Krishna",
@@ -50,22 +51,22 @@ public final class RandomDataHelper {
         return uniqueWithPrefix(LOAN_ID_PREFIX, ISSUED_LOAN_IDS);
     }
 
-    
     public static String uniqueCompanyName() {
         return uniqueWithPrefix(COMPANY_NAME_PREFIX, ISSUED_COMPANY_NAMES);
     }
 
-    
+    public static String uniqueVariableName() {
+        return uniqueWithPrefix(VARIABLE_NAME_PREFIX, ISSUED_VARIABLE_NAMES);
+    }
+
     public static String randomFirstName() {
         return FIRST_NAMES[RANDOM.nextInt(FIRST_NAMES.length)];
     }
 
-    
     public static String randomLastName() {
         return LAST_NAMES[RANDOM.nextInt(LAST_NAMES.length)];
     }
 
-    
     public static String randomName() {
         return randomFirstName() + " " + randomLastName();
     }
@@ -86,6 +87,5 @@ public final class RandomDataHelper {
     private static String sixDigitString() {
         return String.format("%06d", RANDOM.nextInt(SIX_DIGIT_BOUND));
     }
-
 
 }

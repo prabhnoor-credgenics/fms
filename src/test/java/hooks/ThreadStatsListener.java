@@ -28,11 +28,24 @@ public class ThreadStatsListener implements ConcurrentEventListener {
         }
     }
 
+    private static final String REPORT_BASE_DIR = "TestReports";
+    private static final java.util.concurrent.atomic.AtomicBoolean SANITISER_REGISTERED =
+            new java.util.concurrent.atomic.AtomicBoolean(false);
+
     @Override
     public void setEventPublisher(EventPublisher publisher) {
         publisher.registerHandlerFor(TestCaseStarted.class, this::onScenarioStarted);
         publisher.registerHandlerFor(TestStepFinished.class, this::onStepFinished);
         publisher.registerHandlerFor(TestRunFinished.class, this::onRunFinished);
+        registerReportSanitiser();
+    }
+
+    private static void registerReportSanitiser() {
+        if (SANITISER_REGISTERED.compareAndSet(false, true)) {
+            Runtime.getRuntime().addShutdownHook(new Thread(
+                    () -> utils.ReportSanitizer.sanitizeReportsUnder(REPORT_BASE_DIR),
+                    "extent-report-sanitiser"));
+        }
     }
 
     private ThreadStats statsForCurrentThread() {

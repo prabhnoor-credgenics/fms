@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FetchCustomersSuccessResponse",
+  "description": "200 flat envelope for GET {BASE_ROUTE}/fetch/customers (Group 5a). Staging returns output as an object {client_customer_id:[...]} (not a bare array); relaxed to object|array|string|null per reconcile protocol. message is \"success\".",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": {
+      "type": ["object", "array", "string", "null"]
+    },
+    "message": { "type": "string" },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

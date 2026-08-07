@@ -20,11 +20,6 @@ public class RolesStepDefinitions {
         this.validator = validator;
     }
 
-    @Then("the roles success response should be valid")
-    public void the_roles_success_response_should_be_valid() {
-        validator.validateSuccessEnvelope(activeResponse());
-    }
-
     @Then("the role mutation response should be valid")
     public void the_role_mutation_response_should_be_valid() {
         validator.validateMutationResponse(activeResponse());
@@ -38,11 +33,6 @@ public class RolesStepDefinitions {
     @Then("the role details response should be valid")
     public void the_role_details_response_should_be_valid() {
         validator.validateDetailsResponse(activeResponse());
-    }
-
-    @Then("the roles failure response should be valid")
-    public void the_roles_failure_response_should_be_valid() {
-        validator.validateFailureEnvelope(activeResponse());
     }
 
     private Response activeResponse() {

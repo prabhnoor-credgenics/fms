@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CustomerTransactionsSuccessResponse",
+  "description": "200 OK flat envelope for GET {BASE_ROUTE}/customer/transactions (GROUP 4b, credit-line-only). output is a list of transactions for the client_customer_id (may be empty).",
+  "type": "object",
+  "required": ["output", "message"],
+  "properties": {
+    "output": { "type": ["array", "object", "null"] },
+    "message": { "type": "string" },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

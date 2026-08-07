@@ -14,7 +14,6 @@ public class ParallelUserAllocator {
 
     private static final ConcurrentHashMap<Long, Integer> THREAD_TO_SLOT = new ConcurrentHashMap<>();
 
-
     private static final AtomicInteger NEXT_SLOT = new AtomicInteger(0);
 
     private final ConfigReader configReader;
@@ -22,7 +21,6 @@ public class ParallelUserAllocator {
     public ParallelUserAllocator(ConfigReader configReader) {
         this.configReader = configReader;
     }
-
 
     public void allocateForCurrentThread(TestContext testContext) {
         if (configReader.isSingleUserMode()) {
@@ -59,7 +57,6 @@ public class ParallelUserAllocator {
             return slot;
         });
     }
-
 
     public static void reset() {
         THREAD_TO_SLOT.clear();

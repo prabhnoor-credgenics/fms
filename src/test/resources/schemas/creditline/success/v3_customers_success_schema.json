@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "V3CustomersSuccessResponse",
+  "description": "200 OK ResponseHandler envelope for GET {BASE_ROUTE}/v3/customers/<customer_id>[/transactions/<transaction_id>] (GROUP 5e, credit-line-only). success:true, message=\"Successfully fetched customer details\", data=<variable_data> (object or array depending on attribute selectors).",
+  "type": "object",
+  "required": ["success", "message", "data"],
+  "properties": {
+    "success": { "const": true },
+    "message": { "type": "string" },
+    "status_code": { "type": ["integer", "null"] },
+    "data": { "type": ["object", "array", "null"] },
+    "error": { "type": ["object", "null"] },
+    "message_template": { "type": ["string", "null"] },
+    "message_placeholder": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

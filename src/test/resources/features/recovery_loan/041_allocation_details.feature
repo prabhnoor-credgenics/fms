@@ -18,7 +18,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/allocation_details_success_schema.json"
-    And the allocation details success response should be valid
+    And the "allocation_details" success response should be valid
 
   @positive @creator
   Scenario: Filter by multiple loan_ids returns 200
@@ -35,7 +35,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 200
-    And the allocation details success response should be valid
+    And the "allocation_details" success response should be valid
 
   @positive @creator
   Scenario: Filter by a single 16-char allocated_user_id returns 200
@@ -52,7 +52,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 200
-    And the allocation details success response should be valid
+    And the "allocation_details" success response should be valid
 
   @positive @creator
   Scenario: Filter by multiple allocated_user_ids returns 200
@@ -69,7 +69,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 200
-    And the allocation details success response should be valid
+    And the "allocation_details" success response should be valid
 
   @positive @creator
   Scenario: Both filters together (loan_ids AND allocated_user_ids) returns 200
@@ -86,7 +86,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 200
-    And the allocation details success response should be valid
+    And the "allocation_details" success response should be valid
 
   @positive @boundary @creator
   Scenario: allocated_user_id at exactly the 16-char boundary is accepted (200)
@@ -183,7 +183,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 200
-    And the allocation details success response should be valid
+    And the "allocation_details" success response should be valid
 
   @positive @fuzz @creator
   Scenario: Fuzz loan_id ({RANDOM_STRING}) is accepted (200)
@@ -248,8 +248,8 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
     And I authenticate as "creator" slot 1 and remember as "creator1"
@@ -283,8 +283,8 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 200
-    And the allocation details success response should be valid
-    And the allocation details output should contain loan "{LOAN_ID}"
+    And the "allocation_details" success response should be valid
+    And the response body should contain text "{LOAN_ID}"
 
   @manual @other-pod @creator @multistep
   Scenario: Read the allocation back by the creator's allocated_user_id returns the loan
@@ -300,8 +300,8 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
     And I authenticate as "creator" slot 1 and remember as "creator1"
@@ -335,7 +335,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 200
-    And the allocation details output should contain loan "{LOAN_ID}"
+    And the response body should contain text "{LOAN_ID}"
 
 
   @negative @creator
@@ -353,7 +353,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 400
-    And the allocation details failure response should be valid
+    And the "allocation_details" failure response should be valid
 
   @negative @creator
   Scenario: Both filters null returns 400 (Please send loan_ids or allocated_user_ids)
@@ -370,7 +370,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 400
-    And the allocation details failure response should be valid
+    And the "allocation_details" failure response should be valid
 
   @negative @creator
   Scenario: Both filters empty arrays returns 400 (Please send loan_ids or allocated_user_ids)
@@ -387,7 +387,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 400
-    And the allocation details failure response should be valid
+    And the "allocation_details" failure response should be valid
 
   @negative @creator
   Scenario: loan_id with an embedded single quote is rejected (400)
@@ -404,7 +404,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 400
-    And the allocation details failure response should be valid
+    And the "allocation_details" failure response should be valid
 
 
   @negative @boundary @creator
@@ -422,7 +422,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 400
-    And the allocation details failure response should be valid
+    And the "allocation_details" failure response should be valid
 
     Examples:
       | case            | value             |
@@ -445,7 +445,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
       """
     When I send a "POST" request to "/recovery/allocation/details"
     Then the response status code should be 400
-    And the allocation details failure response should be valid
+    And the "allocation_details" failure response should be valid
 
     Examples:
       | case                              | body                                            |

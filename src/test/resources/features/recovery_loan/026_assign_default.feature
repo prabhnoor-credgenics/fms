@@ -545,7 +545,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
         "company_type": "loan"
       }
       """
-    And I update JSON field "<field>" to null
+    And I update JSON field "<field>" as "null" to "null"
     When I send a "POST" request to "/recovery/assign-default"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -595,7 +595,7 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
         "company_type": "loan"
       }
       """
-    And I update JSON field "<field>" to "   "
+    And I update JSON field "<field>" as "auto" to "   "
     When I send a "POST" request to "/recovery/assign-default"
     Then the response status code should be 422
     Then the response body should not be empty

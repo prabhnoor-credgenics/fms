@@ -19,7 +19,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/exports_payments_logs_success_schema.json"
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: Pagination (page_number + page_size) returns 200
@@ -33,7 +33,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: disable_paging=true returns 200
@@ -46,7 +46,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: disable_paging=false (explicit) returns 200
@@ -59,7 +59,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: Search by author returns 200
@@ -73,7 +73,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: Search by request_id (comma-separated) returns 200
@@ -87,7 +87,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario Outline: status filter "<status>" returns 200
@@ -100,7 +100,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
     Examples:
       | status              |
@@ -125,7 +125,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: Date range (start + end) returns 200
@@ -139,7 +139,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: Only start_date returns 200
@@ -152,7 +152,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: Only end_date returns 200
@@ -165,7 +165,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: Search by author with no match returns 200 (empty list)
@@ -179,7 +179,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @positive @creator
   Scenario: Combined — status + author + date + paging returns 200
@@ -198,7 +198,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
 
   @positive @boundary @creator
@@ -212,7 +212,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 200
-    And the export payments logs success response should be valid
+    And the "export_payments_logs" success response should be valid
 
   @negative @boundary @creator
   Scenario: page_size over max (5001) returns 400
@@ -225,7 +225,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 400
-    And the export payments logs failure response should be valid
+    And the "export_payments_logs" failure response should be valid
 
   @negative @boundary @creator
   Scenario: search_type=request_id with out-of-range id returns 400
@@ -239,7 +239,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 400
-    And the export payments logs failure response should be valid
+    And the "export_payments_logs" failure response should be valid
 
 
 
@@ -252,7 +252,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 400
-    And the export payments logs failure response should be valid
+    And the "export_payments_logs" failure response should be valid
 
   @negative @creator
   Scenario: Invalid export_category (loan not allowed here) returns 400
@@ -264,7 +264,7 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 400
-    And the export payments logs failure response should be valid
+    And the "export_payments_logs" failure response should be valid
 
 
   @negative @creator

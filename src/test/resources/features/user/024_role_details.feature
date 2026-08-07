@@ -1,6 +1,8 @@
 @api @user @role-details
 Feature: Roles — GET /user/roles/<role_id> (get one role)
 
+  
+
   @positive @smoke @creator @role-details
   Scenario: Get a single role's details returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -38,7 +40,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator @role-details
   Scenario: Get role details with an invalid authentication token is rejected
@@ -53,7 +55,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @creator @role-details
   Scenario: Get role details without company_id is rejected
@@ -66,7 +68,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | role_id | abcd1234efgh5678 |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @role-details
   Scenario: Get role details with a non-alphanumeric role_id returns 400
@@ -81,7 +83,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid role_id provided"
+    And the response body should contain field "message" as "auto" with value "invalid role_id provided"
 
   @negative @creator @role-details
   Scenario: Get role details for a syntactically-valid but unknown role_id returns 422
@@ -96,7 +98,8 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be 422
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
+
 
   @negative @edge @creator @role-details
   Scenario: Get role details with an empty role_id falls through to the roles list
@@ -105,7 +108,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the path parameters:
-      | role_id |  |
+      | role_id | "" |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
@@ -133,7 +136,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the path parameters:
-      | role_id | <script>alert(1)</script> |
+      | role_id | <xss>alert(1)</xss> |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
@@ -152,7 +155,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be 422
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @edge @creator @role-details
   Scenario: Get role details with a unicode role_id is rejected
@@ -166,7 +169,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,422"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @role-details
   Scenario: Get role details with an empty company_id is rejected
@@ -180,7 +183,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id |  |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @role-details
   Scenario: Get role details with a malformed non-UUID company_id is rejected
@@ -194,7 +197,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | not-a-valid-uuid |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @creator @role-details
   Scenario: Get a real role_id under a foreign company_id is denied by org scoping
@@ -217,7 +220,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {UUID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be one of "400,403"
-    And the roles failure response should be valid
+    And the "roles" failure response should be valid
 
   @negative @routing @creator @role-details
   Scenario: Wrong HTTP method (PUT) on the role item URL is rejected
