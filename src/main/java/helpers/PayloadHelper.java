@@ -36,14 +36,16 @@ public final class PayloadHelper {
         if (value == null) {
             return null;
         }
-        String trimmed = value.trim();
-        if (trimmed.length() >= 2 && trimmed.startsWith("\"") && trimmed.endsWith("\"")) {
-            return trimmed.substring(1, trimmed.length() - 1);
+        if (value.length() >= 2 && value.startsWith("\"") && value.endsWith("\"")) {
+            return value.substring(1, value.length() - 1);
+        }
+        if (value.length() >= 2 && value.startsWith("'") && value.endsWith("'")) {
+            return value.substring(1, value.length() - 1);
         }
         return value;
     }
 
     public static boolean isNullToken(String value) {
-        return value != null && "null".equalsIgnoreCase(value.trim());
+        return value != null && "null".equalsIgnoreCase(value.trim()) && value.trim().length() == value.length();
     }
 }
