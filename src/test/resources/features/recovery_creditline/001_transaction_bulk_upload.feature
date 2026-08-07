@@ -1,4 +1,4 @@
-@api @creditline @creditline-transaction-upload @recovery @test
+@api @creditline @creditline-transaction-upload @recovery
 Feature: Credit-line Transaction Bulk Upload — POST /recovery/v1/bulk/transaction-upload
 
 
