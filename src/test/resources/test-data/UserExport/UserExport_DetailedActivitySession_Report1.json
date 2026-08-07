@@ -1,8 +1,8 @@
 {
   "company_id": "{COMPANY_ID}",
-  "data_scope": "users",
+  "data_scope": "activity-sessions",
   "include_only_parent_company_users": false,
   "include_parent_company_users": false,
-  "created_date_start": "2026-08-01 00:00:00",
-  "created_date_end": "2026-08-06 23:59:59"
+  "activity_start_time": "{START_TIME}",
+  "activity_end_time": "{END_TIME}"
 }
