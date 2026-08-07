@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserExportInvalidDataScopeErrorResponse",
+  "description": "Error response schema for invalid data_scope in POST /user/export/users or /user/export/user-details.",
+  "type": "object",
+  "required": [
+    "data",
+    "message"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "error_payload"
+      ],
+      "properties": {
+        "error_payload": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "input",
+              "loc",
+              "msg",
+              "type"
+            ],
+            "properties": {
+              "input": {
+                "type": "string"
+              },
+              "loc": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "msg": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

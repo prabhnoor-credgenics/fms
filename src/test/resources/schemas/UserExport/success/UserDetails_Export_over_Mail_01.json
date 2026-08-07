@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UsersExportSuccessResponse",
+  "description": "Response schema for POST /user/export/users.",
+  "type": "object",
+  "required": [
+    "message",
+    "success"
+  ],
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "success": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false
+}
