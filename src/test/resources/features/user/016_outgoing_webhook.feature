@@ -2,7 +2,6 @@
 Feature: Outgoing Webhook — GET /user/outgoing-webhook/
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 

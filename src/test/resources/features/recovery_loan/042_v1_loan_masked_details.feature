@@ -2,7 +2,6 @@
 Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
@@ -57,17 +56,17 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
   Scenario: All optional query params populated returns the loan
     Given I prepare a request
     And I set the query parameters:
-      | company_id          | {COMPANY_ID}                                          |
-      | source              | frontend                                              |
-      | allocation_month    | {ALLOCATION_MONTH_OFFSET:0}                                            |
-      | attribute_levels    | applicant,loan_variables,allocation_details,payments  |
-      | attribute_variables | loan_amount,applicant_name                            |
-      | audit_info          | true                                                  |
-      | nested_audit_info   | true                                                  |
-      | id_info             | true                                                  |
-      | data_type_conversion| true                                                  |
-      | apply_transform     | true                                                  |
-      | trigger             | automation_full                                       |
+      | company_id           | {COMPANY_ID}                                         |
+      | source               | frontend                                             |
+      | allocation_month     | {ALLOCATION_MONTH_OFFSET:0}                          |
+      | attribute_levels     | applicant,loan_variables,allocation_details,payments |
+      | attribute_variables  | loan_amount,applicant_name                           |
+      | audit_info           | true                                                 |
+      | nested_audit_info    | true                                                 |
+      | id_info              | true                                                 |
+      | data_type_conversion | true                                                 |
+      | apply_transform      | true                                                 |
+      | trigger              | automation_full                                      |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request headers:
@@ -129,9 +128,9 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
   Scenario: Valid allocation_month (single-digit month, no leading zero) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id       | {COMPANY_ID} |
-      | attribute_levels | applicant    |
-      | allocation_month | {ALLOCATION_MONTH_OFFSET:0}   |
+      | company_id       | {COMPANY_ID}                |
+      | attribute_levels | applicant                   |
+      | allocation_month | {ALLOCATION_MONTH_OFFSET:0} |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request headers:
@@ -143,7 +142,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
   Scenario: All attribute_levels members (comma-separated) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}                                                                                                                                                                                                                            |
+      | company_id       | {COMPANY_ID}                                                                                                                                                                                                                                                     |
       | attribute_levels | applicant,co_applicants,references,guarantors,document_details,loan_additional_variables,loan_variables,loan_statuses,allocation_statuses,applicant_addresses,allocation_variables,allocation_additional_variables,payments,tags,ds_variables,allocation_details |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
@@ -157,7 +156,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
   Scenario: attribute_levels accepted case-insensitively (uppercase coerced) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}            |
+      | company_id       | {COMPANY_ID}             |
       | attribute_levels | APPLICANT,Loan_Variables |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
@@ -170,9 +169,9 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
   Scenario: Unknown query param is silently dropped (extra="ignore") returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id           | {COMPANY_ID} |
-      | attribute_levels     | applicant    |
-      | totally_unknown_param| dropped      |
+      | company_id            | {COMPANY_ID} |
+      | attribute_levels      | applicant    |
+      | totally_unknown_param | dropped      |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request headers:
@@ -236,23 +235,23 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
     Then the response status code should be 200
 
     Examples:
-      | level                            |
-      | applicant                        |
-      | co_applicants                    |
-      | references                       |
-      | guarantors                       |
-      | document_details                 |
-      | loan_additional_variables        |
-      | loan_variables                   |
-      | loan_statuses                    |
-      | allocation_statuses              |
-      | applicant_addresses              |
-      | allocation_variables             |
-      | allocation_additional_variables  |
-      | payments                         |
-      | tags                             |
-      | ds_variables                     |
-      | allocation_details               |
+      | level                           |
+      | applicant                       |
+      | co_applicants                   |
+      | references                      |
+      | guarantors                      |
+      | document_details                |
+      | loan_additional_variables       |
+      | loan_variables                  |
+      | loan_statuses                   |
+      | allocation_statuses             |
+      | applicant_addresses             |
+      | allocation_variables            |
+      | allocation_additional_variables |
+      | payments                        |
+      | tags                            |
+      | ds_variables                    |
+      | allocation_details              |
 
 
   @negative @creator
@@ -331,7 +330,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
   Scenario: attribute_levels invalid member returns 400 (REC_0003)
     Given I prepare a request
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}        |
+      | company_id       | {COMPANY_ID}          |
       | attribute_levels | applicant,bogus_level |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
@@ -373,7 +372,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
 
     Examples:
       | allocation_month | # reason                                  |
-      | 01-12-2026       | # DD-MM-YYYY instead of YYYY-M-01          |
+      | 01-12-2026       | # DD-MM-YYYY instead of YYYY-M-01         |
       | 2026-13-01       | # month out of range                      |
       | 2026-6-15        | # day must be 01                          |
       | 2026-06-01       | # leading-zero month not allowed by regex |

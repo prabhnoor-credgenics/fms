@@ -2,7 +2,6 @@
 Feature: Loan Details Update — PATCH /recovery/loan-details/<loan_id>
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique

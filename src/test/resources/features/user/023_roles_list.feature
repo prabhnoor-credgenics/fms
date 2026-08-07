@@ -1,7 +1,6 @@
 @api @user @roles-list
 Feature: Roles — GET /user/roles/ (list roles)
 
-  
 
   @positive @smoke @creator @roles-list
   Scenario: List roles returns 200 with a roles array

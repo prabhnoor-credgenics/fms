@@ -29,9 +29,9 @@ Feature: Payment Limits API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       { "company_id": "3e561a13-3be3-4672-85b0-e1c49a35d8fb",
@@ -52,9 +52,9 @@ Feature: Payment Limits API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {   "company_id": "3e561a13-3be3-4672-85b0-e1c49a35d8fb",
@@ -71,9 +71,9 @@ Feature: Payment Limits API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {}
@@ -88,9 +88,9 @@ Feature: Payment Limits API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {"company_id": "3e561a13-3be3-4672-85b0-e1c49a35d8fb",
@@ -107,9 +107,9 @@ Feature: Payment Limits API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       { "company_id": "3e561a13-3be3-4672-85b0-e1c49a35d8fb",
@@ -127,9 +127,9 @@ Feature: Payment Limits API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       { "company_id": "3e561a13-3be3-4672-85b0-e1c49a35d8fb",
@@ -147,8 +147,8 @@ Feature: Payment Limits API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept       | application/json, text/plain, */*    |
-      | Content-Type | application/json                     |
+      | accept       | application/json, text/plain, */* |
+      | Content-Type | application/json                  |
     And I set the request body:
       """
       {"company_id": "3e561a13-3be3-4672-85b0-e1c49a35d8fb",
@@ -157,7 +157,7 @@ Feature: Payment Limits API
       }
       """
     When I send a "POST" request to "/recovery/loan/payment-limits"
-   Then the response status code should be 400
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
@@ -166,9 +166,9 @@ Feature: Payment Limits API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | invalid_token_12345                  |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | invalid_token_12345               |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {"company_id": "3e561a13-3be3-4672-85b0-e1c49a35d8fb",
@@ -177,7 +177,7 @@ Feature: Payment Limits API
       }
       """
     When I send a "POST" request to "/recovery/loan/payment-limits"
-     Then the response status code should be 400
+    Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
@@ -186,9 +186,9 @@ Feature: Payment Limits API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
+      | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
-      | Content-Type        | application/json                     |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {"company_id": "3e561a13-3be3-4672-85b0-e1c49a35d8fb",

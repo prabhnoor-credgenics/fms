@@ -84,7 +84,6 @@ Feature: Loan allocation visibility lifecycle
     And the response body should not contain text "{LOAN_ID}"
 
 
-
   @manual @creator
   Scenario: A loan uploaded by creator should be visible to the creator
     Given scenario loan id is unique
@@ -114,7 +113,6 @@ Feature: Loan allocation visibility lifecycle
     When I poll a "GET" request to "/recovery/all-loans" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
     And the response body should contain text "{LOAN_ID}"
-
 
 
   @manual @creator @get-loan

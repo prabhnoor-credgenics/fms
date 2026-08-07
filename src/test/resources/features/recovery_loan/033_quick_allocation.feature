@@ -43,9 +43,9 @@ Feature: Quick Allocation API — POST /recovery/allocation
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json                                  |
+      | accept              | application/json                                 |
       | authenticationtoken | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.expired.sig |
-      | Content-Type        | application/json                                  |
+      | Content-Type        | application/json                                 |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -149,11 +149,11 @@ Feature: Quick Allocation API — POST /recovery/allocation
     And the response should match json schema "schemas/recovery/error/quick_allocation_error_schema.json"
 
     Examples:
-      | missing              | body                                                                                          |
-      | loan_ids             | { "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }     |
-      | source               | { "loan_ids": ["Loan000631"], "allocation_type": "user", "allocation_algorithm": "one_to_one" }    |
-      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_algorithm": "one_to_one" }        |
-      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user" }                   |
+      | missing              | body                                                                                            |
+      | loan_ids             | { "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }      |
+      | source               | { "loan_ids": ["Loan000631"], "allocation_type": "user", "allocation_algorithm": "one_to_one" } |
+      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_algorithm": "one_to_one" }     |
+      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user" }                |
 
   @negative @validation @creator
   Scenario: REQ-002 — All required fields absent (empty body object) returns 400
@@ -192,11 +192,11 @@ Feature: Quick Allocation API — POST /recovery/allocation
     And the response body should not be empty
 
     Examples:
-      | field                | body                                                                                                                |
+      | field                | body                                                                                                                 |
       | loan_ids             | { "loan_ids": null, "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }         |
-      | source               | { "loan_ids": ["Loan000631"], "source": null, "allocation_type": "user", "allocation_algorithm": "one_to_one" }          |
-      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": null, "allocation_algorithm": "one_to_one" }     |
-      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": null }           |
+      | source               | { "loan_ids": ["Loan000631"], "source": null, "allocation_type": "user", "allocation_algorithm": "one_to_one" }      |
+      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": null, "allocation_algorithm": "one_to_one" } |
+      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": null }       |
 
   @negative @validation @creator
   Scenario Outline: REQ-004 — Enum field "<field>" present but empty string returns 400
@@ -217,7 +217,7 @@ Feature: Quick Allocation API — POST /recovery/allocation
     And the response body should not be empty
 
     Examples:
-      | field                | body                                                                                                          |
+      | field                | body                                                                                                               |
       | source               | { "loan_ids": ["Loan000631"], "source": "", "allocation_type": "user", "allocation_algorithm": "one_to_one" }      |
       | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "", "allocation_algorithm": "one_to_one" } |
       | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "" }       |
@@ -242,19 +242,19 @@ Feature: Quick Allocation API — POST /recovery/allocation
     And the response body should not be empty
 
     Examples:
-      | case                                  | body                                                                                                                                  |
-      | loan_ids as string not list           | { "loan_ids": "Loan000631", "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                       |
-      | loan_ids as integer                   | { "loan_ids": 123, "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                            |
-      | loan_ids as object                    | { "loan_ids": {}, "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                             |
-      | source as integer                     | { "loan_ids": ["Loan000631"], "source": 1, "allocation_type": "user", "allocation_algorithm": "one_to_one" }                              |
-      | allocation_type as integer            | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": 5, "allocation_algorithm": "one_to_one" }                         |
-      | allocation_algorithm as boolean       | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": true }                            |
-      | workflow_id as non-numeric string     | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "workflow_id": "abc" } |
-      | disable_previous flag as "yes"        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "disable_previous_user_allocation": "yes" } |
-      | neglect_capacity flag as "yes"        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "neglect_user_allocation_capacity": "yes" } |
-      | parent_company_id not a UUID          | { "loan_ids": ["Loan000631"], "source": "legal", "allocation_type": "agency", "allocation_algorithm": "one_to_one", "parent_company_id": "not-a-uuid" } |
-      | selected_users value as string        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": "five" } } |
-      | user_filters value not a list         | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "user_filters": { "teams": "team-north" } } |
+      | case                              | body                                                                                                                                                                        |
+      | loan_ids as string not list       | { "loan_ids": "Loan000631", "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                                                        |
+      | loan_ids as integer               | { "loan_ids": 123, "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                                                                 |
+      | loan_ids as object                | { "loan_ids": {}, "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one" }                                                                  |
+      | source as integer                 | { "loan_ids": ["Loan000631"], "source": 1, "allocation_type": "user", "allocation_algorithm": "one_to_one" }                                                                |
+      | allocation_type as integer        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": 5, "allocation_algorithm": "one_to_one" }                                                           |
+      | allocation_algorithm as boolean   | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": true }                                                              |
+      | workflow_id as non-numeric string | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "workflow_id": "abc" }                                |
+      | disable_previous flag as "yes"    | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "disable_previous_user_allocation": "yes" }           |
+      | neglect_capacity flag as "yes"    | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "neglect_user_allocation_capacity": "yes" }           |
+      | parent_company_id not a UUID      | { "loan_ids": ["Loan000631"], "source": "legal", "allocation_type": "agency", "allocation_algorithm": "one_to_one", "parent_company_id": "not-a-uuid" }                     |
+      | selected_users value as string    | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": "five" } } |
+      | user_filters value not a list     | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "user_filters": { "teams": "team-north" } }           |
 
   @negative @validation @enum @creator
   Scenario Outline: ENUM-001 — Invalid enum value for "<field>" returns 400
@@ -275,10 +275,10 @@ Feature: Quick Allocation API — POST /recovery/allocation
     And the response body should not be empty
 
     Examples:
-      | field                | body                                                                                                                       |
-      | source               | { "loan_ids": ["Loan000631"], "source": "bogus_src", "allocation_type": "user", "allocation_algorithm": "one_to_one" }          |
-      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "bogus_type", "allocation_algorithm": "one_to_one" }    |
-      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "bogus_algo" }          |
+      | field                | body                                                                                                                         |
+      | source               | { "loan_ids": ["Loan000631"], "source": "bogus_src", "allocation_type": "user", "allocation_algorithm": "one_to_one" }       |
+      | allocation_type      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "bogus_type", "allocation_algorithm": "one_to_one" } |
+      | allocation_algorithm | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "bogus_algo" }       |
 
 
   @negative @validation @creator
@@ -300,11 +300,11 @@ Feature: Quick Allocation API — POST /recovery/allocation
     And the response body should not be empty
 
     Examples:
-      | case                          | body                                                                                                                                                   |
-      | key shorter than 16 chars     | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "short_key": 5 } } |
-      | key longer than 36 chars      | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_this_key_is_definitely_far_too_long_to_be_valid": 5 } } |
-      | value zero (not positive)     | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": 0 } } |
-      | value negative                | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": -3 } } |
+      | case                      | body                                                                                                                                                                                                   |
+      | key shorter than 16 chars | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "short_key": 5 } }                                           |
+      | key longer than 36 chars  | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_this_key_is_definitely_far_too_long_to_be_valid": 5 } } |
+      | value zero (not positive) | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": 0 } }                                 |
+      | value negative            | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_abc1234567890xy": -3 } }                                |
 
   @negative @validation @creator
   Scenario: NEST-002 — user_filters with a key outside the four allowed literals returns 400
@@ -343,11 +343,11 @@ Feature: Quick Allocation API — POST /recovery/allocation
     And the response body should not be empty
 
     Examples:
-      | case                        | body                                                                                                                                                                                          |
-      | operator other than '='     | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": ">", "user_attribute": "city", "loan_attribute": "borrower_city" } ] } |
-      | empty operator              | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "", "user_attribute": "city", "loan_attribute": "borrower_city" } ] }  |
-      | empty user_attribute        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "", "loan_attribute": "borrower_city" } ] }     |
-      | empty loan_attribute        | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "city", "loan_attribute": "" } ] }              |
+      | case                    | body                                                                                                                                                                                                                                |
+      | operator other than '=' | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": ">", "user_attribute": "city", "loan_attribute": "borrower_city" } ] } |
+      | empty operator          | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "", "user_attribute": "city", "loan_attribute": "borrower_city" } ] }  |
+      | empty user_attribute    | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "", "loan_attribute": "borrower_city" } ] }     |
+      | empty loan_attribute    | { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "field", "allocation_algorithm": "one_to_one", "attribute_matching": [ { "operator": "=", "user_attribute": "city", "loan_attribute": "" } ] }              |
 
 
   @negative @boundary @creator

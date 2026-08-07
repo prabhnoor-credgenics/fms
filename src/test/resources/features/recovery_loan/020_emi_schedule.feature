@@ -1,14 +1,14 @@
 @api @emi-schedule @recovery
 Feature: EMI Schedule API
 
-  @positive1 @create @creator 
+  @positive1 @create @creator
   Scenario: POST upserts an EMI schedule entry
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | Loan806595 |
     And I set the request body:
@@ -35,9 +35,9 @@ Feature: EMI Schedule API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | Loan806595 |
     And I set the request body:
@@ -56,9 +56,9 @@ Feature: EMI Schedule API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | Loan806595 |
     And I set the request body:
@@ -74,9 +74,9 @@ Feature: EMI Schedule API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | Loan806595 |
     And I set the request body:
@@ -90,15 +90,15 @@ Feature: EMI Schedule API
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" as "auto" with value "Invalid request data"
 
-  @negative @create @creator 
+  @negative @create @creator
   Scenario: POST EMI schedule should fail when required field company_id is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-     
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | vhgvjhbjhb |
     And I set the request body:
@@ -116,8 +116,8 @@ Feature: EMI Schedule API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept       | application/json, text/plain, */*    |
-      | Content-Type | application/json                     |
+      | accept       | application/json, text/plain, */* |
+      | Content-Type | application/json                  |
     And I set the path parameters:
       | loan_id | Loan806595 |
     And I set the request body:
@@ -133,16 +133,16 @@ Feature: EMI Schedule API
     When I send a "POST" request to "/recovery/loan/emi-schedule/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-      And the response body should contain field "message" as "auto" with value "invalid authentication token"
- 
-  @negative @create @creator 
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
+
+  @negative @create @creator
   Scenario: POST EMI schedule should fail for an invalid loan_id
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | undefined |
     And I set the request body:

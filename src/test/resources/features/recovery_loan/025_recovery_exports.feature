@@ -2,11 +2,9 @@
 Feature: Exports API — GET /recovery/exports
 
 
-
   Background:
     Given scenario company id is from configuration
     And I prepare a request
-
 
 
   @negative
@@ -16,7 +14,7 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | accept | application/json |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
@@ -30,7 +28,7 @@ Feature: Exports API — GET /recovery/exports
       | accept              | application/json  |
       | authenticationtoken | invalid-token-xyz |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
@@ -43,12 +41,11 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
-
 
 
   @negative @chief-admin
@@ -70,7 +67,7 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | |
+      | export_category |              |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
@@ -84,7 +81,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | invalid_category |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}     |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -97,7 +94,7 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | payment |
+      | export_category | payment      |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
@@ -112,12 +109,11 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | loan,invalid_cat |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}     |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     Then the response body should not be empty
     And the response body should contain field "message"
-
 
 
   @positive @chief-admin
@@ -127,7 +123,7 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
@@ -142,7 +138,7 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | transaction |
+      | export_category | transaction  |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
@@ -157,7 +153,7 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | customer |
+      | export_category | customer     |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
@@ -172,7 +168,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | portfolio_allocated_users |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}              |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -186,7 +182,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | portfolio_data |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}   |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -200,7 +196,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | portfolio_transaction_data |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}               |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -214,7 +210,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | loan,transaction,customer |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}              |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -228,13 +224,12 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | LOAN |
+      | export_category | LOAN         |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "data.exports"
-
 
 
   @positive @chief-admin
@@ -244,7 +239,7 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
@@ -259,10 +254,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | page_number     | 2   |
-      | page_size       | 25  |
+      | page_number     | 2            |
+      | page_size       | 25           |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -275,9 +270,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | page_size       | 5000 |
+      | page_size       | 5000         |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -290,9 +285,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | page_size       | 5001 |
+      | page_size       | 5001         |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -304,9 +299,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | page_number     | not-a-page |
+      | page_number     | not-a-page   |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -318,13 +313,12 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan     |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | page_size       | big-size |
+      | page_size       | big-size     |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     Then the response body should not be empty
-
 
 
   @positive @chief-admin
@@ -334,9 +328,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | disable_paging  | true |
+      | disable_paging  | true         |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -350,11 +344,11 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan  |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | disable_paging  | false |
-      | page_number     | 1     |
-      | page_size       | 10    |
+      | disable_paging  | false        |
+      | page_number     | 1            |
+      | page_size       | 10           |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -367,9 +361,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | disable_paging  | TRUE |
+      | disable_paging  | TRUE         |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -383,9 +377,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan      |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | status          | completed |
+      | status          | completed    |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -399,9 +393,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan   |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | status          | failed |
+      | status          | failed       |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -414,8 +408,8 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan                    |
-      | company_id      | {COMPANY_ID} |
+      | export_category | loan                        |
+      | company_id      | {COMPANY_ID}                |
       | status          | completed,failed,in_process |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
@@ -429,14 +423,13 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan      |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | status          | COMPLETED |
+      | status          | COMPLETED    |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "data.exports"
-
 
 
   @positive @chief-admin
@@ -446,10 +439,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan   |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | search_type     | author |
-      | search_query    | test   |
+      | search_type     | author       |
+      | search_query    | test         |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -463,10 +456,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan                   |
-      | company_id      | {COMPANY_ID} |
-      | search_type     | author                 |
-      | search_query    | zzz-no-match-xyzzy123  |
+      | export_category | loan                  |
+      | company_id      | {COMPANY_ID}          |
+      | search_type     | author                |
+      | search_query    | zzz-no-match-xyzzy123 |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -479,10 +472,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | search_type     | request_id |
-      | search_query    | 1,2,3      |
+      | search_type     | request_id   |
+      | search_query    | 1,2,3        |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -495,10 +488,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | search_type     | request_id |
-      | search_query    | 0          |
+      | search_type     | request_id   |
+      | search_query    | 0            |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -511,10 +504,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | search_type     | request_id |
-      | search_query    | 2147483648 |
+      | search_type     | request_id   |
+      | search_query    | 2147483648   |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -527,16 +520,15 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | search_type     | request_id |
-      | search_query    | abc,xyz    |
+      | search_type     | request_id   |
+      | search_query    | abc,xyz      |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "data.exports"
     And the response body should contain field "data.total_count"
-
 
 
   @positive @chief-admin
@@ -546,9 +538,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | start_date      | 2026-01-01 |
+      | start_date      | 2026-01-01   |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -562,9 +554,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | end_date        | 2026-01-31 |
+      | end_date        | 2026-01-31   |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -577,10 +569,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | start_date      | 2026-01-01 |
-      | end_date        | 2026-01-31 |
+      | start_date      | 2026-01-01   |
+      | end_date        | 2026-01-31   |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -595,7 +587,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | loan,transaction |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}     |
       | status          | completed        |
       | start_date      | 2026-01-01       |
       | end_date        | 2026-01-31       |
@@ -615,9 +607,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan              |
-      | company_id      | {COMPANY_ID} |
-      | author_id       | AbCdEfGhIjKlMnOp  |
+      | export_category | loan             |
+      | company_id      | {COMPANY_ID}     |
+      | author_id       | AbCdEfGhIjKlMnOp |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -631,9 +623,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan                                 |
-      | company_id      | {COMPANY_ID} |
-      | author_id       | AbCdEfGhIjKlMnOp,QrStUvWxYz123456    |
+      | export_category | loan                              |
+      | company_id      | {COMPANY_ID}                      |
+      | author_id       | AbCdEfGhIjKlMnOp,QrStUvWxYz123456 |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -646,15 +638,14 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan                |
-      | company_id      | {COMPANY_ID} |
-      | author_id       | ZzZzZzZzZzZzZzZzZz  |
+      | export_category | loan               |
+      | company_id      | {COMPANY_ID}       |
+      | author_id       | ZzZzZzZzZzZzZzZzZz |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "data.exports"
     And the response body should contain field "data.total_count"
-
 
 
   @positive @chief-admin
@@ -664,7 +655,7 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
@@ -681,10 +672,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | start_date      | 2099-01-01 |
-      | end_date        | 2099-12-31 |
+      | start_date      | 2099-01-01   |
+      | end_date        | 2099-12-31   |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -699,13 +690,12 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | loan                   |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}           |
       | search_type     | author                 |
       | search_query    | zzz-definitely-no-user |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
-
 
 
   @positive @chief-admin
@@ -715,7 +705,7 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | <category> |
+      | export_category | <category>   |
       | company_id      | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
@@ -733,7 +723,6 @@ Feature: Exports API — GET /recovery/exports
       | portfolio_transaction_data |
 
 
-
   @positive @chief-admin
   Scenario Outline: TC-STVAL-00x — status filter "<status_val>" returns 200
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
@@ -741,9 +730,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan          |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | status          | <status_val>  |
+      | status          | <status_val> |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -763,7 +752,6 @@ Feature: Exports API — GET /recovery/exports
       | interrupted         |
 
 
-
   @positive @chief-admin
   Scenario: TC-EDGE-001 — page_size=1 (minimum boundary) returns at most 1 record
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
@@ -771,9 +759,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | page_size       | 1   |
+      | page_size       | 1            |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -787,9 +775,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan   |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | search_type     | author |
+      | search_type     | author       |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -803,7 +791,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | loan,transaction,customer,portfolio_allocated_users,portfolio_data,portfolio_transaction_data |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}                                                                                  |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -817,10 +805,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | page_number     | 9999 |
-      | page_size       | 10   |
+      | page_number     | 9999         |
+      | page_size       | 10           |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -834,16 +822,15 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | search_type     | request_id |
-      | search_query    | 1          |
+      | search_type     | request_id   |
+      | search_query    | 1            |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
     And the response body should contain field "data.exports"
     And the response body should contain field "data.total_count"
-
 
 
   @negative @chief-admin
@@ -853,9 +840,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | page_size       | 0   |
+      | page_size       | 0            |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -867,9 +854,9 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | page_number     | 0   |
+      | page_number     | 0            |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -881,10 +868,10 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan       |
+      | export_category | loan         |
       | company_id      | {COMPANY_ID} |
-      | search_type     | request_id |
-      | search_query    | 2147483647 |
+      | search_type     | request_id   |
+      | search_query    | 2147483647   |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -898,8 +885,8 @@ Feature: Exports API — GET /recovery/exports
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | export_category | loan,  transaction  |
-      | company_id      | {COMPANY_ID} |
+      | export_category | loan,  transaction |
+      | company_id      | {COMPANY_ID}       |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -913,7 +900,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | loan,transaction,customer |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}              |
       | disable_paging  | true                      |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
@@ -929,7 +916,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | loan                 |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}         |
       | start_date      | not-a-parseable-date |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
@@ -943,7 +930,7 @@ Feature: Exports API — GET /recovery/exports
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
       | export_category | loan                 |
-      | company_id      | {COMPANY_ID} |
+      | company_id      | {COMPANY_ID}         |
       | end_date        | not-a-parseable-date |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400

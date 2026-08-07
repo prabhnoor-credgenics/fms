@@ -2,7 +2,6 @@
 Feature: Export Loan Allocated-User — POST /recovery/export/bulk/loan-allocated-user
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
@@ -301,10 +300,10 @@ Feature: Export Loan Allocated-User — POST /recovery/export/bulk/loan-allocate
     And the "export_loan_allocated_user" failure response should be valid
 
     Examples:
-      | case                  | body                            |
-      | invalid export_type   | { "export_type": "bogus" }      |
-      | invalid response_type | { "response_type": "xml" }      |
-      | invalid sort          | { "sort": "bogus_sort" }        |
+      | case                  | body                       |
+      | invalid export_type   | { "export_type": "bogus" } |
+      | invalid response_type | { "response_type": "xml" } |
+      | invalid sort          | { "sort": "bogus_sort" }   |
 
 
   @negative @creator

@@ -52,7 +52,6 @@ Feature: Allocation — algorithm, capacity & breach coverage (POST /recovery/al
       | TC_ALC_014 | telecalling | one_to_one     |
 
 
-
   @positive @approver @capacity
   Scenario: TC_ALC_011 — Allocation within a user's capacity is accepted
     Given I authenticate as "approver" slot 0 and remember as "approver0"

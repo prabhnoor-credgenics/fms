@@ -2,7 +2,6 @@
 Feature: Company User Details — GET /user/company/users/<user_id>
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -41,7 +40,7 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     And I set the path parameters:
       | user_id | {USER_ID:creator0} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                  |
+      | company_id | {COMPANY_ID}                   |
       | attributes | name,email,mobile,role,profile |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -95,8 +94,8 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     And I set the path parameters:
       | user_id | {USER_ID:creator0} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID}      |
-      | attributes | not_a_real_attr   |
+      | company_id | {COMPANY_ID}    |
+      | attributes | not_a_real_attr |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"
@@ -125,7 +124,6 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     When I send a "GET" request to "/user/company/users/{user_id}"
     Then the response status code should be 400
     And the response body should not be empty
-
 
 
   @positive @creator
@@ -161,8 +159,8 @@ Feature: Company User Details — GET /user/company/users/<user_id>
     And I set the path parameters:
       | user_id | {USER_ID:creator0} |
     And I set the query parameters:
-      | company_id     | {COMPANY_ID}       |
-      | unknown_filter | {RANDOM_STRING:8}  |
+      | company_id     | {COMPANY_ID}      |
+      | unknown_filter | {RANDOM_STRING:8} |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/{user_id}"

@@ -2,7 +2,6 @@
 Feature: Profile Details — GET /user/profiles/<profile_id>
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -107,7 +106,6 @@ Feature: Profile Details — GET /user/profiles/<profile_id>
     When I send a "GET" request to "/user/profiles/{profile_id}"
     Then the response status code should be 400
     And the response body should not be empty
-
 
 
   @negative @creator
@@ -251,12 +249,12 @@ Feature: Profile Details — GET /user/profiles/<profile_id>
     And the response body should not be empty
 
     Examples:
-      | profile_id            |
-      | ' OR '1'='1           |
+      | profile_id          |
+      | ' OR '1'='1         |
       | <xss>alert(1)</xss> |
-      | プロファイル             |
-      | not a uuid at all     |
-      | {RANDOM_STRING:512}   |
+      | プロファイル              |
+      | not a uuid at all   |
+      | {RANDOM_STRING:512} |
 
   @negative @creator
   Scenario: Unknown/list-only query params are ignored for the item fetch

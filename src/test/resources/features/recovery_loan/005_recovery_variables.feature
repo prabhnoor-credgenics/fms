@@ -9,12 +9,12 @@ Feature: Recovery Variables API
   Scenario: Get recovery variables for configured company_id
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | true         |
-      | include_meta_data            | true         |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response content type should be "text/html; charset=utf-8"
@@ -26,12 +26,12 @@ Feature: Recovery Variables API
   Scenario: Get recovery variables with include_meta_data false
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | true         |
-      | include_meta_data            | false        |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response content type should be "text/html; charset=utf-8"
@@ -46,23 +46,23 @@ Feature: Recovery Variables API
   Scenario: Response differs when include_meta_data changes from true to false
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | true         |
-      | include_meta_data            | true         |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     And recovery variables meta data should be included
     And recovery variables response is saved for meta data comparison
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | true         |
-      | include_meta_data            | false        |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And recovery variables meta data should be excluded
@@ -72,12 +72,12 @@ Feature: Recovery Variables API
   Scenario: Get recovery variables with computed variables and meta data disabled
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | false        |
-      | include_meta_data            | false        |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | false        |
+      | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response content type should be "text/html; charset=utf-8"
@@ -93,24 +93,24 @@ Feature: Recovery Variables API
   Scenario: Response differs when both include_computed_variables and include_meta_data are disabled
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | true         |
-      | include_meta_data            | true         |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     And recovery variables computed variables should be included
     And recovery variables meta data should be included
     And recovery variables response is saved for full payload comparison
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | false        |
-      | include_meta_data            | false        |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | false        |
+      | include_meta_data          | false        |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And recovery variables computed variables should be excluded
@@ -121,12 +121,12 @@ Feature: Recovery Variables API
   Scenario: Get recovery variables with include_computed_variables false
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | false        |
-      | include_meta_data            | true         |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | false        |
+      | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response content type should be "text/html; charset=utf-8"
@@ -141,23 +141,23 @@ Feature: Recovery Variables API
   Scenario: Response differs when include_computed_variables changes from true to false
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | true         |
-      | include_meta_data            | true         |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     And recovery variables computed variables should be included
     And recovery variables response is saved for computed variables comparison
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | false        |
-      | include_meta_data            | true         |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | false        |
+      | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And recovery variables computed variables should be excluded
@@ -167,12 +167,12 @@ Feature: Recovery Variables API
   Scenario: Recovery variables API response time should be within threshold
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | true         |
-      | include_meta_data            | true         |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response time should be less than 5000 milliseconds
@@ -181,11 +181,11 @@ Feature: Recovery Variables API
   Scenario: API should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | true         |
-      | include_meta_data            | true         |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
@@ -194,12 +194,12 @@ Feature: Recovery Variables API
   Scenario: API should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | invalid_token_12345               |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | invalid_token_12345               |
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_computed_variables   | true         |
-      | include_meta_data            | true         |
+      | company_id                 | {COMPANY_ID} |
+      | include_computed_variables | true         |
+      | include_meta_data          | true         |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
@@ -208,11 +208,11 @@ Feature: Recovery Variables API
   Scenario: API should fail when company_id query parameter is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | include_computed_variables   | true |
-      | include_meta_data            | true |
+      | include_computed_variables | true |
+      | include_meta_data          | true |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
@@ -221,12 +221,12 @@ Feature: Recovery Variables API
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | invalid-company-id |
-      | include_computed_variables   | true               |
-      | include_meta_data            | true               |
+      | company_id                 | invalid-company-id |
+      | include_computed_variables | true               |
+      | include_meta_data          | true               |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
@@ -235,18 +235,15 @@ Feature: Recovery Variables API
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id                   | 00000000-0000-0000-0000-000000000000 |
-      | include_computed_variables   | true                                 |
-      | include_meta_data            | true                                 |
+      | company_id                 | 00000000-0000-0000-0000-000000000000 |
+      | include_computed_variables | true                                 |
+      | include_meta_data          | true                                 |
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
-
-
-
 
 
   @positive @smoke @create @creator
@@ -254,9 +251,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -278,9 +275,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -302,9 +299,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -325,9 +322,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -344,8 +341,8 @@ Feature: Recovery Variables API
     And recovery variables create response should be valid
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | false        |
@@ -354,9 +351,9 @@ Feature: Recovery Variables API
     And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -374,9 +371,9 @@ Feature: Recovery Variables API
   Scenario: POST should fail when variable_name is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -393,9 +390,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -411,9 +408,9 @@ Feature: Recovery Variables API
   Scenario: POST should fail when variable_name starts with a digit
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -430,9 +427,9 @@ Feature: Recovery Variables API
   Scenario: POST should fail when variable_name contains spaces
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -450,9 +447,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -470,9 +467,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -492,9 +489,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -532,9 +529,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | invalid_token_12345               |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | invalid_token_12345               |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -548,15 +545,14 @@ Feature: Recovery Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @positive @update @creator
   Scenario: Update variable description via PATCH
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -569,8 +565,8 @@ Feature: Recovery Variables API
     When I send a "POST" request to "/recovery/variables"
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | false        |
@@ -579,9 +575,9 @@ Feature: Recovery Variables API
     And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -601,9 +597,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -616,8 +612,8 @@ Feature: Recovery Variables API
     When I send a "POST" request to "/recovery/variables"
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | false        |
@@ -626,9 +622,9 @@ Feature: Recovery Variables API
     And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -642,9 +638,9 @@ Feature: Recovery Variables API
     And recovery variables update response should be valid
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -663,9 +659,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -679,8 +675,8 @@ Feature: Recovery Variables API
     When I send a "POST" request to "/recovery/variables"
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | false        |
@@ -689,9 +685,9 @@ Feature: Recovery Variables API
     And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -709,9 +705,9 @@ Feature: Recovery Variables API
   Scenario: PATCH should fail when variable_id is missing from body
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -729,9 +725,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -744,8 +740,8 @@ Feature: Recovery Variables API
     When I send a "POST" request to "/recovery/variables"
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | false        |
@@ -754,9 +750,9 @@ Feature: Recovery Variables API
     And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -774,9 +770,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -788,8 +784,8 @@ Feature: Recovery Variables API
     When I send a "POST" request to "/recovery/variables"
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | false        |
@@ -798,9 +794,9 @@ Feature: Recovery Variables API
     And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -835,9 +831,9 @@ Feature: Recovery Variables API
   Scenario: PATCH should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | invalid_token_12345               |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | invalid_token_12345               |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -851,15 +847,14 @@ Feature: Recovery Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @positive @delete @chief-admin
   Scenario: Delete a variable that was just created
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -871,8 +866,8 @@ Feature: Recovery Variables API
     When I send a "POST" request to "/recovery/variables"
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | false        |
@@ -881,8 +876,8 @@ Feature: Recovery Variables API
     And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -895,8 +890,8 @@ Feature: Recovery Variables API
   Scenario: DELETE should fail for a non-existent variable id
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -909,7 +904,7 @@ Feature: Recovery Variables API
   Scenario: DELETE should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -923,8 +918,8 @@ Feature: Recovery Variables API
   Scenario: Get variable categorisation for configured company_id
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/variables/categorisation"
@@ -937,8 +932,8 @@ Feature: Recovery Variables API
   Scenario: Get variable categorisation with transaction target
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
       | target     | transaction  |
@@ -951,8 +946,8 @@ Feature: Recovery Variables API
   Scenario: Get variable categorisation with include_computed_variables true
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | true         |
@@ -964,8 +959,8 @@ Feature: Recovery Variables API
   Scenario: Get variable categorisation with include_all_variables and include_derivable_variables
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                  | {COMPANY_ID} |
       | include_all_variables       | true         |
@@ -978,7 +973,7 @@ Feature: Recovery Variables API
   Scenario: Variable categorisation should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/variables/categorisation"
@@ -989,8 +984,8 @@ Feature: Recovery Variables API
   Scenario: Variable categorisation should fail when company_id is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     When I send a "GET" request to "/recovery/variables/categorisation"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
@@ -999,8 +994,8 @@ Feature: Recovery Variables API
   Scenario: Variable categorisation should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/variables/categorisation"
@@ -1008,15 +1003,14 @@ Feature: Recovery Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @negative @server-error @expected-200 @creator
   Scenario: POST should handle an invalid calculation_formula for a derivable variable
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -1036,9 +1030,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -1058,9 +1052,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -1074,8 +1068,8 @@ Feature: Recovery Variables API
     When I send a "POST" request to "/recovery/variables"
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | false        |
@@ -1084,9 +1078,9 @@ Feature: Recovery Variables API
     And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -1103,8 +1097,8 @@ Feature: Recovery Variables API
   Scenario: GET should handle include_computed_variables sent as an array parameter
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | true         |
@@ -1117,8 +1111,8 @@ Feature: Recovery Variables API
   Scenario: GET categorisation should handle a malformed boolean for include_all_variables
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id            | {COMPANY_ID}        |
       | include_all_variables | {malformed-boolean} |
@@ -1132,9 +1126,9 @@ Feature: Recovery Variables API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario variable name is unique
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -1148,8 +1142,8 @@ Feature: Recovery Variables API
     When I send a "POST" request to "/recovery/variables"
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id                 | {COMPANY_ID} |
       | include_computed_variables | false        |
@@ -1158,9 +1152,9 @@ Feature: Recovery Variables API
     And I find and store variable id for name "{VARIABLE_NAME}" from variables response
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {

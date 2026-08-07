@@ -2,7 +2,6 @@
 Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-details
 
 
-
   @negative
   Scenario: TC-AUTH-001 — Request without authenticationtoken header returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -32,7 +31,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     And the response body should not be empty
 
-  @negative 
+  @negative
   Scenario: TC-AUTH-003 — Valid token resolves to valid company — 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -50,13 +49,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
 
 
-
-  @positive 
+  @positive
   Scenario: TC-BODY-001 — Empty body {} returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -84,12 +82,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-BODY-002 — Valid allocation_month "2026-01-01" returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -120,12 +118,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-BODY-003 — allocation_month "Overall" — service behaviour TBD
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -174,7 +172,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-BODY-005 — archive = true returns 200 (queries archived loans)
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
@@ -210,12 +208,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-BODY-006 — archive = false returns 200 (queries active loans)
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -246,12 +244,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-BODY-007 — Extra unknown fields accepted without error — Config.extra="allow"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -289,7 +287,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -320,7 +318,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative 
+  @negative
   Scenario: TC-BODY-009 — allocation_month as integer is not a parseable date returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -338,13 +336,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
 
 
-
-  @positive 
+  @positive
   Scenario: TC-EXPTYPE-001 — export_type "customer" (default) returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -376,12 +373,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EXPTYPE-002 — export_type "transaction" forces 4 flags to false via root_validator
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -417,12 +414,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EXPTYPE-003 — export_type "allocated_users" returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -454,12 +451,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EXPTYPE-004 — export_type "portfolio_allocated_users" returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -491,12 +488,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EXPTYPE-005 — export_type "portfolio_data" returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -528,12 +525,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EXPTYPE-006 — export_type "portfolio_transaction_data" returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -565,12 +562,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EXPTYPE-007 — export_type "bulk_document_download" returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -602,7 +599,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative 
+  @negative
   Scenario: TC-EXPTYPE-008 — Invalid export_type returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -622,13 +619,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
 
 
-
-  @positive 
+  @positive
   Scenario: TC-RESP-001 — response_type "link" (default) returns 200 with S3 output URL
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -659,12 +655,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-RESP-002 — response_type "data" returns 200 with data array
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -695,7 +691,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative 
+  @negative
   Scenario: TC-RESP-003 — Invalid response_type "csv" returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -715,13 +711,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
 
 
-
-  @positive 
+  @positive
   Scenario: TC-SORT-001 — sort "created_desc" is a valid enum value returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -752,12 +747,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-SORT-002 — sort "principal_outstanding_amount_asc" silently dropped to null — returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -789,12 +784,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-SORT-003 — sort = "null" string coerced to null returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -826,12 +821,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-SORT-004 — sort = null (JSON null) returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -863,7 +858,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative 
+  @negative
   Scenario: TC-SORT-005 — Invalid sort value not in SortBy enum returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -883,13 +878,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
 
 
-
-  @positive 
+  @positive
   Scenario: TC-SEARCH-001 — search_type "loan_id" with query string returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -921,12 +915,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-SEARCH-002 — search_type "applicant_name" with query returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -959,12 +953,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-SEARCH-003 — search_type empty string coerced to "loan_id" returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -997,7 +991,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @negative 
+  @negative
   Scenario: TC-SEARCH-004 — Invalid search_type not in SearchType enum returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -1017,12 +1011,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
 
 
-  @positive 
+  @positive
   Scenario: TC-SELINDS-001 — selected_loan_ids with valid IDs bypasses portfolio filter
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1053,12 +1047,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-SELINDS-002 — selected_loan_ids as empty list — service behaviour TBD
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1094,7 +1088,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1128,12 +1122,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-SELINDS-004 — selected_loan_ids with only non-existent IDs returns 200 no data
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1165,8 +1159,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And the response body should contain field "message"
 
 
-
-  @negative 
+  @negative
   Scenario: TC-EXPORTID-001 — export_id not found in DB returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -1186,12 +1179,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-EXPORTID-002 — export_id with COMPLETED or FAILED status returns 200 no data
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1220,12 +1213,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-EXPORTID-003 — Without export_id query param — normal export flow runs
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1257,13 +1250,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And the response body should contain field "message"
 
 
-
   @positive @500
   Scenario: TC-COLS-001 — All boolean column flags = true returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1304,12 +1296,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-COLS-002 — Custom column count overrides with explicit values returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1346,12 +1338,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-COLS-003 — historical_loan_limit = true extends record cap to 100k
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1383,12 +1375,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-COLS-004 — Number column counts as zero — TBD behaviour
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1422,13 +1414,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And the response body should contain field "message"
 
 
-
-  @positive 
+  @positive
   Scenario: TC-FILTER-001 — dpd_bracket filter returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1460,12 +1451,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-FILTER-002 — dpd_from / dpd_to numeric range generates dynamic bracket
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1497,12 +1488,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-FILTER-003 — applicant_state filter returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1540,7 +1531,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1571,12 +1562,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-FILTER-005 — date_of_default range filter returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1609,12 +1600,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain text "{LOAN_ID}"
 
-  @positive 
+  @positive
   Scenario: TC-FILTER-006 — total_loan_amount range filter returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1648,12 +1639,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain text "{LOAN_ID}"
 
-  @positive 
+  @positive
   Scenario: TC-FILTER-007 — co_applicant_present = true with co_app_from/upto returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1687,12 +1678,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain text "{LOAN_ID}"
 
-  @positive 
+  @positive
   Scenario: TC-FILTER-008 — upload_date range filter returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1729,7 +1720,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1760,12 +1751,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-FILTER-010 — Litigation filter civil_-_current_stages returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1798,13 +1789,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
 
 
-
-  @positive 
+  @positive
   Scenario: TC-SHAPE-001 — Link response has output (S3 URL) and message="success"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1835,12 +1825,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-SHAPE-002 — Data response has data array and message
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1871,12 +1861,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-SHAPE-003 — No-data response has data=[] and message="no data found"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1909,8 +1899,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
 
 
-
-  @negative 
+  @negative
   Scenario Outline: TC-ENUM-00x — Invalid <field> value "<invalid_value>" returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -1935,8 +1924,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | response_type | csv              |
       | search_type   | invalid_search   |
       | sort          | invalid_sort_key |
-      | export_type   | CUSTOMERS         |
-
+      | export_type   | CUSTOMERS        |
 
 
   @positive @500
@@ -1944,7 +1932,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1977,12 +1965,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EDGE-002 — call_attempts_from = 0 treated as null returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2015,12 +2003,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EDGE-003 — co_applicant_present = false resets co_app_from/upto to null
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2059,7 +2047,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2098,7 +2086,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2132,12 +2120,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EDGE-006 — page_number and page_size params forwarded returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2171,13 +2159,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And the response body should contain field "message"
 
 
-
   @positive @500
   Scenario: TC-COMBO-001 — High-value NPA loans with multiple filters and column flags
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2221,7 +2208,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2262,7 +2249,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2298,12 +2285,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-COMBO-004 — Litigation export with co-applicant columns and IBC filter
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2341,13 +2328,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     And the response body should contain field "message"
 
 
-
   @positive @performance @creator
   Scenario: TC-PERF-001 — POST response time should be within configured threshold
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2378,8 +2364,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response time should be within configured limit
 
 
-
-  @negative 
+  @negative
   Scenario: TC-EXTRA-001 — selected_loan_ids as string instead of list returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -2398,12 +2383,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @positive 
+  @positive
   Scenario: TC-EXTRA-002 — co_app_from > co_app_upto when co_applicant_present=false — range ignored
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2437,12 +2422,12 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response body should not be empty
     And the response body should contain field "message"
 
-  @positive 
+  @positive
   Scenario: TC-EXTRA-003 — response_type = null defaults to "link" response
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2478,7 +2463,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2510,7 +2495,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 200
     Then the response body should not be empty
 
-  @negative 
+  @negative
   Scenario: TC-EXTRA-005 — archive as string "yes" is not a valid StrBool value
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -2530,7 +2515,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Then the response status code should be 400
     Then the response body should not be empty
 
-  @negative 
+  @negative
   Scenario: TC-500-001 — Service unhandled exception path returns error
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request

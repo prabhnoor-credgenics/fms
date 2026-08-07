@@ -2,7 +2,6 @@
 Feature: Roles — PATCH /user/roles/<role_id> (update role)
 
 
-
   @positive @smoke @creator @roles-write
   Scenario: Update a role's name returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"

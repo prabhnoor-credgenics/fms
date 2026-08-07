@@ -12,7 +12,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   Scenario: GET without authenticationtoken header returns 400
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID}   |
       | loan_id    | LOAN_{LOAN_ID} |
     When I send a "GET" request to "/recovery/internal/client-customer/linked-loans"
     Then the response status code should be 400
@@ -23,7 +23,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   Scenario: GET with invalid authenticationtoken returns 400
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID}   |
       | loan_id    | LOAN_{LOAN_ID} |
     And I set the request headers:
       | authenticationtoken | invalid_token_12345 |
@@ -47,7 +47,7 @@ Feature: Credit-line Linked Customers — GET/POST /recovery/internal[/bulk]/cli
   Scenario: GET with loan_id on a credit-line company returns 400 REC_0008 INVALID_COMPANY_TYPE
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID}   |
       | loan_id    | LOAN_{LOAN_ID} |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |

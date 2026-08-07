@@ -2,7 +2,6 @@
 Feature: Company Details — GET /user/company/
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -35,8 +34,8 @@ Feature: Company Details — GET /user/company/
   Scenario: Projection — multiple keys (CSV) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                                       |
-      | keys       | company_name,company_email,contact_number,tier     |
+      | company_id | {COMPANY_ID}                                   |
+      | keys       | company_name,company_email,contact_number,tier |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
@@ -47,8 +46,8 @@ Feature: Company Details — GET /user/company/
   Scenario: Projection — tenancy / config fields returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                                                          |
-      | keys       | tenant_type,parent_company_id,authentication_method,enable_sms_otp     |
+      | company_id | {COMPANY_ID}                                                       |
+      | keys       | tenant_type,parent_company_id,authentication_method,enable_sms_otp |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
@@ -59,8 +58,8 @@ Feature: Company Details — GET /user/company/
   Scenario: Projection — address block returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                                              |
-      | keys       | address_text,address_city,address_state,address_pincode   |
+      | company_id | {COMPANY_ID}                                            |
+      | keys       | address_text,address_city,address_state,address_pincode |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
@@ -121,12 +120,11 @@ Feature: Company Details — GET /user/company/
     And the response body should not be empty
 
 
-
   @positive @creator
   Scenario: Projection — config / feature flags returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                                                             |
+      | company_id | {COMPANY_ID}                                                                        |
       | keys       | authentication_method,enable_sms_otp,is_vernac_enabled,enabled_languages,ui_version |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -138,7 +136,7 @@ Feature: Company Details — GET /user/company/
   Scenario: Projection — branding & currency fields returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                                                                          |
+      | company_id | {COMPANY_ID}                                                                                            |
       | keys       | company_name,trademark,company_logo,company_email,contact_number,country_isd_code,country_currency_code |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -150,7 +148,7 @@ Feature: Company Details — GET /user/company/
   Scenario: Projection — auth / security configuration returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                                                          |
+      | company_id | {COMPANY_ID}                                                                 |
       | keys       | authentication_method,enable_sms_otp,company_whitelisted_ips,user_activation |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -162,7 +160,7 @@ Feature: Company Details — GET /user/company/
   Scenario: Projection — data-purging / test-company fields returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                                                       |
+      | company_id | {COMPANY_ID}                                                          |
       | keys       | is_test_company,is_purging_enabled,retention_in_months,is_uat_company |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -174,8 +172,8 @@ Feature: Company Details — GET /user/company/
   Scenario: Projection — webhook fields returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                             |
-      | keys       | webhook_details,webhook_payload_config   |
+      | company_id | {COMPANY_ID}                           |
+      | keys       | webhook_details,webhook_payload_config |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
@@ -186,8 +184,8 @@ Feature: Company Details — GET /user/company/
   Scenario: Projection — unknown column name is tolerated and returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                        |
-      | keys       | company_name,not_a_real_column_xyz  |
+      | company_id | {COMPANY_ID}                       |
+      | keys       | company_name,not_a_real_column_xyz |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/"
