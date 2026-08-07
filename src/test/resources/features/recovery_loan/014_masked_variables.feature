@@ -10,8 +10,8 @@ Feature: Masked Variables API
   Scenario: Get masked variables for configured company_id
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/masked-variables"
@@ -24,8 +24,8 @@ Feature: Masked Variables API
   Scenario: Get masked variables with return_variable_names true
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id            | {COMPANY_ID} |
       | return_variable_names | true         |
@@ -38,8 +38,8 @@ Feature: Masked Variables API
   Scenario: Masked variables GET response time should be within threshold
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/masked-variables"
@@ -50,7 +50,7 @@ Feature: Masked Variables API
   Scenario: GET masked variables should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/masked-variables"
@@ -61,8 +61,8 @@ Feature: Masked Variables API
   Scenario: GET masked variables should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | invalid_token_12345               |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | invalid_token_12345               |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/masked-variables"
@@ -73,21 +73,20 @@ Feature: Masked Variables API
   Scenario: GET masked variables should fail when company_id is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     When I send a "GET" request to "/recovery/masked-variables"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
-
 
 
   @positive @create @creator
   Scenario: Add masked variable for a permission group
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -105,9 +104,9 @@ Feature: Masked Variables API
   Scenario: Add masked variable with complete_masking_enabled true
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -124,9 +123,9 @@ Feature: Masked Variables API
   Scenario: POST masked variables should fail when permission_group_id is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -141,9 +140,9 @@ Feature: Masked Variables API
   Scenario: POST masked variables should fail when permission_group_id is empty list
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -173,14 +172,13 @@ Feature: Masked Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @positive @delete @creator
   Scenario: Delete masked variables by permission_group_id in request body
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -196,9 +194,9 @@ Feature: Masked Variables API
   Scenario: DELETE masked variables should fail when permission_group_id is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -227,14 +225,13 @@ Feature: Masked Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @positive @update @creator
   Scenario: Update masked variable complete_masking_enabled via PATCH
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000001 |
     And I set the request body:
@@ -253,9 +250,9 @@ Feature: Masked Variables API
   Scenario: PATCH masked variable should fail when permission_group_id is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000001 |
     And I set the request body:
@@ -290,13 +287,12 @@ Feature: Masked Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @positive @delete @chief-admin
   Scenario: Delete a single masked variable by variable_id
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -309,8 +305,8 @@ Feature: Masked Variables API
   Scenario: DELETE single masked variable should fail for non-existent variable_id
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -323,7 +319,7 @@ Feature: Masked Variables API
   Scenario: DELETE single masked variable should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -333,13 +329,12 @@ Feature: Masked Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @positive @delete @deprecated @chief-admin
   Scenario: Delete masked variables by permission_group path param (deprecated endpoint)
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -352,7 +347,7 @@ Feature: Masked Variables API
   Scenario: DELETE permission-group masked variables should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:

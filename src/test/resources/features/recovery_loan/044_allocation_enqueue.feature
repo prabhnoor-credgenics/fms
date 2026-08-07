@@ -219,8 +219,8 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
-      | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
+      | Content-Type        | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
     And I set the request body:
       """
       { "loan_ids": ["{LOAN_ID}"], "source": "<source>", "allocation_type": "other", "allocation_algorithm": "one_to_one", "callback_details": {} }
@@ -245,8 +245,8 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
-      | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
+      | Content-Type        | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
     And I set the request body:
       """
       { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "other", "allocation_algorithm": "<algorithm>", "callback_details": {} }
@@ -266,8 +266,8 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
-      | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
+      | Content-Type        | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
     And I set the request body:
       """
       { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "<type>", "allocation_algorithm": "one_to_one", "callback_details": {} }
@@ -476,8 +476,8 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
-      | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
+      | Content-Type        | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
     And I set the request body:
       """
       <body>
@@ -487,12 +487,12 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
     And the allocation enqueue validation error should be valid
 
     Examples:
-      | missing              | body                                                                                                                       |
-      | loan_ids             | { "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {} }   |
-      | source               | { "loan_ids": ["{LOAN_ID}"], "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {} }|
-      | allocation_type      | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_algorithm": "one_to_one", "callback_details": {} }          |
-      | allocation_algorithm | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "callback_details": {} }              |
-      | callback_details     | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one" }|
+      | missing              | body                                                                                                                          |
+      | loan_ids             | { "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {} }     |
+      | source               | { "loan_ids": ["{LOAN_ID}"], "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {} } |
+      | allocation_type      | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_algorithm": "one_to_one", "callback_details": {} }            |
+      | allocation_algorithm | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "callback_details": {} }                |
+      | callback_details     | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one" }  |
 
   @negative @creator
   Scenario: loan_ids present but null returns 400 (REC_0076)
@@ -533,8 +533,8 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
-      | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
+      | Content-Type        | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
     And I set the request body:
       """
       <body>
@@ -544,17 +544,17 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
     And the allocation enqueue validation error should be valid
 
     Examples:
-      | case                              | body                                                                                                                                                                      |
-      | loan_ids string not list          | { "loan_ids": "L1", "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {} }                                |
-      | source invalid enum               | { "loan_ids": ["{LOAN_ID}"], "source": "not_a_source", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {} }                    |
-      | allocation_type invalid enum      | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "bogus", "allocation_algorithm": "one_to_one", "callback_details": {} }                             |
-      | allocation_algorithm invalid enum | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "round_robin", "callback_details": {} }                      |
-      | callback_details string not obj   | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": "x" }                      |
+      | case                              | body                                                                                                                                                                                                                                              |
+      | loan_ids string not list          | { "loan_ids": "L1", "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {} }                                                                                                       |
+      | source invalid enum               | { "loan_ids": ["{LOAN_ID}"], "source": "not_a_source", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {} }                                                                                           |
+      | allocation_type invalid enum      | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "bogus", "allocation_algorithm": "one_to_one", "callback_details": {} }                                                                                                    |
+      | allocation_algorithm invalid enum | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "round_robin", "callback_details": {} }                                                                                             |
+      | callback_details string not obj   | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": "x" }                                                                                             |
       | attribute_matching bad operator   | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {}, "attribute_matching": [ { "operator": ">", "user_attribute": "a", "loan_attribute": "b" } ] } |
-      | user_filters invalid key          | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {}, "user_filters": { "departments": ["x"] } } |
-      | parent_company_id non-uuid        | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {}, "parent_company_id": "not-a-uuid" } |
-      | workflow_id non-integer           | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {}, "workflow_id": "abc" } |
-      | allowed_previous_days non-integer | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {}, "allowed_previous_days": "ninety" } |
+      | user_filters invalid key          | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {}, "user_filters": { "departments": ["x"] } }                                                    |
+      | parent_company_id non-uuid        | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {}, "parent_company_id": "not-a-uuid" }                                                           |
+      | workflow_id non-integer           | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {}, "workflow_id": "abc" }                                                                        |
+      | allowed_previous_days non-integer | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {}, "allowed_previous_days": "ninety" }                                                           |
 
 
   @negative @creator
@@ -594,7 +594,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
-      | Content-Type        | application/json                                  |
+      | Content-Type        | application/json                                 |
       | authenticationtoken | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.expired.sig |
     And I set the request body:
       """

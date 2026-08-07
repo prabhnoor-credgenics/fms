@@ -1,7 +1,6 @@
 @api @user @users-filter
 Feature: Users Filter — GET /user/users/filter/
 
- 
 
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -46,8 +45,8 @@ Feature: Users Filter — GET /user/users/filter/
   Scenario: Multiple filters (comma-separated) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                                       |
-      | filters    | reports_to,roles,permission_groups,professions     |
+      | company_id | {COMPANY_ID}                                   |
+      | filters    | reports_to,roles,permission_groups,professions |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/users/filter/"
@@ -94,7 +93,7 @@ Feature: Users Filter — GET /user/users/filter/
   Scenario: Invalid filter name surfaces as a server-class failure (returned, not raised)
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}     |
+      | company_id | {COMPANY_ID}      |
       | filters    | not_a_real_filter |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |

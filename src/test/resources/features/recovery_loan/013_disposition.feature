@@ -85,9 +85,9 @@ Feature: Disposition API
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id   | {COMPANY_ID} |
-      | service_type | recovery                             |
-      | product_type | car-accessories_1                    |
+      | company_id   | {COMPANY_ID}      |
+      | service_type | recovery          |
+      | product_type | car-accessories_1 |
     When I send a "GET" request to "/recovery/disposition"
     Then the response status code should be 200
     And the response message should be "Dispositions Fetched"

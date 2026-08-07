@@ -11,10 +11,10 @@ Feature: Bulk tasks API
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
       | company_id     | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
-      | page_size      |                                   10 |
+      | page_size      | 10                                   |
       | event_type     | import_operations                    |
       | operation_type | loan_upload                          |
-      | page           |                                    1 |
+      | page           | 1                                    |
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 200
     And the response message should be "success"
@@ -42,12 +42,12 @@ Feature: Bulk tasks API
     And the response body should contain field "message"
     And the response body should contain field "message_template"
     And the response body should contain field "message_placeholder"
-    
-     @negative @auth @creator
+
+  @negative @auth @creator
   Scenario: API should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/bulk/tasks"
@@ -76,18 +76,20 @@ Feature: Bulk tasks API
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" as "auto" with value "invalid company id"
+
   @negative1 @creator
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-     And the response body should contain field "message" as "auto" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
+
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -99,9 +101,9 @@ Feature: Bulk tasks API
     When I send a "GET" request to "/recovery/global-status"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
- And the response body should contain field "message" as "auto" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"
 
-  
+
   @positive @smoke @bulk-tasks-listing @creator
   Scenario: Minimal — event_type only returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -129,8 +131,8 @@ Feature: Bulk tasks API
     And I set the query parameters:
       | company_id | {COMPANY_ID}      |
       | event_type | import_operations |
-      | page       |                 2 |
-      | page_size  |                25 |
+      | page       | 2                 |
+      | page_size  | 25                |
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 200
     And the response body should contain field "output"
@@ -250,10 +252,10 @@ Feature: Bulk tasks API
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id | {COMPANY_ID}        |
-      | event_type | import_operations   |
-      | status     | completed           |
-      | author_id  | {USER_ID:creator0}  |
+      | company_id | {COMPANY_ID}       |
+      | event_type | import_operations  |
+      | status     | completed          |
+      | author_id  | {USER_ID:creator0} |
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 200
     And the response body should contain field "output"
@@ -273,8 +275,8 @@ Feature: Bulk tasks API
       | search_query | Ramesh            |
       | start_date   | 2026-01-01        |
       | end_date     | 2026-01-31        |
-      | page         |                 1 |
-      | page_size    |                50 |
+      | page         | 1                 |
+      | page_size    | 50                |
       | sort_by      | created           |
       | sort_by_type | desc              |
     When I send a "GET" request to "/recovery/bulk/tasks"
@@ -306,7 +308,7 @@ Feature: Bulk tasks API
     And I set the query parameters:
       | company_id | {COMPANY_ID}      |
       | event_type | import_operations |
-      | page_size  |              1000 |
+      | page_size  | 1000              |
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 200
     And the response body should contain field "output"

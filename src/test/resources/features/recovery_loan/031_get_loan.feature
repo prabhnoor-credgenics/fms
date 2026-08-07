@@ -111,7 +111,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     Then the response body should not be empty
 
 
-
   @positive @creator
   Scenario: TC-FIELDS-001 — fields=loan returns loan_details and global_status
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -136,7 +135,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | loan |
+      | fields     | loan         |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -145,7 +144,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-002 — fields=payment returns payment_history array
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -166,7 +165,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | payment |
+      | fields     | payment      |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -175,7 +174,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-003 — fields=notice returns notice_tracking_details
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -196,7 +195,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | notice |
+      | fields     | notice       |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -205,7 +204,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-004 — fields=communication returns communication_details
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -225,8 +224,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields | communication |
+      | company_id | {COMPANY_ID}  |
+      | fields     | communication |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -235,7 +234,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-005 — fields=remark returns remarks array
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -256,7 +255,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | remark |
+      | fields     | remark       |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -265,7 +264,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-006 — fields=reminders returns reminders array
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -286,7 +285,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | reminders |
+      | fields     | reminders    |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -295,7 +294,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-007 — fields=loan_level returns loan-level data without allocation defaults
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -316,7 +315,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | loan_level |
+      | fields     | loan_level   |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -325,7 +324,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-008 — fields=allocation_level returns allocation-month default entries
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -345,8 +344,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields | allocation_level |
+      | company_id | {COMPANY_ID}     |
+      | fields     | allocation_level |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -355,7 +354,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-009 — fields=all returns every section
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -376,18 +375,17 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | all |
+      | fields     | all          |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
-
 
 
   @positive @creator
   Scenario: TC-FIELDS-010 — No fields param uses default loan,payment
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -416,7 +414,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-011 — fields=loan,payment explicitly returns both sections
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -437,7 +435,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | loan,payment |
+      | fields     | loan,payment |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -446,7 +444,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-012 — fields=loan,notice,remark returns three sections
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -466,8 +464,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields | loan,notice,remark |
+      | company_id | {COMPANY_ID}       |
+      | fields     | loan,notice,remark |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -476,7 +474,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-FIELDS-013 — Unknown fields token silently ignored — valid token still works
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -496,12 +494,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields | loan,bogus_token |
+      | company_id | {COMPANY_ID}     |
+      | fields     | loan,bogus_token |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
-
 
 
   @positive @creator
@@ -527,8 +524,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields           | payment  |
+      | company_id       | {COMPANY_ID}                |
+      | fields           | payment                     |
       | allocation_month | {ALLOCATION_MONTH_OFFSET:0} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
@@ -538,7 +535,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-MONTH-002 — allocation_month "2025-12-01" (two-digit month ≥ 10) is valid
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -558,9 +555,9 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields           | payment    |
-      | allocation_month | 2025-12-01 |
+      | company_id       | {COMPANY_ID} |
+      | fields           | payment      |
+      | allocation_month | 2025-12-01   |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -589,8 +586,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | fields           | payment     |
-      | allocation_month | 2026-01-01  |
+      | fields           | payment    |
+      | allocation_month | 2026-01-01 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -621,8 +618,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | fields           | payment     |
-      | allocation_month | 2026-13-01  |
+      | fields           | payment    |
+      | allocation_month | 2026-13-01 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -637,8 +634,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | fields           | payment    |
-      | allocation_month | 2026-1-15  |
+      | fields           | payment   |
+      | allocation_month | 2026-1-15 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -649,7 +646,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-DATE-001 — start_date with valid Unix timestamp filters from that date
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -700,9 +697,9 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                             |
-      | fields     | loan,payment                             |
-      | end_date | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
+      | company_id | {COMPANY_ID}                                              |
+      | fields     | loan,payment                                              |
+      | end_date   | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -731,10 +728,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields     | all        |
+      | company_id | {COMPANY_ID}                                               |
+      | fields     | all                                                        |
       | start_date | {CAPTURED_TIME_OFFSET:uploadTime:-5:minutes:epoch_seconds} |
-      | end_date | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
+      | end_date   | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds}  |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -743,7 +740,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-DATE-004 — start_time alias used when start_date absent
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -764,9 +761,9 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields     | loan,payment |
-      | start_time | {CAPTURED_TIME:uploadTime:epoch_seconds}   |
+      | company_id | {COMPANY_ID}                             |
+      | fields     | loan,payment                             |
+      | start_time | {CAPTURED_TIME:uploadTime:epoch_seconds} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -775,7 +772,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-DATE-005 — end_time alias used when end_date absent
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -796,9 +793,9 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields   | loan,payment |
-      | end_time | {CAPTURED_TIME:uploadTime:epoch_seconds}   |
+      | company_id | {COMPANY_ID}                             |
+      | fields     | loan,payment                             |
+      | end_time   | {CAPTURED_TIME:uploadTime:epoch_seconds} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -836,12 +833,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And the response body should contain field "message"
 
 
-
   @positive @creator
   Scenario: TC-SHAPE-001 — Default response has output object and message=success
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -871,7 +867,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-SHAPE-002 — fields=loan response contains required loan keys
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -892,7 +888,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | loan |
+      | fields     | loan         |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -907,7 +903,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | NON-EXISTENT-LOAN-{UUID} |
     And I set the query parameters:
-      | fields     | loan       |
+      | fields     | loan                                     |
       | start_date | {CAPTURED_TIME:uploadTime:epoch_seconds} |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 400
@@ -915,12 +911,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And the response body should contain field "message"
 
 
-
   @positive @creator
   Scenario: TC-URL-001 — /recovery/loan/ alias URL returns same result as primary URL
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -941,11 +936,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | loan |
+      | fields     | loan         |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
-
 
 
   @negative @creator
@@ -965,7 +959,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | UNDEFINED   |
 
 
-
   @negative @creator
   Scenario Outline: TC-INVMONTH-00x — Invalid allocation_month "<month_val>" returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -975,8 +968,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | fields           | payment      |
-      | allocation_month | <month_val>  |
+      | fields           | payment     |
+      | allocation_month | <month_val> |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -990,7 +983,6 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | not-a-date |
 
 
-
   @negative @creator
   Scenario Outline: TC-INVTS-00x — Non-numeric <param> value returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -1000,8 +992,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | fields   | loan,payment  |
-      | <param>  | not-a-number  |
+      | fields  | loan,payment |
+      | <param> | not-a-number |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -1015,12 +1007,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | end_time   |
 
 
-
   @positive @creator
   Scenario: TC-EDGE-001 — Float Unix timestamp string accepted for start_date
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1041,8 +1032,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields     | loan,payment   |
-      | start_date | 1735689600.5   |
+      | fields     | loan,payment |
+      | start_date | 1735689600.5 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1051,7 +1042,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-EDGE-002 — start_date present overrides start_time alias
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1072,10 +1063,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields     | loan,payment |
-      | start_date | {CAPTURED_TIME:uploadTime:epoch_seconds}   |
-      | start_time | 999999999    |
+      | company_id | {COMPANY_ID}                             |
+      | fields     | loan,payment                             |
+      | start_date | {CAPTURED_TIME:uploadTime:epoch_seconds} |
+      | start_time | 999999999                                |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1104,10 +1095,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields   | loan,payment |
-      | end_date | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds}   |
-      | end_time | 999999999    |
+      | company_id | {COMPANY_ID}                                              |
+      | fields     | loan,payment                                              |
+      | end_date   | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
+      | end_time   | 999999999                                                 |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1136,11 +1127,11 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields           | all        |
-      | allocation_month | 2026-1-01  |
+      | company_id       | {COMPANY_ID}                                               |
+      | fields           | all                                                        |
+      | allocation_month | 2026-1-01                                                  |
       | start_date       | {CAPTURED_TIME_OFFSET:uploadTime:-5:minutes:epoch_seconds} |
-      | end_date         | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
+      | end_date         | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds}  |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1168,8 +1159,8 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields | bogus1,bogus2,unknown |
+      | company_id | {COMPANY_ID}          |
+      | fields     | bogus1,bogus2,unknown |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1198,14 +1189,13 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields     | reminders  |
+      | company_id | {COMPANY_ID}                                               |
+      | fields     | reminders                                                  |
       | start_date | {CAPTURED_TIME_OFFSET:uploadTime:-5:minutes:epoch_seconds} |
-      | end_date   | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds} |
+      | end_date   | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds}  |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
-
 
 
   @positive @creator
@@ -1232,7 +1222,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | loan |
+      | fields     | loan         |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1261,7 +1251,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | loan |
+      | fields     | loan         |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response body should not be empty
     And I prepare a request
@@ -1271,18 +1261,17 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
       | loanId | {LOAN_ID} |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
-      | fields | payment |
+      | fields     | payment      |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
-
 
 
   @positive @creator
   Scenario: TC-EXTRA-001 — allocation_month "2026-10-01" (month 10, two-digit) is valid
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1302,9 +1291,9 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields           | payment    |
-      | allocation_month | 2026-10-01 |
+      | company_id       | {COMPANY_ID} |
+      | fields           | payment      |
+      | allocation_month | 2026-10-01   |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1313,7 +1302,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-EXTRA-002 — allocation_month "2026-9-01" (single-digit near boundary) is valid
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1333,9 +1322,9 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields           | payment   |
-      | allocation_month | 2026-9-01 |
+      | company_id       | {COMPANY_ID} |
+      | fields           | payment      |
+      | allocation_month | 2026-9-01    |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -1344,7 +1333,7 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
   Scenario: TC-EXTRA-003 — start_date = 0 (Unix epoch) is a valid timestamp
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
-    
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1395,10 +1384,10 @@ Feature: Loan Detail API — GET /recovery/loan/<loan_id>
     And I set the path parameters:
       | loanId | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | fields     | loan,payment |
-      | start_date | {CAPTURED_TIME_OFFSET:uploadTime:-5:minutes:epoch_seconds}   |
-      | end_date   | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds}    |
+      | company_id | {COMPANY_ID}                                               |
+      | fields     | loan,payment                                               |
+      | start_date | {CAPTURED_TIME_OFFSET:uploadTime:-5:minutes:epoch_seconds} |
+      | end_date   | {CAPTURED_TIME_OFFSET:uploadTime:5:minutes:epoch_seconds}  |
     When I send a "GET" request to "/recovery/loan/{loanId}"
     Then the response status code should be 200
     Then the response body should not be empty

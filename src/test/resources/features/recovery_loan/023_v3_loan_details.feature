@@ -1,4 +1,4 @@
-@api @v3-loan-details @recovery 
+@api @v3-loan-details @recovery
 Feature: V3 Loan Details API
 
 
@@ -27,8 +27,8 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id          | {COMPANY_ID} |
-      | attribute_variables | total_loan_amount  |
+      | company_id          | {COMPANY_ID}      |
+      | attribute_variables | total_loan_amount |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/v3_loan_details_success_schema.json"
@@ -37,7 +37,7 @@ Feature: V3 Loan Details API
 
   @positive @creator @test12345
   Scenario: GET loan details returns variable_data keyed by the requested loan id
- 
+
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
     And I prepare a request
@@ -60,8 +60,8 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | attribute_levels | applicant |
+      | company_id       | {COMPANY_ID} |
+      | attribute_levels | applicant    |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the response body should contain text "{LOAN_ID}"
@@ -90,17 +90,17 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | source               | settlement                                                          |
-      | allocation_month     | {ALLOCATION_MONTH_OFFSET:0}                                         |
-      | attribute_levels     | applicant,guarantors,document_details,loan_variables,ds_variables   |
-      | attribute_variables  | loan_amount,applicant_name                                          |
-      | audit_info           | true                                                                |
-      | nested_audit_info    | true                                                                |
-      | id_info              | true                                                                |
-      | data_type_conversion | true                                                                |
-      | apply_transform      | true                                                                |
-      | trigger              | ops_review                                                          |
+      | company_id           | {COMPANY_ID}                                                      |
+      | source               | settlement                                                        |
+      | allocation_month     | {ALLOCATION_MONTH_OFFSET:0}                                       |
+      | attribute_levels     | applicant,guarantors,document_details,loan_variables,ds_variables |
+      | attribute_variables  | loan_amount,applicant_name                                        |
+      | audit_info           | true                                                              |
+      | nested_audit_info    | true                                                              |
+      | id_info              | true                                                              |
+      | data_type_conversion | true                                                              |
+      | apply_transform      | true                                                              |
+      | trigger              | ops_review                                                        |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/v3_loan_details_success_schema.json"
@@ -130,13 +130,13 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | audit_info           | false |
-      | nested_audit_info    | false |
-      | id_info              | false |
-      | data_type_conversion | false |
-      | apply_transform      | false |
-      | attribute_variables | total_loan_amount  |
+      | company_id           | {COMPANY_ID}      |
+      | audit_info           | false             |
+      | nested_audit_info    | false             |
+      | id_info              | false             |
+      | data_type_conversion | false             |
+      | apply_transform      | false             |
+      | attribute_variables  | total_loan_amount |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
@@ -165,7 +165,7 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id       | {COMPANY_ID}                                                |
       | attribute_levels | allocation_variables,allocation_statuses,allocation_details |
       | allocation_month | {ALLOCATION_MONTH_OFFSET:0}                                 |
       | audit_info       | true                                                        |
@@ -197,11 +197,11 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | source              | calling                                                    |
-      | attribute_variables | applicant_name,total_loan_amount  |
-      | nested_audit_info   | true                                                       |
-      | id_info             | true                                                       |
+      | company_id          | {COMPANY_ID}                     |
+      | source              | calling                          |
+      | attribute_variables | applicant_name,total_loan_amount |
+      | nested_audit_info   | true                             |
+      | id_info             | true                             |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
@@ -230,7 +230,7 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id          | {COMPANY_ID}                     |
       | attribute_variables | applicant_name,total_loan_amount |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
@@ -260,9 +260,9 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | trigger | manual_refresh |
-      | attribute_variables | total_loan_amount  |
+      | company_id          | {COMPANY_ID}      |
+      | trigger             | manual_refresh    |
+      | attribute_variables | total_loan_amount |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
@@ -292,19 +292,18 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | allocation_month | <allocation_month> |
+      | company_id          | {COMPANY_ID}       |
+      | allocation_month    | <allocation_month> |
       | attribute_variables | total_loan_amount  |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
 
     Examples:
-      | allocation_month               |
-      | 2026-1-01                      |
-      | {ALLOCATION_MONTH_OFFSET:2}    |
-      | 2000-1-01                      |
-
+      | allocation_month            |
+      | 2026-1-01                   |
+      | {ALLOCATION_MONTH_OFFSET:2} |
+      | 2000-1-01                   |
 
 
   @positive @creator
@@ -331,9 +330,9 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | source | <source> |
-      | attribute_variables | total_loan_amount  |
+      | company_id          | {COMPANY_ID}      |
+      | source              | <source>          |
+      | attribute_variables | total_loan_amount |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
@@ -377,9 +376,9 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | source | <source> |
-      | attribute_variables | total_loan_amount  |
+      | company_id          | {COMPANY_ID}      |
+      | source              | <source>          |
+      | attribute_variables | total_loan_amount |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
 
@@ -414,7 +413,7 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id       | {COMPANY_ID}      |
       | attribute_levels | <attribute_level> |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
@@ -464,12 +463,11 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id       | {COMPANY_ID}                          |
       | attribute_levels | applicant,co_applicants,payments,tags |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
-
 
 
   @positive @creator
@@ -497,9 +495,9 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | <flag> | <value> |
-      | attribute_variables | total_loan_amount  |
+      | company_id          | {COMPANY_ID}      |
+      | <flag>              | <value>           |
+      | attribute_variables | total_loan_amount |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
 
@@ -515,7 +513,6 @@ Feature: V3 Loan Details API
       | data_type_conversion | false |
       | apply_transform      | true  |
       | apply_transform      | false |
-
 
 
   @positive @edge @creator
@@ -573,8 +570,8 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | attribute_variables |  |
+      | company_id          | {COMPANY_ID} |
+      | attribute_variables |              |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
 
@@ -602,7 +599,7 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id       | {COMPANY_ID}                  |
       | attribute_levels | applicant,applicant,applicant |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
@@ -627,7 +624,7 @@ Feature: V3 Loan Details API
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
-      | authenticationtoken | invalid_token_12345              |
+      | authenticationtoken | invalid_token_12345               |
     And I set the path parameters:
       | loan_id | Loan047122 |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
@@ -641,16 +638,16 @@ Feature: V3 Loan Details API
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
-      | authenticationtoken | {UUID}                           |
+      | authenticationtoken | {UUID}                            |
     And I set the path parameters:
       | loan_id | Loan047122 |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
 
-  
+
   @positive @approver
   Scenario: GET loan details succeeds for a non-creator role (no permission submodule on this route)
-   
+
     Given I authenticate as "approver" slot 0 and remember as "approver0"
     And scenario loan id is unique
     And I authenticate as "creator" slot 0 and remember as "creator0"
@@ -675,11 +672,10 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | attribute_variables | total_loan_amount  |
+      | company_id          | {COMPANY_ID}      |
+      | attribute_variables | total_loan_amount |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
-
 
 
   @negative @creator
@@ -730,14 +726,14 @@ Feature: V3 Loan Details API
     And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
     Examples:
-      | loan_id   |
-      | loan~123  |
-      | loan;123  |
-      | loan'123  |
+      | loan_id  |
+      | loan~123 |
+      | loan;123 |
+      | loan'123 |
 
   @negative @creator
   Scenario Outline: GET loan details with forbidden character in loan_id "<loan_id>" (encoding-sensitive)
-    
+
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
@@ -767,8 +763,8 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | Loan047122 |
     And I set the query parameters:
-      | source | not_a_real_source |
-      | company_id | {COMPANY_ID} |
+      | source     | not_a_real_source |
+      | company_id | {COMPANY_ID}      |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
@@ -785,17 +781,17 @@ Feature: V3 Loan Details API
       | loan_id | Loan047122 |
     And I set the query parameters:
       | attribute_levels | <attribute_levels> |
-      | company_id | {COMPANY_ID} |
+      | company_id       | {COMPANY_ID}       |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
     And the response body should contain field "error.code" as "auto" with value "REC_0003"
 
     Examples:
-      | attribute_levels    |
-      | foobar              |
-      | applicant,foobar    |
-      | APPLICANT_NOT_REAL  |
+      | attribute_levels   |
+      | foobar             |
+      | applicant,foobar   |
+      | APPLICANT_NOT_REAL |
 
   @negative @creator
   Scenario Outline: GET loan details with badly-formatted allocation_month "<allocation_month>" returns validation error
@@ -808,7 +804,7 @@ Feature: V3 Loan Details API
       | loan_id | Loan047122 |
     And I set the query parameters:
       | allocation_month | <allocation_month> |
-      | company_id | {COMPANY_ID} |
+      | company_id       | {COMPANY_ID}       |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/v3_loan_details_error_schema.json"
@@ -816,7 +812,7 @@ Feature: V3 Loan Details API
 
     Examples:
       | allocation_month | # reason                          |
-      | 01-12-2026       | # DD-MM-YYYY instead of YYYY-M-01  |
+      | 01-12-2026       | # DD-MM-YYYY instead of YYYY-M-01 |
       | 2026-12-15       | # day must be 01                  |
       | 2026-13-01       | # month out of range              |
       | 1999-12-01       | # year not 20xx                   |
@@ -834,7 +830,7 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | Loan047122 |
     And I set the query parameters:
-      | <flag> | <value> |
+      | <flag>     | <value>      |
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 400
@@ -848,7 +844,7 @@ Feature: V3 Loan Details API
 
   @negative @boundary @creator
   Scenario: GET loan details with a very long random loan_id
-   
+
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
@@ -878,7 +874,7 @@ Feature: V3 Loan Details API
 
   @negative @creator
   Scenario: GET loan details for a valid-format but non-existent loan id
-  
+
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
@@ -917,7 +913,7 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id       | {COMPANY_ID}                       |
       | attribute_levels | applicant,co_applicants,references |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
@@ -930,12 +926,11 @@ Feature: V3 Loan Details API
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
       | attribute_variables | applicant_name |
-      | company_id | {COMPANY_ID} |
+      | company_id          | {COMPANY_ID}   |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200
     And the v3 loan success envelope should be valid
 
- 
 
   @positive @performance @creator
   Scenario: GET loan details responds within the time threshold
@@ -962,7 +957,7 @@ Feature: V3 Loan Details API
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id          | {COMPANY_ID}   |
       | attribute_variables | applicant_name |
     When I send a "GET" request to "/recovery/v3/loans/{loan_id}"
     Then the response status code should be 200

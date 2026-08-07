@@ -9,8 +9,8 @@ Feature: Loan Stage Config API
   Scenario: Get loan stage config for configured company_id
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan-stage/config"
@@ -27,8 +27,8 @@ Feature: Loan Stage Config API
   Scenario: Loan stage config API response time should be within threshold
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan-stage/config"
@@ -39,7 +39,7 @@ Feature: Loan Stage Config API
   Scenario: API should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan-stage/config"
@@ -50,8 +50,8 @@ Feature: Loan Stage Config API
   Scenario: API should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | invalid_token_12345               |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | invalid_token_12345               |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan-stage/config"
@@ -62,8 +62,8 @@ Feature: Loan Stage Config API
   Scenario: API should fail when company_id query parameter is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     When I send a "GET" request to "/recovery/loan-stage/config"
     Then the response status code should be 403
     And the response should match json schema "schemas/recovery/error/loan_stage_config_error_schema.json"
@@ -72,8 +72,8 @@ Feature: Loan Stage Config API
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/loan-stage/config"
@@ -84,8 +84,8 @@ Feature: Loan Stage Config API
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/loan-stage/config"
@@ -97,8 +97,8 @@ Feature: Loan Stage Config API
   Scenario: TC_LCS_011 — Update the collection stage configuration (PATCH enables normalize stage)
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan-stage/config"
@@ -106,9 +106,9 @@ Feature: Loan Stage Config API
     And I store response field "stage_variable_id" as variable id
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | content-type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | content-type        | application/json                  |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -128,8 +128,8 @@ Feature: Loan Stage Config API
   Scenario: TC_LCS_010 — Create the collection stage configuration (POST)
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/loan-stage/config"
@@ -137,9 +137,9 @@ Feature: Loan Stage Config API
     And I store response field "stage_variable_id" as variable id
     And I prepare a request
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | content-type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | content-type        | application/json                  |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -183,9 +183,9 @@ Feature: Loan Stage Config API
   Scenario: TC_LCS_015 — Collection stage config write is permission-gated
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | content-type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | content-type        | application/json                  |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -203,8 +203,8 @@ Feature: Loan Stage Config API
   Scenario: TC_LCS_016 — IDOR: cannot read the stage config of an unassigned company
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {UUID} |
     When I send a "GET" request to "/recovery/loan-stage/config"

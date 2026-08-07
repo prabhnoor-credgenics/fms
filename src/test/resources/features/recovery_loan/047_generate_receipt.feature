@@ -2,7 +2,6 @@
 Feature: Generate Receipt — POST /recovery/generate/receipt
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -145,12 +144,12 @@ Feature: Generate Receipt — POST /recovery/generate/receipt
     And the generate receipt validation error should be valid
 
     Examples:
-      | missing        | body                                                                                                                       |
-      | company_id     | { "identifier": "RCPT-1", "data": { "amount": 1 }, "is_cancelled": false, "receipt_source": "platform" }                    |
-      | identifier     | { "company_id": "{COMPANY_ID}", "data": { "amount": 1 }, "is_cancelled": false, "receipt_source": "platform" }              |
-      | data           | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "is_cancelled": false, "receipt_source": "platform" }               |
-      | is_cancelled   | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "data": { "amount": 1 }, "receipt_source": "platform" }             |
-      | receipt_source | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "data": { "amount": 1 }, "is_cancelled": false }                    |
+      | missing        | body                                                                                                            |
+      | company_id     | { "identifier": "RCPT-1", "data": { "amount": 1 }, "is_cancelled": false, "receipt_source": "platform" }        |
+      | identifier     | { "company_id": "{COMPANY_ID}", "data": { "amount": 1 }, "is_cancelled": false, "receipt_source": "platform" }  |
+      | data           | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "is_cancelled": false, "receipt_source": "platform" }   |
+      | is_cancelled   | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "data": { "amount": 1 }, "receipt_source": "platform" } |
+      | receipt_source | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "data": { "amount": 1 }, "is_cancelled": false }        |
 
   @negative @creator
   Scenario: data present but null returns 400 (REC_RT007)
@@ -186,10 +185,10 @@ Feature: Generate Receipt — POST /recovery/generate/receipt
     And the generate receipt validation error should be valid
 
     Examples:
-      | case                        | body                                                                                                                           |
-      | receipt_source invalid enum | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "data": { "amount": 1 }, "is_cancelled": false, "receipt_source": "paper" } |
+      | case                        | body                                                                                                                                     |
+      | receipt_source invalid enum | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "data": { "amount": 1 }, "is_cancelled": false, "receipt_source": "paper" }      |
       | is_cancelled invalid bool   | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "data": { "amount": 1 }, "is_cancelled": "maybe", "receipt_source": "platform" } |
-      | data string not object      | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "data": "x", "is_cancelled": false, "receipt_source": "platform" }       |
+      | data string not object      | { "company_id": "{COMPANY_ID}", "identifier": "RCPT-1", "data": "x", "is_cancelled": false, "receipt_source": "platform" }               |
 
 
   @negative @creator
@@ -229,7 +228,7 @@ Feature: Generate Receipt — POST /recovery/generate/receipt
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
-      | Content-Type        | application/json                                  |
+      | Content-Type        | application/json                                 |
       | authenticationtoken | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.expired.sig |
     And I set the request body:
       """

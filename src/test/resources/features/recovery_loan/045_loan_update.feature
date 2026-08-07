@@ -2,7 +2,6 @@
 Feature: Loan Update — PATCH /recovery/loan/<loan_id>
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
@@ -19,7 +18,6 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
     And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
-
 
 
   @positive @smoke @creator
@@ -187,24 +185,24 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
     Then the response status code should be 200
 
     Examples:
-      | source               |
-      | platform             |
-      | quick_upload         |
-      | quick_update         |
-      | calling-service      |
-      | communication-service|
-      | legal-service        |
-      | notice-service       |
-      | fos-service          |
-      | fos_app              |
-      | upload_excel         |
-      | update_excel         |
-      | upload               |
-      | api                  |
-      | bulk_api_encr        |
-      | unknown              |
-      | priority_queue       |
-      | totally_made_up      |
+      | source                |
+      | platform              |
+      | quick_upload          |
+      | quick_update          |
+      | calling-service       |
+      | communication-service |
+      | legal-service         |
+      | notice-service        |
+      | fos-service           |
+      | fos_app               |
+      | upload_excel          |
+      | update_excel          |
+      | upload                |
+      | api                   |
+      | bulk_api_encr         |
+      | unknown               |
+      | priority_queue        |
+      | totally_made_up       |
 
   @positive @creator
   Scenario Outline: append is parsed leniently — value "<value>" still returns 200
@@ -225,15 +223,15 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
     Then the response status code should be 200
 
     Examples:
-      | value            |
-      | true             |
-      | false            |
-      | TRUE             |
-      | 1                |
-      | 0                |
-      | yes              |
-      | maybe            |
-      | {RANDOM_STRING:6}|
+      | value             |
+      | true              |
+      | false             |
+      | TRUE              |
+      | 1                 |
+      | 0                 |
+      | yes               |
+      | maybe             |
+      | {RANDOM_STRING:6} |
 
   @positive @creator @multistep
   Scenario: Update then read back reflects the new value (PATCH then GET) returns 200
@@ -344,7 +342,7 @@ Feature: Loan Update — PATCH /recovery/loan/<loan_id>
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request headers:
-      | Content-Type        | application/json                                  |
+      | Content-Type        | application/json                                 |
       | authenticationtoken | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.expired.sig |
     And I set the request body:
       """

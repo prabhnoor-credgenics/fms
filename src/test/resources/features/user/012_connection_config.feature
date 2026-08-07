@@ -2,7 +2,6 @@
 Feature: Connection Configuration — GET /user/connection-config/<connection_id>
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 

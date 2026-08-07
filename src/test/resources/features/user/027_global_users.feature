@@ -477,7 +477,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
   Scenario: XSS payload in search_query returns 200
     Given I prepare a request
     And I set the query parameters:
-      | search_type  | name                      |
+      | search_type  | name                |
       | search_query | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |

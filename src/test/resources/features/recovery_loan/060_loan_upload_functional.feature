@@ -268,42 +268,42 @@ Feature: Loan Upload — functional coverage & per-field matrix (POST /recovery/
     Then the response status code should be one of "201,400"
 
     Examples:
-      | tc         | field                             | value                |
-      | TC_LUU_071 | applicant_aadhar_number           | AutoQA-Aadhaar_01    |
-      | TC_LUU_075 | applicant_gender                  | male                 |
-      | TC_LUU_076 | applicant_language                | english              |
-      | TC_LUU_077 | applicant_legal_heir              | AutoQA Heir          |
-      | TC_LUU_078 | applicant_name                    | AutoQA Name          |
-      | TC_LUU_079 | applicant_notice_reference_number | AutoQA-NRN-01        |
-      | TC_LUU_080 | applicant_occupation              | Engineer             |
-      | TC_LUU_081 | applicant_pan_number              | ABCDE1234F           |
-      | TC_LUU_082 | applicant_prefix                  | Mr                   |
-      | TC_LUU_083 | business_name                     | AutoQA Traders       |
-      | TC_LUU_084 | channel_partner                   | AutoQA Partner       |
-      | TC_LUU_102 | credit_account_holder_name        | AutoQA Holder        |
-      | TC_LUU_103 | credit_account_holder_type        | savings              |
-      | TC_LUU_105 | credit_bank_ifsc_code             | HDFC0001234          |
-      | TC_LUU_106 | credit_bank_name                  | HDFC Bank            |
-      | TC_LUU_107 | engine_number                     | ENG-AUTO-01          |
-      | TC_LUU_108 | group_id                          | GRP-AUTO-01          |
-      | TC_LUU_110 | loan_branch                       | AutoQA Branch        |
+      | tc         | field                             | value                 |
+      | TC_LUU_071 | applicant_aadhar_number           | AutoQA-Aadhaar_01     |
+      | TC_LUU_075 | applicant_gender                  | male                  |
+      | TC_LUU_076 | applicant_language                | english               |
+      | TC_LUU_077 | applicant_legal_heir              | AutoQA Heir           |
+      | TC_LUU_078 | applicant_name                    | AutoQA Name           |
+      | TC_LUU_079 | applicant_notice_reference_number | AutoQA-NRN-01         |
+      | TC_LUU_080 | applicant_occupation              | Engineer              |
+      | TC_LUU_081 | applicant_pan_number              | ABCDE1234F            |
+      | TC_LUU_082 | applicant_prefix                  | Mr                    |
+      | TC_LUU_083 | business_name                     | AutoQA Traders        |
+      | TC_LUU_084 | channel_partner                   | AutoQA Partner        |
+      | TC_LUU_102 | credit_account_holder_name        | AutoQA Holder         |
+      | TC_LUU_103 | credit_account_holder_type        | savings               |
+      | TC_LUU_105 | credit_bank_ifsc_code             | HDFC0001234           |
+      | TC_LUU_106 | credit_bank_name                  | HDFC Bank             |
+      | TC_LUU_107 | engine_number                     | ENG-AUTO-01           |
+      | TC_LUU_108 | group_id                          | GRP-AUTO-01           |
+      | TC_LUU_110 | loan_branch                       | AutoQA Branch         |
       | TC_LUU_112 | loan_nbfc_cin                     | U65990MH2010PLC000001 |
-      | TC_LUU_113 | loan_nbfc_name                    | AutoQA NBFC          |
-      | TC_LUU_114 | loan_region                       | West                 |
-      | TC_LUU_115 | loan_regional_manager_name        | AutoQA RM            |
-      | TC_LUU_116 | loan_type                         | Personal Loan        |
-      | TC_LUU_117 | loan_source_branch_address        | AutoQA Source Addr   |
-      | TC_LUU_118 | loan_zone                         | Zone-A               |
-      | TC_LUU_119 | make_and_model                    | AutoQA Model X       |
-      | TC_LUU_120 | merchant_name                     | AutoQA Merchant      |
-      | TC_LUU_121 | notice_delivery_partner           | AutoQA Courier       |
-      | TC_LUU_122 | payment_mode                      | UPI                  |
-      | TC_LUU_123 | product_type                      | Unsecured            |
-      | TC_LUU_124 | rbi_stage                         | Stage 1              |
-      | TC_LUU_125 | receipt_number                    | RCPT-AUTO-01         |
-      | TC_LUU_136 | security_type                     | Vehicle              |
-      | TC_LUU_137 | tags                              | AutoQA-Tag           |
-      | TC_LUU_139 | vehicle_registration_number       | MH01AB1234           |
+      | TC_LUU_113 | loan_nbfc_name                    | AutoQA NBFC           |
+      | TC_LUU_114 | loan_region                       | West                  |
+      | TC_LUU_115 | loan_regional_manager_name        | AutoQA RM             |
+      | TC_LUU_116 | loan_type                         | Personal Loan         |
+      | TC_LUU_117 | loan_source_branch_address        | AutoQA Source Addr    |
+      | TC_LUU_118 | loan_zone                         | Zone-A                |
+      | TC_LUU_119 | make_and_model                    | AutoQA Model X        |
+      | TC_LUU_120 | merchant_name                     | AutoQA Merchant       |
+      | TC_LUU_121 | notice_delivery_partner           | AutoQA Courier        |
+      | TC_LUU_122 | payment_mode                      | UPI                   |
+      | TC_LUU_123 | product_type                      | Unsecured             |
+      | TC_LUU_124 | rbi_stage                         | Stage 1               |
+      | TC_LUU_125 | receipt_number                    | RCPT-AUTO-01          |
+      | TC_LUU_136 | security_type                     | Vehicle               |
+      | TC_LUU_137 | tags                              | AutoQA-Tag            |
+      | TC_LUU_139 | vehicle_registration_number       | MH01AB1234            |
 
 
   @positive @creator @field-matrix @link
@@ -324,7 +324,7 @@ Feature: Loan Upload — functional coverage & per-field matrix (POST /recovery/
     Then the response status code should be one of "201,400"
 
     Examples:
-      | tc         | field               | value                        |
+      | tc         | field                | value                       |
       | TC_LUU_206 | applicant_photo_link | https://example.com/p.jpg   |
       | TC_LUU_208 | payment_link         | https://example.com/pay/123 |
 
@@ -346,12 +346,12 @@ Feature: Loan Upload — functional coverage & per-field matrix (POST /recovery/
     Then the response status code should be one of "201,400"
 
     Examples:
-      | tc         | field                     | value      |
-      | TC_LUU_210 | applicant_dob             | 1990-05-20 |
-      | TC_LUU_211 | client_loan_sanction_date | 2023-06-01 |
-      | TC_LUU_218 | loan_end_date             | 2027-06-01 |
-      | TC_LUU_219 | notice_date               | 2024-03-10 |
-      | TC_LUU_214 | defaults[0].date_of_default | 2024-01-01 |
+      | tc         | field                        | value                       |
+      | TC_LUU_210 | applicant_dob                | 1990-05-20                  |
+      | TC_LUU_211 | client_loan_sanction_date    | 2023-06-01                  |
+      | TC_LUU_218 | loan_end_date                | 2027-06-01                  |
+      | TC_LUU_219 | notice_date                  | 2024-03-10                  |
+      | TC_LUU_214 | defaults[0].date_of_default  | 2024-01-01                  |
       | TC_LUU_213 | defaults[0].allocation_month | {ALLOCATION_MONTH_OFFSET:0} |
 
 
@@ -373,28 +373,28 @@ Feature: Loan Upload — functional coverage & per-field matrix (POST /recovery/
     Then the response status code should be one of "201,400"
 
     Examples:
-      | tc         | field                                  | value  |
-      | TC_LUU_159 | applicant_cibil_score                  | 750    |
-      | TC_LUU_165 | loan_tenure                            | 24     |
-      | TC_LUU_166 | payment_link_expiry                    | 7      |
-      | TC_LUU_161 | defaults[0].allocation_dpd_value       | 30     |
-      | TC_LUU_162 | defaults[0].default_emi_number         | 2      |
-      | TC_LUU_168 | defaults[0].utilisation                | 12.5   |
-      | TC_LUU_170 | applicant_monthly_income               | 40000  |
-      | TC_LUU_171 | defaults[0].advance_payment            | 500    |
-      | TC_LUU_172 | defaults[0].total_outstanding_amount   | 5000   |
-      | TC_LUU_173 | defaults[0].settlement_amount          | 4500   |
-      | TC_LUU_174 | defaults[0].expected_emi_principal_amount | 800 |
-      | TC_LUU_175 | defaults[0].expected_emi_interest_amount  | 200 |
-      | TC_LUU_176 | defaults[0].expected_emi               | 1000   |
-      | TC_LUU_177 | defaults[0].other_penalty              | 100    |
-      | TC_LUU_178 | defaults[0].client_amount_recovered    | 300    |
-      | TC_LUU_179 | defaults[0].total_claim_amount         | 1000   |
-      | TC_LUU_180 | defaults[0].late_fee                   | 50     |
-      | TC_LUU_181 | defaults[0].principal_outstanding_amount | 3500 |
-      | TC_LUU_183 | emi_amount                             | 1000   |
-      | TC_LUU_184 | total_loan_amount                      | 50000  |
-      | TC_LUU_186 | interest_on_loan                       | 12.5   |
+      | tc         | field                                     | value |
+      | TC_LUU_159 | applicant_cibil_score                     | 750   |
+      | TC_LUU_165 | loan_tenure                               | 24    |
+      | TC_LUU_166 | payment_link_expiry                       | 7     |
+      | TC_LUU_161 | defaults[0].allocation_dpd_value          | 30    |
+      | TC_LUU_162 | defaults[0].default_emi_number            | 2     |
+      | TC_LUU_168 | defaults[0].utilisation                   | 12.5  |
+      | TC_LUU_170 | applicant_monthly_income                  | 40000 |
+      | TC_LUU_171 | defaults[0].advance_payment               | 500   |
+      | TC_LUU_172 | defaults[0].total_outstanding_amount      | 5000  |
+      | TC_LUU_173 | defaults[0].settlement_amount             | 4500  |
+      | TC_LUU_174 | defaults[0].expected_emi_principal_amount | 800   |
+      | TC_LUU_175 | defaults[0].expected_emi_interest_amount  | 200   |
+      | TC_LUU_176 | defaults[0].expected_emi                  | 1000  |
+      | TC_LUU_177 | defaults[0].other_penalty                 | 100   |
+      | TC_LUU_178 | defaults[0].client_amount_recovered       | 300   |
+      | TC_LUU_179 | defaults[0].total_claim_amount            | 1000  |
+      | TC_LUU_180 | defaults[0].late_fee                      | 50    |
+      | TC_LUU_181 | defaults[0].principal_outstanding_amount  | 3500  |
+      | TC_LUU_183 | emi_amount                                | 1000  |
+      | TC_LUU_184 | total_loan_amount                         | 50000 |
+      | TC_LUU_186 | interest_on_loan                          | 12.5  |
 
 
   @positive @creator @field-matrix @bool

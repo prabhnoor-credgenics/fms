@@ -5,7 +5,6 @@ Feature: Loan Upload — additional (company-created) variable types
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
 
-
   @positive @creator @additional-variable
   Scenario Outline: <tc> — Additional "<type>" variable (allocation=<alloc>) uploads and reads back
     Given scenario loan id is unique

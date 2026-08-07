@@ -2,12 +2,11 @@
 Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
 
 
-
   @positive @smoke @creator
   Scenario: GET structured loan details with no fields param defaults to "all"
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
- 
+
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -252,8 +251,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID}              |
-      | fields     | loan,applicant,recovery   |
+      | company_id | {COMPANY_ID}            |
+      | fields     | loan,applicant,recovery |
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
@@ -348,15 +347,14 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}                                  |
-      | fields           | loan,applicant,recovery,additional_details    |
-      | allocation_month | {ALLOCATION_MONTH_OFFSET:0}                   |
+      | company_id       | {COMPANY_ID}                               |
+      | fields           | loan,applicant,recovery,additional_details |
+      | allocation_month | {ALLOCATION_MONTH_OFFSET:0}                |
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
     And the response body should contain field "message" as "auto" with value "success"
 
- 
 
   @positive @edge @creator
   Scenario: GET structured loan details with an unknown fields token is silently ignored
@@ -468,7 +466,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     Then the response status code should be 400
     And the response body should not be empty
 
-  
+
   @positive @performance @creator
   Scenario: GET structured loan details responds within the time threshold
     Given I authenticate as "creator" slot 0 and remember as "creator0"

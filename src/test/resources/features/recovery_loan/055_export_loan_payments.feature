@@ -2,7 +2,6 @@
 Feature: Export Loan Payments — POST /recovery/export/bulk/loan-payments
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -217,10 +216,10 @@ Feature: Export Loan Payments — POST /recovery/export/bulk/loan-payments
     And the "export_loan_payments" success response should be valid
 
     Examples:
-      | sort                   |
-      | created_desc           |
-      | total_claim_amount_desc|
-      | date_of_default_asc    |
+      | sort                    |
+      | created_desc            |
+      | total_claim_amount_desc |
+      | date_of_default_asc     |
 
   @positive @creator
   Scenario: Pagination (page_number + page_size) returns 200
@@ -349,11 +348,11 @@ Feature: Export Loan Payments — POST /recovery/export/bulk/loan-payments
     And the "export_loan_payments" failure response should be valid
 
     Examples:
-      | case                  | body                                     |
-      | invalid response_type | { "response_type": "xml" }               |
-      | invalid search_type   | { "search_type": "bogus", "query": "x" } |
-      | invalid sort          | { "sort": "bogus_sort" }                 |
-      | unparseable start_date| { "start_date": "notadate" }             |
+      | case                   | body                                     |
+      | invalid response_type  | { "response_type": "xml" }               |
+      | invalid search_type    | { "search_type": "bogus", "query": "x" } |
+      | invalid sort           | { "sort": "bogus_sort" }                 |
+      | unparseable start_date | { "start_date": "notadate" }             |
 
 
   @negative @creator
@@ -393,7 +392,7 @@ Feature: Export Loan Payments — POST /recovery/export/bulk/loan-payments
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
-      | Content-Type        | application/json                                  |
+      | Content-Type        | application/json                                 |
       | authenticationtoken | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.expired.sig |
     And I set the request body:
       """

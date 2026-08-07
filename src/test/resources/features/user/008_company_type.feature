@@ -2,7 +2,6 @@
 Feature: Company Type — GET /user/company-type
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 

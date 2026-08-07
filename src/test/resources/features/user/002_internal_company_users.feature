@@ -2,7 +2,6 @@
 Feature: Internal Company Users — POST /user/internal/company-users/
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -218,18 +217,18 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     And the "internal_company_users" success response should be valid
 
     Examples:
-      | profession                            |
-      | advocate                              |
-      | area manager                          |
-      | collection manager                    |
-      | field executive                       |
-      | field collection manager              |
-      | field and telecalling executive       |
-      | field and telecalling supervisor      |
-      | lawyer                                |
-      | telecalling                           |
-      | telecalling supervisor                |
-      | other                                 |
+      | profession                       |
+      | advocate                         |
+      | area manager                     |
+      | collection manager               |
+      | field executive                  |
+      | field collection manager         |
+      | field and telecalling executive  |
+      | field and telecalling supervisor |
+      | lawyer                           |
+      | telecalling                      |
+      | telecalling supervisor           |
+      | other                            |
 
   @positive @creator
   Scenario: filters.user_ids + deselected_user_ids returns 200
@@ -731,8 +730,8 @@ Feature: Internal Company Users — POST /user/internal/company-users/
     And the "internal_company_users" success response should be valid
 
     Examples:
-      | payload                   |
-      | ' OR '1'='1               |
+      | payload             |
+      | ' OR '1'='1         |
       | <xss>alert(1)</xss> |
 
   @negative @creator

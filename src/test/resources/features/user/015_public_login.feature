@@ -1,7 +1,6 @@
 @api @user @public-login
 Feature: Public Login — POST /user/public/login
 
- 
 
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"

@@ -2,8 +2,6 @@
 Feature: Cross-slot loan visibility in all-loans
 
 
-
-
   @manual @creator
   Scenario: A loan uploaded by slot 0 is visible in all-loans to the slot 1 user (reports to slot 1)
     Given scenario loan id is unique

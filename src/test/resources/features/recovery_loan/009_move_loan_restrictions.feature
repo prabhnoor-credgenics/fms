@@ -21,7 +21,6 @@ Feature: Move Loan Restriction
     And the response body should contain field "success" as "auto" with value "true"
 
 
-
   Scenario: Verify get move loan restriction variables request
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
@@ -44,9 +43,9 @@ Feature: Move Loan Restriction
     And the response body should contain field "data.global_status[0]"
     And the response body should contain field "data.is_move_loan_restriction_enabled"
     And the response body should contain field "message_template"
-  
-  
- @negative @creator
+
+
+  @negative @creator
   Scenario: API should fail when company_id query parameter is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
@@ -56,18 +55,20 @@ Feature: Move Loan Restriction
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" as "auto" with value "invalid company id"
+
   @negative @creator
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-     And the response body should contain field "message" as "auto" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
+
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -79,5 +80,5 @@ Feature: Move Loan Restriction
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
- And the response body should contain field "message" as "auto" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"
   

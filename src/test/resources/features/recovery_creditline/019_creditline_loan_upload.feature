@@ -355,35 +355,35 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     Then the response status code should be 201
 
     Examples:
-      | field_path                                    | allowed_value            |
-      | client_customer_id                            | cust_01-AZ               |
-      | group_id                                      | group_01-A               |
-      | center_name                                   | Center-1 (Noida) @Sector |
-      | loan_region                                   | North-East (Zone-1)      |
-      | loan_zone                                     | Zone-2 (East)            |
-      | loan_branch                                   | Branch-01 (Noida)        |
-      | loan_regional_manager_name                    | Rajesh.Kumar             |
-      | loan_source_branch_address                    | S-48/Sector-62 (Noida)   |
-      | loan_nbfc_name                                | NBFC-Name (India)        |
-      | notice_delivery_partner                       | Blue-Dart (India)        |
-      | product_type                                  | Car-Loan/Personal        |
-      | loan_type                                     | Home-Loan                |
-      | business_name                                 | Biz_Name-1@India         |
-      | channel_partner                               | Partner_01#India         |
-      | credit_account_holder_name                    | Aman.Sharma              |
-      | credit_bank_name                              | State_Bank@India         |
-      | merchant_name                                 | PayPal.India             |
-      | applicant_name                                | Ramesh.Kumar             |
-      | applicant_occupation                          | Govt-Employee (Group-A)  |
-      | applicant_address[0].applicant_address_text   | H-12/45, Sector-62       |
-      | applicant_address[0].applicant_city           | New-Delhi                |
-      | applicant_address[0].applicant_landmark       | Near-Metro/Gate-3        |
-      | co_applicant[0].co_applicant_name             | Suresh.Verma             |
-      | document_details[0].document_number           | DOC-123/2024             |
-      | document_details[0].document_bounce_bank_address | H-No-10, New-Delhi    |
-      | loan_guarantor[0].loan_guarantor_name         | Mohan.Lal                |
-      | references[0].name                            | Test.Reference           |
-      | references[0].relation_with_applicant         | Father                   |
+      | field_path                                       | allowed_value            |
+      | client_customer_id                               | cust_01-AZ               |
+      | group_id                                         | group_01-A               |
+      | center_name                                      | Center-1 (Noida) @Sector |
+      | loan_region                                      | North-East (Zone-1)      |
+      | loan_zone                                        | Zone-2 (East)            |
+      | loan_branch                                      | Branch-01 (Noida)        |
+      | loan_regional_manager_name                       | Rajesh.Kumar             |
+      | loan_source_branch_address                       | S-48/Sector-62 (Noida)   |
+      | loan_nbfc_name                                   | NBFC-Name (India)        |
+      | notice_delivery_partner                          | Blue-Dart (India)        |
+      | product_type                                     | Car-Loan/Personal        |
+      | loan_type                                        | Home-Loan                |
+      | business_name                                    | Biz_Name-1@India         |
+      | channel_partner                                  | Partner_01#India         |
+      | credit_account_holder_name                       | Aman.Sharma              |
+      | credit_bank_name                                 | State_Bank@India         |
+      | merchant_name                                    | PayPal.India             |
+      | applicant_name                                   | Ramesh.Kumar             |
+      | applicant_occupation                             | Govt-Employee (Group-A)  |
+      | applicant_address[0].applicant_address_text      | H-12/45, Sector-62       |
+      | applicant_address[0].applicant_city              | New-Delhi                |
+      | applicant_address[0].applicant_landmark          | Near-Metro/Gate-3        |
+      | co_applicant[0].co_applicant_name                | Suresh.Verma             |
+      | document_details[0].document_number              | DOC-123/2024             |
+      | document_details[0].document_bounce_bank_address | H-No-10, New-Delhi       |
+      | loan_guarantor[0].loan_guarantor_name            | Mohan.Lal                |
+      | references[0].name                               | Test.Reference           |
+      | references[0].relation_with_applicant            | Father                   |
 
 
   @datatype-validation @text @special-characters @positive @creditline @creator @not-enforced
@@ -520,11 +520,11 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     Then the response status code should be 201
 
     Examples:
-      | field_path                              | value                   |
-      | applicant_address[0].applicant_pincode  | 1234                    |
-      | applicant_address[0].applicant_pincode  | 123456789               |
-      | applicant_photo_link                    | www.example.com         |
-      | applicant_photo_link                    | http://invalid..url.com |
+      | field_path                             | value                   |
+      | applicant_address[0].applicant_pincode | 1234                    |
+      | applicant_address[0].applicant_pincode | 123456789               |
+      | applicant_photo_link                   | www.example.com         |
+      | applicant_photo_link                   | http://invalid..url.com |
 
 
   @datatype-validation @text @positive @creditline @creator

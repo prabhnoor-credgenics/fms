@@ -9,8 +9,8 @@ Feature: Global Status API
   Scenario: Get global statuses for configured company_id
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/global-status"
@@ -26,8 +26,8 @@ Feature: Global Status API
   Scenario: Global status API response time should be within threshold
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/global-status"
@@ -38,7 +38,7 @@ Feature: Global Status API
   Scenario: API should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/global-status"
@@ -49,8 +49,8 @@ Feature: Global Status API
   Scenario: API should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | invalid_token_12345               |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | invalid_token_12345               |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/global-status"
@@ -61,8 +61,8 @@ Feature: Global Status API
   Scenario: API should fail when company_id query parameter is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     When I send a "GET" request to "/recovery/global-status"
     Then the response status code should be 403
     And the response should match json schema "schemas/global_status/error/global_status_error_schema.json"
@@ -71,8 +71,8 @@ Feature: Global Status API
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | invalid-company-id |
     When I send a "GET" request to "/recovery/global-status"
@@ -83,8 +83,8 @@ Feature: Global Status API
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/global-status"
@@ -95,8 +95,8 @@ Feature: Global Status API
   Scenario: Global status response should contain valid mandatory fields
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/global-status"
@@ -110,8 +110,8 @@ Feature: Global Status API
   Scenario: Global status message should confirm dispositions fetched for valid company
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/global-status"
@@ -123,11 +123,11 @@ Feature: Global Status API
   Scenario: Global status should return 200 when an unknown query parameter is supplied
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id     | {COMPANY_ID} |
-      | unknown_param  | some_value   |
+      | company_id    | {COMPANY_ID} |
+      | unknown_param | some_value   |
     When I send a "GET" request to "/recovery/global-status"
     Then the response status code should be 200
     And the response body should not be empty
@@ -136,8 +136,8 @@ Feature: Global Status API
   Scenario: Global status response should be valid JSON content type
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/global-status"
@@ -148,10 +148,10 @@ Feature: Global Status API
   Scenario: API should fail when company_id query parameter is empty
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id | |
+      | company_id |  |
     When I send a "GET" request to "/recovery/global-status"
     Then the response status code should be 403
     And the response should match json schema "schemas/global_status/error/global_status_error_schema.json"
@@ -160,8 +160,8 @@ Feature: Global Status API
   Scenario: API should fail when company_id contains a SQL injection payload
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | ' OR '1'='1 |
     When I send a "GET" request to "/recovery/global-status"

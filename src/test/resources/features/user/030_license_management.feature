@@ -73,17 +73,17 @@ Feature: License Management (per-company per-profession license configuration)
     And the response body should not be empty
 
     Examples:
-      | profession                         |
-      | advocate                           |
-      | area manager                       |
-      | collection manager                 |
-      | field executive                    |
-      | field collection manager           |
-      | field and telecalling executive    |
-      | field and telecalling supervisor   |
-      | telecalling                        |
-      | telecalling supervisor             |
-      | other                              |
+      | profession                       |
+      | advocate                         |
+      | area manager                     |
+      | collection manager               |
+      | field executive                  |
+      | field collection manager         |
+      | field and telecalling executive  |
+      | field and telecalling supervisor |
+      | telecalling                      |
+      | telecalling supervisor           |
+      | other                            |
 
   @positive @chief-admin @edge
   Scenario: TC_LIC_054 — Min equal to Max passes max>=min validation

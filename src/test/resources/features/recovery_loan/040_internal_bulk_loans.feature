@@ -2,7 +2,6 @@
 Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
@@ -599,23 +598,23 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
     Then the response status code should be 200
 
     Examples:
-      | level                            |
-      | applicant                        |
-      | co_applicants                    |
-      | references                       |
-      | guarantors                       |
-      | document_details                 |
-      | loan_additional_variables        |
-      | loan_variables                   |
-      | loan_statuses                    |
-      | allocation_statuses              |
-      | applicant_addresses              |
-      | allocation_variables             |
-      | allocation_additional_variables  |
-      | payments                         |
-      | tags                             |
-      | ds_variables                     |
-      | allocation_details               |
+      | level                           |
+      | applicant                       |
+      | co_applicants                   |
+      | references                      |
+      | guarantors                      |
+      | document_details                |
+      | loan_additional_variables       |
+      | loan_variables                  |
+      | loan_statuses                   |
+      | allocation_statuses             |
+      | applicant_addresses             |
+      | allocation_variables            |
+      | allocation_additional_variables |
+      | payments                        |
+      | tags                            |
+      | ds_variables                    |
+      | allocation_details              |
 
   @positive @creator @multistep
   Scenario: Upload then read back asserts the loan is returned with id_info
@@ -765,7 +764,6 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | ~  |
 
 
-
   @negative @creator
   Scenario: Missing authenticationtoken header is rejected
     Given scenario loan id is unique
@@ -845,7 +843,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
-      | Content-Type        | application/json                                  |
+      | Content-Type        | application/json                                 |
       | authenticationtoken | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.expired.sig |
     And I set the request body:
       """
@@ -1165,13 +1163,12 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
     Examples:
       | allocation_month | # reason                                  |
-      | 01-12-2026       | # DD-MM-YYYY instead of YYYY-M-01          |
+      | 01-12-2026       | # DD-MM-YYYY instead of YYYY-M-01         |
       | 2026-13-01       | # month out of range                      |
       | 2026-6-15        | # day must be 01                          |
       | 2026-06-01       | # leading-zero month not allowed by regex |
       | 2026/6/01        | # wrong separators                        |
       | notadate         | # non-date string                         |
-
 
 
   @negative @creator

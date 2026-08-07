@@ -34,7 +34,7 @@ Feature: AI Rules Variables
   Scenario: API should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/ai-rules/variables"
@@ -68,8 +68,8 @@ Feature: AI Rules Variables
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/ai-rules/variables"
@@ -105,8 +105,8 @@ Feature: AI Rules Variables
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/ai-rules/variables"
@@ -126,7 +126,6 @@ Feature: AI Rules Variables
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" as "auto" with value "Invalid company_id"
-
 
 
   @positive
@@ -402,7 +401,7 @@ Feature: AI Rules Variables
   Scenario: Variables values API should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
       | key        | recovery_status                      |

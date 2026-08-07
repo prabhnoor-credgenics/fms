@@ -46,7 +46,7 @@ Feature: Credit-line Portfolio Listing — GET /recovery/all-loans
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
-      | authenticationtoken | {AUTH_TOKEN:creatorc0}                      |
+      | authenticationtoken | {AUTH_TOKEN:creatorc0}            |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creatorc0} |
     When I send a "GET" request to "/recovery/all-loans"
@@ -59,11 +59,11 @@ Feature: Credit-line Portfolio Listing — GET /recovery/all-loans
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
-      | authenticationtoken | {AUTH_TOKEN:creatorc0}                      |
+      | authenticationtoken | {AUTH_TOKEN:creatorc0}            |
     And I set the query parameters:
-      | company_id  | {COMPANY_ID:creatorc0}  |
-      | page_number | <page_number> |
-      | page_size   | <page_size>   |
+      | company_id  | {COMPANY_ID:creatorc0} |
+      | page_number | <page_number>          |
+      | page_size   | <page_size>            |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
     And the response body should not be empty
