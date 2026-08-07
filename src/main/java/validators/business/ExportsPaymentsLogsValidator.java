@@ -8,7 +8,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-
 public class ExportsPaymentsLogsValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(ExportsPaymentsLogsValidator.class);

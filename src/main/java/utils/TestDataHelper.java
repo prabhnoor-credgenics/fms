@@ -19,14 +19,14 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
 
-
 public class TestDataHelper {
     private static final Logger logger = LogManager.getLogger(TestDataHelper.class);
     private static final Random RANDOM = new Random();
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String NUMBERS = "0123456789";
     private static final String ALPHANUMERIC = ALPHABET + NUMBERS;
-
+    private static final DateTimeFormatter ALLOCATION_MONTH_OFFSET_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-M-dd");
 
     public static final List<String> TIME_FORMATS = List.of(
             "epoch_seconds",
@@ -81,33 +81,6 @@ public class TestDataHelper {
         return LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 
-    /**
-     * Renders a single instant (given as milliseconds since the Unix epoch) into a String
-     * using one of the supported {@code format} keys.
-     *
-     * <p>Every format returns a {@link String}; the table documents the <b>shape / type</b>
-     * of that string so a caller knows exactly what a given input produces. Date/time keys
-     * (all except {@code iso_instant}) are rendered in the JVM's default time zone;
-     * {@code iso_instant} is rendered in UTC.</p>
-     *
-     * <pre>
-     * Input (format)     | Example return value    | Meaning &amp; underlying type of the string
-     * -------------------|-------------------------|-----------------------------------------------------
-     * "epoch_seconds"    | "1767225600"            | Unix time in SECONDS      — 10-digit numeric string
-     * "epoch_millis"     | "1767225600000"         | Unix time in MILLISECONDS — 13-digit numeric string
-     * "iso_date"         | "2026-07-12"            | Local calendar date, yyyy-MM-dd
-     * "iso_datetime"     | "2026-07-12T14:30:00"   | Local date-time, ISO_LOCAL_DATE_TIME (no zone)
-     * "iso_instant"      | "2026-07-12T09:00:00Z"  | UTC instant, ISO-8601 with trailing 'Z'
-     * "date_time"        | "2026-07-12 14:30:00"   | Local date-time, space separator
-     * "year_month"       | "2026-07"               | Local year-month, yyyy-MM
-     * "month_first_day"  | "2026-07-01"            | First day of the instant's local month, yyyy-MM-dd
-     * </pre>
-     *
-     * @param epochMillis the instant to format, in milliseconds since 1970-01-01T00:00:00Z
-     * @param format      one of the keys above (case-insensitive, surrounding spaces ignored)
-     * @return the instant rendered as a String in the requested format (never {@code null})
-     * @throws IllegalArgumentException if {@code format} is not one of {@link #TIME_FORMATS}
-     */
     public String formatEpochMillis(long epochMillis, String format) {
         Instant instant = Instant.ofEpochMilli(epochMillis);
         ZoneId zone = ZoneId.systemDefault();
@@ -141,24 +114,10 @@ public class TestDataHelper {
         }
     }
 
-    /**
-     * Convenience wrapper for {@link #formatEpochMillis(long, String)} that uses the current
-     * wall-clock time ({@code System.currentTimeMillis()}). See that method for the full
-     * input/return-type table.
-     *
-     * @param format one of {@link #TIME_FORMATS}
-     * @return the current time rendered in the requested format
-     */
     public String currentTime(String format) {
         return formatEpochMillis(System.currentTimeMillis(), format);
     }
 
-    /**
-     * Renders the same instant in every supported format at once.
-     *
-     * @param epochMillis the instant to format, in milliseconds since the Unix epoch
-     * @return an ordered map of {@code format key -> rendered value}, in {@link #TIME_FORMATS} order
-     */
     public Map<String, String> allTimeFormats(long epochMillis) {
         Map<String, String> out = new LinkedHashMap<>();
         for (String format : TIME_FORMATS) {
@@ -167,16 +126,6 @@ public class TestDataHelper {
         return out;
     }
 
-    /**
-     * Replaces inline {@code {NOW:<format>}} placeholders with the current time in that format.
-     * Example: {@code {NOW:epoch_seconds}} -> {@code "1767225600"}. Each occurrence is evaluated
-     * independently against {@code System.currentTimeMillis()}, so two placeholders in the same
-     * template may differ by a few milliseconds. Use {@code {CAPTURED_TIME:...}} when you need a
-     * stable value captured at an earlier point in the scenario.
-     *
-     * @param template text possibly containing {@code {NOW:<format>}} tokens (may be {@code null})
-     * @return the template with every {@code {NOW:...}} token resolved
-     */
     public String replaceNowPlaceholders(String template) {
         if (template == null) {
             return null;
@@ -196,18 +145,6 @@ public class TestDataHelper {
         return result;
     }
 
-    /**
-     * Replaces {@code {CAPTURED_TIME:<key>:<format>}} placeholders with a previously captured
-     * instant, rendered in the requested format. The instant is stored via the Cucumber step
-     * {@code I capture the current time as "<key>"} (see ScenarioDataStepDefinitions), which
-     * records {@code System.currentTimeMillis()} under {@code key} on the TestContext.
-     * Example: {@code {CAPTURED_TIME:uploadTime:epoch_seconds}} -> {@code "1767225600"}.
-     *
-     * @param template text possibly containing {@code {CAPTURED_TIME:<key>:<format>}} tokens
-     * @return the template with every captured-time token resolved
-     * @throws IllegalArgumentException if a placeholder is missing the {@code <key>:<format>} pair
-     * @throws IllegalStateException    if no time was captured under the referenced key
-     */
     public String replaceCapturedTimePlaceholders(String template) {
         if (template == null) {
             return null;
@@ -222,23 +159,60 @@ public class TestDataHelper {
             }
             String placeholder = result.substring(start, end + 1);
             String inner = placeholder.substring(prefix.length(), placeholder.length() - 1).trim();
-            int sep = inner.indexOf(':');
-            if (sep < 0) {
-                throw new IllegalArgumentException(
-                        "Malformed placeholder '" + placeholder
-                                + "'. Expected {CAPTURED_TIME:<key>:<format>}.");
+            String[] parts = inner.split(":");
+            if (parts.length == 2) {
+                String key = parts[0].trim();
+                String format = parts[1].trim();
+                Long epochMillis = testContext.getCapturedTime(key);
+                if (epochMillis == null) {
+                    throw new IllegalStateException(
+                            "No time captured as '" + key + "'. Use the step "
+                                    + "'I capture the current time as \"" + key + "\"' before referencing it.");
+                }
+                result = result.replace(placeholder, formatEpochMillis(epochMillis, format));
+                continue;
             }
-            String key = inner.substring(0, sep).trim();
-            String format = inner.substring(sep + 1).trim();
-            Long epochMillis = testContext.getCapturedTime(key);
-            if (epochMillis == null) {
-                throw new IllegalStateException(
-                        "No time captured as '" + key + "'. Use the step "
-                                + "'I capture the current time as \"" + key + "\"' before referencing it.");
+            if (parts.length == 4) {
+                String key = parts[0].trim();
+                long amount = Long.parseLong(parts[1].trim());
+                String unit = parts[2].trim();
+                String format = parts[3].trim();
+                Long epochMillis = testContext.getCapturedTime(key);
+                if (epochMillis == null) {
+                    throw new IllegalStateException(
+                            "No time captured as '" + key + "'. Use the step "
+                                    + "'I capture the current time as \"" + key + "\"' before referencing it.");
+                }
+                long adjustedEpochMillis = applyCapturedTimeOffset(epochMillis, amount, unit, placeholder);
+                result = result.replace(placeholder, formatEpochMillis(adjustedEpochMillis, format));
+                continue;
             }
-            result = result.replace(placeholder, formatEpochMillis(epochMillis, format));
+            throw new IllegalArgumentException(
+                    "Malformed placeholder '" + placeholder
+                            + "'. Expected {CAPTURED_TIME:<key>:<format>} or "
+                            + "{CAPTURED_TIME_OFFSET:<key>:<amount>:<unit>:<format>}.");
         }
         return result;
+    }
+
+    private long applyCapturedTimeOffset(long epochMillis, long amount, String unit, String placeholder) {
+        switch (unit.toLowerCase()) {
+            case "second":
+            case "seconds":
+                return epochMillis + amount * 1000L;
+            case "minute":
+            case "minutes":
+                return epochMillis + amount * 60_000L;
+            case "hour":
+            case "hours":
+                return epochMillis + amount * 3_600_000L;
+            case "day":
+            case "days":
+                return epochMillis + amount * 86_400_000L;
+            default:
+                throw new IllegalArgumentException(
+                        "Unsupported offset unit in '" + placeholder + "'. Use seconds, minutes, hours, or days.");
+        }
     }
 
     public String replacePlaceholders(String template) {
@@ -247,8 +221,6 @@ public class TestDataHelper {
         result = result.replace(ContextKeys.EMAIL, generateRandomEmail());
         result = result.replace(ContextKeys.TIMESTAMP, getCurrentTimestamp());
 
-        
-        
         while (result.contains(ContextKeys.RANDOM_NAME)) {
             String name = RandomDataHelper.randomName();
             result = result.replaceFirst(
@@ -296,7 +268,6 @@ public class TestDataHelper {
         return result;
     }
 
-
     public String replaceAllocationMonthOffset(String template) {
         if (template == null) {
             return null;
@@ -315,7 +286,7 @@ public class TestDataHelper {
             String allocationMonth = LocalDate.now()
                     .plusMonths(offset)
                     .withDayOfMonth(1)
-                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    .format(ALLOCATION_MONTH_OFFSET_FORMAT);
             result = result.replace(placeholder, allocationMonth);
         }
         return result;

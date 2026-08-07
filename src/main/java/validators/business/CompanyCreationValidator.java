@@ -13,7 +13,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-
 public class CompanyCreationValidator {
 
     private static final Logger logger = LogManager.getLogger(CompanyCreationValidator.class);
@@ -111,7 +110,6 @@ public class CompanyCreationValidator {
         );
     }
 
-    
     public void validateCreatedCompanyMatchesContext(Response response) {
         validateHttpOk(response);
 

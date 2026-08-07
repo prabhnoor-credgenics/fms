@@ -40,7 +40,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator @role-details
   Scenario: Get role details with an invalid authentication token is rejected
@@ -55,7 +55,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @creator @role-details
   Scenario: Get role details without company_id is rejected
@@ -83,12 +83,10 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid role_id provided"
+    And the response body should contain field "message" as "auto" with value "invalid role_id provided"
 
   @negative @creator @role-details
   Scenario: Get role details for a syntactically-valid but unknown role_id returns 422
-    # TODO: verify on staging — validate_role_id_argument rejects inaccessible/unknown ids with 422
-    # "role not found" (a found-but-empty fetch could instead surface as 500 per the source note).
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the request headers:
@@ -102,10 +100,6 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
     Then the response status code should be 422
     And the "roles" failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (role_id path negatives/injection, company_id negatives,
-  # cross-company, method/path, response shape) — grounded in roles-crud-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @negative @edge @creator @role-details
   Scenario: Get role details with an empty role_id falls through to the roles list
@@ -114,7 +108,7 @@ Feature: Roles — GET /user/roles/<role_id> (get one role)
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the path parameters:
-      | role_id |  |
+      | role_id | "" |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/{role_id}"

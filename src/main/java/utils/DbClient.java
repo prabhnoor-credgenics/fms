@@ -32,7 +32,6 @@ public class DbClient {
         }
     }
 
-    
     public DbRow fetchSingleColumn(
             String tableName,
             String columnName,

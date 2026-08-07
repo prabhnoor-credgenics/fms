@@ -17,7 +17,6 @@ import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP2_REQUEST;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP3_REQUEST;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP4_REQUEST;
 
-
 public class CompanyCreationPayloadBuilder {
 
     private static final Logger logger = LogManager.getLogger(CompanyCreationPayloadBuilder.class);
@@ -37,7 +36,6 @@ public class CompanyCreationPayloadBuilder {
         this.configReader = configReader;
         this.testContext = testContext;
     }
-
 
     public void prepareCompanyCreationTestData() {
         String companyName = RandomDataHelper.uniqueCompanyName();
@@ -74,7 +72,6 @@ public class CompanyCreationPayloadBuilder {
         );
     }
 
-    
     private static String digitsSuffix(String name) {
         if (name == null) {
             return "";

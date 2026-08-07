@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.LoanStageConfigValidator;
 
-
 public class LoanStageConfigStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(LoanStageConfigStepDefinitions.class);

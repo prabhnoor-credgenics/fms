@@ -134,7 +134,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "A role cannot report to itself"
+    And the response body should contain field "message" as "auto" with value "A role cannot report to itself"
 
   @negative @auth @creator @roles-update
   Scenario: Update a role without authentication token is rejected
@@ -153,7 +153,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @creator @roles-write
   Scenario: Update a role with an empty body is rejected
@@ -195,7 +195,7 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
       """
     When I send a "PATCH" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid role_id provided"
+    And the response body should contain field "message" as "auto" with value "invalid role_id provided"
 
   @negative @creator @roles-write
   Scenario: Update a syntactically-valid but unknown role_id returns 422
@@ -218,10 +218,6 @@ Feature: Roles — PATCH /user/roles/<role_id> (update role)
     Then the response status code should be 422
     And the "roles" failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (auth, invalid field values/types, reserved name conflict,
-  # company_id negatives, method/content-type, success envelope) — grounded in roles-crud-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @negative @auth @creator @roles-update
   Scenario: Update a role with an invalid authentication token is rejected

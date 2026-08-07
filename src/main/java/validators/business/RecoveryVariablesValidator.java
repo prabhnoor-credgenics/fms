@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 public class RecoveryVariablesValidator {
 
     private static final Logger logger = LogManager.getLogger(RecoveryVariablesValidator.class);

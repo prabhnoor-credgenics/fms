@@ -16,7 +16,6 @@ public class ConfigReader {
     private static final String CRYPTO_PROPERTIES_FILE = "secrets/crypto.properties";
     private static final String ENVIRONMENT_KEY = "environment";
 
-    
     private static final String MAIN_RESOURCES_PATH = "src/main/resources/";
 
     private final Properties properties = new Properties();
@@ -52,7 +51,6 @@ public class ConfigReader {
         }
     }
 
-    
     private void loadEnvironmentProperties() {
         String envOverride = System.getProperty(ENVIRONMENT_KEY);
         String envName = (envOverride != null && !envOverride.isBlank())
@@ -92,21 +90,11 @@ public class ConfigReader {
         return value;
     }
 
-    /**
-     * Reads a crypto property without throwing when the key is absent/blank. Returns the trimmed
-     * value or {@code null}. Used by credential resolution, which probes several candidate keys
-     * (module-scoped first, then legacy non-scoped) and needs a silent miss to fall through.
-     */
     public String getCryptoPropertyOrNull(String key) {
         String value = cryptoProperties.getProperty(key);
         return (value == null || value.isBlank()) ? null : value.trim();
     }
 
-    /**
-     * Module/product used by the module-less authentication step (e.g. the legacy
-     * {@code I authenticate as "creator" slot 0 ...}). Configurable via {@code default_module}
-     * in global.properties; defaults to {@code lending}.
-     */
     public String getDefaultModule() {
         return getProperty("default_module", "lending");
     }
@@ -117,7 +105,6 @@ public class ConfigReader {
         logger.info("Loaded RSA public key for environment {}", env.name());
         return publicKey;
     }
-
 
     private String resolvePublicKey(Environment env) {
         String envKey = env.getValue() + "_public_key";
@@ -268,7 +255,6 @@ public class ConfigReader {
         return Integer.parseInt(getProperty("parallel_thread_count", "2"));
     }
 
-    
     public int getParallelUserPoolSize() {
         String override = System.getProperty("parallel.user.pool.size");
         if (override != null && !override.isBlank()) {
@@ -288,7 +274,6 @@ public class ConfigReader {
     public boolean isSingleUserMode() {
         return Boolean.parseBoolean(getProperty("auth_single_user_mode", "false"));
     }
-
 
     public boolean isCiMode() {
         return Boolean.parseBoolean(System.getProperty("ci.mode", getProperty("ci_mode", "false")));

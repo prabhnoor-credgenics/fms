@@ -7,8 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.V3LoansValidator;
 
-
-
 public class V3LoansStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(V3LoansStepDefinitions.class);
@@ -31,6 +29,4 @@ public class V3LoansStepDefinitions extends BaseStepDefinitions {
         logger.info("v3 loan success envelope validation completed");
     }
 
-    // "response should contain data for loan {string}" -> generic: the response body should contain text "<id>"
-    // "error code should be {string}" -> generic: the response body should contain field "error.code" with value "<code>"
 }

@@ -1,11 +1,5 @@
 @api @creditline @creditline-transaction-update @recovery
 Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transaction-update
-  # Credit-line product (company_type == "credit line"). Async endpoint: a valid envelope returns
-  # 202 + data.request_id; per-row validation happens later in the queue worker, so row-shape
-  # errors are NOT returned synchronously. Only upload_type + transaction_data are validated inline.
-  # Body serializer: BulkTransactionUpload (upload_type?, transaction_data[] min 1 / max 1000).
-  # Mirrors 001 (transaction bulk upload) but uses PATCH; success 202 message
-  # "Update Request Initiated Successfully"; synchronous validation error code REC_BT0002.
 
   Background:
     Given scenario loan id is unique
@@ -13,7 +7,6 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
     And I set the request headers:
       | Content-Type | application/json |
 
-  # ---------- Auth & permission ----------
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
@@ -48,7 +41,6 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
     Then the response status code should be 403
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- Happy path ----------
 
   @positive @smoke @creditline
   Scenario: Valid bulk transaction update returns 202 with a request_id
@@ -97,7 +89,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/transaction_bulk_upload.json"
-    And I update JSON field "upload_type" to "<upload_type>"
+    And I update JSON field "upload_type" as "auto" to "<upload_type>"
     When I send a "PATCH" request to "/recovery/v1/bulk/transaction-update"
     Then the response status code should be 202
     And the response should match json schema "schemas/creditline/success/transaction_bulk_async_success_schema.json"
@@ -108,7 +100,6 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
       | replace_previous_data |
       | replace_given_data    |
 
-  # ---------- Required-field / body validation (synchronous: REC_BT0002) ----------
 
   @negative @creditline
   Scenario: Missing transaction_data returns 400 validation error
@@ -133,7 +124,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/transaction_bulk_upload.json"
-    And I update JSON field "transaction_data" to null
+    And I update JSON field "transaction_data" as "null" to "null"
     When I send a "PATCH" request to "/recovery/v1/bulk/transaction-update"
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
@@ -161,7 +152,7 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/transaction_bulk_upload.json"
-    And I update JSON field "upload_type" to "not_a_valid_operation"
+    And I update JSON field "upload_type" as "auto" to "not_a_valid_operation"
     When I send a "PATCH" request to "/recovery/v1/bulk/transaction-update"
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
@@ -181,11 +172,9 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- Boundary ----------
 
   @negative @creditline @boundary
   Scenario: More than 1000 transactions in one request returns 400 (max_length 1000)
-    # TODO: verify on staging — needs a 1001-row payload; asserting the documented max_length limit.
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -196,7 +185,6 @@ Feature: Credit-line Transaction Bulk Update — PATCH /recovery/v1/bulk/transac
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- Async behaviour note ----------
 
   @positive @creditline @async
   Scenario: Rows with missing per-row keys still return 202 (row validation is async, not synchronous)

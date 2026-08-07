@@ -19,8 +19,8 @@ Feature: Loan allocation visibility lifecycle
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "approver" slot 0 and remember as "approver0"
@@ -99,8 +99,8 @@ Feature: Loan allocation visibility lifecycle
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "creator" slot 0 and remember as "creator0"
@@ -116,12 +116,6 @@ Feature: Loan allocation visibility lifecycle
     And the response body should contain text "{LOAN_ID}"
 
 
-  # ---------------------------------------------------------------------------
-  # Same allocate -> visible -> de-allocate -> invisible lifecycle as above,
-  # but the visibility oracle is a different read API each time. The loan is
-  # uploaded and allocated to the creator by the approver, then the creator
-  # checks visibility through the target API before and after de-allocation.
-  # ---------------------------------------------------------------------------
 
   @manual @creator @get-loan
   Scenario: Allocated loan is visible via get-loan API, then invisible after de-allocation
@@ -139,8 +133,8 @@ Feature: Loan allocation visibility lifecycle
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "approver" slot 0 and remember as "approver0"
@@ -162,7 +156,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    # Loan is now allocated to the creator -> visible via get-loan
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -175,7 +168,6 @@ Feature: Loan allocation visibility lifecycle
     When I poll a "GET" request to "/recovery/loan/{loanId}" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
     And the response body should contain text "{LOAN_ID}"
-    # De-allocate the loan from the creator
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
     And I set the query parameters:
@@ -194,7 +186,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    # Loan is de-allocated, but get-loan is NOT allocation-scoped -> loan still returned
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -225,8 +216,8 @@ Feature: Loan allocation visibility lifecycle
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "approver" slot 0 and remember as "approver0"
@@ -248,7 +239,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    # Loan is now allocated to the creator -> visible via linked-loans
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -260,7 +250,6 @@ Feature: Loan allocation visibility lifecycle
     When I poll a "GET" request to "/recovery/linked/loans" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
     And the response body should contain text "{LOAN_ID}"
-    # De-allocate the loan from the creator
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
     And I set the query parameters:
@@ -279,7 +268,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    # Loan is de-allocated, but linked-loans is NOT allocation-scoped -> loan still returned
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -309,8 +297,8 @@ Feature: Loan allocation visibility lifecycle
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "approver" slot 0 and remember as "approver0"
@@ -332,7 +320,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    # Loan is now allocated to the creator -> loan-details PATCH accepted (200)
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the path parameters:
@@ -353,7 +340,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "PATCH" request to "/recovery/loan-details/{loan_id}"
     Then the response status code should be 200
-    # De-allocate the loan from the creator
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
     And I set the query parameters:
@@ -372,7 +358,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    # Loan is de-allocated, but loan-details PATCH is NOT allocation-scoped -> still accepted (200)
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the path parameters:
@@ -411,8 +396,8 @@ Feature: Loan allocation visibility lifecycle
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "approver" slot 0 and remember as "approver0"
@@ -434,7 +419,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    # Loan is now allocated to the creator -> visible via v3 loan details
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -447,7 +431,6 @@ Feature: Loan allocation visibility lifecycle
     When I poll a "GET" request to "/recovery/v3/loans/{loan_id}" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
     And the response body should contain text "{LOAN_ID}"
-    # De-allocate the loan from the creator
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
     And I set the query parameters:
@@ -466,7 +449,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    # Loan is de-allocated, but v3 loan details is NOT allocation-scoped -> loan still returned
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -497,8 +479,8 @@ Feature: Loan allocation visibility lifecycle
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "approver" slot 0 and remember as "approver0"
@@ -520,7 +502,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
-    # Loan is now allocated to the creator -> visible via v1 loan details
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -533,7 +514,6 @@ Feature: Loan allocation visibility lifecycle
     When I poll a "GET" request to "/recovery/v1/loans/{loan_id}" until the response body contains "{LOAN_ID}"
     Then the response status code should be 200
     And the response body should contain text "{LOAN_ID}"
-    # De-allocate the loan from the creator
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
     And I set the query parameters:
@@ -552,7 +532,6 @@ Feature: Loan allocation visibility lifecycle
       """
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
-    # Loan is de-allocated, but v1 loan details is NOT allocation-scoped -> loan still returned
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the query parameters:
@@ -584,8 +563,8 @@ Feature: Loan allocation visibility lifecycle
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     And I authenticate as "creator" slot 0 and remember as "creator0"

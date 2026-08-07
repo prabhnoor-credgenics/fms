@@ -10,7 +10,6 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Map;
 
-
 public class RecoveryExportsValidator {
 
     private static final Logger logger = LogManager.getLogger(RecoveryExportsValidator.class);

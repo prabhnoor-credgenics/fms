@@ -9,8 +9,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.Map;
 
-
-
 public class V3LoansValidator {
 
     private static final Logger logger = LogManager.getLogger(V3LoansValidator.class);

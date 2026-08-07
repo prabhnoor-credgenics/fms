@@ -8,7 +8,6 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
       | Content-Type | application/json |
 
 
-
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
@@ -32,7 +31,6 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
 
   @negative @creditline
   Scenario: Missing company_id returns 400 "invalid company id"
-  
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -40,7 +38,6 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     Then the response status code should be 400
     And the response message should be "invalid company id"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
-
 
 
   @positive @smoke @creditline
@@ -55,6 +52,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response message should be "success"
     And the response body should contain field "output"
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
+
 
 
   @positive @creditline @500
@@ -75,11 +73,6 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
       | loan               |
       | communication      |
       | loan,communication |
-
-  
-    @env-blocked
-    Examples:
-      | events             |
       | all                |
       | notice             |
 
@@ -94,7 +87,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     When I send a "GET" request to "/recovery/fetch/customers"
     Then the response status code should be 400
     And the response message should be "failure"
-    And the response body should contain field "output" with value "Invalid event provided"
+    And the response body should contain field "output" as "auto" with value "Invalid event provided"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
 
@@ -125,7 +118,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response message should be "status is invalid"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- start_time / end_time validation ----------
+
 
   @negative @creditline
   Scenario: Non-numeric start_time returns 400 "start_time is incorrect"
@@ -138,7 +131,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     When I send a "GET" request to "/recovery/fetch/customers"
     Then the response status code should be 400
     And the response message should be "failure"
-    And the response body should contain field "output" with value "start_time is incorrect"
+    And the response body should contain field "output" as "auto" with value "start_time is incorrect"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
   @negative @creditline
@@ -152,13 +145,12 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     When I send a "GET" request to "/recovery/fetch/customers"
     Then the response status code should be 400
     And the response message should be "failure"
-    And the response body should contain field "output" with value "end_time is incorrect"
+    And the response body should contain field "output" as "auto" with value "end_time is incorrect"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
 
 
   @positive @creditline @env-blocked @424
- 
   Scenario: start_time/end_time range using {NOW:epoch_seconds} returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
@@ -173,7 +165,6 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
   @positive @creditline @env-blocked @424
-
   Scenario: start_time/end_time range using a captured time returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I capture the current time as "fetchTime"
@@ -189,7 +180,6 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
   @positive @creditline @env-blocked @424
-
   Scenario: start_time alone (open-ended range) returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
@@ -203,7 +193,6 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
   @positive @creditline @env-blocked @424
-
   Scenario: end_time alone using {NOW:epoch_seconds} returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
@@ -217,9 +206,7 @@ Feature: Credit-line Fetch Customers — GET /recovery/fetch/customers
     And the response should match json schema "schemas/creditline/success/fetch_customers_success_schema.json"
 
 
-
   @positive @creditline @env-blocked @424
-
   Scenario: events + time range combined returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:

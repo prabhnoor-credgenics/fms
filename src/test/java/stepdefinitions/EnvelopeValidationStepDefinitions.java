@@ -9,12 +9,6 @@ import validators.business.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Generic response-envelope validation steps replacing the ~80 per-feature
- * "the &lt;feature&gt; success/failure response should be valid" steps. Each feature now writes
- * the "&lt;key&gt;" success response should be valid (or failure); the key selects the feature's
- * EnvelopeValidator from the registry. Behaviour is unchanged - the same validator method runs.
- */
 public class EnvelopeValidationStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(EnvelopeValidationStepDefinitions.class);

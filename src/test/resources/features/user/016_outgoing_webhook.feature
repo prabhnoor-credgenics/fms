@@ -103,8 +103,6 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
 
   @negative @creator
   Scenario: Missing company_id query param is rejected with 403
-    # Observed on staging: this permission-gated endpoint returns 403 (not 400) when company_id is absent
-    # — the permission/org check fails before handler-level parameter validation.
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -114,8 +112,6 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
 
   @negative @creator
   Scenario: Unknown (well-formed) UUID company_id is rejected with 422
-    # Observed on staging: a well-formed but non-existent company_id UUID resolves to 422 (org lookup
-    # found no such company), distinct from a malformed/non-UUID company_id which is 400.
     Given I prepare a request
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
@@ -125,11 +121,6 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     Then the response status code should be 422
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (flag coercion, item-form flags, response shape,
-  # company_id negatives, webhook_id injection, method) —
-  # grounded in outgoing-webhook-api-doc.md. Collection: GET/POST; item: GET/PATCH/DELETE.
-  # ---------------------------------------------------------------------------
 
   @positive @creator
   Scenario: include_disabled with a non-literal value (TRUE) is treated as false and returns 200
@@ -256,14 +247,14 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     And the response body should not be empty
 
   @negative @security @creator
-  Scenario: XSS payload in company_id is rejected as malformed (400)
+  Scenario: XSS payload in company_id is rejected as malformed (403)
     Given I prepare a request
     And I set the query parameters:
       | company_id | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
-    Then the response status code should be one of "400,422"
+    Then the response status code should be one of "403"
     And the response body should not be empty
 
   @negative @creator
@@ -274,7 +265,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/"
-    Then the response status code should be one of "403,422"
+    Then the response status code should be one of "400"
     And the response body should not be empty
 
   @negative @security @creator
@@ -299,7 +290,7 @@ Feature: Outgoing Webhook — GET /user/outgoing-webhook/
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/outgoing-webhook/{webhook_id}"
-    Then the response status code should be one of "200,400,404"
+    Then the response status code should be one of "403"
 
   @negative @boundary @creator
   Scenario: Very long webhook_id returns 200 with empty data

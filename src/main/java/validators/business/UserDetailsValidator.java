@@ -8,7 +8,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.Map;
 
-
 public class UserDetailsValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(UserDetailsValidator.class);

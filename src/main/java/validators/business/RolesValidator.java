@@ -9,11 +9,9 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Map;
 
-
 public class RolesValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(RolesValidator.class);
-
 
     public void validateSuccessEnvelope(Response response) {
         JsonPath jp = response.jsonPath();
@@ -24,7 +22,6 @@ public class RolesValidator implements EnvelopeValidator {
         logger.info("roles success response validated");
     }
 
-
     public void validateMutationResponse(Response response) {
         validateSuccessEnvelope(response);
         SoftAssert sa = new SoftAssert();
@@ -33,7 +30,6 @@ public class RolesValidator implements EnvelopeValidator {
         sa.assertAll();
         logger.info("roles mutation response validated");
     }
-
 
     public void validateListResponse(Response response) {
         validateSuccessEnvelope(response);
@@ -44,7 +40,6 @@ public class RolesValidator implements EnvelopeValidator {
         logger.info("roles list response validated (roles: {})", roles == null ? 0 : roles.size());
     }
 
-
     public void validateDetailsResponse(Response response) {
         validateSuccessEnvelope(response);
         SoftAssert sa = new SoftAssert();
@@ -52,7 +47,6 @@ public class RolesValidator implements EnvelopeValidator {
         sa.assertAll();
         logger.info("roles details response validated");
     }
-
 
     public void validateFailureEnvelope(Response response) {
         JsonPath jp = response.jsonPath();

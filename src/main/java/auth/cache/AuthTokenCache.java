@@ -8,7 +8,6 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 public class AuthTokenCache {
 
     private record CacheKey(Environment env, String module, UserRole role, String userType, int userSlot) {}

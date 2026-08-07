@@ -1,11 +1,12 @@
 @api @creditline @creditline-client-customer-loans @recovery
 Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loans/<client_customer_id>
 
-  Background: 
+  Background:
     Given scenario loan id is unique
     And I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
+
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
@@ -44,6 +45,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
     When I send a "GET" request to "/recovery/client/customer/loans/{clientCustomerId}"
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
+
 
   @positive @smoke @creditline
   Scenario: Upload a transaction for a customer then fetch that customer's loans returns 200 success
@@ -92,6 +94,7 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
     And the response message should be "success"
     And the response should match json schema "schemas/creditline/success/client_customer_loans_success_schema.json"
 
+
   @positive @creditline @boundary
   Scenario Outline: allocation_month accepts current / previous / next month and returns 200 success
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
@@ -107,11 +110,12 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
     And the response message should be "success"
     And the response should match json schema "schemas/creditline/success/client_customer_loans_success_schema.json"
 
-    Examples: 
+    Examples:
       | offset |
-      |      0 |
-      |     -1 |
-      |      1 |
+      | 0      |
+      | -1     |
+      | 1      |
+
 
   @positive @creditline
   Scenario: Fetch loans for an unknown client_customer_id returns 200 with an empty output list
@@ -129,11 +133,9 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
     And the response body should not contain text "TXN_"
     And the response should match json schema "schemas/creditline/success/client_customer_loans_success_schema.json"
 
-  # ---------- Path param negatives ----------
+
   @negative @creditline
   Scenario: Literal "undefined" client_customer_id returns 200 with an empty output list
-    # TODO: verify on staging — sentinel string sent by frontends; expected to resolve as an unknown
-    # customer (empty list, 200) rather than a hard error.
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | undefined |
@@ -149,7 +151,6 @@ Feature: Credit-line Client Customer Loans — GET /recovery/client/customer/loa
 
   @negative @creditline
   Scenario: Literal "null" client_customer_id returns 200 with an empty output list
-    # TODO: verify on staging — sentinel string; expected to resolve as an unknown customer (empty list, 200).
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | clientCustomerId | null |

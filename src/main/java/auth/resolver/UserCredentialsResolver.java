@@ -11,19 +11,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Resolves the email/password for a login from {@code secrets/crypto.properties}.
- *
- * <p>Credentials are keyed by {@code (env, module, role, slot)}. The optional <b>module</b>
- * (a.k.a. product line — e.g. {@code lending}, {@code creditline}, {@code notice}) is a free-form
- * segment placed right after the env prefix: {@code <env>_<module>_<suffix>}. Resolution tries the
- * module-scoped key first, then falls back to the legacy non-scoped key {@code <env>_<suffix>} so
- * accounts that are not module-specific (e.g. a shared chief-admin) keep working.
- *
- * <p>All credential values live in {@code secrets/crypto.properties} (never the plain env
- * {@code *.properties} files) so they can later be sourced from a secrets manager.
- */
 public class UserCredentialsResolver {
 
     private static final Logger logger = LogManager.getLogger(UserCredentialsResolver.class);
@@ -34,15 +21,10 @@ public class UserCredentialsResolver {
         this.configReader = configReader;
     }
 
-    /** Module-less entry point (legacy callers); resolves with no module scope. */
     public UserCredentials resolve(Environment env, UserRole role, int slot) {
         return resolve(env, null, role, slot);
     }
 
-    /**
-     * Resolves credentials for {@code (env, module, role, slot)}. A blank/null {@code module}
-     * skips the module-scoped lookup and uses only the legacy non-scoped keys.
-     */
     public UserCredentials resolve(Environment env, String module, UserRole role, int slot) {
         String mod = normalizeModule(module);
         String email = lookup(env, mod, role, slot, "email");
@@ -54,10 +36,6 @@ public class UserCredentialsResolver {
         return new UserCredentials(email, password, slot);
     }
 
-    /**
-     * Probes candidate crypto keys for a field ({@code email}/{@code password}): module-scoped
-     * keys first (if a module is given), then the legacy non-scoped keys.
-     */
     private String lookup(Environment env, String module, UserRole role, int slot, String field) {
         if (module != null) {
             for (String suffix : candidateSuffixes(role, slot, field)) {
@@ -76,10 +54,6 @@ public class UserCredentialsResolver {
         return null;
     }
 
-    /**
-     * Candidate key suffixes for a role/slot, in preference order. {@code field} is
-     * {@code email} or {@code password}.
-     */
     private static List<String> candidateSuffixes(UserRole role, int slot, String field) {
         List<String> suffixes = new ArrayList<>();
         if (role == UserRole.CHIEF_ADMIN) {
@@ -91,7 +65,7 @@ public class UserCredentialsResolver {
             } else {
                 suffixes.add("approver_user_" + slot + "_" + field);
             }
-        } else { // CREATOR
+        } else { 
             if (slot == 0) {
                 suffixes.add("user_" + field);
                 suffixes.add(field);
@@ -110,7 +84,6 @@ public class UserCredentialsResolver {
         return base + suffix;
     }
 
-    /** Trim + lowercase; null/blank collapses to {@code null} (no module scope). */
     private static String normalizeModule(String module) {
         if (module == null || module.isBlank()) {
             return null;

@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.InternalBulkLoansValidator;
 
-
 public class InternalBulkLoansStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(InternalBulkLoansStepDefinitions.class);
@@ -25,11 +24,9 @@ public class InternalBulkLoansStepDefinitions extends BaseStepDefinitions {
         this.validator = validator;
     }
 
-
     @Then("the internal bulk loans validation error should be valid")
     public void the_internal_bulk_loans_validation_error_should_be_valid() {
         validator.validateValidationError(activeResponse());
     }
-    // "response should contain loan {string}" -> generic: the response body should contain text "<id>"
-    // "error code should be {string}" -> generic: the response body should contain field "error.code" with value "<code>"
+    
 }

@@ -4,7 +4,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
 
   @negative
-  Scenario: TC-AUTH-001 — Request without authenticationtoken header returns 401
+  Scenario: TC-AUTH-001 — Request without authenticationtoken header returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
@@ -15,7 +15,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       """
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "you have insufficient access rights"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative
   Scenario: TC-AUTH-002 — Invalid authenticationtoken returns 401
@@ -56,7 +56,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -66,8 +66,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -89,7 +89,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -99,8 +99,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -125,7 +125,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -135,8 +135,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -179,7 +179,6 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -189,8 +188,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -216,7 +215,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -226,8 +225,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -252,7 +251,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -262,8 +261,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -290,7 +289,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -300,8 +299,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -345,7 +344,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -355,8 +354,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -382,7 +381,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -392,8 +391,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -423,7 +422,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -433,8 +432,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -460,7 +459,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -470,8 +469,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -497,7 +496,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -507,8 +506,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -534,7 +533,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -544,8 +543,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -571,7 +570,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -581,8 +580,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -629,7 +628,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -639,8 +638,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -665,7 +664,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -675,8 +674,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -722,7 +721,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -732,8 +731,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -758,7 +757,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -768,8 +767,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -795,7 +794,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -805,8 +804,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -832,7 +831,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -842,8 +841,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -890,7 +889,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -900,8 +899,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -927,7 +926,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -937,8 +936,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -965,7 +964,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -975,8 +974,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1023,7 +1022,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1033,8 +1032,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1059,7 +1058,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1069,8 +1068,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1095,7 +1094,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1105,8 +1104,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1134,7 +1133,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1144,8 +1143,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1192,7 +1191,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1202,8 +1201,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1226,7 +1225,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1236,8 +1235,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1264,7 +1263,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1274,8 +1273,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1310,7 +1309,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1320,8 +1319,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1352,7 +1351,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1362,8 +1361,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1389,7 +1388,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1399,8 +1398,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1426,11 +1425,10 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
   @positive 
   Scenario: TC-FILTER-001 — dpd_bracket filter returns 200
-    # TODO: 200-only — DPD bracket is derived from date_of_default vs the allocation month — not directly settable on a plain upload. Loan presence not asserted.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1440,8 +1438,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1464,11 +1462,10 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
   @positive 
   Scenario: TC-FILTER-002 — dpd_from / dpd_to numeric range generates dynamic bracket
-    # TODO: 200-only — DPD range is derived — not directly settable on a plain upload. Loan presence not asserted.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1478,8 +1475,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1505,7 +1502,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1515,10 +1512,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
-    # match the applicant_state filter below so the uploaded loan appears in the export
-    And I update JSON field "applicant_address[0].applicant_state" to "maharashtra"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "applicant_address[0].applicant_state" as "auto" to "maharashtra"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1541,11 +1537,10 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
   @positive @500
   Scenario: TC-FILTER-004 — recovery_status filter returns 200
-    # TODO: 200-only — recovery_status is a disposition set via status-update, not on upload. Loan presence not asserted.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1555,8 +1550,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1581,7 +1576,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1591,8 +1586,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1612,7 +1607,6 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 200
     Then the response body should not be empty
-    # uploaded loan's defaults[0].date_of_default is 2025-08-04 — inside the filter range
     And the response body should contain text "{LOAN_ID}"
 
   @positive 
@@ -1620,7 +1614,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1630,10 +1624,9 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
-    # set total_loan_amount inside the 50000-500000 filter range so the loan appears
-    And I update JSON field "total_loan_amount" to "100000"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "total_loan_amount" as "auto" to "100000"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1660,7 +1653,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1670,8 +1663,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1692,16 +1685,14 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 200
     Then the response body should not be empty
-    # uploaded loan already carries 2 co-applicants — inside the 1..3 filter range
     And the response body should contain text "{LOAN_ID}"
 
   @positive 
   Scenario: TC-FILTER-008 — upload_date range filter returns 200
-    # TODO: 200-only — upload_date is server-set to the actual upload day; the loan will not fall in a past (Jan) range. Loan presence not asserted.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1711,8 +1702,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1735,11 +1726,10 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
   @positive @500
   Scenario: TC-FILTER-009 — speedpost_status filter returns 200
-    # TODO: 200-only — speedpost_status requires a notice/speedpost dispatch, not produced by a loan upload. Loan presence not asserted.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1749,8 +1739,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1772,11 +1762,10 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
 
   @positive 
   Scenario: TC-FILTER-010 — Litigation filter civil_-_current_stages returns 200
-    # TODO: 200-only — litigation data requires litigation records, not produced by a loan upload. Loan presence not asserted.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1786,8 +1775,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1815,7 +1804,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1825,8 +1814,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1851,7 +1840,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1861,8 +1850,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1887,7 +1876,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1897,8 +1886,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1935,7 +1924,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
         "allocation_month": "2026-01-01"
       }
       """
-    And I update JSON field "<field>" to "<invalid_value>"
+    And I update JSON field "<field>" as "auto" to "<invalid_value>"
     When I send a "POST" request to "/recovery/export/bulk/loan-details"
     Then the response status code should be 400
     Then the response body should not be empty
@@ -1955,7 +1944,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1965,8 +1954,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -1993,7 +1982,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2003,8 +1992,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2031,7 +2020,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2041,8 +2030,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2070,7 +2059,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2080,8 +2069,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2109,7 +2098,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2119,8 +2108,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2148,7 +2137,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2158,8 +2147,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2188,7 +2177,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2198,8 +2187,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2232,7 +2221,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2242,8 +2231,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2273,7 +2262,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2283,8 +2272,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2314,7 +2303,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2324,8 +2313,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2358,7 +2347,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2368,8 +2357,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2414,7 +2403,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2424,8 +2413,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2453,7 +2442,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2463,8 +2452,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -2489,7 +2478,7 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
-    # --- upload a fresh loan first, then export its data below (as creator) ---
+    
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -2499,8 +2488,8 @@ Feature: Export Bulk Loan Details API — POST /recovery/export/bulk/loan-detail
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request

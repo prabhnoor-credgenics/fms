@@ -4,7 +4,6 @@ import context.TestContext;
 import io.cucumber.java.en.Then;
 import validators.business.AllocationEnqueueValidator;
 
-
 public class AllocationEnqueueStepDefinitions extends BaseStepDefinitions {
 
     private final AllocationEnqueueValidator validator;
@@ -14,11 +13,9 @@ public class AllocationEnqueueStepDefinitions extends BaseStepDefinitions {
         this.validator = validator;
     }
 
-
     @Then("the allocation enqueue validation error should be valid")
     public void the_allocation_enqueue_validation_error_should_be_valid() {
         validator.validateValidationError(activeResponse());
     }
-    // "error code should be {string}" removed — use generic:
-    // Then the response body should contain field "error.code" with value "<code>"
+    
 }

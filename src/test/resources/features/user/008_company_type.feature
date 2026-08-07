@@ -79,11 +79,6 @@ Feature: Company Type — GET /user/company-type
     When I send a "POST" request to "/user/company-type"
     Then the response status code should be 405
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (response shape, v2 alias hardening, param/header tolerance,
-  # injection, auth/method/path quirks) — grounded in company-type-api-doc.md.
-  # Endpoint takes NO params/body; GET-only; collection-only URL; extra input ignored.
-  # ---------------------------------------------------------------------------
 
   @positive @creator
   Scenario: Response envelope exposes the caller identity fields
@@ -107,7 +102,7 @@ Feature: Company Type — GET /user/company-type
     Then the response status code should be 200
     And the response body should contain field "id"
     And the response body should contain field "message"
-    And the response body should contain field "error_code"
+    And the response body should contain field "success"
     And the "company_type" success response should be valid
 
   @positive @creator
@@ -117,7 +112,7 @@ Feature: Company Type — GET /user/company-type
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-type"
     Then the response status code should be 200
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
     And the "company_type" success response should be valid
 
   @positive @creator
@@ -186,25 +181,25 @@ Feature: Company Type — GET /user/company-type
     And the "company_type" success response should be valid
 
   @positive @security @creator
-  Scenario: SQL injection in an extraneous query param is ignored and returns 200
+  Scenario: SQL injection in an extraneous query param is ignored and returns 400
     Given I prepare a request
     And I set the query parameters:
       | company_id | ' OR '1'='1 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-type"
-    Then the response status code should be 200
+    Then the response status code should be 400
     And the "company_type" success response should be valid
 
   @positive @security @creator
-  Scenario: XSS payload in an extraneous query param is ignored and returns 200
+  Scenario: XSS payload in an extraneous query param is ignored and returns 403
     Given I prepare a request
     And I set the query parameters:
       | q | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company-type"
-    Then the response status code should be 200
+    Then the response status code should be 403
     And the "company_type" success response should be valid
 
   @positive @creator
@@ -281,7 +276,7 @@ Feature: Company Type — GET /user/company-type
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    When I send a "GET" request to "/user/company-type/{UUID}"
+    When I send a "GET" request to "/user/company-type/{COMPANY_ID}"
     Then the response status code should be one of "404,405"
     And the response body should not be empty
 

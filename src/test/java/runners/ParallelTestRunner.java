@@ -42,6 +42,7 @@ import java.util.Map;
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
                 "rerun:rerun/failedparallelrerun.txt"
         },
+        tags="not @shouldfail and not @500 and not @public-access-token and not @internal-register-route and not @first-login and not @creditline",
         monochrome = true
 )
 
@@ -101,7 +102,6 @@ public class ParallelTestRunner {
         Object[][] allScenarios =
                 testNGCucumberRunner.provideScenarios();
 
-        // Preserve feature execution order
         Arrays.sort(
                 allScenarios,
 

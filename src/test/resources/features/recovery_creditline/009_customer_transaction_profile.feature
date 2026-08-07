@@ -1,11 +1,13 @@
 @api @creditline @creditline-customer-transaction-profile @recovery
 Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/transaction/profile/<client_customer_id>/<transaction_id>
 
-  Background: 
+
+  Background:
     Given scenario loan id is unique
     And I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
+
 
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
@@ -46,6 +48,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
+
   @positive @smoke @multistep @creditline
   Scenario: Upload a transaction then fetch its customer transaction profile returns 200 success
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
@@ -77,6 +80,7 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
     And the response message should be "success"
     And the response body should contain field "output"
     And the response should match json schema "schemas/creditline/success/customer_transaction_profile_success_schema.json"
+
 
   @negative @creditline
   Scenario: Unknown client_customer_id and transaction_id return 400 Invalid transaction id
@@ -123,10 +127,9 @@ Feature: Credit-line Customer Transaction Profile — GET /recovery/customer/tra
     And the response message should be "Invalid transaction id"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- Path parameter negatives (undefined / null) ----------
+
   @negative @creditline
   Scenario: Undefined transaction_id path segment returns 400 Invalid transaction id
-    # transaction_id path parameter left as the literal token "undefined".
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the path parameters:
       | client_customer_id | CUST_{LOAN_ID} |

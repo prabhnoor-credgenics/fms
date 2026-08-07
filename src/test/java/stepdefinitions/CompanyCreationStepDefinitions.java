@@ -24,12 +24,10 @@ import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP3_SUCCESS;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP4_REQUEST;
 import static constants.FrameworkConstants.SCHEMA_COMPANY_STEP4_SUCCESS;
 
-
 public class CompanyCreationStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(CompanyCreationStepDefinitions.class);
 
-    // step number -> success/request schema classpath (replaces the four SCHEMA_COMPANY_STEPn_* per-step methods)
     private static final Map<Integer, String> SUCCESS_SCHEMA = Map.of(
             1, SCHEMA_COMPANY_STEP1_SUCCESS,
             2, SCHEMA_COMPANY_STEP2_SUCCESS,
@@ -77,11 +75,6 @@ public class CompanyCreationStepDefinitions {
         companyCreationValidator.validateStep2(step2);
     }
 
-    /**
-     * Parameterized replacement for the former four {@code I create company with validation step 1..4}
-     * steps. Steps 2-4 first assert trademark consistency across the wizard (step 1 has just had its
-     * data prepared, so it doesn't). The existing feature text ("... step 1") still matches via {int}.
-     */
     @When("I create company with validation step {int}")
     public void i_create_company_with_validation_step(int step) {
         if (step != 1) {
@@ -120,10 +113,6 @@ public class CompanyCreationStepDefinitions {
         companyCreationService.createCompanyStep3WithoutEmailAndMobile();
     }
 
-    /**
-     * Parameterized replacement for the former four {@code company creation step 1..4 should be successful}
-     * steps. Validates the step's success schema, then runs the step-specific extract/validate side-effect.
-     */
     @Then("company creation step {int} should be successful")
     public void company_creation_step_should_be_successful(int step) {
         Response response = requireResponse();
@@ -137,10 +126,6 @@ public class CompanyCreationStepDefinitions {
         }
     }
 
-    /**
-     * Parameterized replacement for the former four {@code company creation step 1..4 request should
-     * match json schema} steps.
-     */
     @Then("company creation step {int} request should match json schema")
     public void company_creation_step_request_should_match_json_schema(int step) {
         String body = testContext.getLastRequestBody();

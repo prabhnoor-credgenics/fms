@@ -128,11 +128,6 @@ Feature: Internal Register Route — POST /user/internal/register-route
     Then the response status code should be 400
     And the "internal_register_route" failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (idempotent upsert, required/null/type validation, invalid
-  # values, boundary, method/content-type, GET lookup) —
-  # grounded in internal-register-route-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @positive @creator
   Scenario: Re-registering the same service upserts the route map and returns 200 (idempotent)

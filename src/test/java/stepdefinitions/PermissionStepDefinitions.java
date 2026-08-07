@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import static io.restassured.RestAssured.given;
 
-
 public class PermissionStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(PermissionStepDefinitions.class);
@@ -42,7 +41,7 @@ public class PermissionStepDefinitions {
 
     @Given("I grant the current user all loan permissions")
     public void i_grant_the_current_user_all_loan_permissions() {
-        // Snapshot whoever is active so the scenario continues as that user afterwards.
+        
         String savedToken = testContext.getAuthToken();
         String savedCompanyId = testContext.getCompanyId();
         int savedSlot = testContext.getUserSlot();
@@ -55,16 +54,10 @@ public class PermissionStepDefinitions {
         String profileId;
         String companyId;
         try {
-            // The grant must target the CREATOR's profile even when another role (e.g. chief-admin)
-            // is the active user — some scenarios authenticate as chief-admin right before this step,
-            // which would otherwise make the grant target the chief-admin's profile / its "All"
-            // company instead of the creator's.
+            
             Creator creator = resolveCreator(savedToken, savedRole);
             companyId = creator.companyId;
 
-            // Resolve the creator's profile_id (verify API reads assigned_companies_dict.<companyId>).
-            // The creator token can be a stale cached token on long runs (verify then returns an empty
-            // dict); refresh the creator once and retry before giving up.
             try {
                 profileId = userProfileService.fetchProfileId(creator.token, creator.companyId);
             } catch (RuntimeException e) {
@@ -79,12 +72,9 @@ public class PermissionStepDefinitions {
                 profileId = userProfileService.fetchProfileId(creator.token, creator.companyId);
             }
 
-            // PATCH as chief-admin (owns permission-group management).
             authManager.initializeAuthentication(UserRole.CHIEF_ADMIN);
             response = patchPermissions(testContext.getAuthToken(), baseUrl, profileId, companyId, body);
 
-            // The chief-admin token is cached and shared across scenarios, so it can go stale
-            // mid-run ("Session expired"). On 401, force a fresh chief-admin login once and retry.
             if (response.getStatusCode() == 401) {
                 logger.warn("Chief-admin token rejected (401) when setting permissions; re-authenticating and retrying once.");
                 authManager.reAuthenticate(UserRole.CHIEF_ADMIN);
@@ -111,14 +101,8 @@ public class PermissionStepDefinitions {
         logger.info("Granted full loan permissions to creator profile_id '{}' (company '{}') as chief-admin", profileId, companyId);
     }
 
-    /** The creator the grant targets: token + own company + credential slot. */
     private record Creator(String token, String companyId, int slot) {}
 
-    /**
-     * Resolve the creator to grant. If the active user is the creator, use the active session
-     * (its token is freshest). Otherwise fall back to a remembered creator session (e.g. "creator0"),
-     * so the grant still targets the creator when chief-admin/approver is the active user.
-     */
     private Creator resolveCreator(String activeToken, UserRole activeRole) {
         if (activeRole == UserRole.CREATOR && notBlank(activeToken)) {
             return new Creator(activeToken, scenarioTestDataResolver.resolveUserCompanyId(), testContext.getUserSlot());
@@ -130,7 +114,7 @@ public class PermissionStepDefinitions {
             }
         }
         if (notBlank(activeToken)) {
-            // No creator available; grant the active user (best effort).
+            
             return new Creator(activeToken, scenarioTestDataResolver.resolveUserCompanyId(), testContext.getUserSlot());
         }
         throw new IllegalStateException(

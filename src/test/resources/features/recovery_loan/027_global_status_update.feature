@@ -864,7 +864,7 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
         "status_name": "Closed"
       }
       """
-    And I update JSON field "module" to "<module_value>"
+    And I update JSON field "module" as "auto" to "<module_value>"
     When I send a "PATCH" request to "/recovery/global-status/update/{loanId}"
     Then the response status code should be 400
     Then the response body should not be empty

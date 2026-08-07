@@ -8,7 +8,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.Map;
 
-
 public class CoordinatesDistanceValidator implements EnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(CoordinatesDistanceValidator.class);

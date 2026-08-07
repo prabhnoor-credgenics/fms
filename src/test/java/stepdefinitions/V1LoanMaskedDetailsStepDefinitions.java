@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.V1LoanMaskedDetailsValidator;
 
-
 public class V1LoanMaskedDetailsStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(V1LoanMaskedDetailsStepDefinitions.class);
@@ -25,11 +24,9 @@ public class V1LoanMaskedDetailsStepDefinitions extends BaseStepDefinitions {
         this.validator = validator;
     }
 
-
     @Then("the v1 loan details validation error should be valid")
     public void the_v1_loan_details_validation_error_should_be_valid() {
         validator.validateValidationError(activeResponse());
     }
-    // "response should contain loan {string}" -> generic: the response body should contain text "<id>"
-    // "error code should be {string}" -> generic: the response body should contain field "error.code" with value "<code>"
+    
 }

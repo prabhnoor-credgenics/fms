@@ -3,12 +3,10 @@ package helpers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 public final class PayloadHelper {
 
     private static final Logger LOGGER = LogManager.getLogger(PayloadHelper.class);
 
-    
     private static final String[] BOOLEAN_AS_STRING_FIELDS = {
             "tenure_finished",
             "backed_by_security",
@@ -19,7 +17,6 @@ public final class PayloadHelper {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    
     public static String convertBooleansToStrings(String jsonBody) {
         if (jsonBody == null || jsonBody.isBlank()) {
             return jsonBody;
@@ -35,7 +32,6 @@ public final class PayloadHelper {
         return result;
     }
 
-    
     public static String stripSurroundingQuotes(String value) {
         if (value == null) {
             return null;
@@ -47,7 +43,6 @@ public final class PayloadHelper {
         return value;
     }
 
-    
     public static boolean isNullToken(String value) {
         return value != null && "null".equalsIgnoreCase(value.trim());
     }

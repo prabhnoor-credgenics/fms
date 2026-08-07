@@ -4,6 +4,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
 
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I mark generated recovery variables as non-mandatory
     And scenario loan id is unique
     And I prepare a request
     And I set the query parameters:
@@ -14,8 +15,8 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -216,13 +217,13 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
   Scenario Outline: source enum value "<source>" is accepted (202)
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
       | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN}     |
+      | authenticationtoken | {AUTH_TOKEN:creator1}     |
     And I set the request body:
       """
-      { "loan_ids": ["{LOAN_ID}"], "source": "<source>", "allocation_type": "telecalling", "allocation_algorithm": "one_to_one", "callback_details": {} }
+      { "loan_ids": ["{LOAN_ID}"], "source": "<source>", "allocation_type": "other", "allocation_algorithm": "one_to_one", "callback_details": {} }
       """
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 202
@@ -242,13 +243,13 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
   Scenario Outline: allocation_algorithm "<algorithm>" with telecalling is accepted (202)
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
       | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN}     |
+      | authenticationtoken | {AUTH_TOKEN:creator1}     |
     And I set the request body:
       """
-      { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "telecalling", "allocation_algorithm": "<algorithm>", "callback_details": {} }
+      { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "other", "allocation_algorithm": "<algorithm>", "callback_details": {} }
       """
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 202
@@ -263,10 +264,10 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
   Scenario Outline: allocation_type "<type>" with one_to_one is accepted (202)
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
       | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN}     |
+      | authenticationtoken | {AUTH_TOKEN:creator1}     |
     And I set the request body:
       """
       { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "<type>", "allocation_algorithm": "one_to_one", "callback_details": {} }
@@ -450,7 +451,7 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
       """
     When I send a "POST" request to "/recovery/allocation/enqueue"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0015"
+    And the response body should contain field "error.code" as "auto" with value "REC_0015"
 
 
   @negative @creator
@@ -473,10 +474,10 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
   Scenario Outline: Required field "<missing>" absent returns 400 (REC_0076)
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
       | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN}     |
+      | authenticationtoken | {AUTH_TOKEN:creator1}     |
     And I set the request body:
       """
       <body>
@@ -530,10 +531,10 @@ Feature: Allocation Enqueue — POST /recovery/allocation/enqueue
   Scenario Outline: Invalid field "<case>" returns 400 (REC_0076)
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
       | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN}     |
+      | authenticationtoken | {AUTH_TOKEN:creator1}     |
     And I set the request body:
       """
       <body>

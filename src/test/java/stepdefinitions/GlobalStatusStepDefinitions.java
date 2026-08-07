@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import validators.business.GlobalStatusValidator;
 
-
 public class GlobalStatusStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(GlobalStatusStepDefinitions.class);

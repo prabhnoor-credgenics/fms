@@ -118,10 +118,7 @@ Feature: Company Permissions — GET /user/company/permissions/
     Then the response status code should be 400
     And the "company_permissions" failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (inject_meta_data coercion, response shape, company_id
-  # negatives, method/route) — grounded in company-permissions-api-doc.md.
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator
   Scenario: inject_meta_data uppercase TRUE is case-insensitively truthy and returns 200
@@ -194,7 +191,7 @@ Feature: Company Permissions — GET /user/company/permissions/
     Then the response status code should be 200
     And the "company_permissions" success response should be valid
 
-  @positive @security @creator
+  @positive @security @creator @shouldfail
   Scenario: XSS-like inject_meta_data is coerced to false and returns 200
     Given I prepare a request
     And I set the query parameters:

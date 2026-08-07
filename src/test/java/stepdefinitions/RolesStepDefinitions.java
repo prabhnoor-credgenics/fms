@@ -20,7 +20,6 @@ public class RolesStepDefinitions {
         this.validator = validator;
     }
 
-
     @Then("the role mutation response should be valid")
     public void the_role_mutation_response_should_be_valid() {
         validator.validateMutationResponse(activeResponse());
@@ -35,7 +34,6 @@ public class RolesStepDefinitions {
     public void the_role_details_response_should_be_valid() {
         validator.validateDetailsResponse(activeResponse());
     }
-
 
     private Response activeResponse() {
         return ResponseHelper.resolve(null, testContext);

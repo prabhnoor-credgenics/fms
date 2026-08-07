@@ -11,7 +11,6 @@ import validators.business.RecoveryVariablesValidator;
 import java.util.List;
 import java.util.Map;
 
-
 public class RecoveryVariablesStepDefinitions extends BaseStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(RecoveryVariablesStepDefinitions.class);
@@ -144,18 +143,26 @@ public class RecoveryVariablesStepDefinitions extends BaseStepDefinitions {
     }
 
     private String findVariableIdByName(List<Map<String, Object>> variables, String name) {
-        if (variables == null) return null;
+        if (variables == null || name == null) {
+            return null;
+        }
         for (Map<String, Object> item : variables) {
-            if (name.equals(item.get("variable_name"))) {
+            Object itemName = item.get("variable_name");
+            
+            if (itemName != null && name.equalsIgnoreCase(itemName.toString())) {
                 Object idObj = item.get("variable_id");
-                if (idObj != null) return idObj.toString();
+                if (idObj != null) {
+                    return idObj.toString();
+                }
             }
             Object subVars = item.get("sub_variables");
             if (subVars instanceof List<?>) {
                 @SuppressWarnings("unchecked")
                 List<Map<String, Object>> nested = (List<Map<String, Object>>) subVars;
                 String found = findVariableIdByName(nested, name);
-                if (found != null) return found;
+                if (found != null) {
+                    return found;
+                }
             }
         }
         return null;

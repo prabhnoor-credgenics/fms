@@ -5,8 +5,8 @@ import io.restassured.response.Response;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-
 
 public class TestContext {
 
@@ -29,39 +29,109 @@ public class TestContext {
     private Response response;
     private Response savedComparisonResponse;
     private String lastRequestBody;
-
+    private String requestBody;
 
     private String apiLogs;
 
-
     private String scenarioLoanId;
+    private String scenarioVariableName;
     private String scenarioCompanyId;
     private String scenarioAllocationMonth;
     private String scenarioName;
     private String scenarioVariableId;
     private String scenarioMappingId;
 
-
     private int userSlot;
 
-    /** Module/product (e.g. lending, creditline, notice) the active session logged in under. */
     private String activeModule;
-
 
     private UserRole userRole;
 
     private final Map<String, String> randomStringCache = new HashMap<>();
 
-
     private final Map<String, Long> capturedTimes = new HashMap<>();
 
+    private final Map<String, Object> capturedValues = new HashMap<>();
+
+    public void captureValue(String key, String value) {
+        capturedValues.put(key, value);
+    }
+
+    public void captureObject(String key, Object value) {
+        capturedValues.put(key, value);
+    }
+
+    public String getCapturedValue(String key) {
+        return stringifyCaptured(capturedValues.get(key));
+    }
+
+    public Object getCapturedObject(String key) {
+        return capturedValues.get(key);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getCapturedMap(String key) {
+        Object value = capturedValues.get(key);
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof Map<?, ?> map) {
+            return (Map<String, Object>) map;
+        }
+        throw new IllegalStateException(
+                "Captured '" + key + "' is not a map (found " + value.getClass().getSimpleName() + ")");
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Object> getCapturedList(String key) {
+        Object value = capturedValues.get(key);
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof List<?> list) {
+            return (List<Object>) list;
+        }
+        throw new IllegalStateException(
+                "Captured '" + key + "' is not a list (found " + value.getClass().getSimpleName() + ")");
+    }
+
+    public boolean hasCapturedValue(String key) {
+        return capturedValues.containsKey(key);
+    }
+
+    public void clearCapturedValues() {
+        capturedValues.clear();
+    }
+
+    public void clearCapturedValue(String key) {
+        if (key == null || key.isBlank()) {
+            throw new IllegalArgumentException("Captured key must not be blank");
+        }
+        capturedValues.remove(key);
+    }
+
+    public Map<String, Object> getCapturedValues() {
+        return capturedValues;
+    }
+
+    public static String stringifyCaptured(Object raw) {
+        if (raw == null) {
+            return null;
+        }
+        if (raw instanceof String || raw instanceof Number || raw instanceof Boolean) {
+            return String.valueOf(raw);
+        }
+        try {
+            return new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(raw);
+        } catch (Exception e) {
+            return String.valueOf(raw);
+        }
+    }
 
     public record UserSession(String authToken, String companyId, String userId, UserRole role, int slot,
                               String module) {}
 
-
     private final Map<String, UserSession> namedSessions = new LinkedHashMap<>();
-
 
     public void rememberUserSession(String key, UserSession session) {
         namedSessions.put(key, session);
@@ -70,7 +140,6 @@ public class TestContext {
     public UserSession getUserSession(String key) {
         return namedSessions.get(key);
     }
-
 
     public Map<String, UserSession> getNamedSessions() {
         return namedSessions;
@@ -98,6 +167,14 @@ public class TestContext {
 
     public void setLastRequestBody(String lastRequestBody) {
         this.lastRequestBody = lastRequestBody;
+    }
+
+    public String getRequestBody() {
+        return requestBody;
+    }
+
+    public void setRequestBody(String requestBody) {
+        this.requestBody = requestBody;
     }
 
     public String getAuthToken() {
@@ -238,6 +315,14 @@ public class TestContext {
 
     public void setScenarioLoanId(String scenarioLoanId) {
         this.scenarioLoanId = scenarioLoanId;
+    }
+
+    public String getScenarioVariableName() {
+        return scenarioVariableName;
+    }
+
+    public void setScenarioVariableName(String scenarioVariableName) {
+        this.scenarioVariableName = scenarioVariableName;
     }
 
     public String getScenarioCompanyId() {

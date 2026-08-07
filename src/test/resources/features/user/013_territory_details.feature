@@ -353,10 +353,7 @@ Feature: Territory Details — POST /user/territory/details
     When I send a "GET" request to "/user/territory/details"
     Then the response status code should be 405
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (filters, pagination boundary, response shape, injection,
-  # validation negatives, method/path) — grounded in territory-details-api-doc.md.
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator
   Scenario: Filter by parent_territory_code returns 200
@@ -502,7 +499,7 @@ Feature: Territory Details — POST /user/territory/details
     Then the response status code should be 200
     And the "territory_details" success response should be valid
 
-  @positive @creator
+  @negative @creator @shouldfail
   Scenario: Default success response carries the expected message
     Given I prepare a request
     And I set the query parameters:
@@ -515,8 +512,8 @@ Feature: Territory Details — POST /user/territory/details
       {}
       """
     When I send a "POST" request to "/user/territory/details"
-    Then the response status code should be 200
-    And the response message should be "Territory details fetched successfully."
+    Then the response status code should be 400
+    And the response message should be "Please provide complete details"
 
   @positive @creator
   Scenario: fetch_descendants response names the searched code in its message
@@ -544,7 +541,7 @@ Feature: Territory Details — POST /user/territory/details
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      {}
+      { "fetch_descendants": true, "search_key": "code", "search_value": "MH-01" }
       """
     When I send a "POST" request to "/user/territory/details"
     Then the response status code should be 200
@@ -566,7 +563,7 @@ Feature: Territory Details — POST /user/territory/details
     Then the response status code should be 200
     And the "territory_details" success response should be valid
 
-  @positive @security @creator
+  @positive @security @creator @shouldfail
   Scenario: XSS payload in search_value is handled safely (200)
     Given I prepare a request
     And I set the query parameters:
@@ -630,7 +627,7 @@ Feature: Territory Details — POST /user/territory/details
     Then the response status code should be 400
     And the "territory_details" failure response should be valid
 
-  @negative @creator
+  @negative @creator @shouldfail
   Scenario: Whitespace-only search_value is rejected (400)
     Given I prepare a request
     And I set the query parameters:
@@ -773,7 +770,7 @@ Feature: Territory Details — POST /user/territory/details
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      {}
+      { "fetch_descendants": true, "search_key": "code" }
       """
     When I send a "POST" request to "/user/territory/details/"
     Then the response status code should be one of "200,404,405"

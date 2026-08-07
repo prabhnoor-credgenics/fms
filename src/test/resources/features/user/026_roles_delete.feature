@@ -81,7 +81,6 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 200
     And the role mutation response should be valid
-    # second delete of the now-inactive role -> no longer accessible -> 422
     And I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -106,12 +105,10 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @creator @roles-write
   Scenario: Delete a role without company_id is rejected
-    # Observed on staging: on the write path the permission check fires before org resolution, so a
-    # missing company_id returns 403 (the GET paths return 400 for the same omission).
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And I prepare a request
@@ -138,7 +135,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid role_id provided"
+    And the response body should contain field "message" as "auto" with value "invalid role_id provided"
 
   @negative @creator @roles-write
   Scenario: Delete a syntactically-valid but unknown role_id returns 422
@@ -156,10 +153,6 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
     Then the response status code should be 422
     And the "roles" failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (dependents/assigned conflicts, role_id injection/boundary,
-  # auth/company negatives, method/path, success envelope) — grounded in roles-crud-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @negative @multistep @conflict @creator @roles-write
   Scenario: Delete a non-leaf role that has a child role reporting to it returns 409
@@ -304,7 +297,7 @@ Feature: Roles — DELETE /user/roles/<role_id> (delete role)
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the path parameters:
-      | role_id |  |
+      | role_id | " " |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "DELETE" request to "/user/roles/{role_id}"

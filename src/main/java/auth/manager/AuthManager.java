@@ -16,7 +16,6 @@ public class AuthManager {
 
     private static final Logger logger = LogManager.getLogger(AuthManager.class);
 
-
     private static final ConcurrentHashMap<String, Object> LOGIN_LOCKS = new ConcurrentHashMap<>();
 
     private final ConfigReader configReader;
@@ -39,7 +38,6 @@ public class AuthManager {
         this.authTokenCache = authTokenCache;
     }
 
-
     public void initializeAuthentication(UserRole role, int slot) {
         initializeAuthentication(role, null, slot);
     }
@@ -60,7 +58,6 @@ public class AuthManager {
         Environment env = configReader.getEnvironment();
         int userSlot = testContext.getUserSlot();
 
-
         AuthTokenCache.CachedSession cached = authTokenCache.getIfValid(env, effectiveModule, role, userType, userSlot);
         if (cached != null) {
             testContext.setAuthToken(cached.authToken());
@@ -69,7 +66,6 @@ public class AuthManager {
             }
             return;
         }
-
 
         String lockKey = env + ":" + effectiveModule + ":" + role + ":" + userType + ":" + userSlot;
         Object lock = LOGIN_LOCKS.computeIfAbsent(lockKey, k -> new Object());
@@ -97,11 +93,6 @@ public class AuthManager {
         }
     }
 
-    /**
-     * A blank module means the caller used the module-less step; fall back to the configured
-     * {@code default_module} so those logins still land on a real credential set (e.g. lending).
-     * Normalised to lowercase to match the credential keys and keep cache keys stable.
-     */
     private String resolveModule(String module) {
         String candidate = (module == null || module.isBlank())
                 ? configReader.getDefaultModule()
@@ -109,14 +100,6 @@ public class AuthManager {
         return (candidate == null || candidate.isBlank()) ? null : candidate.trim().toLowerCase();
     }
 
-    /**
-     * Authenticates the active session using a pre-issued API key instead of a user login.
-     * Loads {@code <env>_api_key} (from secrets/crypto.properties) into the auth token and
-     * {@code <env>_api_key_global_company_id} into the company id, so subsequent requests send
-     * the API key via {@code {AUTH_TOKEN}} and target the global company via {@code {COMPANY_ID}}.
-     * Bypasses the token cache and user-slot machinery — the API key is environment-scoped, not
-     * per-user. Requires {@code <env>_api_key} to be present in secrets/crypto.properties.
-     */
     public void initializeApiKeyAuthentication() {
         Environment env = configReader.getEnvironment();
         apiKeyService.loadMultiCompanyApiKey(env);

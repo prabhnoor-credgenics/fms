@@ -1,27 +1,5 @@
 @api @creditline @recovery @creditline-loan-upload
 Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loan/{loan_id}
-  # Credit-line product (company_type == "credit line"). Single-record "quick_upload" of a
-  # transaction via the shared loan-upload endpoint. For a credit-line company the record identity
-  # is `transaction_id`; the id in the URI path and the `transaction_id` in the payload MUST be the
-  # same value or the API rejects the request. Both are driven by the scenario-unique {LOAN_ID}, so
-  # every scenario uploads under its own non-colliding id.
-  #
-  # Body serializer mirrors the loan-upload object (applicant / co_applicant / defaults /
-  # document_details / loan_guarantor / references arrays) with source == "quick_upload".
-  # Reusable payload: test-data/creditline/creditline_loan_recovery_request.json.
-  #
-  # Success envelope (observed on staging): HTTP 201
-  #   {"success": true, "message": "Data uploaded successfully", "data": null, "output": {"error": null}}
-  # auto-validated against schemas/recovery/success/loan_recovery_success_schema.json.
-  #
-  # VALIDATION SCOPE (verified on staging 2026-07-22): the credit-line quick-upload path enforces
-  # far fewer field rules than the lending loan-upload endpoint. It DOES enforce: identity
-  # (transaction_id present / <=64 / path==payload), auth/company gate, mobile & email format,
-  # date format, booleans, numeric-only text, and special-char/length rules on the id-like fields
-  # (client_customer_id, group_id) plus max length on loan_nbfc_name/product_type/loan_type. It does
-  # NOT enforce: integer/amount/percentage/CIBIL-range rules, URL format, pincode length, and
-  # special-chars / over-length on most descriptive text fields — those are accepted (201). Scenarios
-  # documenting the accepted-but-"invalid" behaviour are grouped under "not enforced" outlines.
 
   Background:
     Given scenario loan id is unique
@@ -32,9 +10,6 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
       | replace_previous_data | false |
       | replace_given_data    | false |
 
-  # ============================================================================
-  # Auth & permission
-  # ============================================================================
 
   @negative @creditline @creator
   Scenario: Upload without authenticationtoken header returns 400
@@ -75,9 +50,6 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     Then the response status code should be 403
     And the response should match json schema "schemas/recovery/error/loan_recovery_error_schema.json"
 
-  # ============================================================================
-  # Happy path
-  # ============================================================================
 
   @positive @smoke @creditline @creator
   Scenario: Valid single transaction upload returns 201
@@ -146,9 +118,6 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
       | true                  | false              |
       | false                 | true               |
 
-  # ============================================================================
-  # Path / payload id matching (enforced)
-  # ============================================================================
 
   @negative @creditline @creator
   Scenario: URI id and payload transaction_id mismatch returns 400
@@ -174,7 +143,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "transaction_id" to null
+    And I update JSON field "transaction_id" as "null" to "null"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -188,7 +157,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "transaction_id" to "{RANDOM_STRING:65}"
+    And I update JSON field "transaction_id" as "auto" to "{RANDOM_STRING:65}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -205,13 +174,10 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "transaction_id" to "txn_123-ABC/45"
+    And I update JSON field "transaction_id" as "auto" to "txn_123-ABC/45"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
-  # ============================================================================
-  # ENFORCED validations (return 400)
-  # ============================================================================
 
   @datatype-validation @text @special-characters @negative @creditline @creator
   Scenario Outline: Id-like text fields reject disallowed special characters (enforced)
@@ -223,7 +189,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "<invalid_value>"
+    And I update JSON field "<field_path>" as "auto" to "<invalid_value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -242,7 +208,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "{RANDOM_STRING:<max_length_plus>}"
+    And I update JSON field "<field_path>" as "auto" to "{RANDOM_STRING:<max_length_plus>}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -263,7 +229,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "<invalid_value>"
+    And I update JSON field "<field_path>" as "auto" to "<invalid_value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -282,7 +248,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "<invalid_value>"
+    And I update JSON field "<field_path>" as "auto" to "<invalid_value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -302,7 +268,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "applicant_contact_details[0].applicant_contact_number" to "<invalid_value>"
+    And I update JSON field "applicant_contact_details[0].applicant_contact_number" as "auto" to "<invalid_value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -323,7 +289,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "applicant_email_details[0].applicant_email" to "<invalid_value>"
+    And I update JSON field "applicant_email_details[0].applicant_email" as "auto" to "<invalid_value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -344,7 +310,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "applicant_address[0].applicant_pincode" to "ABC123"
+    And I update JSON field "applicant_address[0].applicant_pincode" as "auto" to "ABC123"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -358,7 +324,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "<invalid_value>"
+    And I update JSON field "<field_path>" as "auto" to "<invalid_value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 400
 
@@ -370,9 +336,6 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
       | client_loan_sanction_date    | 01-01-2021    |
       | defaults[0].allocation_month | 2021/01/01    |
 
-  # ============================================================================
-  # Positive: text fields accept allowed special characters (201)
-  # ============================================================================
 
   @datatype-validation @text @special-characters @positive @creditline @creator
   Scenario Outline: Text fields accept values containing allowed special characters (201)
@@ -387,7 +350,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "<allowed_value>"
+    And I update JSON field "<field_path>" as "auto" to "<allowed_value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -422,14 +385,9 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
       | references[0].name                            | Test.Reference           |
       | references[0].relation_with_applicant         | Father                   |
 
-  # ============================================================================
-  # NOT ENFORCED by credit-line quick upload — accepted with 201
-  # (documented staging gap vs the lending loan-upload endpoint)
-  # ============================================================================
 
   @datatype-validation @text @special-characters @positive @creditline @creator @not-enforced
   Scenario Outline: Descriptive text fields accept disallowed special characters (not enforced, 201)
-    # TODO: verify on staging — quick upload does not enforce the char-set rule on these fields (returns 201).
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
@@ -441,7 +399,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "<value>"
+    And I update JSON field "<field_path>" as "auto" to "<value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -464,7 +422,6 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @text @positive @creditline @creator @not-enforced @boundary
   Scenario Outline: Text fields accept over-length values (max length not enforced, 201)
-    # TODO: verify on staging — quick upload does not enforce max length on these fields (returns 201).
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
@@ -476,7 +433,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "{RANDOM_STRING:<length>}"
+    And I update JSON field "<field_path>" as "auto" to "{RANDOM_STRING:<length>}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -511,7 +468,6 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @integer @amount @percentage @positive @creditline @creator @not-enforced
   Scenario Outline: Numeric fields accept decimal / negative / out-of-range values (not enforced, 201)
-    # TODO: verify on staging — quick upload does not enforce integer/amount/percentage/CIBIL rules (returns 201).
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
@@ -523,7 +479,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "<value>"
+    And I update JSON field "<field_path>" as "auto" to "<value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -548,7 +504,6 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
 
   @datatype-validation @pincode @url @positive @creditline @creator @not-enforced
   Scenario Outline: Pincode length and URL format are not enforced (accepted, 201)
-    # TODO: verify on staging — quick upload accepts wrong-length pincodes and malformed URLs (returns 201).
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
@@ -560,7 +515,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to "<value>"
+    And I update JSON field "<field_path>" as "auto" to "<value>"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -571,9 +526,6 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
       | applicant_photo_link                    | www.example.com         |
       | applicant_photo_link                    | http://invalid..url.com |
 
-  # ============================================================================
-  # Null / empty acceptance for optional text fields (201)
-  # ============================================================================
 
   @datatype-validation @text @positive @creditline @creator
   Scenario Outline: Optional text field accepts null (201)
@@ -588,7 +540,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to null
+    And I update JSON field "<field_path>" as "null" to "null"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -621,7 +573,7 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
-    And I update JSON field "<field_path>" to ""
+    And I update JSON field "<field_path>" as "auto" to ""
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -636,9 +588,6 @@ Feature: Credit-line single transaction (quick) upload — POST /recovery/v1/loa
       | loan_zone               |
       | notice_delivery_partner |
 
-  # ============================================================================
-  # Multi-step: upload then read the transaction back
-  # ============================================================================
 
   @positive @creditline @creator @multistep
   Scenario: Upload a transaction then read it back via transaction details

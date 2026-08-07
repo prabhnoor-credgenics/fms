@@ -1,11 +1,12 @@
 @api @creditline @creditline-exports @recovery
 Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/payments
 
-  Background: 
+  Background:
     Given scenario company id is from configuration
     And I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
+
 
   @negative @creditline
   Scenario: Export loans without authenticationtoken header returns 400
@@ -36,6 +37,7 @@ Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/p
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
+
   @positive @smoke @creditline @env-blocked
   Scenario: Export credit-line portfolio (link) returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
@@ -43,9 +45,9 @@ Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/p
     And I grant the current user all loan permissions
     And I switch active user to "creatorc0"
     And I set the request headers:
-      | authenticationtoken | {AUTH_TOKEN} |
+      | authenticationtoken | {AUTH_TOKEN:creatorc0} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID:creatorc0} |
     And I set the request body:
       """
       { "export_type": "customer", "response_type": "link" }
@@ -61,9 +63,9 @@ Feature: Credit-line Exports — POST /recovery/export/loans, /recovery/export/p
     And I grant the current user all loan permissions
     And I switch active user to "creatorc0"
     And I set the request headers:
-      | authenticationtoken | {AUTH_TOKEN} |
+      | authenticationtoken | {AUTH_TOKEN:creatorc0} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
+      | company_id | {COMPANY_ID:creatorc0} |
     And I set the request body:
       """
       { "response_type": "link" }

@@ -9,11 +9,9 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Map;
 
-
 public class AllocationDetailsValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(AllocationDetailsValidator.class);
-
 
     public void validateSuccessEnvelope(Response response) {
         JsonPath jp = response.jsonPath();

@@ -9,7 +9,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-
 public class LoanStageConfigValidator {
 
     private static final Logger logger = LogManager.getLogger(LoanStageConfigValidator.class);

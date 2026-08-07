@@ -1,11 +1,7 @@
 Feature: Linked Loans API
-  # The linked loans API requires either loan_id or group_id (in addition to
-  # company_id). Every positive scenario therefore first uploads a loan tagged
-  # with a known group_id, then queries linked loans by that loan_id or group_id.
 
   @positive1
   Scenario: GET linked loans by loan_id after uploading a loan
-    # Setup: upload a loan tagged with a known group_id so it can be queried back.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
@@ -18,15 +14,10 @@ Feature: Linked Loans API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "group_id" to "linked-loans-auto-grp"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "group_id" as "auto" to "linked-loans-auto-grp"
     When I send a "POST" request to "/recovery/loan/{loan_id}"
-    # Setup upload. On staging this company carries orphaned mandatory recovery
-    # variables (and a strict pincode rule) that make every loan upload return
-    # 400 "Loan Data Validation Failed"; 400 is therefore accepted here so the
-    # setup does not mask the real assertions on the linked-loans GET below.
-    Then the response status code should be one of "200,201,400"
-    # Query linked loans using the compulsory loan_id parameter.
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
@@ -43,7 +34,6 @@ Feature: Linked Loans API
 
   @positive
   Scenario: GET linked loans by group_id with allocation_month=overall
-    # Setup: upload a loan tagged with a known group_id.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
@@ -56,15 +46,10 @@ Feature: Linked Loans API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "group_id" to "linked-loans-auto-grp"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "group_id" as "auto" to "linked-loans-auto-grp"
     When I send a "POST" request to "/recovery/loan/{loan_id}"
-    # Setup upload. On staging this company carries orphaned mandatory recovery
-    # variables (and a strict pincode rule) that make every loan upload return
-    # 400 "Loan Data Validation Failed"; 400 is therefore accepted here so the
-    # setup does not mask the real assertions on the linked-loans GET below.
     Then the response status code should be one of "200,201,400"
-    # Query linked loans using the compulsory group_id parameter.
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -82,7 +67,6 @@ Feature: Linked Loans API
 
   @positive
   Scenario: GET linked loans by group_id with pagination params
-    # Setup: upload a loan tagged with a known group_id.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I grant the current user all loan permissions
     And scenario loan id is unique
@@ -95,15 +79,10 @@ Feature: Linked Loans API
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "group_id" to "linked-loans-auto-grp"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "group_id" as "auto" to "linked-loans-auto-grp"
     When I send a "POST" request to "/recovery/loan/{loan_id}"
-    # Setup upload. On staging this company carries orphaned mandatory recovery
-    # variables (and a strict pincode rule) that make every loan upload return
-    # 400 "Loan Data Validation Failed"; 400 is therefore accepted here so the
-    # setup does not mask the real assertions on the linked-loans GET below.
     Then the response status code should be one of "200,201,400"
-    # Query linked loans by group_id with pagination.
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -144,7 +123,7 @@ Feature: Linked Loans API
       | allocation_month | overall                              |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator
   Scenario: GET linked loans should fail with invalid authentication token
@@ -170,7 +149,7 @@ Feature: Linked Loans API
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be one of "400,401,403"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
 
   @negative @creator @discuss
   Scenario: GET linked loans should fail when company_id does not exist
@@ -184,7 +163,7 @@ Feature: Linked Loans API
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be one of "422"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
 
   @negative @creator
   Scenario: GET linked loans should fail when company_id is invalid UUID format
@@ -198,7 +177,7 @@ Feature: Linked Loans API
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"
     
   @negative @creator @500
   Scenario: GET linked loans should fail when allocation_month does not exist
@@ -211,5 +190,5 @@ Feature: Linked Loans API
       | allocation_month |   invalid_allocation_month                          |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be 422
-    And the response body should contain field "message" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
   

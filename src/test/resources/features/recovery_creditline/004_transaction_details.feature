@@ -1,12 +1,13 @@
 @api @creditline @creditline-transaction-details @recovery
 Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<transaction_id>
- 
+
 
   Background:
     Given scenario loan id is unique
     And I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
+
 
 
   @negative @creditline
@@ -36,7 +37,7 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
 
   @negative @creditline
   Scenario: Missing company_id returns 400
-  
+
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -46,7 +47,7 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
- 
+
 
   @positive @smoke @creditline @multistep
   Scenario: Upload a transaction then fetch its details returns 200 with output and message "success"
@@ -54,7 +55,6 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I grant the current user all loan permissions
     And I switch active user to "creatorc0"
-
     And I set the query parameters:
       | company_id            | {COMPANY_ID} |
       | replace_previous_data | false        |
@@ -66,7 +66,6 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     And I set the request body from file "test-data/creditline/creditline_loan_recovery_request.json"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
-   
     And I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -81,7 +80,8 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     And the response should match json schema "schemas/creditline/success/transaction_details_success_schema.json"
 
 
-  @positive @creditline @multistep
+
+  @positive @creditline @multistep @500
   Scenario Outline: attributes selector "<attributes>" is accepted and returns 200 "success"
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
@@ -115,13 +115,10 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
       | attributes      |
       | loan_attributes |
       | emi_schedule    |
-
-    
-    @env-blocked
-    Examples:
-      | attributes            |
       | all                   |
       | additional_attributes |
+
+
 
 
   @positive @creditline @multistep
@@ -187,7 +184,6 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     Then the response status code should be 200
     And the response message should be "success"
     And the response should match json schema "schemas/creditline/success/transaction_details_success_schema.json"
-
 
 
   @negative @creditline @smoke

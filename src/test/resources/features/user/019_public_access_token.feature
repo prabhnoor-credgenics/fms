@@ -7,11 +7,9 @@ Feature: Public Access Token — POST /user/public/access-token
 
   @positive @creator
   Scenario: Valid client credentials mint an API key
-    # client_id / client_secret come from secrets/crypto.properties (<env>_client_id / <env>_client_secret).
     Given I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
-    # Referer is auto-set by the framework to baseUrl + endpoint (matches the working cURL).
     And I set the request body:
       """
       { "client_id": "{CLIENT_ID}", "client_secret": "{CLIENT_SECRET}", "token_expiry_duration": 3600 }
@@ -23,7 +21,6 @@ Feature: Public Access Token — POST /user/public/access-token
 
   @negative @creator
   Scenario: Unknown client_id is rejected
-    # TODO: verify on staging — retrieve_client_id_details may surface as 400 or 404 for an unknown client.
     Given I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
@@ -113,11 +110,6 @@ Feature: Public Access Token — POST /user/public/access-token
     Then the response status code should be 400
     And the "public_access_token" failure response should be valid
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (secret mismatch, token_expiry boundaries/default/float,
-  # extra fields, method/content-type, injection, response shape) —
-  # grounded in public-access-token-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @negative @creator
   Scenario: Valid client_id with a wrong client_secret is rejected
@@ -305,4 +297,4 @@ Feature: Public Access Token — POST /user/public/access-token
     And the response body should contain field "data.client_id"
     And the response body should contain field "data.expiry"
     And the response body should contain field "data.company_details"
-    And the response body should contain field "message" with value "API Key generated successfully"
+    And the response body should contain field "message" as "auto" with value "API Key generated successfully"

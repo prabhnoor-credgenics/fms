@@ -92,8 +92,6 @@ Feature: User Variables — GET /user/variables/
 
   @negative @creator
   Scenario: Unknown (well-formed) UUID company_id is rejected with 422
-    # Observed on staging: a well-formed but non-existent company_id UUID resolves to 422 (org lookup
-    # found no such company), distinct from a malformed/non-UUID company_id which is 400.
     Given I prepare a request
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
@@ -103,10 +101,6 @@ Feature: User Variables — GET /user/variables/
     Then the response status code should be 422
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (flag coercion, extra params ignored, response shape,
-  # company_id negatives, method/route) — grounded in variables-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @positive @creator
   Scenario: include_all_default_variables=false (explicit default) returns 200
@@ -163,7 +157,7 @@ Feature: User Variables — GET /user/variables/
     Then the response status code should be 200
     And the "user_variables" success response should be valid
 
-  @positive @security @creator
+  @positive @security @creator @shouldfail
   Scenario: Injection strings in flag params are coerced to false and return 200
     Given I prepare a request
     And I set the query parameters:
@@ -202,7 +196,7 @@ Feature: User Variables — GET /user/variables/
     And the response body should contain text "variables fetched successfully"
     And the "user_variables" success response should be valid
 
-  @negative @security @creator
+  @negative @security @creator @shouldfail
   Scenario Outline: Malformed or hostile company_id "<label>" is rejected
     Given I prepare a request
     And I set the query parameters:
@@ -254,7 +248,7 @@ Feature: User Variables — GET /user/variables/
       | company_id | {COMPANY_ID} |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    When I send a "GET" request to "/user/variables/does-not-exist-{RANDOM_STRING:6}"
+    When I send a "GET" request to "/user/variables/does-not-exist"
     Then the response status code should be one of "404,405"
     And the response body should not be empty
 

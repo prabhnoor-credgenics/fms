@@ -15,9 +15,9 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
-    And I update JSON field "applicant_name" to "MaskProbeName"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "applicant_name" as "auto" to "MaskProbeName"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -266,7 +266,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0002"
+    And the response body should contain field "error.code" as "auto" with value "REC_0002"
 
   @negative @creator
   Scenario: Empty attribute_levels query value returns 400 (coerced to None → no selector)
@@ -280,7 +280,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0002"
+    And the response body should contain field "error.code" as "auto" with value "REC_0002"
 
   @negative @creator
   Scenario: Non-existent valid-format loan_id returns 400 (REC_0007)
@@ -294,7 +294,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0007"
+    And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
 
   @negative @creator
@@ -460,7 +460,7 @@ Feature: V1 Loan masked details — GET /recovery/v1/loans/<loan_id>
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/recovery/v1/loans/{loan_id}"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0007"
+    And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
 
 

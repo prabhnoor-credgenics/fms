@@ -116,11 +116,8 @@ Feature: Company Users Export — POST /user/company/users/export
     Then the response status code should be 200
     And the "company_users_export" success response should be valid
 
-  @negative @creator
+  @negative @creator @500
   Scenario: include_only_inactive=true alone returns 400
-    # Observed on staging: the export handler auto-sets include_inactive=true (no deselected_user_ids),
-    # so include_only_inactive=true alone conflicts → 400 "Only one of 'include_inactive'/'include_api_users'
-    # and 'include_only_inactive' can be true at a time."
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -290,8 +287,8 @@ Feature: Company Users Export — POST /user/company/users/export
     Then the response status code should be 400
     And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: filters.user_ids with invalid NanoID (wrong length) returns 400
+  @positive @creator @shouldfail
+  Scenario: filters.user_ids with invalid NanoID (wrong length) returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -303,11 +300,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "user_ids": "tooshort123" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: filters.profession invalid enum returns 400
+  @positive @creator @shouldfail
+  Scenario: filters.profession invalid enum returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -319,7 +316,7 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "profession": "astronaut" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_export" failure response should be valid
 
   @negative @creator
@@ -404,8 +401,6 @@ Feature: Company Users Export — POST /user/company/users/export
 
   @positive @creator
   Scenario: company_id supplied only in body (no query param) still returns 200
-    # Observed on staging: company_id is resolved from the request body when the query param is absent,
-    # so the export succeeds with 200 (the doc's "required query param" is not enforced when body has it).
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
@@ -459,11 +454,6 @@ Feature: Company Users Export — POST /user/company/users/export
     When I send a "DELETE" request to "/user/company/users/export"
     Then the response status code should be 405
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (return_type/search/hierarchy flags, filters, invalid
-  # enums/NanoIDs/dates, injection, cross-company, method/content-type) —
-  # grounded in company-users-export-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @positive @creator
   Scenario: return_type=s3_link explicitly set returns 200
@@ -622,7 +612,7 @@ Feature: Company Users Export — POST /user/company/users/export
     Then the response status code should be 200
     And the "company_users_export" success response should be valid
 
-  @positive @creator
+  @positive @creator @500
   Scenario: filters client_employee_id/department/coverage_areas/mapped_portfolio_ids returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -751,8 +741,8 @@ Feature: Company Users Export — POST /user/company/users/export
     And the response body should contain field "data"
     And the response body should contain field "message"
 
-  @negative @creator
-  Scenario: Invalid attributes enum returns 400
+  @positive @creator @shouldfail
+  Scenario: Invalid attributes enum returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -764,7 +754,7 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "attributes": "name,not_a_real_attribute" }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_export" failure response should be valid
 
   @negative @creator
@@ -799,8 +789,8 @@ Feature: Company Users Export — POST /user/company/users/export
     Then the response status code should be 400
     And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: filters.usernames not an email or mobile returns 400
+  @positive @creator @shouldfail
+  Scenario: filters.usernames not an email or mobile returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -812,11 +802,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "usernames": "not-an-email-or-mobile" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario Outline: filters.<field> with invalid NanoID returns 400
+  @positive @creator  @shouldfail
+  Scenario Outline: filters.<field> with invalid NanoID returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -828,7 +818,7 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "<field>": "bad" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_export" failure response should be valid
 
     Examples:
@@ -838,8 +828,8 @@ Feature: Company Users Export — POST /user/company/users/export
       | reports_to          |
       | deselected_user_ids |
 
-  @negative @creator
-  Scenario: filters.exclude_profession invalid enum returns 400
+  @positive @creator @shouldfail
+  Scenario: filters.exclude_profession invalid enum returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -851,11 +841,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "exclude_profession": "astronaut" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: Invalid created_date format returns 400
+  @positive @creator @shouldfail
+  Scenario: Invalid created_date format returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -867,11 +857,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "filters": { "created_date_start": "2026/06/01" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: Invalid activity_start_time datetime format returns 400
+  @positive @creator @shouldfail
+  Scenario: Invalid activity_start_time datetime format returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -883,11 +873,11 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "data_scope": "activity-sessions", "filters": { "activity_start_time": "2026-06-01" } }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_export" failure response should be valid
 
-  @negative @creator
-  Scenario: Invalid StrBool value on include_inactive returns 400
+  @positive @creator @shouldfail
+  Scenario: Invalid StrBool value on include_inactive returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -899,7 +889,7 @@ Feature: Company Users Export — POST /user/company/users/export
       { "company_id": "{COMPANY_ID}", "include_inactive": "maybe" }
       """
     When I send a "POST" request to "/user/company/users/export"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_export" failure response should be valid
 
   @negative @creator

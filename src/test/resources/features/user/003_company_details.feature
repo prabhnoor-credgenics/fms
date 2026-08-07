@@ -120,10 +120,7 @@ Feature: Company Details — GET /user/company/
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (projections, keys edge behavior, response shape, negative
-  # company_id variants, method) — grounded in company-api-doc.md.
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator
   Scenario: Projection — config / feature flags returns 200

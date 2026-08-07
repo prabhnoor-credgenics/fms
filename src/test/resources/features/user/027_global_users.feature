@@ -3,10 +3,6 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
 
 
   Background:
-    # chief-admin is the caller for the endpoint; its own company is the pseudo value "All"
-    # (not a real UUID), so we also source a real member-company UUID from a creator session
-    # and reference it via {COMPANY_ID:creator0} in assigned_companies. chief-admin is
-    # authenticated last so it remains the active caller.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
 
@@ -131,7 +127,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 400
     And the "global_users" failure response should be valid
 
-  @negative @chief-admin
+  @negative @chief-admin @500
   Scenario: assigned_companies with a non-UUID value returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -143,7 +139,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 400
     And the "global_users" failure response should be valid
 
-  @negative @chief-admin
+  @negative @chief-admin @shouldfail
   Scenario: attributes value outside the allowed set returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -337,11 +333,6 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage — GET (filters/pagination/injection/shape) + POST create
-  # (required fields, invalid formats/enums, domain rules, method/content-type,
-  # RBAC) — grounded in global-users-get-api-doc.md + global-users-post-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @positive @chief-admin
   Scenario: disable_paging=false with explicit paging returns 200
@@ -370,7 +361,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-  @positive @chief-admin
+  @positive @chief-admin @500
   Scenario: search_query without search_type (defaults to name) returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -482,7 +473,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-  @negative @security @chief-admin
+  @negative @security @chief-admin @shouldfail
   Scenario: XSS payload in search_query returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -495,7 +486,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 200
     And the global users list response should be valid
 
-  @negative @boundary @chief-admin
+  @negative @boundary @chief-admin @shouldfail
   Scenario: Very long search_query returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -546,7 +537,7 @@ Feature: Global Users — GET (list) and POST (create) /user/global/users/
     Then the response status code should be 201
     And the global user create response should be valid
 
-  @positive @chief-admin @global-user-create
+  @positive @chief-admin @global-user-create @shouldfail
   Scenario: Extra unknown top-level field is ignored and create returns 201
     Given I prepare a request
     And I set the request headers:

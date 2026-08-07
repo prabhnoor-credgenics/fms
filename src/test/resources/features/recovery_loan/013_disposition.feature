@@ -10,7 +10,7 @@ Feature: Disposition API
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
+      | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/disposition"
     Then the response status code should be 200
     And the response message should be "Dispositions Fetched"
@@ -32,7 +32,7 @@ Feature: Disposition API
     When I send a "GET" request to "/recovery/disposition"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
 
   @negative @creator
   Scenario: API should fail when company_id does not exist
@@ -45,7 +45,7 @@ Feature: Disposition API
     When I send a "GET" request to "/recovery/disposition"
     Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
 
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
@@ -58,18 +58,34 @@ Feature: Disposition API
     When I send a "GET" request to "/recovery/disposition"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"
 
   @positive
   Scenario: Verify get disposition request with product_type and service_type
     Given I authenticate as "creator" slot 0 and remember as "creator0"
+    And I grant the current user all loan permissions
+    And scenario loan id is unique
+    And I prepare a request
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the path parameters:
+      | loan_id | {LOAN_ID} |
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the request body from file "test-data/loan_recovery_request.json"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "product_type" as "auto" to "car-accessories_1"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
+    When I send a "POST" request to "/recovery/loan/{loan_id}"
+    Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
       | Content-Type        | application/json |
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id   | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
+      | company_id   | {COMPANY_ID} |
       | service_type | recovery                             |
       | product_type | car-accessories_1                    |
     When I send a "GET" request to "/recovery/disposition"
@@ -131,7 +147,7 @@ Feature: Disposition API
     When I send a "GET" request to "/recovery/disposition"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid service_type provided"
+    And the response body should contain field "message" as "auto" with value "Invalid service_type provided"
 
   @negative @creator
   Scenario: API should fail when product_type is invalid
@@ -145,7 +161,7 @@ Feature: Disposition API
     When I send a "GET" request to "/recovery/disposition"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_get_disposition_success_schema.json"
-    And the response body should contain field "data" with value "empty"
+    And the response body should contain field "data" as "auto" with value "empty"
 
   @negative @creator4
   Scenario: API should fail when service_type is invalid and product_type is invalid
@@ -160,4 +176,4 @@ Feature: Disposition API
     When I send a "GET" request to "/recovery/disposition"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid service_type provided"
+    And the response body should contain field "message" as "auto" with value "Invalid service_type provided"

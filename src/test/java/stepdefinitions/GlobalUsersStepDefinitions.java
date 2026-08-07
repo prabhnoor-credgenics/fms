@@ -35,7 +35,6 @@ public class GlobalUsersStepDefinitions {
         createValidator.validateSuccessShape(activeResponse());
     }
 
-
     private Response activeResponse() {
         return ResponseHelper.resolve(null, testContext);
     }

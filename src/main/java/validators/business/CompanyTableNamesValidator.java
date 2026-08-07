@@ -9,7 +9,6 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Map;
 
-
 public class CompanyTableNamesValidator extends BaseEnvelopeValidator {
 
     private static final Logger logger = LogManager.getLogger(CompanyTableNamesValidator.class);

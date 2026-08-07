@@ -3,7 +3,6 @@ package runners;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
-
 @CucumberOptions(
         features = "@rerun/failedparallelrerun.txt",
         glue = {
@@ -31,5 +30,4 @@ monochrome = true,
         )
 public class FailedScenarioRunner extends AbstractTestNGCucumberTests {
 }
-
 

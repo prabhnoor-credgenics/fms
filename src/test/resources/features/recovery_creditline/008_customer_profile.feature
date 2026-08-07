@@ -1,11 +1,12 @@
 @api @creditline @creditline-customer-profile @recovery
 Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile/<client_customer_id>
 
-  Background: 
+  Background:
     Given scenario loan id is unique
     And I prepare a request
     And I set the request headers:
       | Content-Type | application/json |
+
 
   @negative @creditline
   Scenario: GET without authenticationtoken header returns 400
@@ -43,6 +44,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
+
   @positive @smoke @creditline
   Scenario: Fetch the profile of a freshly created customer returns 200 with success and output
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
@@ -72,6 +74,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
     And the response body should contain field "output"
     And the response should match json schema "schemas/creditline/success/customer_profile_get_success_schema.json"
 
+
   @negative @creditline
   Scenario: GET an unknown client_customer_id returns 400 Invalid client customer id
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
@@ -85,6 +88,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
     Then the response status code should be 400
     And the response message should be "Invalid client customer id"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
+
 
   @positive @creditline
   Scenario Outline: GET honours allocation_month and loan_details_meta_data query params (200)
@@ -115,11 +119,12 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
     And the response message should be "success"
     And the response should match json schema "schemas/creditline/success/customer_profile_get_success_schema.json"
 
-    Examples: 
+    Examples:
       | allocation_month | loan_details_meta_data |
       | Overall          | false                  |
       | Overall          | true                   |
       | 2026-7-01        | false                  |
+
 
   @negative @creditline
   Scenario: PATCH without authenticationtoken header returns 400
@@ -145,6 +150,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
     When I send a "PATCH" request to "/recovery/customer/profile/{client_customer_id}"
     Then the response status code should be 403
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
+
 
   @positive @smoke @creditline
   Scenario: Update a customer variable on a freshly created customer returns 200
@@ -203,10 +209,11 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
     Then the response status code should be 200
     And the response should match json schema "schemas/creditline/success/customer_profile_patch_success_schema.json"
 
-    Examples: 
+    Examples:
       | append |
       | false  |
       | true   |
+
 
   @negative @creditline
   Scenario: PATCH with an empty body returns 400
@@ -228,7 +235,7 @@ Feature: Credit-line Customer Profile — GET & PATCH /recovery/customer/profile
     Then the response status code should be 400
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
-  # ---------- Business/domain: unknown customer ----------
+
   @negative @creditline
   Scenario: PATCH an unknown client_customer_id returns 400 customer not found
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"

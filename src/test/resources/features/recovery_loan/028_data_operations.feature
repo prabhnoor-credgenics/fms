@@ -1009,7 +1009,7 @@ Feature: Data Operations API — POST /recovery/data-operations
         "allocation_month": "2026-5-01"
       }
       """
-    And I update JSON field "<field>" to "<invalid_value>"
+    And I update JSON field "<field>" as "auto" to "<invalid_value>"
     When I send a "POST" request to "/recovery/data-operations"
     Then the response status code should be 400
     Then the response body should not be empty

@@ -23,9 +23,6 @@ Feature: Recovery Exports API
     And the response body should contain field "data"
     And the response body should contain field "message"
     And the response body should contain field "success"
-    #And recovery exports response mandatory fields should be valid
-   # And recovery exports should match requested company
-   # And recovery exports page should respect page size 10
     And the response time should be within configured limit
 
   @positive @performance @chief-admin
@@ -125,7 +122,7 @@ Feature: Recovery Exports API
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
   @negative @creator
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -137,7 +134,7 @@ Feature: Recovery Exports API
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-     And the response body should contain field "message" with value "one or more companies not found"
+     And the response body should contain field "message" as "auto" with value "one or more companies not found"
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -149,4 +146,4 @@ Feature: Recovery Exports API
     When I send a "GET" request to "/recovery/global-status"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "Invalid company_id"
+    And the response body should contain field "message" as "auto" with value "Invalid company_id"

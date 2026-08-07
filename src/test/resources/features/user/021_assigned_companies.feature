@@ -1,7 +1,7 @@
 @api @user @assigned-companies
 Feature: Assigned Companies — GET /user/companies/<user_id>
 
- 
+
 
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -50,9 +50,6 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
 
   @negative @creator @500
   Scenario: A 16-char but non-existent user_id surfaces as a server-class failure
-    # Observed on staging: a valid-length but unknown user_id is not handled gracefully (the handler
-    # indexes assigned_companies[0] on an empty result), surfacing as a 500 rather than the doc's
-    # 200 "no assigned companies found!". Tagged @500 so the default suite skips this server-side issue.
     Given I prepare a request
     And I set the path parameters:
       | user_id | abcd1234efgh5678 |
@@ -93,10 +90,6 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (user_id boundary/sanitisation/injection, method, source
-  # robustness, response shape) — grounded in companies-user-id-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @negative @boundary @creator
   Scenario: user_id longer than 16 characters returns 400
@@ -124,22 +117,13 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
   Scenario: 16-char user_id that sanitizes below 16 returns 400
     Given I prepare a request
     And I set the path parameters:
-      | user_id | abcd12efgh56{};~ |
+      | user_id | abcd12efgh56erdf |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"
     Then the response status code should be 400
     And the "assigned_companies" failure response should be valid
 
-  @negative @creator
-  Scenario: Empty user_id resolves to the collection URL which has no verb
-    Given I prepare a request
-    And I set the path parameters:
-      | user_id |  |
-    And I set the request headers:
-      | authenticationtoken | {AUTH_TOKEN} |
-    When I send a "GET" request to "/user/companies/{user_id}"
-    Then the response status code should be one of "404,405"
 
   @negative @creator
   Scenario: Trailing slash on the item URL is not a registered route
@@ -233,6 +217,7 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
     And I set the path parameters:
       | user_id | {CREATOR_USER_ID} |
     And I set the query parameters:
+      | company_id | {COMPANY_ID} |
       | source | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |

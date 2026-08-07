@@ -3,14 +3,12 @@ package helpers;
 import context.TestContext;
 import io.restassured.response.Response;
 
-
 public final class ResponseHelper {
 
     private ResponseHelper() {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    
     public static Response resolve(Response localResponse, TestContext testContext) {
         if (localResponse != null) {
             return localResponse;

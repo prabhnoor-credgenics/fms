@@ -17,7 +17,6 @@ import validators.business.PublicLoginValidator;
 
 import static io.restassured.RestAssured.given;
 
-
 public class PublicLoginStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(PublicLoginStepDefinitions.class);
@@ -104,8 +103,6 @@ public class PublicLoginStepDefinitions {
         testContext.setResponse(response);
         logger.info("Login request sent; status={}", response.getStatusCode());
     }
-
-
 
     private Response activeResponse() {
         return ResponseHelper.resolve(null, testContext);

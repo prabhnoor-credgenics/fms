@@ -136,7 +136,7 @@ public class ExtentService implements Serializable {
 		private static final String OUT_EXCEL_KEY = EXTENT_REPORTER + DELIM + EXCEL + DELIM + OUT;
 
 		private static final String VIEW_ORDER_SPARK_KEY = EXTENT_REPORTER + DELIM + SPARK + DELIM + VIEW_ORDER;
-		// Use below for both Spark & Html reporters
+		
 		private static final String BASE64_IMAGE_SRC_SPARK_KEY = EXTENT_REPORTER + DELIM + SPARK + DELIM
 				+ BASE64_IMAGE_SRC;
 
@@ -147,7 +147,6 @@ public class ExtentService implements Serializable {
 
 		private static boolean ENABLE_BASE64_IMAGE_SRC = false;
 
-		// Use below for both Spark & Pdf reporters
 		private static final String STATUS_FILTER_KEY = EXTENT_REPORTER + DELIM + STATUS_FILTER;
 
 		private static String SCREENSHOT_FOLDER_NAME;
@@ -261,7 +260,7 @@ public class ExtentService implements Serializable {
 				DECLARED_RUNNER_COUNT = Integer
 						.parseInt(String.valueOf(getPropertyOrDefault(REPORTS_RUNNER_COUNT_KEY, 1)));
 			} catch (Exception e) {
-				// Do nothing, default to 1
+				
 				DECLARED_RUNNER_COUNT = 1;
 			}
 		}
@@ -338,8 +337,7 @@ public class ExtentService implements Serializable {
 					: String.valueOf(properties.get(CONFIG_KLOV_KEY));
 			File f = new File(configPath);
 			if (configPath != null && !configPath.isEmpty() && f.exists()) {
-				// Object prop = ExtentService.getProperty("screenshot.dir");
-				// String screenshotDir = prop == null ? "test-output/" : String.valueOf(prop);
+				
 				configureScreenshotProperties();
 				String url = Paths.get(SCREENSHOT_FOLDER_NAME).toString();
 				ExtentService.getInstance().tryResolveMediaPath(new String[] { url });
@@ -385,7 +383,7 @@ public class ExtentService implements Serializable {
 						.map(s -> convertToStatus(s)).collect(Collectors.toList());
 				reporter.filter().statusFilter().as(statuses);
 			} catch (Exception e) {
-				// Do nothing. Uses no filter.
+				
 			}
 		}
 
@@ -398,7 +396,7 @@ public class ExtentService implements Serializable {
 						.map(v -> ViewName.valueOf(v.toUpperCase())).collect(Collectors.toList());
 				spark.viewConfigurer().viewOrder().as(viewOrder).apply();
 			} catch (Exception e) {
-				// Do nothing. Uses default order.
+				
 			}
 		}
 

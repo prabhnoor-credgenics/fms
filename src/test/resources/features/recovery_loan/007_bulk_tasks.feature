@@ -27,8 +27,6 @@ Feature: Bulk tasks API
     And the response body should contain field "output[0].failure_count"
     And the response body should contain field "output[0].data_link"
     And the response body should contain field "output[0].data_key"
-    #  And the response body should contain field "output[0].error_logs_link"
-    #   And the response body should contain field "output[0].error_logs_key"
     And the response body should contain field "output[0].processing_started_at"
     And the response body should contain field "output[0].updated"
     And the response body should contain field "output[0].created"
@@ -39,8 +37,6 @@ Feature: Bulk tasks API
     And the response body should contain field "output[0].request_id"
     And the response body should contain field "output[0].operation_type"
     And the response body should contain field "output[0].total_tasks"
-    # And the response body should contain field "output[0].batch_name"
-    # And the response body should contain field "output[0].batch_description"
     And the response body should contain field "output[0].task_type"
     And the response body should contain field "output[0].is_export_link"
     And the response body should contain field "message"
@@ -56,7 +52,7 @@ Feature: Bulk tasks API
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator
   Scenario: API should fail with invalid authentication token
@@ -79,7 +75,7 @@ Feature: Bulk tasks API
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
   @negative1 @creator
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -91,7 +87,7 @@ Feature: Bulk tasks API
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-     And the response body should contain field "message" with value "one or more companies not found"
+     And the response body should contain field "message" as "auto" with value "one or more companies not found"
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -103,7 +99,7 @@ Feature: Bulk tasks API
     When I send a "GET" request to "/recovery/global-status"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
- And the response body should contain field "message" with value "Invalid company_id"
+ And the response body should contain field "message" as "auto" with value "Invalid company_id"
 
   
   @positive @smoke @bulk-tasks-listing @creator
@@ -121,7 +117,7 @@ Feature: Bulk tasks API
     And the response should match json schema "schemas/recovery/success/recovery_bulk_tasks_success_schema.json"
     And the response body should contain field "success"
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @bulk-tasks-listing @creator
   Scenario: Pagination — page and page_size returns 200
@@ -138,7 +134,7 @@ Feature: Bulk tasks API
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @bulk-tasks-listing @creator
   Scenario Outline: disable_paging "<disable_paging>" returns 200
@@ -196,7 +192,7 @@ Feature: Bulk tasks API
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @bulk-tasks-listing @creator
   Scenario: Search by author returns 200
@@ -284,7 +280,7 @@ Feature: Bulk tasks API
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @bulk-tasks-listing @approver
   Scenario: Listing succeeds for a non-creator role (no permission submodule on this route)
@@ -302,7 +298,6 @@ Feature: Bulk tasks API
 
   @positive @boundary @bulk-tasks-listing @creator
   Scenario: Large page_size is accepted (no documented maximum)
-    # TODO: verify on staging — doc specifies no max page_size; expecting a tolerant 200.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the request headers:
@@ -318,7 +313,6 @@ Feature: Bulk tasks API
 
   @negative @bulk-tasks-listing @creator
   Scenario Outline: Invalid querystring "<param>=<value>" returns 400
-    # quart-schema RequestSchemaValidationError → {"message": "<field>: <msg>", "success": false}.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the request headers:

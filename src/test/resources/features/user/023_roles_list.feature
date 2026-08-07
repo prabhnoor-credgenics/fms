@@ -40,7 +40,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @auth @creator @roles-list
   Scenario: List roles with an invalid authentication token is rejected
@@ -53,7 +53,7 @@ Feature: Roles — GET /user/roles/ (list roles)
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 400
-    And the response body should contain field "message" with value "invalid authentication token"
+    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 
   @negative @creator @roles-list
   Scenario: List roles without company_id is rejected
@@ -92,10 +92,6 @@ Feature: Roles — GET /user/roles/ (list roles)
     Then the response status code should be 200
     And the response time should be less than 5000 milliseconds
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (response shape, API-key auth, company_id negatives,
-  # extra params, method/path) — grounded in roles-crud-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @positive @schema @creator @roles-list
   Scenario: List roles response exposes the documented data.roles array

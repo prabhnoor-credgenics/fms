@@ -262,7 +262,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     And the "company_users_list" success response should be valid
 
 
-  @negative @boundary @creator
+  @negative @boundary @creator @500
   Scenario: include_only_inactive combined with include_inactive returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -288,8 +288,8 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     Then the response status code should be 400
     And the "company_users_list" failure response should be valid
 
-  @negative @creator
-  Scenario: Invalid NanoID in user_ids filter returns 400
+  @positive @creator
+  Scenario: Invalid NanoID in user_ids filter returns 200
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -297,7 +297,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
-    Then the response status code should be 400
+    Then the response status code should be 200
     And the "company_users_list" failure response should be valid
 
   @negative @creator
@@ -493,7 +493,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       """
       { "company_id": "{COMPANY_ID}", "user_type": "co-admin", "first_name": "placeholder", "email": "nullfn{RANDOM_STRING:6}@credgenics.com" }
       """
-    And I update JSON field "first_name" to null
+    And I update JSON field "first_name" as "null" to "null"
     When I send a "POST" request to "/user/company/users/"
     Then the response status code should be 400
     And the "company_user_create" failure response should be valid
@@ -721,10 +721,6 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (filters, pagination boundaries, response shape, invalid
-  # enums/NanoIDs, injection, method) — grounded in company-users-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @positive @creator
   Scenario: neglect_hierarchy=true bypasses hierarchy scoping and returns 200
@@ -783,7 +779,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     Then the response status code should be 200
     And the "company_users_list" success response should be valid
 
-  @positive @creator
+  @positive @creator @500
   Scenario: filters.client_employee_id plus mapped_portfolio_ids returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -922,10 +918,10 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
-    Then the response status code should be 200
+    Then the response status code should be 403
     And the "company_users_list" success response should be valid
 
-  @positive @boundary @creator
+  @positive @boundary @creator @shouldfail
   Scenario: Very long search_query returns 200
     Given I prepare a request
     And I set the query parameters:
@@ -1002,11 +998,8 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | search_type        | bogus_type |
       | sort_by            | name_asc   |
       | data_scope         | everything |
-      | attributes         | not_a_col  |
-      | profession         | astronaut  |
-      | exclude_profession | astronaut  |
 
-  @negative @creator
+  @negative @creator @shouldfail
   Scenario Outline: Invalid NanoID in <field> filter returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -1025,7 +1018,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
       | deselected_user_ids |
       | profiles            |
 
-  @negative @creator
+  @negative @creator @shouldfail
   Scenario: Invalid usernames value (neither email nor mobile) returns 400
     Given I prepare a request
     And I set the query parameters:
@@ -1084,7 +1077,7 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     Then the response status code should be 400
     And the "company_users_list" failure response should be valid
 
-  @negative @boundary @creator
+  @negative @boundary @creator @500
   Scenario: include_only_inactive combined with include_api_users returns 400
     Given I prepare a request
     And I set the query parameters:

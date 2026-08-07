@@ -15,8 +15,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be 201
 
@@ -33,8 +33,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -65,8 +65,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -80,7 +80,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       {
         "loan_ids": ["{LOAN_ID}"],
         "source": "frontend",
-        "allocation_month": "2026-6-01",
+        "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}",
         "attribute_levels": ["applicant", "loan_variables", "allocation_details", "payments"],
         "attribute_variables": ["loan_amount", "applicant_name"],
         "audit_info": true,
@@ -108,8 +108,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -137,8 +137,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -174,8 +174,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -211,8 +211,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -223,7 +223,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
-      { "loan_ids": ["{LOAN_ID}"], "attribute_levels": ["applicant"], "allocation_month": "2026-6-01" }
+      { "loan_ids": ["{LOAN_ID}"], "attribute_levels": ["applicant"], "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}" }
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 200
@@ -240,8 +240,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -256,7 +256,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0007"
+    And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
   @positive @creator
   Scenario: All attribute_levels members in one request returns 200
@@ -270,8 +270,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -309,8 +309,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -338,8 +338,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -367,8 +367,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -397,8 +397,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -427,8 +427,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -442,7 +442,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       {
         "loan_ids": ["{LOAN_ID}"],
         "source": "frontend",
-        "allocation_month": "2026-6-01",
+        "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}",
         "attribute_levels": ["applicant", "loan_variables", "allocation_details", "payments"],
         "audit_info": true,
         "id_info": true
@@ -463,8 +463,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -499,8 +499,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -514,7 +514,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       {
         "loan_ids": ["{LOAN_ID}"],
         "source": "litigation",
-        "allocation_month": "2026-6-01",
+        "allocation_month": "{ALLOCATION_MONTH_OFFSET:0}",
         "attribute_levels": ["applicant", "guarantors", "references"],
         "attribute_variables": ["case_number", "court_name"],
         "nested_audit_info": true,
@@ -537,8 +537,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -581,8 +581,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -629,8 +629,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -661,8 +661,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -677,7 +677,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0002"
+    And the response body should contain field "error.code" as "auto" with value "REC_0002"
 
   @negative @creator
   Scenario: Non-existent valid-format loan_id returns 400 (REC_0007)
@@ -693,7 +693,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0007"
+    And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
   @positive @creator
   Scenario: Mixed existing + non-existent loan_ids returns 200 (unknown ids ignored, valid loan returned)
@@ -707,8 +707,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -739,7 +739,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0007"
+    And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
   @negative @creator
   Scenario Outline: loan_id containing forbidden character "<ch>" is rejected (REC_0007)
@@ -755,7 +755,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0007"
+    And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
     Examples:
       | ch |
@@ -778,8 +778,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -807,8 +807,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -837,8 +837,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -867,8 +867,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -895,8 +895,8 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -928,7 +928,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0007"
+    And the response body should contain field "error.code" as "auto" with value "REC_0007"
 
 
   @negative @creator
@@ -981,7 +981,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
 
   @negative @boundary @creator
   Scenario: loan_ids over max (51 items) returns 400 (max_items=50, REC_0003)
-    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    Given I authenticate as "creator" slot 1 and remember as "creator1"
     Given I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -991,7 +991,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       | company_id | {COMPANY_ID} |
     And I set the request body:
       """
-      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "usr_16charskey00": 5 } }
+      { "loan_ids": ["Loan000631"], "source": "portfolio", "allocation_type": "user", "allocation_algorithm": "one_to_one", "selected_users": { "{USER_ID:creator0}": 5 } }
       """
     When I send a "POST" request to "/recovery/allocation"
     Then the response status code should be 200
@@ -1100,7 +1100,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
     And the internal bulk loans validation error should be valid
 
   @negative @creator
-  Scenario: source as a JSON integer triggers an unhandled error (500, REC_0004)
+  Scenario: source as a JSON integer triggers an unhandled error (400, REC_0003)
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
@@ -1113,7 +1113,7 @@ Feature: Internal Bulk Loans fetch — POST /recovery/internal/bulk/loans
       """
     When I send a "POST" request to "/recovery/internal/bulk/loans"
     Then the response status code should be 400
-    And the response body should contain field "error.code" with value "REC_0004"
+    And the response body should contain field "error.code" as "auto" with value "REC_0003"
 
   @negative @creator
   Scenario: attribute_levels invalid member returns 400 (REC_0003)

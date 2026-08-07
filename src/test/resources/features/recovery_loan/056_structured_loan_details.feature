@@ -17,8 +17,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -32,7 +32,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @creator
   Scenario: GET structured loan details with fields=all returns every category
@@ -47,8 +47,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -63,7 +63,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @creator
   Scenario: GET structured loan details with fields=loan returns loan_details
@@ -78,8 +78,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -93,7 +93,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | fields     | loan         |
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
     And the response body should contain field "output.loan_details"
 
   @positive @creator
@@ -109,8 +109,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -124,7 +124,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | fields     | applicant    |
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
     And the response body should contain field "output.applicant_details"
 
   @positive @creator
@@ -140,8 +140,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -155,7 +155,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | fields     | recovery     |
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
     And the response body should contain field "output.recovery_details"
 
   @positive @creator
@@ -171,8 +171,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -186,7 +186,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | fields     | additional_details |
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
     And the response body should contain field "output.additional_details"
 
   @positive @creator
@@ -202,8 +202,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -218,7 +218,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
     Examples:
       | fields             |
@@ -241,8 +241,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -257,7 +257,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
 
   @positive @creator
@@ -273,8 +273,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -290,7 +290,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @creator
   Scenario: GET structured loan details additional_details for a specific allocation_month
@@ -305,8 +305,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -322,7 +322,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @creator
   Scenario: GET structured loan details combined — full detail for one month
@@ -337,8 +337,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -354,7 +354,7 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
  
 
@@ -371,8 +371,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -387,11 +387,10 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @edge @creator
   Scenario: GET structured loan details for an unknown loan_id returns 200 with empty output (no 404)
-    # TODO: verify on staging — doc specifies the where-clause simply matches no rows → output={}, still 200.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the request headers:
@@ -405,12 +404,10 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
   @positive @edge @creator
   Scenario: GET structured loan details with an unvalidated allocation_month still returns 200
-    # TODO: verify on staging — doc states allocation_month is a raw equality match with NO format
-    # validation on this route; a non-matching value yields empty recovery/additional sections but 200.
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
     And I prepare a request
@@ -422,8 +419,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request
@@ -439,11 +436,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
     When I send a "GET" request to "/recovery/loan/details/{loan_id}"
     Then the response status code should be 200
     And the response body should contain field "output"
-    And the response body should contain field "message" with value "success"
+    And the response body should contain field "message" as "auto" with value "success"
 
-  # =====================================================================
-  # Negative — authentication (mirrors sibling recovery GET routes: 400 on staging)
-  # =====================================================================
 
   @negative @auth @creator
   Scenario: GET structured loan details without authentication token is rejected
@@ -488,8 +482,8 @@ Feature: Structured Loan Details API — GET /recovery/loan/details/<loan_id>
       | Content-Type        | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body from file "test-data/loan_recovery_request_allocation_flow.json"
-    And I update JSON field "loan_id" to "{LOAN_ID}"
-    And I update JSON field "defaults[0].allocation_month" to "{ALLOCATION_MONTH_OFFSET:0}"
+    And I update JSON field "loan_id" as "auto" to "{LOAN_ID}"
+    And I update JSON field "defaults[0].allocation_month" as "auto" to "{ALLOCATION_MONTH_OFFSET:0}"
     When I send a "POST" request to "/recovery/v1/loan/{loan_id}"
     Then the response status code should be one of "201"
     Given I prepare a request

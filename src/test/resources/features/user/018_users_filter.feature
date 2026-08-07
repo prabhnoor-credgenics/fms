@@ -68,8 +68,6 @@ Feature: Users Filter — GET /user/users/filter/
 
   @negative @creator @500
   Scenario: address_states filter surfaces as a server-class failure
-    # Observed on staging: requesting the address_states filter (alone or combined) returns a 500-class
-    # error from the underlying query. Tagged @500 so the default suite skips this server-side issue.
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID}   |
@@ -94,9 +92,6 @@ Feature: Users Filter — GET /user/users/filter/
 
   @negative @creator @500
   Scenario: Invalid filter name surfaces as a server-class failure (returned, not raised)
-    # Per the doc, an unknown filter name is `return`ed (not raised) as InvalidParametersException,
-    # so it does not produce a clean 400 — it surfaces as a malformed / 500-class response.
-    # TODO: verify exact status on staging.
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID}     |
@@ -137,8 +132,6 @@ Feature: Users Filter — GET /user/users/filter/
 
   @negative @creator
   Scenario: Unknown (well-formed) UUID company_id is rejected with 422
-    # Observed on staging: a well-formed but non-existent company_id UUID resolves to 422 (org lookup
-    # found no such company), distinct from a malformed/non-UUID company_id which is 400.
     Given I prepare a request
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
@@ -148,11 +141,6 @@ Feature: Users Filter — GET /user/users/filter/
     Then the response status code should be 422
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (response shape, filter combos, neglect_hierarchy quirk,
-  # company_id negatives, invalid-filter 500 family, method/route) —
-  # grounded in users-filter-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @positive @smoke @creator
   Scenario: Default response envelope shape and message are valid

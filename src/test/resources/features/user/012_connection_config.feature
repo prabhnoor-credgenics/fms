@@ -156,11 +156,6 @@ Feature: Connection Configuration — GET /user/connection-config/<connection_id
     Then the response status code should be 403
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (connection_type validation, encryption flag, connection_id
-  # sanitisation/injection, response shape, auth/company_id, method/route) —
-  # grounded in connection-config-connection-id-api-doc.md.
-  # ---------------------------------------------------------------------------
 
   @500 @negative @creator
   Scenario: Item form — missing connection_type returns 400

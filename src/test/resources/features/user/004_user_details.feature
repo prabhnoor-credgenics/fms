@@ -86,10 +86,7 @@ Feature: User Details — GET /user/users/
     When I send a "POST" request to "/user/users/"
     Then the response status code should be 405
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (response shape, extra params ignored, auth negatives,
-  # method) — grounded in users-api-doc.md (GET /user/users/ = own profile).
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator
   Scenario: Response exposes documented profile fields
@@ -100,7 +97,7 @@ Feature: User Details — GET /user/users/
     Then the response status code should be 200
     And the response body should contain field "data.user_details.name"
     And the response body should contain field "data.user_details.email"
-    And the response body should contain field "data.user_details.mobile"
+    And the response body should contain field "data.user_details.user_id"
     And the response body should contain field "data.user_details.role"
 
   @positive @creator

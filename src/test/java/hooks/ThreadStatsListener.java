@@ -28,8 +28,6 @@ public class ThreadStatsListener implements ConcurrentEventListener {
         }
     }
 
-    // Report base folder (mirrors extent.properties `basefolder.name`). The generated Spark /
-    // Extent HTML reports are sanitised here after the adapter has flushed them.
     private static final String REPORT_BASE_DIR = "TestReports";
     private static final java.util.concurrent.atomic.AtomicBoolean SANITISER_REGISTERED =
             new java.util.concurrent.atomic.AtomicBoolean(false);
@@ -42,11 +40,6 @@ public class ThreadStatsListener implements ConcurrentEventListener {
         registerReportSanitiser();
     }
 
-    /**
-     * Registers a JVM shutdown hook (once) that neutralises any executable HTML/JS injected into the
-     * generated ExtentReports HTML via Gherkin data tables / docstrings. Runs at shutdown so the
-     * adapter has already written the report file. See {@link utils.ReportSanitizer}.
-     */
     private static void registerReportSanitiser() {
         if (SANITISER_REGISTERED.compareAndSet(false, true)) {
             Runtime.getRuntime().addShutdownHook(new Thread(

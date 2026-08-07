@@ -15,7 +15,7 @@
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 400
 #    And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-#    And the response body should contain field "message" with value "invalid authentication token"
+#    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 #
 #  @negative @auth @creator @flaky
 #  Scenario: DELETE bulk loan with an invalid authentication token returns 401
@@ -31,7 +31,7 @@
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 400
 #    And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-#    And the response body should contain field "message" with value "invalid authentication token"
+#    And the response body should contain field "message" as "auto" with value "invalid authentication token"
 #
 #
 #  @negative @org @creator
@@ -48,7 +48,7 @@
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 400
 #    And the response should match json schema "schemas/recovery/error/invalid_schema.json"
-#    And the response body should contain field "message" with value "invalid company id"
+#    And the response body should contain field "message" as "auto" with value "invalid company id"
 #
 #  @negative @org @creator
 #  Scenario: DELETE bulk loan with a wrong RPC secret is still rejected at org resolution (400)
@@ -64,7 +64,7 @@
 #      """
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 400
-#    And the response body should contain field "message" with value "invalid company id"
+#    And the response body should contain field "message" as "auto" with value "invalid company id"
 #
 #  @negative @org @approver
 #  Scenario: DELETE bulk loan as approver is rejected at org resolution (400 invalid company id)
@@ -79,7 +79,7 @@
 #      """
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 400
-#    And the response body should contain field "message" with value "invalid company id"
+#    And the response body should contain field "message" as "auto" with value "invalid company id"
 #
 #  @negative @org @creator
 #  Scenario Outline: DELETE bulk loan is rejected at org resolution regardless of body "<description>"
@@ -96,7 +96,7 @@
 #      """
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 400
-#    And the response body should contain field "message" with value "invalid company id"
+#    And the response body should contain field "message" as "auto" with value "invalid company id"
 #
 #    Examples:
 #      | description           | body                          |
@@ -155,7 +155,7 @@
 #      | Rpc_Secret_Key      | {RPC_SECRET_KEY}                 |
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 400
-#    And the response body should contain field "message" with value "Empty request body"
+#    And the response body should contain field "message" as "auto" with value "Empty request body"
 #
 #  @manual @rpc-required @negative @creator @500
 #  Scenario: DELETE bulk loan with loan_ids present but null returns 400
@@ -187,7 +187,7 @@
 #      """
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 400
-#    And the response body should contain field "message" with value "No loan id provided"
+#    And the response body should contain field "message" as "auto" with value "No loan id provided"
 #
 #  @manual @rpc-required @negative @creator @500
 #  Scenario Outline: DELETE bulk loan with wrong-typed loan_ids "<description>" returns 400
@@ -229,7 +229,7 @@
 #    And I set the request body from file "test-data/bulk_loan_purge_501_ids.json"
 #    When I send a "DELETE" request to "/recovery/bulk/loan"
 #    Then the response status code should be 400
-#    And the response body should contain field "message" with value "loan_ids length exceeds max allowed limit of 500"
+#    And the response body should contain field "message" as "auto" with value "loan_ids length exceeds max allowed limit of 500"
 #
 #
 #  @manual @rpc-required @destructive @positive @creator @500

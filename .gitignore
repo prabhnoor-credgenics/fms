@@ -70,3 +70,5 @@ Jenkinsfile
 
 scripts/*
 
+rerun/
+

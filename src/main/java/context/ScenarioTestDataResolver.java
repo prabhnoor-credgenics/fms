@@ -4,7 +4,6 @@ import config.ConfigReader;
 import helpers.RandomDataHelper;
 import utils.TestDataHelper;
 
-
 public class ScenarioTestDataResolver {
 
     private final TestContext testContext;
@@ -21,7 +20,6 @@ public class ScenarioTestDataResolver {
         this.testDataHelper = testDataHelper;
     }
 
-
     public void ensureUniqueLoanIdIfEnabled() {
         if (!configReader.isUniqueLoanIdPerScenarioEnabled()) {
             return;
@@ -30,6 +28,18 @@ public class ScenarioTestDataResolver {
             return;
         }
         testContext.setScenarioLoanId(RandomDataHelper.uniqueLoanId());
+    }
+
+    public void ensureUniqueVariableName() {
+        if (testContext.getScenarioVariableName() != null && !testContext.getScenarioVariableName().isBlank()) {
+            return;
+        }
+        testContext.setScenarioVariableName(RandomDataHelper.uniqueVariableName());
+    }
+
+    public String resolveVariableName() {
+        ensureUniqueVariableName();
+        return testContext.getScenarioVariableName();
     }
 
     public String resolveLoanId() {
@@ -65,7 +75,6 @@ public class ScenarioTestDataResolver {
                         + "set company_id in properties, or configure {env}_api_key_global_company_id"
         );
     }
-
 
     public String resolveUserCompanyId() {
         if (testContext.getCompanyId() != null && !testContext.getCompanyId().isBlank()) {
@@ -118,6 +127,9 @@ public class ScenarioTestDataResolver {
         String result = resolveNamedSessionPlaceholders(text);
         result = testDataHelper.replacePlaceholders(result);
         result = result.replace(ContextKeys.LOAN_ID, resolveLoanId());
+        if (result.contains(ContextKeys.VARIABLE_NAME)) {
+            result = result.replace(ContextKeys.VARIABLE_NAME, resolveVariableName());
+        }
         result = result.replace(ContextKeys.COMPANY_ID, resolveCompanyId());
         String allocationMonth = resolveAllocationMonth();
         if (allocationMonth != null && !allocationMonth.isBlank()) {
@@ -141,20 +153,11 @@ public class ScenarioTestDataResolver {
         return result;
     }
 
-    /**
-     * Resolves {@code {CLIENT_ID}} to the API client id for the active environment,
-     * read from secrets/crypto.properties as {@code <env>_client_id} (e.g. {@code stag_client_id}).
-     * Used to mint API keys via {@code POST /user/public/access-token}.
-     */
     public String resolveClientId() {
         String key = configReader.getEnvironment().getValue() + "_client_id";
         return configReader.getCryptoProperty(key);
     }
 
-    /**
-     * Resolves {@code {CLIENT_SECRET}} to the API client secret for the active environment,
-     * read from secrets/crypto.properties as {@code <env>_client_secret} (e.g. {@code stag_client_secret}).
-     */
     public String resolveClientSecret() {
         String key = configReader.getEnvironment().getValue() + "_client_secret";
         return configReader.getCryptoProperty(key);
@@ -170,12 +173,11 @@ public class ScenarioTestDataResolver {
         );
     }
 
-
     public String resolveNamedSessionPlaceholders(String text) {
         if (text == null || text.indexOf('{') < 0) {
             return text;
         }
-        String result = text;
+        String result = replaceCapturedValues(text);
         result = replaceKeyed(result, ContextKeys.AUTH_TOKEN_FOR_PREFIX, "auth token",
                 session -> session.authToken());
         result = replaceKeyed(result, ContextKeys.COMPANY_ID_FOR_PREFIX, "company id",
@@ -185,6 +187,28 @@ public class ScenarioTestDataResolver {
         return result;
     }
 
+    private String replaceCapturedValues(String text) {
+        String result = text;
+        int start;
+        while ((start = result.indexOf(ContextKeys.CAPTURED_PREFIX)) >= 0) {
+            int end = result.indexOf('}', start);
+            if (end < 0) {
+                break; 
+            }
+            String key = result.substring(start + ContextKeys.CAPTURED_PREFIX.length(), end).trim();
+            if (!testContext.hasCapturedValue(key)) {
+                throw new IllegalStateException(
+                        "Nothing captured as '" + key + "'. Use 'I store response field \"<json path>\" as \""
+                                + key + "\"' earlier in the scenario.");
+            }
+            String value = testContext.getCapturedValue(key);
+            if (value == null) {
+                value = "";
+            }
+            result = result.substring(0, start) + value + result.substring(end + 1);
+        }
+        return result;
+    }
 
     private String replaceKeyed(
             String text,
@@ -197,7 +221,7 @@ public class ScenarioTestDataResolver {
         while ((start = result.indexOf(prefix)) >= 0) {
             int end = result.indexOf('}', start);
             if (end < 0) {
-                break; // unterminated placeholder; leave the rest as-is
+                break; 
             }
             String key = result.substring(start + prefix.length(), end).trim();
             TestContext.UserSession session = testContext.getUserSession(key);

@@ -9,7 +9,28 @@ Feature: Move Loan Restriction
       | accept              | application/json |
       | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id | 3e561a13-3be3-4672-85b0-e1c49a35d8fb |
+      | company_id | {COMPANY_ID} |
+    And I set the request body:
+      """
+      {"company_id":"{COMPANY_ID}","recovery_status":["fully recovered"],"global_status":["closed"],"is_move_loan_restriction_enabled":true}
+      """
+    When I send a "PUT" request to "/recovery/move-loan-restriction"
+    Then the response status code should be 200
+    And the response body should contain field "message" as "auto" with value "Move loans Setting saved successfully"
+    And the response body should contain field "message_template" as "auto" with value "Move loans Setting saved successfully"
+    And the response body should contain field "success" as "auto" with value "true"
+
+
+
+  Scenario: Verify get move loan restriction variables request
+    Given I authenticate as "creator" slot 0 and remember as "creator0"
+    Given I prepare a request
+    And I set the request headers:
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 200
     And the response message should be "data fetched successfully"
@@ -22,10 +43,7 @@ Feature: Move Loan Restriction
     And the response body should contain field "data.global_status"
     And the response body should contain field "data.global_status[0]"
     And the response body should contain field "data.is_move_loan_restriction_enabled"
- #   And the response body should contain field "error"
     And the response body should contain field "message_template"
-  #  And the response body should contain field "message_placeholder"
-  
   
   
  @negative @creator
@@ -37,7 +55,7 @@ Feature: Move Loan Restriction
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
-    And the response body should contain field "message" with value "invalid company id"
+    And the response body should contain field "message" as "auto" with value "invalid company id"
   @negative @creator
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -49,7 +67,7 @@ Feature: Move Loan Restriction
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-     And the response body should contain field "message" with value "one or more companies not found"
+     And the response body should contain field "message" as "auto" with value "one or more companies not found"
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -61,5 +79,5 @@ Feature: Move Loan Restriction
     When I send a "GET" request to "/recovery/move-loan-restriction"
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
- And the response body should contain field "message" with value "Invalid company_id"
+ And the response body should contain field "message" as "auto" with value "Invalid company_id"
   

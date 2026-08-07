@@ -1,0 +1,579 @@
+{
+  "applicant_aadhar_number": "1234-5678-0987",
+  "applicant_address": [
+    {
+      "applicant_address_text": "text123_321",
+      "applicant_city": "gzb1",
+      "applicant_state": "noida1",
+      "applicant_pincode": "401009",
+      "applicant_landmark": "near community center",
+      "applicant_address_latitude": "31231",
+      "applicant_address_longitude": "3123.312",
+      "applicant_address_type": "testing132_232"
+    },
+    {
+      "applicant_address_text": "text123_32122",
+      "applicant_city": "gzb1",
+      "applicant_state": "noida1",
+      "applicant_pincode": "201001",
+      "applicant_landmark": "near community center",
+      "applicant_address_type": "testing132_232223"
+    }
+  ],
+  "applicant_cibil_score": "780.67",
+  "applicant_contact_details": [
+    {
+      "applicant_contact_number": "1234567898"
+    },
+    {
+      "applicant_contact_number": "3434343434"
+    },
+    {
+      "applicant_contact_number": "8787878787"
+    },
+    {
+      "applicant_contact_number": "3434343434"
+    }
+  ],
+  "applicant_dob": "1990-01-01",
+  "applicant_email_details": [
+    {
+      "applicant_email": "s1@yopmail.com"
+    },
+    {
+      "applicant_email": "s2@yopmail.com"
+    },
+    {
+      "applicant_email": "s3@yopmail.com"
+    },
+    {
+      "applicant_email": "s4@yopmail.com"
+    },
+    {
+      "applicant_email": "s5@yopmail.com"
+    }
+  ],
+  "applicant_gender": "male",
+  "applicant_language": "hi,en,te",
+  "applicant_legal_heir": "gupta",
+  "applicant_monthly_income": "100",
+  "applicant_name": "{RANDOM_NAME}",
+  "applicant_notice_reference_number": "sdad-2313-321",
+  "applicant_occupation": "govt.servent",
+  "applicant_pan_number": "123456789987",
+  "applicant_photo_link": "s1/testfile.src",
+  "applicant_prefix": "mr.",
+  "backed_by_security": "true",
+  "business_name": "car showroom",
+  "center_name": "testingportfolio1",
+  "channel_partner": "TESTINGUSER1",
+  "chassis_number": "321331DSAFDSA",
+  "client_customer_id": "report1",
+  "client_loan_sanction_date": "2010-09-01",
+  "co_applicant": [
+    {
+      "co_applicant_contact_details": [
+        {
+          "co_applicant_contact_number": "1234567891",
+          "co_applicant_contact_number_type": "home",
+          "co_applicant_contact_number_is_valid": "TRUE",
+          "co_applicant_contact_number_is_active": "FALSE"
+        }
+      ],
+      "co_applicant_gender": "male",
+      "co_applicant_dob": "1990-01-01",
+      "co_applicant_language": "hi,en,te",
+      "co_applicant_photo_link": "j1/src.file",
+      "co_applicant_notice_reference_number": "3456789876",
+      "co_applicant_address": [
+        {
+          "co_applicant_address_type": "home1",
+          "co_applicant_address_text": "commercial-1_1",
+          "co_applicant_city": "delhi",
+          "co_applicant_state": "up",
+          "co_applicant_pincode": "201001",
+          "co_applicant_address_latitude": "2312331",
+          "co_applicant_address_longitude": "321"
+        },
+        {
+          "co_applicant_address_type": "seconlist1-apart_sprint99",
+          "co_applicant_address_text": "abu-dhabi uae emirate_1",
+          "co_applicant_city": "hong-kong_1",
+          "co_applicant_state": "testing_city-1",
+          "co_applicant_pincode": "201000",
+          "co_applicant_address_latitude": "3122321",
+          "co_applicant_address_longitude": "32342"
+        },
+        {
+          "co_applicant_address_type": "arrow1",
+          "co_applicant_address_text": "array1",
+          "co_applicant_city": "testinguser1",
+          "co_applicant_state": "peninsula1-test_1",
+          "co_applicant_pincode": "201000",
+          "co_applicant_address_latitude": "23131",
+          "co_applicant_address_longitude": "231"
+        },
+        {
+          "co_applicant_address_type": "array1",
+          "co_applicant_address_text": "arrow1",
+          "co_applicant_city": "peninsula1-test_1",
+          "co_applicant_state": "testinguser1",
+          "co_applicant_pincode": "231311",
+          "co_applicant_address_latitude": "201000",
+          "co_applicant_address_longitude": "456"
+        }
+      ],
+      "co_applicant_email_details": [
+        {
+          "co_applicant_email": "s1coapp@yopmail.com",
+          "co_applicant_email_type": "home",
+          "co_applicant_email_is_valid": "TRUE",
+          "co_applicant_email_is_active": "FALSE"
+        },
+        {
+          "co_applicant_email": "testinguser1@yopmail.com"
+        },
+        {
+          "co_applicant_email": "user1@yopmail.com"
+        },
+        {
+          "co_applicant_email": "using1@yopmail.com"
+        },
+        {
+          "co_applicant_email": "list1@yopmail.com"
+        },
+        {
+          "co_applicant_email": "sublist1@yopmail.com"
+        }
+      ],
+      "co_applicant_type": "workers1",
+      "co_applicant_name": "{RANDOM_NAME}",
+      "co_applicant_legal_heir": "sharma family",
+      "co_applicant_prefix": "bhardwaj"
+    },
+    {
+      "co_applicant_contact_details": [
+        {
+          "co_applicant_contact_number": "1111111111",
+          "co_applicant_contact_number_type": "home",
+          "co_applicant_contact_number_is_valid": "TRUE",
+          "co_applicant_contact_number_is_active": "FALSE"
+        }
+      ],
+      "co_applicant_gender": "male",
+      "co_applicant_dob": "1990-01-01",
+      "co_applicant_language": "hi,en,te",
+      "co_applicant_photo_link": "j1/src.file",
+      "co_applicant_notice_reference_number": "3456789876",
+      "co_applicant_address": [
+        {
+          "co_applicant_address_type": "home1",
+          "co_applicant_address_text": "commercial-1_1",
+          "co_applicant_city": "delhi",
+          "co_applicant_state": "up",
+          "co_applicant_pincode": "201001",
+          "co_applicant_address_latitude": "2312331",
+          "co_applicant_address_longitude": "321"
+        },
+        {
+          "co_applicant_address_type": "seconlist1-apart_sprint99",
+          "co_applicant_address_text": "abu-dhabi uae emirate_1",
+          "co_applicant_city": "hong-kong_1",
+          "co_applicant_state": "testing_city-1",
+          "co_applicant_pincode": "201000",
+          "co_applicant_address_latitude": "3122321",
+          "co_applicant_address_longitude": "32342"
+        },
+        {
+          "co_applicant_address_type": "arrow1",
+          "co_applicant_address_text": "array1",
+          "co_applicant_city": "testinguser1",
+          "co_applicant_state": "peninsula1-test_1",
+          "co_applicant_pincode": "201000",
+          "co_applicant_address_latitude": "23131",
+          "co_applicant_address_longitude": "231"
+        },
+        {
+          "co_applicant_address_type": "array1",
+          "co_applicant_address_text": "arrow1",
+          "co_applicant_city": "peninsula1-test_1",
+          "co_applicant_state": "testinguser1",
+          "co_applicant_pincode": "231311",
+          "co_applicant_address_latitude": "201000",
+          "co_applicant_address_longitude": "456"
+        }
+      ],
+      "co_applicant_email_details": [
+        {
+          "co_applicant_email": "s1coapp@yopmail.com",
+          "co_applicant_email_type": "home",
+          "co_applicant_email_is_valid": "TRUE",
+          "co_applicant_email_is_active": "FALSE"
+        },
+        {
+          "co_applicant_email": "testinguser1@yopmail.com"
+        },
+        {
+          "co_applicant_email": "user1@yopmail.com"
+        },
+        {
+          "co_applicant_email": "using1@yopmail.com"
+        },
+        {
+          "co_applicant_email": "list1@yopmail.com"
+        },
+        {
+          "co_applicant_email": "sublist1@yopmail.com"
+        }
+      ],
+      "co_applicant_type": "workers1",
+      "co_applicant_name": "{RANDOM_NAME}",
+      "co_applicant_legal_heir": "sharma family",
+      "co_applicant_prefix": "bhardwaj"
+    }
+  ],
+  "credit_account_holder_name": "testing_user1",
+  "credit_account_holder_type": "current",
+  "credit_account_number": "1234567890",
+  "credit_bank_ifsc_code": "1233-3124-3213",
+  "credit_bank_name": "testing bank",
+  "defaults": [
+    {
+      "digital_communication_end_date": "2024-07-01",
+      "advance_payment": "10000.65",
+      "total_outstanding_amount": "-12000",
+      "allocation_month": "2026-1-01",
+      "allocation_dpd_value": "0",
+      "settlement_amount": "10000001",
+      "expected_emi_principal_amount": "3234",
+      "expected_emi_interest_amount": "1000",
+      "expected_emi": "1000",
+      "other_penalty": "12",
+      "client_amount_recovered": "1000.77",
+      "date_of_default": "2025-08-04",
+      "late_fee": "123.67",
+      "utilisation": "343.43",
+      "default_emi_number": "3123",
+      "principal_outstanding_amount": "31231.312"
+    }
+  ],
+  "document_details": [
+    {
+      "document_number": "987654745",
+      "document_amount": "1000.98",
+      "security_mode": "high",
+      "document_bank_name": "AX",
+      "document_bank_ifsc_code": "AX76",
+      "document_date": "2024-5-26",
+      "document_dishonour_date": "2024-5-26",
+      "document_signature_name": "Aman",
+      "document_bounce_bank_account_number": "98765432101",
+      "document_bounce_charges": "989.89",
+      "document_bounce_bank_name": "Doc425",
+      "document_bounce_bank_ifsc_code": "AX76",
+      "document_bounce_bank_address": "h no 10, New Delhi, Delhi",
+      "document_bounce_memo_date": "2024-5-26",
+      "reason_of_document_bounce": "late pay",
+      "document_micr": "MICR987654745",
+      "document_presented_in_account": "Pan Card",
+      "document_presented_zone": "Delhi",
+      "document_bounce_memo_branch_address": "Delhi",
+      "document_signature_address_text": "Delhi",
+      "document_signature_city": "New Delhi",
+      "document_signature_state": "Delhi",
+      "document_signature_pincode": "-201009",
+      "document_sequence_number": "98765855",
+      "document_bounce_memo_reference_number": "RFN12765",
+      "document_bounce_memo_return_date": "2024-5-26",
+      "document_umrn": "UMRN425"
+    }
+  ],
+  "emi_amount": "17000",
+  "engine_number": "12312-3123",
+  "group_id": "test-manufacture_batch_1",
+  "interest_on_loan": "10",
+  "loan_branch": "unknown branch_1",
+  "loan_end_date": "2026-12-01",
+  "loan_foreclosure_amount": "1800.89",
+  "loan_guarantor": [
+    {
+      "loan_guarantor_name": "{RANDOM_NAME}",
+      "loan_guarantor_gender": "male",
+      "loan_guarantor_contact_details": [
+        {
+          "loan_guarantor_contact_number": "1234567899",
+          "loan_guarantor_contact_type": "home",
+          "loan_guarantor_contact_number_is_valid": "TRUE",
+          "loan_guarantor_contact_number_is_active": "TRUE"
+        }
+      ],
+      "loan_guarantor_email_details": [
+        {
+          "loan_guarantor_email": "mecedez-g45@yopmail.com",
+          "loan_guarantor_email_type": "car",
+          "loan_guarantor_email_is_valid": "FALSE",
+          "loan_guarantor_email_is_active": "FALSE"
+        }
+      ],
+      "loan_guarantor_address": [
+        {
+          "loan_guarantor_address_type": "homecoming",
+          "loan_guarantor_address_text": "un_ited-56-newdelhi",
+          "loan_guarantor_city": "delhi",
+          "loan_guarantor_state": "u.p",
+          "loan_guarantor_pincode": "201008"
+        }
+      ],
+      "loan_guarantor_legal_heir": "mr",
+      "loan_guarantor_prefix": "mr."
+    }
+  ],
+  "loan_id": "{LOAN_ID}",
+  "loan_nbfc_cin": "255790",
+  "loan_nbfc_name": "testing-number-12345",
+  "loan_region": "testing2",
+  "loan_regional_manager_contact_email": "s1testint_1@yopmail.com",
+  "loan_regional_manager_contact_number": "1234567890",
+  "loan_regional_manager_name": "{RANDOM_NAME}",
+  "loan_source_branch_address": "s-48 industrial sector noida",
+  "loan_tenure": "60",
+  "loan_type": "delhi",
+  "loan_zone": "north-east",
+  "make_and_model": "2015-vfz-lxi",
+  "merchant_name": "paypal",
+  "notice_date": "2025-01-01",
+  "notice_delivery_partner": "blue-dart",
+  "payment_link": "google.com",
+  "payment_link_expiry": "35",
+  "payment_mode": "upi",
+  "product_type": "car-accessories_1",
+  "rbi_stage": "not-known_1",
+  "receipt_number": "v23-3131-312-dsa",
+  "references": [
+    {
+      "reference_contact_details": [
+        {
+          "contact_number": "9999999999",
+          "reference_contact_number_type": "home",
+          "reference_contact_number_is_valid": "TRUE",
+          "reference_contact_number_is_active": "FALSE"
+        },
+        {
+          "contact_number": "5555555555",
+          "reference_contact_number_type": "office_1",
+          "reference_contact_number_is_valid": "FALSE",
+          "reference_contact_number_is_active": "TRUE"
+        },
+        {
+          "contact_number": "4444444444",
+          "reference_contact_number_type": "officespace",
+          "reference_contact_number_is_valid": "FALSE",
+          "reference_contact_number_is_active": "FALSE"
+        }
+      ],
+      "name": "{RANDOM_NAME}",
+      "reference_gender": "male",
+      "reference_pan_number": "1234567899",
+      "reference_address": [
+        {
+          "reference_address_type": "home",
+          "reference_address_text": "s-142/67,dehradun,rishikesh road",
+          "reference_city": "shahdhara",
+          "reference_state": "up",
+          "reference_pincode": "201001"
+        },
+        {
+          "reference_address_type": "indoor_1",
+          "reference_address_text": "S-141_test-1",
+          "reference_city": "delhi-6",
+          "reference_state": "uttar-pradesh_1",
+          "reference_pincode": "201001"
+        },
+        {
+          "reference_address_type": "typing1",
+          "reference_address_text": "t-8312,panckula road"
+        },
+        {
+          "reference_city": "new delhi",
+          "reference_state": "testing",
+          "reference_pincode": "201009"
+        }
+      ],
+      "relation_with_applicant": "father",
+      "reference_email_details": [
+        {
+          "reference_email": "e1-testingdone_1@yopmail.com",
+          "reference_email_type": "home",
+          "reference_email_is_valid": "TRUE",
+          "reference_email_is_active": "FALSE"
+        },
+        {
+          "reference_email": "f1@yopmail.com",
+          "reference_email_type": "commercial1",
+          "reference_email_is_valid": "TRUE",
+          "reference_email_is_active": "FALSE"
+        },
+        null,
+        null,
+        {
+          "reference_email": "w1mclaren@yopmail.com",
+          "reference_email_type": "pit-stop",
+          "reference_email_is_valid": "FALSE",
+          "reference_email_is_active": "FALSE"
+        }
+      ]
+    },
+    {
+      "reference_contact_details": [
+        {
+          "contact_number": "9876543210",
+          "reference_contact_number_type": "home",
+          "reference_contact_number_is_valid": "TRUE",
+          "reference_contact_number_is_active": "TRUE"
+        },
+        {
+          "contact_number": "9123456780",
+          "reference_contact_number_type": "testing1",
+          "reference_contact_number_is_valid": "FALSE",
+          "reference_contact_number_is_active": "FALSE"
+        },
+        {
+          "contact_number": "9012345678",
+          "reference_contact_number_type": "ghar1",
+          "reference_contact_number_is_valid": "FALSE",
+          "reference_contact_number_is_active": "FALSE"
+        }
+      ],
+      "name": "{RANDOM_NAME}",
+      "reference_gender": "male",
+      "reference_pan_number": "ABCDE1234F",
+      "reference_address": [
+        {
+          "reference_address_type": "Residential Address",
+          "reference_address_text": "123, MG Road, Bangalore, Karnataka - 560001, India",
+          "reference_city": "New York",
+          "reference_state": "Maharashtra",
+          "reference_pincode": "110001"
+        },
+        {
+          "reference_address_type": "Current Address",
+          "reference_address_text": "Flat No. 21B, Rosewood Apartments, Sector 15, Gurgaon - 122001, Haryana, India",
+          "reference_city": "New York",
+          "reference_state": "goa",
+          "reference_pincode": "301009"
+        },
+        {
+          "reference_address_type": "Residential Mailing Address",
+          "reference_address_text": "House No. 45, Sunrise Apartments, MG Road, Pune - 411001, Maharashtra, India"
+        },
+        {
+          "reference_city": "manali",
+          "reference_state": "himachal-pradesh",
+          "reference_pincode": "401009"
+        }
+      ],
+      "relation_with_applicant": "Father",
+      "reference_email_details": [
+        {
+          "reference_email": "john.doe@example.com",
+          "reference_email_type": "Factory/Warehouse Address",
+          "reference_email_is_valid": "TRUE",
+          "reference_email_is_active": "TRUE"
+        },
+        {
+          "reference_email": "r1reference1@yopmail.com",
+          "reference_email_type": "commercial",
+          "reference_email_is_valid": "TRUE",
+          "reference_email_is_active": "TRUE"
+        },
+        null,
+        null,
+        {
+          "reference_email": "alex.johnson@email.com",
+          "reference_email_type": "email1",
+          "reference_email_is_valid": "TRUE",
+          "reference_email_is_active": "TRUE"
+        }
+      ]
+    },
+    {
+      "reference_contact_details": [
+        {
+          "contact_number": "9823456710",
+          "reference_contact_number_type": "contact1",
+          "reference_contact_number_is_valid": "FALSE",
+          "reference_contact_number_is_active": "FALSE"
+        },
+        {
+          "contact_number": "9999999999",
+          "reference_contact_number_type": "numbering1",
+          "reference_contact_number_is_valid": "FALSE",
+          "reference_contact_number_is_active": "TRUE"
+        },
+        {
+          "contact_number": "9123456789",
+          "reference_contact_number_type": "query1",
+          "reference_contact_number_is_valid": "FALSE",
+          "reference_contact_number_is_active": "FALSE"
+        }
+      ],
+      "name": "{RANDOM_NAME}",
+      "reference_gender": "female",
+      "reference_pan_number": "XCVBN1234Z",
+      "reference_address": [
+        {
+          "reference_address_type": "typing1",
+          "reference_address_text": "texting1",
+          "reference_city": "city_1",
+          "reference_state": "stating_1",
+          "reference_pincode": "401009"
+        },
+        {
+          "reference_address_type": "hello1",
+          "reference_address_text": "r-142,pratap vihar",
+          "reference_city": "citing1",
+          "reference_state": "stating1",
+          "reference_pincode": "601009"
+        },
+        {
+          "reference_address_type": "homecoming1",
+          "reference_address_text": "testing-142,galing-no-3"
+        },
+        {
+          "reference_city": "london1",
+          "reference_state": "haryana1",
+          "reference_pincode": "501009"
+        }
+      ],
+      "relation_with_applicant": "mother1",
+      "reference_email_details": [
+        {
+          "reference_email": "david.clark@email.com",
+          "reference_email_type": "referencing1",
+          "reference_email_is_valid": "TRUE",
+          "reference_email_is_active": "FALSE"
+        },
+        {
+          "reference_email": "emailing1@yopmail.com",
+          "reference_email_type": "referencing1",
+          "reference_email_is_valid": "TRUE",
+          "reference_email_is_active": "TRUE"
+        },
+        null,
+        null,
+        {
+          "reference_email": "john.doe123@example.com",
+          "reference_email_type": "typo1",
+          "reference_email_is_valid": "FALSE",
+          "reference_email_is_active": "FALSE"
+        }
+      ]
+    }
+  ],
+  "security_type": "jewellery",
+  "tags": "testing1",
+  "tenure_finished": "true",
+  "total_loan_amount": "817000.68",
+  "vehicle_registration_number": "altroz123456",
+  "source": "quick_upload"
+}

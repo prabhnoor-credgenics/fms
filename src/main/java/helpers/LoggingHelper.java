@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 public final class LoggingHelper {
 
     private static final Logger FILE_LOGGER = LogManager.getLogger(LoggingHelper.class);

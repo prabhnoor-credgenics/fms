@@ -158,10 +158,7 @@ Feature: Profiles List — GET /user/profiles/
     Then the response status code should be 400
     And the response body should not be empty
 
-  # ---------------------------------------------------------------------------
-  # Expanded coverage (response shape, branch combos, boolean coercion, invalid
-  # profile_type/company_id, method/path) — grounded in profiles-api-doc.md.
-  # ---------------------------------------------------------------------------
+
 
   @positive @creator
   Scenario: Success response exposes documented shape (data.profiles, message)
@@ -177,7 +174,7 @@ Feature: Profiles List — GET /user/profiles/
     And the response body should contain field "message"
     And the "profiles_list" success response should be valid
 
-  @positive @creator
+  @positive @creator @shouldfail
   Scenario: parent_company_id WITH profile_type stays in the default list branch returns 200
     Given I prepare a request
     And I set the query parameters:

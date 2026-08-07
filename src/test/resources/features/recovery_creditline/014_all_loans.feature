@@ -1,11 +1,9 @@
 @api @creditline @creditline-all-loans @recovery
 Feature: Credit-line Portfolio Listing — GET /recovery/all-loans
- 
 
   Background:
     Given scenario company id is from configuration
     And I prepare a request
-
 
 
   @negative @creditline
@@ -44,28 +42,26 @@ Feature: Credit-line Portfolio Listing — GET /recovery/all-loans
 
 
   @positive @smoke @creditline @env-blocked
-
   Scenario: GET all-loans for the credit-line company returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
-      | authenticationtoken | {AUTH_TOKEN : creatorc0}                      |
+      | authenticationtoken | {AUTH_TOKEN:creatorc0}                      |
     And I set the query parameters:
-      | company_id | {COMPANY_ID : creatorc0} |
+      | company_id | {COMPANY_ID:creatorc0} |
     When I send a "GET" request to "/recovery/all-loans"
     Then the response status code should be 200
     And the response body should not be empty
     And the response time should be within configured limit
 
   @positive @creditline @env-blocked
-
   Scenario Outline: GET all-loans paginated returns 200
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the request headers:
       | accept              | application/json, text/plain, */* |
-      | authenticationtoken | {AUTH_TOKEN : creatorc0}                      |
+      | authenticationtoken | {AUTH_TOKEN:creatorc0}                      |
     And I set the query parameters:
-      | company_id  | {COMPANY_ID : creatorc0}  |
+      | company_id  | {COMPANY_ID:creatorc0}  |
       | page_number | <page_number> |
       | page_size   | <page_size>   |
     When I send a "GET" request to "/recovery/all-loans"

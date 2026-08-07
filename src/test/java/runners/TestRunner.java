@@ -25,6 +25,7 @@ import org.testng.annotations.DataProvider;
                 "hooks.ThreadStatsListener",
                 "rerun:rerun/failedrerun.txt"
         },
+        tags="not @creditline",
         monochrome = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

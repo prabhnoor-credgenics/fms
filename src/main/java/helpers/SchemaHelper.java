@@ -9,7 +9,6 @@ import java.util.Map;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 
-
 public final class SchemaHelper {
 
     private static final Logger LOGGER = LogManager.getLogger(SchemaHelper.class);
@@ -25,10 +24,6 @@ public final class SchemaHelper {
         DEFAULT_MAPPINGS.put("/recovery/loan-stage/config", "schemas/recovery/success/loan_stage_config_success_schema.json");
         DEFAULT_MAPPINGS.put("/recovery/exports", "schemas/recovery/success/recovery_exports_success_schema.json");
 
-        
-        
-        
-        
         REQUEST_BODY_MAPPINGS.put("test-data/loan_recovery_request.json",
                 "schemas/request/loan_upload_request_schema.json");
         REQUEST_BODY_MAPPINGS.put("test-data/company_creation_step1.json",
