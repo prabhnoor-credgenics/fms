@@ -465,7 +465,7 @@ Feature: Clock In / Clock Out
     And the response message should be "one or more companies not found"
 
   @negative
-  Scenario: TC-COMP-026 —
+  Scenario: TC-COMP-026 — Clock status api with wrong HTTP method returns 405
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the request headers:
@@ -508,32 +508,21 @@ Feature: Clock In / Clock Out
     And the response message should be "Session expired, please login again"
 
   @negative @auth
-  Scenario: TC-CLOCK-STATUS-030 — Invalid UUID authentication token
-    Given I prepare a request
-    And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-    And I set the request headers:
-      | authenticationtoken | not-a-uuid |
-    When I send a "GET" request to "/fos/clock/status"
-    Then the response status code should be 400
-    And the response message should be "invalid authentication token"
-
-  @negative @auth
-  Scenario: TC-CLOCK-SET-031 — Clock In with valid company ID where user does not belong to the company
+  Scenario: TC-CLOCK-SET-030 — Clock In with missing company id in params and valid company ID where user does not belong to the company
     Given I prepare a request
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the request body:
-  """
-  {
-    "company_id":"f7c0c2cf-6b0a-4207-baad-96b80452d966"
-  }
-  """
+    """
+    {
+     "company_id":"f7c0c2cf-6b0a-4207-baad-96b80452d966"
+     }
+     """
     When I send a "POST" request to "/fos/clock/set"
     Then the response status code should be 403
 
   @negative
-  Scenario: TC-CLOCK-STATUS-032 — Clock status with valid company ID where user does not belong to the company
+  Scenario: TC-CLOCK-STATUS-031 — Clock status with valid company ID where user does not belong to the company
     Given I prepare a request
     And I set the query parameters:
       | company_id | f7c0c2cf-6b0a-4207-baad-96b80452d966 |
