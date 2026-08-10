@@ -3,6 +3,6 @@
   "data_scope": "users",
   "include_only_parent_company_users": false,
   "include_parent_company_users": false,
-  "created_date_start": "{START_TIME}",
-  "created_date_end": "{END_TIME}"
+  "created_date_start": "{CAPTURED_TIME:CURRENT_TIME:date_time}",
+  "created_date_end": "{CAPTURED_TIME:CURRENT_TIME:date_time}"
 }

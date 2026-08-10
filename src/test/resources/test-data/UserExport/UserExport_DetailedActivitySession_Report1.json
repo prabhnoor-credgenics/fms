@@ -3,6 +3,6 @@
   "data_scope": "activity-sessions",
   "include_only_parent_company_users": false,
   "include_parent_company_users": false,
-  "activity_start_time": "{START_TIME}",
-  "activity_end_time": "{END_TIME}"
+  "activity_start_time": "{CAPTURED_TIME:CURRENT_TIME:date_time}",
+  "activity_end_time": "{CAPTURED_TIME:CURRENT_TIME:date_time}"
 }

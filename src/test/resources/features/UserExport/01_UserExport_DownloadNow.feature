@@ -1,7 +1,106 @@
-@api @approver @user-export
+#@api @approver @user-export
 Feature: User Export API - DownloadNow
 
-  @approver @positive @smoke @regression @user-export
+
+#  @approver @positive @smoke @regression @user-details-report
+  Scenario: Fetch the users for a company with valid authentication token
+    And I authenticate as "approver" slot 0 and remember as "approver0"
+    And I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN} |
+      | x-company-id        | {COMPANY_ID} |
+    And I set the query parameters:
+      | company_id   | {COMPANY_ID} |
+      | page_number  | 1 |
+      | search_type  | name |
+    When I send a "GET" request to "/user/company/users"
+    Then the response status code should be 200
+
+
+#  @positive @e2e @lifecycle @chief-admin
+#  Scenario: Full lifecycle — create role, create user with that role, set/reset password, login, verify by user_id
+#    Given I authenticate as "creator" slot 0 and remember as "creator0"
+#    And I grant the current user all loan permissions
+#    And I prepare a request
+#    And I set the request headers:
+#      | accept              | application/json |
+#      | authenticationtoken | {AUTH_TOKEN}     |
+#    And I set the query parameters:
+#      | company_id | {COMPANY_ID} |
+#    When I send a "GET" request to "/user/roles/"
+#    Then the response status code should be 200
+#    And I store response field "data.roles[0].role_id" as mapping id
+#    And I prepare a request
+#    And I set the request headers:
+#      | accept              | application/json |
+#      | authenticationtoken | {AUTH_TOKEN}     |
+#      | Content-Type        | application/json |
+#    And I set the query parameters:
+#      | company_id | {COMPANY_ID} |
+#    And I set the request body:
+#      """
+#      { "role_name": "lifecycleRole{RANDOM_STRING:8}", "reports_to_role_id": "{MAPPING_ID}" }
+#      """
+#    When I send a "POST" request to "/user/roles/"
+#    Then the response status code should be 201
+#    And I store response field "data.role_id" as variable id
+#    When I create a permission profile
+#    When I create a company user assigned the created role
+#    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+#    When I set the lifecycle user's password to "User@123" using the chief admin token
+#    And I log in as the lifecycle user with password "User@123"
+#    When I set the lifecycle user's password to "User@1234" using the chief admin token
+#    And I log in as the lifecycle user with password "User@1234"
+#    When I verify the lifecycle user's details by user id
+#    And the "verify_user" success response should be valid
+
+
+#  @positive @e2e @lifecycle @chief-admin
+  Scenario: Full lifecycle — chief admin creates user, user logs in, creates permission profile, and chief admin logs in again
+
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+
+    And I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    When I send a "GET" request to "/user/roles/"
+    Then the response status code should be 200
+    And I store response field "data.roles[0].role_id" as mapping id
+
+    And I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request body:
+    """
+    {
+      "role_name": "lifecycleRole{RANDOM_STRING:8}",
+      "reports_to_role_id": "{MAPPING_ID}"
+    }
+    """
+    When I send a "POST" request to "/user/roles/"
+    Then the response status code should be 201
+    And I store response field "data.role_id" as variable id
+
+    When I create a permission profile
+    When I create a company user assigned the created role
+
+    When I set the lifecycle user's password to "User@123" using the chief admin token
+    And I log in as the lifecycle user with password "User@123"
+
+    When I create a permission profile
+
+    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+
+
+#  @approver @positive @smoke @regression @user-export
   Scenario Outline: Download NOW with valid authentication token - <reportName>
     And I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
@@ -19,47 +118,15 @@ Feature: User Export API - DownloadNow
     And the response message should be "<successMessage>"
 
     Examples:
-      | reportName                | requestFile                              | endpoint                | successSchema                                             | successMessage                                   |
-      | User Details              | UserExport_UserDetails_Report1.json      | user-details            | schemas/UserExport/success/UserDetails_DownloadNow_01.json | user accounts export link generated successfully |
-      | User Details Audit        | UserExport_UserDetailsAudit_Report1.json | user-audit-report       | schemas/UserExport/success/UserDetailsAudit_DownloadNow.json | user accounts export link generated successfully |
-      | Detailed Activity Session | UserExport_DetailedActivitySession_Report1.json         | activity-session-report | schemas/UserExport/success/DetailedActivitySession_DownloadNow_01.json | user accounts export link generated successfully |
-      | Detailed Login Session    | UserExport_DetailedLoginSession_Report1.json | login-session-report    | schemas/UserExport/success/DetailedLoginSession_DownloadNow_01.json | user accounts export link generated successfully |
-      | Session Summary           | UserExport_SessionSummary_Report1.json   | user-summary-report     | schemas/UserExport/success/SessionSummary_DownloadNow.json | user accounts export link generated successfully |
+      | reportName                | requestFile                                      | endpoint                | successSchema                                                          | successMessage                                   |
+      | User Details              | UserExport_UserDetails_Report1.json              |  user-details           | schemas/UserExport/success/UserDetails_DownloadNow_01.json             | user accounts export link generated successfully |
+      | User Details Audit        | UserExport_UserDetailsAudit_Report1.json         | user-audit-report       | schemas/UserExport/success/UserDetailsAudit_DownloadNow.json           | user accounts export link generated successfully |
+      | Detailed Activity Session | UserExport_DetailedActivitySession_Report1.json  | activity-session-report | schemas/UserExport/success/DetailedActivitySession_DownloadNow_01.json | user accounts export link generated successfully |
+      | Detailed Login Session    | UserExport_DetailedLoginSession_Report1.json     | login-session-report    | schemas/UserExport/success/SessionSummary_DownloadNow_01.json          | user accounts export link generated successfully |
+      | Session Summary           | UserExport_SessionSummary_Report1.json           | user-summary-report     | schemas/UserExport/success/SessionSummary_DownloadNow.json             | user accounts export link generated successfully |
 
 
-#  @approver @positive @smoke @regression @user-details-report
-#  Scenario: Fetch the users for a company with valid authentication token
-#    And I authenticate as "approver" slot 0 and remember as "approver0"
-#    And I prepare a request
-#    And I set the request headers:
-#      | accept              | application/json |
-#      | authenticationtoken | {AUTH_TOKEN} |
-#      | x-company-id        | {COMPANY_ID} |
-#    And I set the query parameters:
-#      | company_id   | {COMPANY_ID} |
-#      | page_number  | 1 |
-#      | search_type  | name |
-#    When I send a "GET" request to "/user/company/users"
-#    Then the response status code should be 200
-#
-#
-#  @positive @smoke @chief-admin @global-user-create
-#  Scenario: Create a super user (email) in caller's company returns 201
-#    Given I prepare a request
-#    And I set the request headers:
-#      | Content-Type        | application/json |
-#      | authenticationtoken | {AUTH_TOKEN}     |
-#      | referer             | abc              |
-#    And I set the request body:
-#      """
-#      { "first_name": "Sam", "email": "globalu{RANDOM_STRING:8}@credgenics.com", "user_type": "super user", "assigned_companies": [ { "company_id": "{COMPANY_ID:creator0}" } ] }
-#      """
-#    When I send a "POST" request to "/user/global/users/"
-#    Then the response status code should be 201
-#    And the response should match json schema "schemas/user/success/global_user_create_success_schema.json"
-#    And the global user create response should be valid
-#
-#
+
 #  @approver @negative @regression @user-details-report
 #  Scenario: API should return 400 when authentication token is missing - User Details Report Download NOW
 #    And I prepare a request
