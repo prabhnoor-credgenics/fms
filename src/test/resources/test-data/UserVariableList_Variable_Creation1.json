@@ -1,0 +1,20 @@
+{
+  "company_id": "{COMPANY_ID}",
+  "variable_name": "{VARIABLE_NAME}",
+  "variable_type": "list",
+  "allow_multiple_values": false,
+  "is_dropdown": false,
+  "is_trackable": false,
+  "is_casing_enabled": false,
+  "is_mandatory": false,
+  "is_workflow_editable": false,
+  "is_derivable": false,
+  "sub_variables": [
+    {
+      "variable_id": "",
+      "variable_name": "{VARIABLE_NAME}_sub",
+      "variable_type": "text",
+      "description": ""
+    }
+  ]
+}

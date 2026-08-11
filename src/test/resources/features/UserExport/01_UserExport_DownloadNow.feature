@@ -19,48 +19,8 @@ Feature: User Export API - DownloadNow
 
 
 #  @positive @e2e @lifecycle @chief-admin
-#  Scenario: Full lifecycle — create role, create user with that role, set/reset password, login, verify by user_id
-#    Given I authenticate as "creator" slot 0 and remember as "creator0"
-#    And I grant the current user all loan permissions
-#    And I prepare a request
-#    And I set the request headers:
-#      | accept              | application/json |
-#      | authenticationtoken | {AUTH_TOKEN}     |
-#    And I set the query parameters:
-#      | company_id | {COMPANY_ID} |
-#    When I send a "GET" request to "/user/roles/"
-#    Then the response status code should be 200
-#    And I store response field "data.roles[0].role_id" as mapping id
-#    And I prepare a request
-#    And I set the request headers:
-#      | accept              | application/json |
-#      | authenticationtoken | {AUTH_TOKEN}     |
-#      | Content-Type        | application/json |
-#    And I set the query parameters:
-#      | company_id | {COMPANY_ID} |
-#    And I set the request body:
-#      """
-#      { "role_name": "lifecycleRole{RANDOM_STRING:8}", "reports_to_role_id": "{MAPPING_ID}" }
-#      """
-#    When I send a "POST" request to "/user/roles/"
-#    Then the response status code should be 201
-#    And I store response field "data.role_id" as variable id
-#    When I create a permission profile
-#    When I create a company user assigned the created role
-#    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
-#    When I set the lifecycle user's password to "User@123" using the chief admin token
-#    And I log in as the lifecycle user with password "User@123"
-#    When I set the lifecycle user's password to "User@1234" using the chief admin token
-#    And I log in as the lifecycle user with password "User@1234"
-#    When I verify the lifecycle user's details by user id
-#    And the "verify_user" success response should be valid
-
-
-#  @positive @e2e @lifecycle @chief-admin
-  Scenario: Full lifecycle — chief admin creates user, user logs in, creates permission profile, and chief admin logs in again
-
-    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
-
+  Scenario: Full lifecycle — create role, create user with that role, set/reset password, login, verify by user_id
+    Given I authenticate as "approver" slot 0 and remember as "approver0"
     And I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -70,7 +30,6 @@ Feature: User Export API - DownloadNow
     When I send a "GET" request to "/user/roles/"
     Then the response status code should be 200
     And I store response field "data.roles[0].role_id" as mapping id
-
     And I prepare a request
     And I set the request headers:
       | accept              | application/json |
@@ -79,25 +38,64 @@ Feature: User Export API - DownloadNow
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
-    """
-    {
-      "role_name": "lifecycleRole{RANDOM_STRING:8}",
-      "reports_to_role_id": "{MAPPING_ID}"
-    }
-    """
+      """
+      { "role_name": "lifecycleRole{RANDOM_STRING:8}", "reports_to_role_id": "{MAPPING_ID}" }
+      """
     When I send a "POST" request to "/user/roles/"
     Then the response status code should be 201
     And I store response field "data.role_id" as variable id
-
     When I create a permission profile
     When I create a company user assigned the created role
-
     When I set the lifecycle user's password to "User@123" using the chief admin token
     And I log in as the lifecycle user with password "User@123"
+    When I set the lifecycle user's password to "User@1234" using the chief admin token
+    And I log in as the lifecycle user with password "User@1234"
+    When I verify the lifecycle user's details by user id
+    And the "verify_user" success response should be valid
 
-    When I create a permission profile
 
-    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+#  @positive @e2e @lifecycle @chief-admin
+#  Scenario: Full lifecycle — chief admin creates user, user logs in, creates permission profile, and chief admin logs in again
+#
+#    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
+#
+#    And I prepare a request
+#    And I set the request headers:
+#      | accept              | application/json |
+#      | authenticationtoken | {AUTH_TOKEN}     |
+#    And I set the query parameters:
+#      | company_id | {COMPANY_ID} |
+#    When I send a "GET" request to "/user/roles/"
+#    Then the response status code should be 200
+#    And I store response field "data.roles[0].role_id" as mapping id
+#
+#    And I prepare a request
+#    And I set the request headers:
+#      | accept              | application/json |
+#      | authenticationtoken | {AUTH_TOKEN}     |
+#      | Content-Type        | application/json |
+#    And I set the query parameters:
+#      | company_id | {COMPANY_ID} |
+#    And I set the request body:
+#    """
+#    {
+#      "role_name": "lifecycleRole{RANDOM_STRING:8}",
+#      "reports_to_role_id": "{MAPPING_ID}"
+#    }
+#    """
+#    When I send a "POST" request to "/user/roles/"
+#    Then the response status code should be 201
+#    And I store response field "data.role_id" as variable id
+#
+#    When I create a permission profile
+#    When I create a company user assigned the created role
+#
+#    When I set the lifecycle user's password to "User@123" using the chief admin token
+#    And I log in as the lifecycle user with password "User@123"
+#
+#    When I create a permission profile
+#
+#    Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
 
 
 #  @approver @positive @smoke @regression @user-export
