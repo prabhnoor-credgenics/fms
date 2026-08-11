@@ -3,8 +3,10 @@ package stepdefinitions;
 import context.TestContext;
 import helpers.ResponseHelper;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +42,45 @@ public class CrudCaptureStepDefinitions {
         logger.info("Stored response field '{}' = '{}' as {{MAPPING_ID}} [thread={}]",
                 jsonPath, value, Thread.currentThread().getName());
     }
+//
+    @Given("I capture request field {string} as {string}")
+public void i_capture_request_field_as(String jsonPath, String key) {
 
+    String requestBody = testContext.getLastRequestBody();
+
+    if (requestBody == null || requestBody.isBlank()) {
+        throw new AssertionError(
+                "Request body is empty; cannot store request field '"
+                        + jsonPath + "' as '" + key + "'."
+        );
+    }
+
+    Object raw = JsonPath.from(requestBody).get(jsonPath);
+
+    if (raw == null) {
+        throw new AssertionError(
+                "Request field '" + jsonPath + "' is missing/null; cannot store as '"
+                        + key + "'. Request body: " + requestBody
+        );
+    }
+
+    if (raw instanceof String s && s.isBlank()) {
+        throw new AssertionError(
+                "Request field '" + jsonPath + "' is blank; cannot store as '"
+                        + key + "'. Request body: " + requestBody
+        );
+    }
+
+    testContext.captureObject(key, raw);
+
+    logger.info(
+            "Stored request field '{}' ({}) as {{CAPTURED:{}}} [thread={}]",
+            jsonPath,
+            describeType(raw),
+            key,
+            Thread.currentThread().getName()
+    );
+}
     @Then("I store response field {string} as {string}")
     @Given("I capture response field {string} as {string}")
     public void i_store_response_field_as(String jsonPath, String key) {
@@ -214,6 +254,8 @@ public class CrudCaptureStepDefinitions {
         }
         return raw;
     }
+
+    
 
     private static Map<String, Object> toStringKeyedMap(Map<?, ?> raw) {
         Map<String, Object> map = new LinkedHashMap<>();

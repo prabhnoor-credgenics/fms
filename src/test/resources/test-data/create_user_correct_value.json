@@ -1,0 +1,16 @@
+{
+  "first_name": "Mihir",
+  "email": "dummy{RANDOM_INT:100:999}@mailinator.com",
+  "mobile": "97{RANDOM_INT:10000000:99999999}",
+  "reports_to_user_id": "iz0seiv84mh7e4sj",
+  "role_id": "aao0pwbjdvyo4vif",
+  "profile_id": "arvken14ze01rkp4",
+  "preferred_language": "en_in",
+  "country_isd_code": "+91",
+  "map_portfolio_details": "{}",
+  "user_type": "user",
+  "territory_type_id": "c1grlesrvqbgg5f1",
+  "company_id": "{COMPANY_ID}",
+  "address_latitude": "28.6139",
+  "address_longitude": "77.2090"
+}

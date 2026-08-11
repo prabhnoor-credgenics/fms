@@ -544,6 +544,55 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
     public void the_response_status_code_should_be_one_of(String statusCodes) {
         AssertionHelper.assertStatusCodeOneOf(activeResponse(), statusCodes);
     }
+//
+
+@Then("the response body field {string} should be captured value {string} increased by {int}")
+public void the_response_body_field_should_be_captured_value_increased_by(
+        String jsonPath, String capturedKey, int increment) {
+
+    String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+
+    String capturedValue = testContext.getCapturedValue(capturedKey);
+
+    if (capturedValue == null || capturedValue.isBlank()) {
+        throw new AssertionError(
+                "No captured value found for '" + capturedKey + "'.");
+    }
+
+    int expectedValue;
+
+    try {
+        expectedValue = Integer.parseInt(capturedValue) + increment;
+    } catch (NumberFormatException e) {
+        throw new AssertionError(
+                "Captured value '" + capturedValue + "' for key '" + capturedKey
+                        + "' is not a valid integer.");
+    }
+
+    Object actualValue = activeResponse().jsonPath().get(resolvedPath);
+
+    if (actualValue == null) {
+        throw new AssertionError(
+                "Response field '" + resolvedPath + "' was not found. Body: "
+                        + activeResponse().getBody().asString());
+    }
+
+    int actual;
+
+    try {
+        actual = Integer.parseInt(String.valueOf(actualValue));
+    } catch (NumberFormatException e) {
+        throw new AssertionError(
+                "Response field '" + resolvedPath + "' is not numeric. Actual value: "
+                        + actualValue);
+    }
+
+    Assert.assertEquals(
+            actual,
+            expectedValue,
+            "Response field '" + resolvedPath + "' mismatch. Expected: "
+                    + expectedValue + ", Actual: " + actual);
+}
 
     @Then("the response body should contain field {string} as {string} with value {string}")
     public void the_response_body_should_contain_field_as_type_with_value(
