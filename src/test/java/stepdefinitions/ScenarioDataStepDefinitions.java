@@ -5,6 +5,7 @@ import context.ScenarioTestDataResolver;
 import context.TestContext;
 import helpers.RandomDataHelper;
 import helpers.RecoveryVariableCleanupHelper;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,6 +25,7 @@ public class ScenarioDataStepDefinitions {
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final TestDataHelper testDataHelper;
     private final RecoveryVariableCleanupHelper recoveryVariableCleanupHelper;
+
 
     public ScenarioDataStepDefinitions(
             TestContext testContext,
@@ -52,6 +54,12 @@ public class ScenarioDataStepDefinitions {
     public void scenario_variable_name_is_unique() {
         scenarioTestDataResolver.ensureUniqueVariableName();
         logger.info("Unique scenario variable name: {}", testContext.getScenarioVariableName());
+    }
+
+    @And("scenario variable type is {string}")
+    public void scenario_variable_type_is(String variableType) {
+        testContext.captureValue("VARIABLE_TYPE", variableType);
+        logger.info("Scenario variable type: {}", variableType);
     }
 
     @Given("I mark generated recovery variables as non-mandatory")
