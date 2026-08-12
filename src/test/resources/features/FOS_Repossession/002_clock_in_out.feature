@@ -4,19 +4,19 @@ Feature: Clock In / Clock Out
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
-  @positive @smoke
+  @positive @smoke @regression
   Scenario: TC-CLOCK-001 - Clock out user successfully
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    And I set the request body from file "test-data/clock_in_out.json"
+    And I set the request body from file "test-data/fos/clock_in_out.json"
     When I send a "POST" request to "/fos/clock/set"
     Then the response status code should be one of "200, 201"
     And the response message should be "Clock-out Successful"
 
-  @positive @smoke
+  @positive @smoke @regression
   Scenario: TC-CLOCK-002 - Verify clock status after clocking out
     Given I prepare a request
     And I set the query parameters:
@@ -38,20 +38,20 @@ Feature: Clock In / Clock Out
     And the response body should contain field "data[0].clock_time"
 
 
-  @positive @smoke
+  @positive @smoke @regression
   Scenario: TC-CLOCK-003 - Clock in user successfully
     Given I prepare a request
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
-    And I set the request body from file "test-data/clock_in_out.json"
+    And I set the request body from file "test-data/fos/clock_in_out.json"
     When I send a "POST" request to "/fos/clock/set"
     And the response status code should be one of "201,200"
     And the response message should be "Clock-in Successful"
 
 
-  @positive @smoke
+  @positive @smoke @regression
   Scenario: TC-CLOCK-004 - Verify clock status after clocking in
 
     Given I prepare a request
