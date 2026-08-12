@@ -1,10 +1,10 @@
-@api @user @roles-list
+ @user @API @POD1
 Feature: Create a new user and verify it is listed in the user search using (Email,Mobile,User_id,Name) and verify user count increases by 1
 
 Background:
 Given I authenticate as "approver" slot 0 and remember as "approver0"
 
-@positive @api @approver @user @creation @search
+@api @approver @user @Positive @Smoke 
 Scenario: Validate newly created user is listed and user count increases and delete the newly created user
 
 # 1. Fetch initial user count
