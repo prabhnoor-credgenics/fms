@@ -73,7 +73,7 @@ Feature: Filter & Sort
     When I send a "GET" request to "/recovery/variables"
     Then the response status code should be 200
     And the response body should contain text "{VARIABLE_NAME}"
-    And I store response field "output[1].variable_id" as variable id
+    And I store response field "output[0].variable_id" as variable id
 
 
     And I prepare a request
