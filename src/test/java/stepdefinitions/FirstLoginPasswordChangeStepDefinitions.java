@@ -23,6 +23,7 @@ public class FirstLoginPasswordChangeStepDefinitions {
     private final ConfigReader configReader;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final EncryptedUserAuthClient authClient;
+    private final PasswordManagementStepDefinitions passwordManagementSteps;
 
     private String createdEmail;
     private String createdUserId;
@@ -31,12 +32,14 @@ public class FirstLoginPasswordChangeStepDefinitions {
             TestContext testContext,
             ConfigReader configReader,
             ScenarioTestDataResolver scenarioTestDataResolver,
-            EncryptedUserAuthClient authClient
+            EncryptedUserAuthClient authClient,
+            PasswordManagementStepDefinitions passwordManagementSteps
     ) {
         this.testContext = testContext;
         this.configReader = configReader;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
         this.authClient = authClient;
+        this.passwordManagementSteps = passwordManagementSteps;
     }
 
     @When("I create a global user with a random email")
@@ -84,27 +87,8 @@ public class FirstLoginPasswordChangeStepDefinitions {
     @When("I set the created user's password to {string} using the chief admin token")
     public void i_set_the_created_users_password_using_the_chief_admin_token(String newPassword) {
         requireCreatedUser();
-        String adminToken = requireAdminToken();
-        String resolvedNewPassword = scenarioTestDataResolver.replaceScenarioPlaceholders(newPassword);
-
-        Response response = authClient.changePassword(createdUserId, resolvedNewPassword, "first_login", adminToken);
-        int status = response.getStatusCode();
-        String body = response.getBody().asString();
-        logger.info("Admin change-password for user_id={}: status={}, body={}", createdUserId, status, body);
-        testContext.setResponse(response);
-
-        boolean success = status >= 200 && status < 300;
-        
-        boolean alreadySet = status == 400 && body != null
-                && (body.contains("USER_022") || body.toLowerCase().contains("same as the previous password"));
-        if (!success && !alreadySet) {
-            throw new AssertionError("Admin change-password failed for user_id=" + createdUserId
-                    + ": status " + status + ", body " + body);
-        }
-        if (alreadySet) {
-            logger.info("Password for user_id={} is already the requested value; proceeding to login.",
-                    createdUserId);
-        }
+        requireAdminToken();
+        passwordManagementSteps.changePasswordByUserId(createdUserId, newPassword, null);
     }
 
     @When("I log in as the created user with password {string}")

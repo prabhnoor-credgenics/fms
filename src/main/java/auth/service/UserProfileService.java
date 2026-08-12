@@ -52,6 +52,33 @@ public class UserProfileService {
                 "Could not find a user id in the verify/user response. Tried the known paths.");
     }
 
+    public String fetchUserIdByLookup(String authToken, String keyName, String keyValue, String companyId) {
+        if (authToken == null || authToken.isBlank()) {
+            throw new IllegalStateException(
+                    "Cannot lookup user id: auth token is blank. Authenticate first.");
+        }
+        if (keyName == null || keyName.isBlank()) {
+            throw new IllegalArgumentException("keyName must not be blank");
+        }
+        if (keyValue == null || keyValue.isBlank()) {
+            throw new IllegalArgumentException("keyValue must not be blank");
+        }
+
+        JsonPath jp = verifyUser(authToken, keyName, keyValue, companyId).jsonPath();
+        for (String path : USER_ID_PATHS) {
+            String candidate = jp.getString(path);
+            if (candidate != null && !candidate.isBlank()) {
+                logger.info("Resolved user id '{}' from verify/user lookup ({}, {}) via path '{}'",
+                        candidate, keyName, keyValue, path);
+                return candidate;
+            }
+        }
+
+        throw new IllegalStateException(
+                "Could not find a user id in the verify/user lookup response for key_name='"
+                        + keyName + "'. Tried the known paths.");
+    }
+
     public String fetchProfileId(String authToken, String companyId) {
         if (authToken == null || authToken.isBlank()) {
             throw new IllegalStateException("Cannot fetch profile id: auth token is blank. Authenticate first.");
@@ -93,6 +120,10 @@ public class UserProfileService {
         return requestVerifyUser(configReader, authToken);
     }
 
+    public Response verifyUser(String authToken, String keyName, String keyValue, String companyId) {
+        return requestVerifyUser(configReader, authToken, keyName, keyValue, companyId);
+    }
+
     static Response requestVerifyUser(ConfigReader configReader, String authToken) {
         String baseUrl = configReader.getBaseUrl();
         return given()
@@ -101,6 +132,33 @@ public class UserProfileService {
                 .queryParam("auth_token", authToken)
                 .when()
                 .get("/user/public/verify/user")
+                .then()
+                .extract()
+                .response();
+    }
+
+    static Response requestVerifyUser(
+            ConfigReader configReader,
+            String authToken,
+            String keyName,
+            String keyValue,
+            String companyId
+    ) {
+        String baseUrl = configReader.getBaseUrl();
+        var request = given()
+                .baseUri(baseUrl)
+                .header("authenticationtoken", authToken)
+                .header("referer", baseUrl + "/user/public/verify/user")
+                .queryParam("key_name", keyName)
+                .queryParam("key_value", keyValue);
+
+        if (companyId != null && !companyId.isBlank()) {
+            request = request.queryParam("company_id", companyId);
+        }
+
+        return request
+                .when()
+                .get("/user/public/verify/user/")
                 .then()
                 .extract()
                 .response();

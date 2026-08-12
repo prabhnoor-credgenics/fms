@@ -29,17 +29,20 @@ import utils.ResponseValidator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import java.io.File;
+import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static org.hamcrest.Matchers.equalTo;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
 import org.testng.Assert;
 
 public class ApiStepDefinitions {
@@ -58,6 +61,14 @@ public class ApiStepDefinitions {
     private final LinkedHashMap<String, String> storedHeaders = new LinkedHashMap<>();
     private final Map<String, String> storedPathParams = new HashMap<>();
     private final Map<String, String> storedQueryParams = new HashMap<>();
+    private final List<MultipartFilePart> multipartFiles = new ArrayList<>();
+    private final List<MultipartTextPart> multipartFields = new ArrayList<>();
+    private File binaryBodyFile;
+    private String binaryBodyContentType;
+
+    private record MultipartFilePart(String controlName, File file, String mimeType) {}
+
+    private record MultipartTextPart(String controlName, String value) {}
 
     public ApiStepDefinitions(
             TestContext testContext,
@@ -127,6 +138,9 @@ public class ApiStepDefinitions {
         storedHeaders.clear();
         storedQueryParams.clear();
         storedPathParams.clear();
+        multipartFiles.clear();
+        multipartFields.clear();
+        clearBinaryBody();
         clearRequestBody();
         headersToRemove.clear();
         logger.info("Request specification prepared");
@@ -174,6 +188,7 @@ public class ApiStepDefinitions {
     }
 
     private void applyRequestBody(String body) {
+        clearBinaryBody();
         testContext.setRequestBody(body);
         if (request != null && body != null) {
             request.body(body);
@@ -200,6 +215,81 @@ public class ApiStepDefinitions {
         SchemaHelper.autoValidateRequestSchema(filePath, processedBody);
         applyRequestBody(processedBody);
         logger.info("Request body loaded from file '{}' and placeholders replaced", filePath);
+    }
+
+    @Given("I attach file {string} as {string}")
+    public void i_attach_file_as(String filePath, String controlName) {
+        ensureRequestPrepared();
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(filePath);
+        String resolvedControlName = scenarioTestDataResolver.replaceScenarioPlaceholders(controlName);
+        if (resolvedControlName == null || resolvedControlName.isBlank()) {
+            throw new IllegalArgumentException("Multipart control name must not be blank");
+        }
+        File file = FileHelper.resolveTestFile(resolvedPath);
+        String mimeType = FileHelper.guessMimeType(file);
+        multipartFiles.add(new MultipartFilePart(resolvedControlName, file, mimeType));
+        logger.info("Attached file '{}' as multipart field '{}' (mimeType={}, size={} bytes)",
+                file.getPath(), resolvedControlName, mimeType, file.length());
+    }
+
+    @Given("I attach file {string} as {string} with content type {string}")
+    public void i_attach_file_as_with_content_type(String filePath, String controlName, String contentType) {
+        ensureRequestPrepared();
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(filePath);
+        String resolvedControlName = scenarioTestDataResolver.replaceScenarioPlaceholders(controlName);
+        String resolvedContentType = scenarioTestDataResolver.replaceScenarioPlaceholders(contentType);
+        if (resolvedControlName == null || resolvedControlName.isBlank()) {
+            throw new IllegalArgumentException("Multipart control name must not be blank");
+        }
+        if (resolvedContentType == null || resolvedContentType.isBlank()) {
+            throw new IllegalArgumentException("Multipart content type must not be blank");
+        }
+        File file = FileHelper.resolveTestFile(resolvedPath);
+        multipartFiles.add(new MultipartFilePart(resolvedControlName, file, resolvedContentType));
+        logger.info("Attached file '{}' as multipart field '{}' (mimeType={}, size={} bytes)",
+                file.getPath(), resolvedControlName, resolvedContentType, file.length());
+    }
+
+    @Given("I set the multipart form fields:")
+    public void i_set_the_multipart_form_fields(Map<String, String> fields) {
+        ensureRequestPrepared();
+        for (Map.Entry<String, String> field : fields.entrySet()) {
+            String name = field.getKey();
+            if (name == null || name.isBlank()) {
+                throw new IllegalArgumentException("Multipart form field name must not be blank");
+            }
+            String value = scenarioTestDataResolver.replaceScenarioPlaceholders(field.getValue());
+            multipartFields.add(new MultipartTextPart(name, value == null ? "" : value));
+            logger.info("Added multipart form field: {} = {}", name, value);
+        }
+    }
+
+    @Given("I set the request body from binary file {string}")
+    public void i_set_the_request_body_from_binary_file(String filePath) {
+        ensureRequestPrepared();
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(filePath);
+        File file = FileHelper.resolveTestFile(resolvedPath);
+        binaryBodyFile = file;
+        binaryBodyContentType = FileHelper.guessMimeType(file);
+        clearRequestBody();
+        logger.info("Binary request body set from '{}' (mimeType={}, size={} bytes)",
+                file.getPath(), binaryBodyContentType, file.length());
+    }
+
+    @Given("I set the request body from binary file {string} with content type {string}")
+    public void i_set_the_request_body_from_binary_file_with_content_type(String filePath, String contentType) {
+        ensureRequestPrepared();
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(filePath);
+        String resolvedContentType = scenarioTestDataResolver.replaceScenarioPlaceholders(contentType);
+        if (resolvedContentType == null || resolvedContentType.isBlank()) {
+            throw new IllegalArgumentException("Binary body content type must not be blank");
+        }
+        File file = FileHelper.resolveTestFile(resolvedPath);
+        binaryBodyFile = file;
+        binaryBodyContentType = resolvedContentType;
+        clearRequestBody();
+        logger.info("Binary request body set from '{}' (mimeType={}, size={} bytes)",
+                file.getPath(), binaryBodyContentType, file.length());
     }
 
     @Given("I set the query parameters:")
@@ -273,9 +363,10 @@ public class ApiStepDefinitions {
             throw new IllegalStateException(
                     "Request body must be set before updating JSON field from captured value.");
         }
-        if (!testContext.hasCapturedValue(key)) {
+        if (!testContext.hasCapturedPath(key)) {
             throw new IllegalStateException(
-                    "Nothing captured as '" + key + "'. Store/capture it earlier in the scenario.");
+                    "Nothing captured at '" + key + "'. Store/capture a root key first "
+                            + "(use mapKey.field or listKey[0] for nested access).");
         }
         Object value = testContext.getCapturedObject(key);
         String processedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
@@ -312,7 +403,24 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
     );
 
     String bodyForSend = currentRequestBody();
-    if (bodyForSend != null && !bodyForSend.isBlank()) {
+    boolean multipart = hasMultipartParts();
+    boolean binary = hasBinaryBody();
+    if (multipart) {
+        // RestAssured accumulates multiPart() calls, so rebuild from stored state first.
+        rebuildRequestFromStoredState(null);
+        if (bodyForSend != null && !bodyForSend.isBlank()) {
+            logger.warn("Multipart parts are present; JSON/text request body will be ignored for this request.");
+        }
+        testContext.setLastRequestBody(summarizeMultipartForLogging());
+    } else if (binary) {
+        rebuildRequestFromStoredState(null);
+        if (binaryBodyContentType != null && !binaryBodyContentType.isBlank()) {
+            request.contentType(binaryBodyContentType);
+        }
+        request.body(binaryBodyFile);
+        testContext.setLastRequestBody("binary-file=" + binaryBodyFile.getPath()
+                + " (" + binaryBodyContentType + ", " + binaryBodyFile.length() + " bytes)");
+    } else if (bodyForSend != null && !bodyForSend.isBlank()) {
         request.body(bodyForSend);
         testContext.setLastRequestBody(bodyForSend);
     }
@@ -372,7 +480,10 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
             .append(fullUrl)
             .append("\n");
 
-    if (bodyForSend != null && !bodyForSend.isEmpty()) {
+    if (multipart) {
+        apiLogs.append("\nMULTIPART PARTS:\n");
+        apiLogs.append(summarizeMultipartForLogging()).append("\n");
+    } else if (bodyForSend != null && !bodyForSend.isEmpty()) {
         apiLogs.append("\nREQUEST BODY:\n");
         apiLogs.append(bodyForSend).append("\n");
     }
@@ -452,7 +563,82 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
     logResponseDetails(response);
 }
-    
+
+    @When("I send a {string} request to absolute url {string}")
+    public void i_send_a_request_to_absolute_url(String httpMethod, String absoluteUrl) {
+        HttpMethod method = HttpMethod.valueOf(httpMethod.toUpperCase());
+        String resolvedUrl = scenarioTestDataResolver.replaceScenarioPlaceholders(absoluteUrl);
+        if (resolvedUrl != null) {
+            resolvedUrl = resolvedUrl.trim();
+        }
+        if (resolvedUrl == null || resolvedUrl.isBlank()) {
+            throw new IllegalArgumentException("Absolute URL must not be blank");
+        }
+        if (!resolvedUrl.startsWith("http://") && !resolvedUrl.startsWith("https://")) {
+            throw new IllegalArgumentException(
+                    "Absolute URL must start with http:// or https://. Got: " + resolvedUrl);
+        }
+
+        RequestSpecification absoluteRequest = given();
+        applyHeadersAndQueryParamsToAbsoluteRequest(absoluteRequest);
+        String bodySummary = applyPayloadToAbsoluteRequest(absoluteRequest);
+
+        logger.info("Sending {} request to absolute url (no framework baseUri/auto-Referer)", method);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        LocalDateTime requestTime = LocalDateTime.now();
+        long startTime = System.currentTimeMillis();
+
+        StringBuilder apiLogs = new StringBuilder();
+        apiLogs.append("========== ABSOLUTE REQUEST ==========\n");
+        apiLogs.append("REQUEST TIME: ").append(requestTime.format(formatter)).append('\n');
+        apiLogs.append("METHOD: ").append(method).append('\n');
+        apiLogs.append("URL: ").append(resolvedUrl).append("\n\n");
+
+        apiLogs.append("QUERY PARAMETERS:\n");
+        if (storedQueryParams.isEmpty()) {
+            apiLogs.append("None\n");
+        } else {
+            for (Map.Entry<String, String> entry : storedQueryParams.entrySet()) {
+                apiLogs.append(entry.getKey()).append(": ").append(entry.getValue()).append('\n');
+            }
+        }
+
+        apiLogs.append("\nHEADERS:\n");
+        if (storedHeaders.isEmpty()) {
+            apiLogs.append("None\n");
+        } else {
+            for (Map.Entry<String, String> entry : storedHeaders.entrySet()) {
+                apiLogs.append(entry.getKey()).append(": ").append(entry.getValue()).append('\n');
+            }
+        }
+
+        if (bodySummary != null && !bodySummary.isBlank()) {
+            apiLogs.append("\nPAYLOAD:\n").append(bodySummary).append('\n');
+        }
+
+        response = executeHttp(absoluteRequest, method, resolvedUrl);
+
+        LocalDateTime responseTime = LocalDateTime.now();
+        long duration = System.currentTimeMillis() - startTime;
+        logger.info("Absolute URL response status: {}", response.getStatusCode());
+
+        apiLogs.append("\n========== RESPONSE ==========\n");
+        apiLogs.append("RESPONSE TIME: ").append(responseTime.format(formatter)).append('\n');
+        apiLogs.append("DURATION: ").append(duration).append(" ms\n");
+        apiLogs.append("STATUS CODE: ").append(response.getStatusCode()).append('\n');
+        apiLogs.append("\nRESPONSE HEADERS:\n");
+        for (Header header : response.getHeaders()) {
+            apiLogs.append(header.getName()).append(": ").append(header.getValue()).append('\n');
+        }
+        apiLogs.append("\nRESPONSE BODY:\n");
+        apiLogs.append(response.getBody().asPrettyString());
+
+        testContext.setApiLogs(apiLogs.toString());
+        testContext.setResponse(response);
+        logResponseDetails(response);
+    }
+
         private void autoValidateResponseSchema(String httpMethod, String endpoint, int statusCode) {
         String schemaPath = null;
         boolean isSuccess = statusCode >= 200 && statusCode < 300;
@@ -665,15 +851,11 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
 
     private void rebuildRequestWithFreshAuth() {
         String freshToken = testContext.getAuthToken();
-        request = restAssuredBase.getRequestSpec();
-        storedHeaders.replaceAll((k, v) -> "authenticationtoken".equalsIgnoreCase(k) ? freshToken : v);
-        storedHeaders.forEach((k, v) -> request.header(k, v));
-        storedPathParams.forEach((k, v) -> request.pathParam(k, v));
-        storedQueryParams.forEach((k, v) -> request.queryParam(k, v));
-        String body = currentRequestBody();
-        if (body != null && !body.isBlank()) {
-            request.body(body);
-        }
+        LinkedHashMap<String, String> headers = new LinkedHashMap<>(storedHeaders);
+        headers.replaceAll((k, v) -> "authenticationtoken".equalsIgnoreCase(k) ? freshToken : v);
+        storedHeaders.clear();
+        storedHeaders.putAll(headers);
+        rebuildRequestFromStoredState(null);
         logger.info("Rebuilt request with fresh auth token after 401");
     }
 
@@ -681,20 +863,68 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         if (headersToRemove.isEmpty()) {
             return;
         }
+        rebuildRequestFromStoredState(headersToRemove);
+        logger.info("Rebuilt request excluding headers: {}", headersToRemove);
+        headersToRemove.clear();
+    }
+
+    private void rebuildRequestFromStoredState(Set<String> excludedHeaderNamesLower) {
         request = restAssuredBase.getRequestSpec();
         for (Map.Entry<String, String> header : storedHeaders.entrySet()) {
-            if (!headersToRemove.contains(header.getKey().toLowerCase())) {
-                request.header(header.getKey(), header.getValue());
+            if (excludedHeaderNamesLower != null
+                    && excludedHeaderNamesLower.contains(header.getKey().toLowerCase())) {
+                continue;
             }
+            request.header(header.getKey(), header.getValue());
         }
         storedPathParams.forEach((k, v) -> request.pathParam(k, v));
         storedQueryParams.forEach((k, v) -> request.queryParam(k, v));
-        String body = currentRequestBody();
-        if (body != null && !body.isEmpty()) {
-            request.body(body);
+        if (hasMultipartParts()) {
+            applyMultipartParts();
+        } else if (hasBinaryBody()) {
+            if (binaryBodyContentType != null && !binaryBodyContentType.isBlank()) {
+                request.contentType(binaryBodyContentType);
+            }
+            request.body(binaryBodyFile);
+        } else {
+            String body = currentRequestBody();
+            if (body != null && !body.isBlank()) {
+                request.body(body);
+            }
         }
-        logger.info("Rebuilt request excluding headers: {}", headersToRemove);
-        headersToRemove.clear();
+    }
+
+    private boolean hasMultipartParts() {
+        return !multipartFiles.isEmpty() || !multipartFields.isEmpty();
+    }
+
+    private void applyMultipartParts() {
+        ensureRequestPrepared();
+        if (!hasMultipartParts()) {
+            return;
+        }
+        request.contentType(ContentType.MULTIPART);
+        for (MultipartTextPart field : multipartFields) {
+            request.multiPart(field.controlName(), field.value());
+        }
+        for (MultipartFilePart part : multipartFiles) {
+            request.multiPart(part.controlName(), part.file(), part.mimeType());
+        }
+    }
+
+    private String summarizeMultipartForLogging() {
+        StringBuilder sb = new StringBuilder();
+        for (MultipartTextPart field : multipartFields) {
+            sb.append("field ").append(field.controlName())
+                    .append("=").append(field.value()).append('\n');
+        }
+        for (MultipartFilePart part : multipartFiles) {
+            sb.append("file ").append(part.controlName())
+                    .append("=").append(part.file().getPath())
+                    .append(" (").append(part.mimeType()).append(", ")
+                    .append(part.file().length()).append(" bytes)\n");
+        }
+        return sb.toString().trim();
     }
 
     private String applyRefererHeader(String endpoint) {
@@ -721,13 +951,67 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
     }
 
     private Response executeHttp(HttpMethod method, String endpoint) {
+        return executeHttp(request, method, endpoint);
+    }
+
+    private Response executeHttp(RequestSpecification spec, HttpMethod method, String endpointOrUrl) {
         return switch (method) {
-            case GET -> request.get(endpoint);
-            case POST -> request.post(endpoint);
-            case PUT -> request.put(endpoint);
-            case PATCH -> request.patch(endpoint);
-            case DELETE -> request.delete(endpoint);
+            case GET -> spec.get(endpointOrUrl);
+            case POST -> spec.post(endpointOrUrl);
+            case PUT -> spec.put(endpointOrUrl);
+            case PATCH -> spec.patch(endpointOrUrl);
+            case DELETE -> spec.delete(endpointOrUrl);
             default -> throw new IllegalArgumentException("Unsupported HTTP method: " + method);
         };
+    }
+
+    private void clearBinaryBody() {
+        binaryBodyFile = null;
+        binaryBodyContentType = null;
+    }
+
+    private boolean hasBinaryBody() {
+        return binaryBodyFile != null;
+    }
+
+    private void applyHeadersAndQueryParamsToAbsoluteRequest(RequestSpecification absoluteRequest) {
+        for (Map.Entry<String, String> header : storedHeaders.entrySet()) {
+            absoluteRequest.header(header.getKey(), header.getValue());
+        }
+        for (Map.Entry<String, String> query : storedQueryParams.entrySet()) {
+            absoluteRequest.queryParam(query.getKey(), query.getValue());
+        }
+    }
+
+    private String applyPayloadToAbsoluteRequest(RequestSpecification absoluteRequest) {
+        if (hasMultipartParts()) {
+            absoluteRequest.contentType(ContentType.MULTIPART);
+            for (MultipartTextPart field : multipartFields) {
+                absoluteRequest.multiPart(field.controlName(), field.value());
+            }
+            for (MultipartFilePart part : multipartFiles) {
+                absoluteRequest.multiPart(part.controlName(), part.file(), part.mimeType());
+            }
+            String summary = summarizeMultipartForLogging();
+            testContext.setLastRequestBody(summary);
+            return summary;
+        }
+        if (hasBinaryBody()) {
+            if (binaryBodyContentType != null && !binaryBodyContentType.isBlank()) {
+                absoluteRequest.contentType(binaryBodyContentType);
+            }
+            absoluteRequest.body(binaryBodyFile);
+            String summary = "binary-file=" + binaryBodyFile.getPath()
+                    + " (" + binaryBodyContentType + ", " + binaryBodyFile.length() + " bytes)";
+            testContext.setLastRequestBody(summary);
+            return summary;
+        }
+        String body = currentRequestBody();
+        if (body != null && !body.isBlank()) {
+            absoluteRequest.body(body);
+            testContext.setLastRequestBody(body);
+            return body;
+        }
+        return null;
     }
 }

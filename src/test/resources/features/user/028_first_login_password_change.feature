@@ -21,6 +21,23 @@ Feature: First-login password set by chief admin — create user + PATCH /user/c
     Then the response status code should be 200
     And the response body should contain field "message" as "auto" with value "Password successfully updated"
 
+  @positive @first-login @change-password @generic
+  Scenario: Generic password change by captured user id using the active authenticated user
+    When I create a global user with a random email
+    And I store response field "data.user_id" as "targetUserId"
+    And I change password for user id "{CAPTURED:targetUserId}" to "Valid=Pass99"
+    And I log in as the created user with password "Valid=Pass99"
+    Then the response status code should be 200
+    And the "public_login" success response should be valid
+
+  @positive @first-login @change-password @generic
+  Scenario: Generic password change by user email using a remembered chief admin session
+    When I create a global user with a random email
+    And I change password for user email "globalfl{RANDOM_STRING:8}@credgenics.com" to "User@1234" using remembered user "chiefadmin0"
+    And I log in as the created user with password "User@1234"
+    Then the response status code should be 200
+    And the "public_login" success response should be valid
+
   @positive @first-login @boundary
   Scenario: A maximum-length (24-character) policy-valid password is accepted, then that user logs in
     When I create a global user with a random email
