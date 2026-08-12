@@ -1,0 +1,123 @@
+{
+  "permissions": {
+    "fos": {
+      "branch_collection_management": {
+        "levels": "company",
+        "meta_data": {
+          "description": "User would be able to view the Branch Collection Managment section and sub-tabs within this section",
+          "name": "branch_collection_management"
+        },
+        "read": true,
+        "write": true
+      },
+      "change_requests_module": {
+        "levels": "company",
+        "meta_data": {
+          "description": "Used for viewing and responding to edit/cancel verification requests",
+          "name": "change_requests_module"
+        },
+        "read": true,
+        "write": true
+      },
+      "deferred_verification": {
+        "levels": "company",
+        "meta_data": {
+          "description": "Allow user to mark 'Approved As Deferred' in deposit cash verification",
+          "name": "deferred_verification"
+        },
+        "write": true
+      },
+      "deposit_verification_module": {
+        "levels": "company",
+        "meta_data": {
+          "description": "Used for viewing and responding to deposit verification requests",
+          "name": "deposit_verification_module"
+        },
+        "read": true,
+        "write": true
+      },
+      "field_collection_dashboard": {
+        "levels": "company",
+        "meta_data": {
+          "description": "User would be able to view the Field Collection Dashboard tab and sub-tabs within this section",
+          "name": "field_collection_dashboard"
+        },
+        "read": true
+      },
+      "form_management": {
+        "levels": "company",
+        "meta_data": {
+          "description": "User would be able to view the Form Management tab and sub-tabs within this section",
+          "name": "form_management"
+        },
+        "write": true
+      },
+      "fos_settings_module": {
+        "levels": "company",
+        "meta_data": {
+          "description": "Used for viewing and updating fos settings",
+          "name": "fos_settings_module"
+        },
+        "read": true,
+        "write": true
+      },
+      "lead_addition": {
+        "levels": "company",
+        "meta_data": {
+          "description": "Used for adding sales leads from fos app",
+          "name": "add_new_lead"
+        },
+        "write": true
+      },
+      "live_agent_tracking_module": {
+        "levels": "company",
+        "meta_data": {
+          "description": "Used for viewing live agent location",
+          "name": "live_agent_tracking_module"
+        },
+        "read": true
+      },
+      "non_allocated_loan_access": {
+        "levels": "company",
+        "meta_data": {
+          "description": "Used to allow the agents to perform visits on loans beyond their general allocation",
+          "name": "non_allocated_loan_access"
+        },
+        "write": true
+      },
+      "online_verification_module": {
+        "levels": "company",
+        "meta_data": {
+          "description": "Used for viewing and responding to online deposit verification requests",
+          "name": "online_verification_module"
+        },
+        "read": true,
+        "write": true
+      },
+      "restrict_collection_form": {
+        "levels": "company",
+        "meta_data": {
+          "description": "restrict collection form access",
+          "name": "restrict_collection_form"
+        },
+        "write": true
+      },
+      "restrict_document_upload_from_gallery": {
+        "levels": "company",
+        "meta_data": {
+          "description": "Restrict Field Users from uploading documents from the gallery",
+          "name": "restrict_document_upload_from_gallery"
+        },
+        "write": true
+      },
+      "visibility_basis_of_loan_allocation": {
+        "levels": "company",
+        "meta_data": {
+          "description": "allow the user to view data basis loan allocation",
+          "name": "visibility_basis_of_loan_allocation"
+        },
+        "write": true
+      }
+    }
+  }
+}

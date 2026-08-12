@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RoleHierarchySuccessResponse",
+  "description": "Success response schema for GET /user/roles/hierarchy",
+  "type": "object",
+  "required": [
+    "data",
+    "message"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "role_hierarchy"
+      ],
+      "properties": {
+        "role_hierarchy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/role"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true,
+
+  "$defs": {
+    "role": {
+      "type": "object",
+      "required": [
+        "children",
+        "created",
+        "created_by",
+        "created_by_contact",
+        "created_by_name",
+        "role_description",
+        "role_id",
+        "role_name"
+      ],
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/role"
+          }
+        },
+        "created": {
+          "type": "string"
+        },
+        "created_by": {
+          "type": "string"
+        },
+        "created_by_contact": {
+          "type": "string"
+        },
+        "created_by_name": {
+          "type": "string"
+        },
+        "role_description": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "role_id": {
+          "type": "string"
+        },
+        "role_name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}
