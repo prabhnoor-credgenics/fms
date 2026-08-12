@@ -61,14 +61,6 @@ public class TestContext {
         capturedValues.put(key, value);
     }
 
-    public String getCapturedValue(String key) {
-        return stringifyCaptured(capturedValues.get(key));
-    }
-
-    public Object getCapturedObject(String key) {
-        return capturedValues.get(key);
-    }
-
     @SuppressWarnings("unchecked")
     public Map<String, Object> getCapturedMap(String key) {
         Object value = capturedValues.get(key);
@@ -97,6 +89,75 @@ public class TestContext {
 
     public boolean hasCapturedValue(String key) {
         return capturedValues.containsKey(key);
+    }
+
+    public boolean hasCapturedPath(String path) {
+        try {
+            resolveCapturedPath(path);
+            return true;
+        } catch (RuntimeException e) {
+            return false;
+        }
+    }
+
+    public String getCapturedValue(String keyOrPath) {
+        return stringifyCaptured(resolveCapturedPath(keyOrPath));
+    }
+
+    public Object getCapturedObject(String keyOrPath) {
+        return resolveCapturedPath(keyOrPath);
+    }
+
+    public Object resolveCapturedPath(String keyOrPath) {
+        if (keyOrPath == null || keyOrPath.isBlank()) {
+            throw new IllegalArgumentException("Captured key/path must not be blank");
+        }
+        String path = keyOrPath.trim();
+        int split = indexOfNestedPath(path);
+        String rootKey = split < 0 ? path : path.substring(0, split);
+        if (!capturedValues.containsKey(rootKey)) {
+            throw new IllegalStateException(
+                    "Nothing captured as '" + rootKey + "'. Use 'I store/capture response field ...' first.");
+        }
+        Object root = capturedValues.get(rootKey);
+        if (split < 0) {
+            return root;
+        }
+        String nested = path.substring(split);
+        if (nested.startsWith(".")) {
+            nested = nested.substring(1);
+        }
+        return readNested(root, nested, path);
+    }
+
+    private static int indexOfNestedPath(String path) {
+        for (int i = 0; i < path.length(); i++) {
+            char c = path.charAt(i);
+            if (c == '.' || c == '[') {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private static Object readNested(Object root, String nestedPath, String fullPath) {
+        if (root == null) {
+            throw new IllegalStateException("Captured path '" + fullPath + "' resolved to null root");
+        }
+        try {
+            String json = stringifyCaptured(root);
+            io.restassured.path.json.JsonPath jsonPath = io.restassured.path.json.JsonPath.from(json);
+            Object value = jsonPath.get(nestedPath);
+            if (value == null) {
+                throw new IllegalStateException("Captured path '" + fullPath + "' not found inside stored value");
+            }
+            return value;
+        } catch (IllegalStateException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new IllegalStateException(
+                    "Failed to read captured path '" + fullPath + "': " + e.getMessage(), e);
+        }
     }
 
     public void clearCapturedValues() {
@@ -139,6 +200,10 @@ public class TestContext {
 
     public UserSession getUserSession(String key) {
         return namedSessions.get(key);
+    }
+
+    public void removeUserSession(String key) {
+        namedSessions.remove(key);
     }
 
     public Map<String, UserSession> getNamedSessions() {

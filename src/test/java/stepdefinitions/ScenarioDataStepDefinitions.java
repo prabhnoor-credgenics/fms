@@ -3,6 +3,7 @@ package stepdefinitions;
 import config.ConfigReader;
 import context.ScenarioTestDataResolver;
 import context.TestContext;
+import helpers.FileHelper;
 import helpers.RandomDataHelper;
 import helpers.RecoveryVariableCleanupHelper;
 import io.cucumber.java.en.Given;
@@ -88,5 +89,17 @@ public class ScenarioDataStepDefinitions {
         logger.info("Captured current time as '{}' (epoch millis {}). All formats:", key, epochMillis);
         testDataHelper.allTimeFormats(epochMillis)
                 .forEach((format, value) -> logger.info("  {} -> {}", format, value));
+    }
+
+    @Given("I store file size in bytes of {string} as {string}")
+    public void i_store_file_size_in_bytes_of_as(String filePath, String variableName) {
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(filePath);
+        String resolvedKey = scenarioTestDataResolver.replaceScenarioPlaceholders(variableName);
+        if (resolvedKey == null || resolvedKey.isBlank()) {
+            throw new IllegalArgumentException("Variable name must not be blank");
+        }
+        String sizeBytes = FileHelper.fileSizeBytesAsString(resolvedPath);
+        testContext.captureValue(resolvedKey, sizeBytes);
+        logger.info("Stored file size in bytes for '{}' as '{}' = {}", resolvedPath, resolvedKey, sizeBytes);
     }
 }

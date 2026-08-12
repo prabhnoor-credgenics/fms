@@ -31,6 +31,7 @@ public class UserLifecycleStepDefinitions {
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final UserProfileService userProfileService;
     private final EncryptedUserAuthClient authClient;
+    private final PasswordManagementStepDefinitions passwordManagementSteps;
 
     private String createdEmail;
     private String createdUserId;
@@ -42,13 +43,15 @@ public class UserLifecycleStepDefinitions {
             ConfigReader configReader,
             ScenarioTestDataResolver scenarioTestDataResolver,
             UserProfileService userProfileService,
-            EncryptedUserAuthClient authClient
+            EncryptedUserAuthClient authClient,
+            PasswordManagementStepDefinitions passwordManagementSteps
     ) {
         this.testContext = testContext;
         this.configReader = configReader;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
         this.userProfileService = userProfileService;
         this.authClient = authClient;
+        this.passwordManagementSteps = passwordManagementSteps;
     }
 
     @When("I create a permission profile")
@@ -164,28 +167,8 @@ public class UserLifecycleStepDefinitions {
     @When("I set the lifecycle user's password to {string} using the chief admin token")
     public void i_set_the_lifecycle_users_password_using_the_chief_admin_token(String newPassword) {
         requireCreatedUser();
-        String adminToken = requireAdminToken();
-        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(newPassword);
-
-        Response response = authClient.changePassword(createdUserId, resolved, "first_login", adminToken);
-        int status = response.getStatusCode();
-        String responseBody = response.getBody().asString();
-        logger.info("Admin change-password for lifecycle user_id={}: status={}, body={}",
-                createdUserId, status, responseBody);
-        testContext.setResponse(response);
-
-        boolean success = status >= 200 && status < 300;
-        boolean alreadySet = status == 400 && responseBody != null
-                && (responseBody.contains("USER_022")
-                    || responseBody.toLowerCase().contains("same as the previous password"));
-        if (!success && !alreadySet) {
-            throw new AssertionError("Admin change-password failed for lifecycle user_id=" + createdUserId
-                    + ": status " + status + ", body " + responseBody);
-        }
-        if (alreadySet) {
-            logger.info("Password for lifecycle user_id={} already set to requested value; continuing.",
-                    createdUserId);
-        }
+        requireAdminToken();
+        passwordManagementSteps.changePasswordByUserId(createdUserId, newPassword, null);
     }
 
     @When("I log in as the lifecycle user with password {string}")
