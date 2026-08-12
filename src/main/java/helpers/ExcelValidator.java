@@ -18,10 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-/**
- * Loads an Excel workbook and validates cells using:
- * Reference column → Reference value → Target column → Expected value
- */
+
 public class ExcelValidator {
 
     private static final Logger logger = LogManager.getLogger(ExcelValidator.class);
