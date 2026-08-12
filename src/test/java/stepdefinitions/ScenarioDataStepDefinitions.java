@@ -59,7 +59,7 @@ public class ScenarioDataStepDefinitions {
         recoveryVariableCleanupHelper.markGeneratedVariablesNonMandatoryBestEffort();
     }
 
-    @Given( "scenario company id is from configuration")
+    @Given("scenario company id is from configuration")
 
     public void scenario_company_id_is_from_configuration() {
         String companyId = configReader.getApiKeyGlobalCompanyId();
