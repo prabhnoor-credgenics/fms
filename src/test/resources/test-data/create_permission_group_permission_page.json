@@ -1,0 +1,389 @@
+{
+  "profile_name": "PermissionPageToolkit",
+  "profile_description": "Permission page read write toggle validation",
+  "permissions": {
+    "Agency Management Module": {
+      "agency_master_permissions": {
+        "read": true,
+        "write": true
+      },
+      "mapped_agency_users": {
+        "read": true,
+        "write": false
+      }
+    },
+
+    "Approval Service": {
+      "all_data_access": {
+        "read": true,
+        "write": false
+      },
+      "approval_company_settings": {
+        "read": true,
+        "write": true
+      },
+      "approval_management_page": {
+        "read": false,
+        "write": true
+      },
+      "approval_policy": {
+        "read": true,
+        "write": true
+      }
+    },
+
+    "CG Payment Module": {
+      "company_settings": {
+        "read": true,
+        "write": true
+      },
+      "e-nach": {
+        "read": true,
+        "write": true
+      },
+      "e-nach-plan": {
+        "read": true,
+        "write": true
+      },
+      "payment_link_amount_customisation": {
+        "read": false,
+        "write": true
+      },
+      "portfolio_export": {
+        "read": true,
+        "write": false
+      },
+      "recurring_payment_company_settings": {
+        "read": true,
+        "write": true
+      },
+      "recurring_subscription_trigger_request": {
+        "read": false,
+        "write": true
+      },
+      "sender_level_upi_settings": {
+        "read": true,
+        "write": true
+      },
+      "upi_company_settings": {
+        "read": true,
+        "write": true
+      },
+      "upi_trigger": {
+        "read": false,
+        "write": true
+      }
+    },
+
+    "Chat Bot": {
+      "chatbot_permissions": {
+        "read": false,
+        "write": true
+      }
+    },
+
+    "Core Collection Modules": {
+      "access_loan_edit_history": {
+        "read": true,
+        "write": false
+      },
+      "access_unmasked_data": {
+        "read": true,
+        "write": false
+      },
+      "add_borrower_details": {
+        "read": false,
+        "write": true
+      },
+      "add_payment": {
+        "read": false,
+        "write": true
+      },
+      "allocate_and_deallocate_loans": {
+        "read": false,
+        "write": true
+      },
+      "archive_and_unarchive_loan": {
+        "read": false,
+        "write": true
+      },
+      "authorised_officer_assignment": {
+        "read": false,
+        "write": true
+      },
+      "complete_data_access": {
+        "read": true,
+        "write": false
+      },
+      "custom_integrations": {
+        "read": false,
+        "write": true
+      },
+      "export_communication": {
+        "read": true,
+        "write": false
+      },
+      "export_digital_notice": {
+        "read": true,
+        "write": false
+      },
+      "export_loans": {
+        "read": true,
+        "write": false
+      },
+      "export_payments": {
+        "read": true,
+        "write": false
+      },
+      "loan_collection_stage": {
+        "read": true,
+        "write": true
+      },
+      "loan_update": {
+        "read": false,
+        "write": true
+      },
+      "loan_upload": {
+        "read": false,
+        "write": true
+      },
+      "loan_upload_with_replace_given_data": {
+        "read": false,
+        "write": true
+      },
+      "loan_upload_with_replace_previous_data": {
+        "read": false,
+        "write": true
+      },
+      "move_loans": {
+        "read": false,
+        "write": true
+      },
+      "out_of_hierarchy_allocation": {
+        "read": false,
+        "write": true
+      },
+      "payment_receipt_management": {
+        "read": true,
+        "write": true
+      },
+      "payment_upload": {
+        "read": true,
+        "write": true
+      },
+      "portfolio_customisation": {
+        "read": false,
+        "write": true
+      },
+      "send_receipt": {
+        "read": false,
+        "write": true
+      },
+      "settings_company_details": {
+        "read": false,
+        "write": true
+      },
+      "settings_loan_status": {
+        "read": true,
+        "write": true
+      },
+      "settings_loan_variables": {
+        "read": true,
+        "write": true
+      },
+      "status_update": {
+        "read": false,
+        "write": true
+      },
+      "tags": {
+        "read": false,
+        "write": true
+      },
+      "webhook_retrigger": {
+        "read": true,
+        "write": true
+      }
+    },
+
+    "Data Science": {
+      "Borrower Interaction Score - Month-over-Month Insights": {
+        "read": true,
+        "write": false
+      },
+      "Borrower Probability of Response Across Channels": {
+        "read": true,
+        "write": false
+      },
+      "Borrower Receptiveness Behaviour": {
+        "read": true,
+        "write": false
+      },
+      "Borrower Risk Profile": {
+        "read": true,
+        "write": false
+      },
+      "Bounce Prediction Score": {
+        "read": true,
+        "write": false
+      },
+      "Intent to Pay Score": {
+        "read": true,
+        "write": false
+      },
+      "Recommendation on preferred communication intensity": {
+        "read": true,
+        "write": false
+      },
+      "Recommendation on responsiveness of the borrower": {
+        "read": true,
+        "write": false
+      },
+      "Risk & Payment Behaviour - Comparison of Scores": {
+        "read": true,
+        "write": false
+      }
+    },
+
+    "Document Management": {
+      "company_documents": {
+        "read": true,
+        "write": true
+      },
+      "document_types": {
+        "read": false,
+        "write": true
+      },
+      "loan_documents": {
+        "read": true,
+        "write": true
+      },
+      "user_documents": {
+        "read": true,
+        "write": true
+      }
+    },
+
+    "User Management Module": {
+      "configure_sso": {
+        "read": true,
+        "write": true
+      },
+      "profiles": {
+        "read": true,
+        "write": true
+      },
+      "roles": {
+        "read": true,
+        "write": true
+      },
+      "settings_company_details": {
+        "read": true,
+        "write": true
+      },
+      "settings_connection_configuration": {
+        "read": true,
+        "write": true
+      },
+      "settings_outgoing_webhook": {
+        "read": true,
+        "write": true
+      },
+      "settings_user_variables": {
+        "read": true,
+        "write": true
+      },
+      "single_factor_authentication": {
+        "read": true,
+        "write": false
+      },
+      "single_sign_on": {
+        "read": true,
+        "write": false
+      },
+      "territory_management": {
+        "read": true,
+        "write": true
+      },
+      "user_device_validation": {
+        "read": false,
+        "write": true
+      },
+      "users": {
+        "read": true,
+        "write": true
+      }
+    },
+
+    "Reports": {
+      "all_report_access": {
+        "read": true,
+        "write": false
+      },
+      "create_report": {
+        "read": false,
+        "write": true
+      },
+      "schedule_report_for_others": {
+        "read": false,
+        "write": true
+      }
+    },
+
+    "Segment Management": {
+      "group_segment": {
+        "read": true,
+        "write": true
+      },
+      "lead_loan": {
+        "read": true,
+        "write": true
+      },
+      "segment": {
+        "read": true,
+        "write": true
+      }
+    },
+
+    "Solitary Communications": {
+      "dtmf_ivr": {
+        "read": true,
+        "write": true
+      },
+      "email": {
+        "read": true,
+        "write": true
+      },
+      "obd_ivr": {
+        "read": true,
+        "write": true
+      },
+      "rcs": {
+        "read": true,
+        "write": true
+      },
+      "sms": {
+        "read": true,
+        "write": true
+      },
+      "template_management": {
+        "read": true,
+        "write": true
+      },
+      "whatsapp": {
+        "read": true,
+        "write": true
+      },
+      "whatsapp_bot": {
+        "read": true,
+        "write": true
+      }
+    },
+
+    "WhatsApp ChatR": {
+      "two_way_communication_permission": {
+        "read": true,
+        "write": true
+      }
+    }
+  }
+}

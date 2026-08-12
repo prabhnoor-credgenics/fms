@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "data",
+    "message"
+  ],
+  "properties": {
+    "message": {
+      "type": "string",
+      "const": "Assertion failed, must be alphanumeric"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "error_payload"
+      ],
+      "properties": {
+        "error_payload": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "input",
+              "loc",
+              "msg",
+              "type"
+            ],
+            "properties": {
+              "input": {
+                "type": "string"
+              },
+              "loc": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 1,
+                "items": {
+                  "type": "string",
+                  "const": "role_name"
+                }
+              },
+              "msg": {
+                "type": "string",
+                "const": "Assertion failed, must be alphanumeric"
+              },
+              "type": {
+                "type": "string",
+                "const": "assertion_error"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TerritoryDetailsSuccessResponse",
+  "description": "Success response schema for GET /user/territory/details",
+  "type": "object",
+  "required": [
+    "data",
+    "message"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "count",
+        "territory_details"
+      ],
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "territory_details": {
+          "type": "array"
+        }
+      },
+      "additionalProperties": true
+    },
+    "message": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}
