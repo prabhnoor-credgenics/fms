@@ -56,7 +56,7 @@ When I send a "GET" request to "/user/company/users"
 
 Then the response status code should be 200
 And the response message should be "user accounts fetched successfully"
-And the response body field "data.total_count" should be captured value "initialUserCount" increased by 1
+And the response body field "data.total_count" should be captured value "initialUserCount" "increased" by 1
 
 # 4. Search newly created user by user_id and verify it is listed
 
@@ -183,7 +183,6 @@ Scenario: Validate user list with multiple filters applied
   And the response body should contain field "data.users[1].profile_id" as "auto" with value "arvken14ze01rkp4"
   And the response body should contain field "data.users[1].profession" as "string" with value "lawyer"
   And the response body should contain field "data.users[1].role_id" as "auto" with value "xs1vliik024bn2e0"
-
 
 
 @positive @api @approver @user @search @updatedhello

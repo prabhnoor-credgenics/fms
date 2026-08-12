@@ -2,15 +2,23 @@ package stepdefinitions;
 
 import auth.manager.AuthManager;
 import auth.service.UserProfileService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import config.ConfigReader;
 import context.ScenarioTestDataResolver;
 import context.TestContext;
 import enums.UserRole;
 import helpers.FileHelper;
+import helpers.ResponseHelper;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -142,5 +150,91 @@ public class PermissionStepDefinitions {
                 .then()
                 .extract()
                 .response();
+    }
+
+    @Then("I validate company permissions against test data {string}")
+    public void i_validate_company_permissions_against_test_data(String testDataFile) {
+        Response response = ResponseHelper.resolve(null, testContext);
+        String responseBody = response.getBody().asString();
+        String testDataContent = FileHelper.readResourceAsString(testDataFile);
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<String> failures = new ArrayList<>();
+
+        try {
+            JsonNode responseJson = mapper.readTree(responseBody);
+            JsonNode testDataJson = mapper.readTree(testDataContent);
+            JsonNode permissionsArray = testDataJson.get("permissions");
+            JsonNode responsePermissions = responseJson.path("data").path("profile_details").path("permissions");
+
+            if (permissionsArray == null || !permissionsArray.isArray()) {
+                throw new AssertionError("Test data file does not contain 'permissions' array");
+            }
+
+            for (JsonNode expected : permissionsArray) {
+                String module = expected.get("module").asText();
+                String permission = expected.get("permission").asText();
+                String expectedName = expected.get("permission_name").asText();
+                String expectedDescription = expected.get("permission_description").asText();
+                boolean expectedRead = expected.has("read") && expected.get("read").asBoolean();
+                boolean expectedWrite = expected.has("write") && expected.get("write").asBoolean();
+
+                JsonNode moduleNode = responsePermissions.path(module);
+                if (moduleNode.isMissingNode()) {
+                    failures.add(String.format("Module '%s' not found in response", module));
+                    continue;
+                }
+
+                JsonNode permissionNode = moduleNode.path(permission);
+                if (permissionNode.isMissingNode()) {
+                    failures.add(String.format("Permission '%s.%s' not found in response", module, permission));
+                    continue;
+                }
+
+                JsonNode metaData = permissionNode.path("meta_data");
+                String actualName = metaData.path("name").asText("");
+                String actualDescription = metaData.path("description").asText("");
+                boolean actualRead = permissionNode.path("read").asBoolean(false);
+                boolean actualWrite = permissionNode.path("write").asBoolean(false);
+
+                if (!expectedName.equals(actualName)) {
+                    failures.add(String.format("[%s.%s] name mismatch: expected '%s', actual '%s'",
+                            module, permission, expectedName, actualName));
+                }
+
+                if (!expectedDescription.isEmpty() && !expectedDescription.equals(actualDescription)) {
+                    failures.add(String.format("[%s.%s] description mismatch: expected '%s', actual '%s'",
+                            module, permission, expectedDescription, actualDescription));
+                }
+
+                if (expectedRead != actualRead) {
+                    failures.add(String.format("[%s.%s] read mismatch: expected %s, actual %s",
+                            module, permission, expectedRead, actualRead));
+                }
+
+                if (expectedWrite != actualWrite) {
+                    failures.add(String.format("[%s.%s] write mismatch: expected %s, actual %s",
+                            module, permission, expectedWrite, actualWrite));
+                }
+
+                logger.debug("Validated permission: {}.{} - name={}, read={}, write={}",
+                        module, permission, actualName, actualRead, actualWrite);
+            }
+
+            if (!failures.isEmpty()) {
+                StringBuilder errorMsg = new StringBuilder("Permission validation failures:\n");
+                for (String failure : failures) {
+                    errorMsg.append("  - ").append(failure).append("\n");
+                }
+                Assert.fail(errorMsg.toString());
+            }
+
+            logger.info("Successfully validated {} permissions against test data", permissionsArray.size());
+
+        } catch (AssertionError e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to validate company permissions: " + e.getMessage(), e);
+        }
     }
 }

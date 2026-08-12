@@ -1,0 +1,2571 @@
+{
+  "permissions": [
+    {
+      "module": "Agency Management Module",
+      "permission": "agency_master_permissions",
+      "permission_name": "Agency Master Permissions",
+      "permission_description": "This permission allows LOP user to access master permission set shared to agency",
+      "expected_levels": true,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Agency Management Module",
+      "permission": "mapped_agency_users",
+      "permission_name": "Mapped Agency Users",
+      "permission_description": "This permission allows LOP user to access agency users mapped in LOP",
+      "expected_levels": true,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Approval Service",
+      "permission": "all_data_access",
+      "permission_name": "All Data Access",
+      "permission_description": "Users can access all approval data",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Approval Service",
+      "permission": "approval_company_settings",
+      "permission_name": "Approval Settings Module",
+      "permission_description": "Users can view and edit approval module settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Approval Service",
+      "permission": "approval_management_page",
+      "permission_name": "Manage Approvals",
+      "permission_description": "Users can view and perform actions on requests pending on them",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Approval Service",
+      "permission": "approval_policy",
+      "permission_name": "Approval Policy",
+      "permission_description": "Users with this permission will be able to view/edit/create the approval policy for an organization",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "company_settings",
+      "permission_name": "Billzy Company Settings",
+      "permission_description": "Enables you to view and edit company settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "e-nach",
+      "permission_name": "Generate / Send E-NACH Links",
+      "permission_description": "Enables you to configure enach",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "e-nach-plan",
+      "permission_name": "E-NACH Plan Creation",
+      "permission_description": "Enables you to view and edit enach plan",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "payment_link_amount_customisation",
+      "permission_name": "Billzy Sender Level Amount Customisation",
+      "permission_description": "Enables you to customize payment link amount",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "portfolio_export",
+      "permission_name": "Export Transaction Data",
+      "permission_description": "Enables you to export transaction data",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "recurring_payment_company_settings",
+      "permission_name": "Indonesian Recurring Payment Company Setting",
+      "permission_description": "Enables you to Change Recuring Payment Company Settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "recurring_subscription_trigger_request",
+      "permission_name": "Send Indonesian Recurring Subscription Request On Portfolio",
+      "permission_description": "Enables you to send Bulk Recurring Subscription from Portfolio",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "sender_level_upi_settings",
+      "permission_name": "Sender Level Permission for UPI Collect",
+      "permission_description": "Sender Level Permission for UPI Collect",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "upi_company_settings",
+      "permission_name": "UPI Collect Company Settings",
+      "permission_description": "Enables you to Change UPI Collect Payment Company Settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "CG Payment Module",
+      "permission": "upi_trigger",
+      "permission_name": "Send UPI Collect Request On Portfolio",
+      "permission_description": "Enables you to send Bulk UPI Collect from Portfolio",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+
+    {
+      "module": "Core Collection Modules",
+      "permission": "access_loan_edit_history",
+      "permission_name": "Access Loan Edit History",
+      "permission_description": "Ability to access the edit history of any Loan Id",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "access_unmasked_data",
+      "permission_name": "Bypass Data Masking",
+      "permission_description": "Enables you to view unmasked data and select what variables will be masked on platform",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "add_borrower_details",
+      "permission_name": "Add Borrower Details",
+      "permission_description": "This permission will allow users to only add details of different borrower types from Loan Details page",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "add_payment",
+      "permission_name": "Add Payment",
+      "permission_description": "It will enable user to add payment from Loan Details page",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "allocate_and_deallocate_loans",
+      "permission_name": "Allocate and Deallocate loans",
+      "permission_description": "Gives user ability to allocate and de-allocate loans through portfolio,excel and workflow",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "archive_and_unarchive_loan",
+      "permission_name": "Archive Loans",
+      "permission_description": "Ability to archive and un-archive loans from portfolio and archive loans section respectively",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "authorised_officer_assignment",
+      "permission_name": "AO Assignment",
+      "permission_description": "This feature is not available out of the box, there are some variable configurations that need to be in place for this feature to work properly. Do not enable this permission without proper implementation.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "complete_data_access",
+      "permission_name": "Complete Data Access",
+      "permission_description": "This permission gives user access to all loans or transactions irrespective of where they are in organization tree",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "custom_integrations",
+      "permission_name": "Custom Integrations",
+      "permission_description": "This permission allows the user to modify custom integrations settings for the company.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "export_communication",
+      "permission_name": "Communication Export",
+      "permission_description": "Download specific data points of communication done via calling, email, SMS, voice and whatsapp",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "export_digital_notice",
+      "permission_name": "Digital Notice Export",
+      "permission_description": "Download report which will give you status & tracking of digital notice generated on the platform",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "export_loans",
+      "permission_name": "Loans Export",
+      "permission_description": "Ability to export loans from portfolio page for a given set of selected loans",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "export_payments",
+      "permission_name": "Payments Export",
+      "permission_description": "Ability to export payments from portfolio page for a given set of selected loans",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "loan_collection_stage",
+      "permission_name": "Collection Stage",
+      "permission_description": "This permission provides the ability to access the collection stage configuration for the company.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "loan_update",
+      "permission_name": "Loan Update",
+      "permission_description": "Ability to upload new loans in bulk on-to the platform through excel upload in data upload section",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "loan_upload",
+      "permission_name": "Loan Upload",
+      "permission_description": "Ability to upload new loans in bulk on-to the platform through excel upload in data upload section",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "loan_upload_with_replace_given_data",
+      "permission_name": "Loan Upload (Replace Previous Data for uploaded columns only)",
+      "permission_description": "Loan Upload (Replace Previous Data for uploaded columns only)",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "loan_upload_with_replace_previous_data",
+      "permission_name": "Loan Upload (Remove All Previous Data)",
+      "permission_description": "Loan Upload (Remove All Previous Data)",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "move_loans",
+      "permission_name": "Move Loans",
+      "permission_description": "Ability to move loans to current allocation month from a previous month through portfolio page",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "out_of_hierarchy_allocation",
+      "permission_name": "Out of Hierarchy Allocation",
+      "permission_description": "If this permission is enabled for a permission group, users can perform bulk allocation/deallocation (via Excel upload) to and from users outside their reporting hierarchy.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "payment_receipt_management",
+      "permission_name": "Payment Receipt Management",
+      "permission_description": "This permission allows users to access payment receipt management tab under platform settings.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "payment_upload",
+      "permission_name": "Payment Upload",
+      "permission_description": "Ability to upload payments in bulk on-to the platform through excel upload in data upload section",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "portfolio_customisation",
+      "permission_name": "Portfolio Customisation",
+      "permission_description": "Ability to enable or disable variables/filters on the portfolio and also change the order of visibility",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "send_receipt",
+      "permission_name": "Send Receipt",
+      "permission_description": "This permission provides the ability to send the payment receipt froom loan details page.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "settings_company_details",
+      "permission_name": "Edit Company Details",
+      "permission_description": "This permission will give access to user to edit company details from the settings page",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "settings_loan_status",
+      "permission_name": "Status Management",
+      "permission_description": "Enables you to view all disposition status at one place and you can easily customize it too",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "settings_loan_variables",
+      "permission_name": "Variable Management",
+      "permission_description": "Ability to add new custom variables and edit their attributes from loan variables section in settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "status_update",
+      "permission_name": "Remarks and Status Upload",
+      "permission_description": "This permission provides access to the remarks and status upload functionality which is a part of Data Upload Tab.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "tags",
+      "permission_name": "Tags",
+      "permission_description": "Ability to add and remove tags from loans",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Core Collection Modules",
+      "permission": "webhook_retrigger",
+      "permission_name": "Webhook Retrigger",
+      "permission_description": "This permission provides the ability to retrigger webhooks for the company.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Data Science",
+      "permission": "Borrower Interaction Score - Month-over-Month Insights",
+      "permission_name": "Borrower Interaction Score - Month-over-Month Insights",
+      "permission_description": "Tracks monthly changes in borrower engagement and contactability scores to monitor behavioral trends.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Data Science",
+      "permission": "Borrower Probability of Response Across Channels",
+      "permission_name": "Borrower Probability of Response Across Channels",
+      "permission_description": "Predicts the likelihood of borrower response across various channels based on persona and outreach history.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Data Science",
+      "permission": "Borrower Receptiveness Behaviour",
+      "permission_name": "Borrower Receptiveness Behaviour",
+      "permission_description": "Aggregated score reflecting borrower overall connectivity and responsiveness, helping shape campaign strategies.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Data Science",
+      "permission": "Borrower Risk Profile",
+      "permission_name": "Borrower Risk Profile",
+      "permission_description": "Classifies borrower into risk segments based on historical behavior and assigns a corresponding risk score.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Data Science",
+      "permission": "Bounce Prediction Score",
+      "permission_name": "Bounce Prediction Score",
+      "permission_description": "Predicts the probability of a borrower missing their upcoming EMI before the due date.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Data Science",
+      "permission": "Intent to Pay Score",
+      "permission_name": "Intent to Pay Score",
+      "permission_description": "Indicates the borrower likelihood or willingness to make a payment.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Data Science",
+      "permission": "Recommendation on preferred communication intensity",
+      "permission_name": "Recommendation on preferred communication intensity",
+      "permission_description": "Suggests optimal communication frequency for each borrower preferred channel.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Data Science",
+      "permission": "Recommendation on responsiveness of the borrower",
+      "permission_name": "Recommendation on responsiveness of the borrower",
+      "permission_description": "Recommends the most effective language, time, and channel for borrower communication based on past responsiveness.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Data Science",
+      "permission": "Risk & Payment Behaviour - Comparison of Scores",
+      "permission_name": "Risk & Payment Behaviour - Comparison of Scores",
+      "permission_description": "Month-wise comparison of key behavioral indicators: risk profile, bounce prediction, and intent to pay scores.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Digital Comm Campaign Management",
+      "permission": "rules",
+      "permission_name": "Digital Comm Campaign Management",
+      "permission_description": "Schedule digital communication campaigns",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "company_link_configurations",
+      "permission_name": "Company Link Configurations",
+      "permission_description": "Company Link Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "contact_preference_configurations",
+      "permission_name": "Contact Preference Configurations",
+      "permission_description": "Contact Preference Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "content_creation",
+      "permission_name": "AI Videos",
+      "permission_description": "AI Videos",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "digital_channels_tab",
+      "permission_name": "Digital Channels Tab",
+      "permission_description": "Digital Channels Tab",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "dtmf_ivr",
+      "permission_name": "DTMF IVR",
+      "permission_description": "Trigger DTMF IVR",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "dtmf_ivr_campaigns",
+      "permission_name": "Bulk DTMF IVR Requests",
+      "permission_description": "Trigger Bulk DTMF IVR Requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "dtmf_ivr_configurations",
+      "permission_name": "DTMF IVR Configurations",
+      "permission_description": "DTMF IVR Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "email",
+      "permission_name": "EMAIL",
+      "permission_description": "Trigger EMAIL",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "email_campaigns",
+      "permission_name": "Bulk Email Requests",
+      "permission_description": "Trigger Bulk Email Requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "email_configurations",
+      "permission_name": "Email Configurations",
+      "permission_description": "Email Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "excel_driven_master_campaigns",
+      "permission_name": "Excel Driven Master Campaign Requests",
+      "permission_description": "Trigger Excel Driven Master Campaign Requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "master_campaigns",
+      "permission_name": "Master Campaign Requests",
+      "permission_description": "Trigger Master Campaign Requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "obd_ivr",
+      "permission_name": "OBD IVR",
+      "permission_description": "Trigger OBD IVR",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "obd_ivr_campaigns",
+      "permission_name": "Bulk OBD IVR Requests",
+      "permission_description": "Trigger Bulk OBD IVR Requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "obd_ivr_configurations",
+      "permission_name": "OBD IVR Configurations",
+      "permission_description": "OBD IVR Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "payment_configurations",
+      "permission_name": "Payment Configurations",
+      "permission_description": "Payment Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "rcs",
+      "permission_name": "RCS",
+      "permission_description": "Trigger RCS",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "rcs_campaigns",
+      "permission_name": "Bulk RCS Requests",
+      "permission_description": "Trigger Bulk RCS Requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "rcs_configurations",
+      "permission_name": "RCS Configurations",
+      "permission_description": "RCS Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "render_video",
+      "permission_name": "Render Video",
+      "permission_description": "Render Video",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "sms",
+      "permission_name": "SMS",
+      "permission_description": "Trigger SMS",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "sms_campaigns",
+      "permission_name": "Bulk SMS Requests",
+      "permission_description": "Trigger Bulk SMS Requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "sms_configurations",
+      "permission_name": "SMS Configurations",
+      "permission_description": "SMS Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "template_management",
+      "permission_name": "Digital Channel Templates",
+      "permission_description": "Digital Channel Templates",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "universal_api_configurations",
+      "permission_name": "Universal API Configurations",
+      "permission_description": "Universal API Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "voice_bot",
+      "permission_name": "Voice Bot",
+      "permission_description": "Trigger Voice Bot",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "whatsapp",
+      "permission_name": "Whatsapp",
+      "permission_description": "Trigger Whatsapp Bot",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "whatsapp_bot",
+      "permission_name": "WHATSAPP BOT",
+      "permission_description": "Trigger WHATSAPP BOT",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "whatsapp_bot_campaigns",
+      "permission_name": "Bulk Whatsapp Bot Requests",
+      "permission_description": "Trigger Bulk Whatsapp Bot Requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "whatsapp_campaigns",
+      "permission_name": "Bulk Whatsapp Requests",
+      "permission_description": "Trigger Bulk Whatsapp Requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Digital Communications",
+      "permission": "whatsapp_configurations",
+      "permission_name": "WhatsApp Configurations",
+      "permission_description": "WhatsApp Configurations",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Document Management",
+      "permission": "company_documents",
+      "permission_name": "CG Drive",
+      "permission_description": "Provides access to upload/download files in central file manager",
+      "expected_levels": true,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Document Management",
+      "permission": "document_types",
+      "permission_name": "Document Types",
+      "permission_description": "Provides access to document type section in settings to configure the supported document types",
+      "expected_levels": true,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Document Management",
+      "permission": "loan_documents",
+      "permission_name": "Loan Documents",
+      "permission_description": "Provides access to upload/download files at a loan or customer level",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Document Management",
+      "permission": "user_documents",
+      "permission_name": "User Documents",
+      "permission_description": "This permission provides access to upload and view documents against a given user",
+      "expected_levels": true,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Policy Control Module",
+      "permission": "day_time_control",
+      "permission_name": "Day Time Control Module",
+      "permission_description": "Day Time Control",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Policy Control Module",
+      "permission": "dnd",
+      "permission_name": "Dnd Control Module",
+      "permission_description": "Dnd Control",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Policy Control Module",
+      "permission": "exclude_dates",
+      "permission_name": "Exclude Dates Module",
+      "permission_description": "Exclude Dates",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Policy Control Module",
+      "permission": "exclude_status",
+      "permission_name": "Exclude Status Module",
+      "permission_description": "Exclude Status",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Policy Control Module",
+      "permission": "frequency_control",
+      "permission_name": "Frequency Control Module",
+      "permission_description": "Frequency Control",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Reports",
+      "permission": "all_report_access",
+      "permission_name": "All reports access",
+      "permission_description": "Provides read access.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Reports",
+      "permission": "create_report",
+      "permission_name": "Create report",
+      "permission_description": "Provides access to configure reports.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Reports",
+      "permission": "schedule_report_for_others",
+      "permission_name": "Schedule report for others",
+      "permission_description": "Provides access to schedule report for others",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "Segment Management",
+      "permission": "group_segment",
+      "permission_name": "Group Segment",
+      "permission_description": "Provides access to group segment.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Segment Management",
+      "permission": "lead_loan",
+      "permission_name": "Lead loan configuration",
+      "permission_description": "Provides access to lead loan configuration.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Segment Management",
+      "permission": "segment",
+      "permission_name": "Segment",
+      "permission_description": "Provides access to segment.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Solitary Communications",
+      "permission": "dtmf_ivr",
+      "permission_name": "DTMF IVR",
+      "permission_description": "Trigger DTMF IVR",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Solitary Communications",
+      "permission": "email",
+      "permission_name": "Email",
+      "permission_description": "Trigger Email",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Solitary Communications",
+      "permission": "obd_ivr",
+      "permission_name": "OBD IVR",
+      "permission_description": "Trigger OBD IVR",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Solitary Communications",
+      "permission": "rcs",
+      "permission_name": "RCS",
+      "permission_description": "Trigger RCS",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Solitary Communications",
+      "permission": "sms",
+      "permission_name": "SMS",
+      "permission_description": "Trigger SMS",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Solitary Communications",
+      "permission": "template_management",
+      "permission_name": "Digital Channel Templates",
+      "permission_description": "Digital Channel Templates",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Solitary Communications",
+      "permission": "whatsapp",
+      "permission_name": "Whatsapp",
+      "permission_description": "Trigger Whatsapp Bot",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Solitary Communications",
+      "permission": "whatsapp_bot",
+      "permission_name": "Whatsapp Bot",
+      "permission_description": "Trigger Whatsapp Bot",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "StarTrack",
+      "permission": "Cohort",
+      "permission_name": "Cohort Management",
+      "permission_description": "Section to form the group of users for Performance Plan",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "StarTrack",
+      "permission": "Incentive",
+      "permission_name": "Incentive Plan Management",
+      "permission_description": "Section to create a plan to measure incentives of the users",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "StarTrack",
+      "permission": "Kpi-Kra",
+      "permission_name": "KRA/KPI Management",
+      "permission_description": "Section to form KPIs for Performance Plan",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "StarTrack",
+      "permission": "Manage_performance_data",
+      "permission_name": "Data Upload for External Variable",
+      "permission_description": " Upload data for the variables created outside CG system",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "StarTrack",
+      "permission": "Manage_performance_variable",
+      "permission_name": "External Variable Creation",
+      "permission_description": "Create variables outside CG system to form KPIs",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "StarTrack",
+      "permission": "Plan",
+      "permission_name": "Performance Plan Management",
+      "permission_description": "Section to create plans to assess the performance of users",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "configure_sso",
+      "permission_name": "SSO Configuration",
+      "permission_description": "This permission will give you access to configure different  types of SSO",
+      "expected_levels": true,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "profiles",
+      "permission_name": "Permission Group Management",
+      "permission_description": "Ability to create and edit permission groups for all users in the user management section of settings",
+      "expected_levels": true,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "roles",
+      "permission_name": "Roles Management",
+      "permission_description": "Ability to create, edit and modify hierarchy of roles in the user management section of settings",
+      "expected_levels": true,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "settings_company_details",
+      "permission_name": "Edit Company Details",
+      "permission_description": "This permission will give access to user to edit company details from the settings page",
+      "expected_levels": true,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "settings_connection_configuration",
+      "permission_name": "Connection Configuration (S3 and SFTP)",
+      "permission_description": "Permission to view & edit connection configuration",
+      "expected_levels": true,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "settings_outgoing_webhook",
+      "permission_name": "Outgoing Webhook",
+      "permission_description": "Ability to configure outgoing webhooks for a company in the settings",
+      "expected_levels": true,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "settings_user_variables",
+      "permission_name": "User Variables",
+      "permission_description": "Ability to configure additional variables of users in a company",
+      "expected_levels": true,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "single_factor_authentication",
+      "permission_name": "Single Factor Authentication",
+      "permission_description": "This permission allows user to access platform without OTP authentication",
+      "expected_levels": true,
+      "read": true,
+      "write": false
+    },
+
+    {
+      "module": "User Management Module",
+      "permission": "territory_management",
+      "permission_name": "Territory Management",
+      "permission_description": "This permission allows the user to configure territory tree as well as manage individual territories defined in a given company",
+      "expected_levels": true,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "user_device_validation",
+      "permission_name": "User Device Validation",
+      "permission_description": "Permission that makes the validation of device id required",
+      "expected_levels": true,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "User Management Module",
+      "permission": "users",
+      "permission_name": "User Management",
+      "permission_description": "Ability to create, edit and delete in the user management section of settings",
+      "expected_levels": true,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "WhatsApp ChatR",
+      "permission": "two_way_communication_permission",
+      "permission_name": "WhatsApp ChatR",
+      "permission_description": "Two Way WhatsApp Communication",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Workflow Management",
+      "permission": "manual_workflow",
+      "permission_name": "Manual Workflow",
+      "permission_description": "Provides access to trigger manual workflow",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "Workflow Management",
+      "permission": "reports_and_dashboard",
+      "permission_name": "Reports & Dashboard",
+      "permission_description": "Provides access reports & dashboard",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "Workflow Management",
+      "permission": "workflow",
+      "permission_name": "Workflow",
+      "permission_description": "Provides access to workflow.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "additional_contact_number",
+      "permission_name": "Add Additional Contact Number",
+      "permission_description": "Provides access to add additional contact number against the loan id through calling pop-up",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "agent_leaderboard",
+      "permission_name": "Agent Leaderboard",
+      "permission_description": "Provides access to Agent Leaderboard",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "agent_talking_script",
+      "permission_name": "Agent Talking Script",
+      "permission_description": "Provides access to create, edit and delete Agent Talking Script",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "allocation_based_apr",
+      "permission_name": "Allocation Based APR",
+      "permission_description": "Provides access to Allocation based APR",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "autodialer",
+      "permission_name": "Autodialer Call",
+      "permission_description": "Activates autodialer fuctionalities for the environment.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "call_upload",
+      "permission_name": "Calling Upload",
+      "permission_description": "Provides access to upload bulk calling data.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "call_variable_management",
+      "permission_name": "Call Variables Management",
+      "permission_description": "Provides access to call variables under call settings.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "calling_campaign_operation",
+      "permission_name": "Calling Campaign Operations",
+      "permission_description": "Provides access to campaign operations like pause, edit, delete etc.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "campaign",
+      "permission_name": "Campaign Management",
+      "permission_description": "Provides access to calling campaigns under Campaign Management.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "click_to_call",
+      "permission_name": "Click To Call",
+      "permission_description": "Provides access to Click to Call service.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "company_settings",
+      "permission_name": "Tele-calling Settings",
+      "permission_description": "Provides access to the Tele-calling tab in company details.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "complete_data",
+      "permission_name": "Complete Data Access For Report",
+      "permission_description": "Complete Data Access For Report.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "create_calling_campaign",
+      "permission_name": "Create Calling Campaign",
+      "permission_description": "Provides access to create calling campaign.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "did_management_v2",
+      "permission_name": "DID Management",
+      "permission_description": "Provides access to DID Management under company settings.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "disposition_priority_settings",
+      "permission_name": "Disposition Priority Settings",
+      "permission_description": "Provides access to modify Disposition Priority Settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "download_call_recording",
+      "permission_name": "Download Call Recording",
+      "permission_description": "Provides access to download call recordings.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "extended_duration_apr",
+      "permission_name": "Extended Duration Agent Productivity Report",
+      "permission_description": "Provides access to the Extended Duration Agent Productivity Report in the calling dashboard",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "inbound",
+      "permission_name": "Inbound",
+      "permission_description": "Provides access to inbound dialer functionalities.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "inbound_campaign",
+      "permission_name": "Inbound Campaign",
+      "permission_description": "Provides access to inbound campaigns.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "incoming_lead_report",
+      "permission_name": "Incoming Lead Report",
+      "permission_description": "Provides access to Incoming Lead Report",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "limit_calls_to_current_allocation_month",
+      "permission_name": "Limit Calls To Current Allocation Month",
+      "permission_description": "If turned on, calls can't be placed on previous allocation months.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "play_call_recording",
+      "permission_name": "Play Call Recording",
+      "permission_description": "Provides access to play recordings.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "post_call_communication",
+      "permission_name": "Post Call Communication",
+      "permission_description": "Provides access to configure post call communication",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "predictive",
+      "permission_name": "Predictive Call",
+      "permission_description": "Provides access to trigger Predictive calls in campaigns.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "reminder_report",
+      "permission_name": "Reminder Report",
+      "permission_description": "Provides access to reminder report.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "report_customisation",
+      "permission_name": "Report Customisation",
+      "permission_description": "Provides access to the report customisation page under call Settings.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "supervisor_actions",
+      "permission_name": "Supervisor Actions",
+      "permission_description": "Provides mandatory supervisor actions for calling campaigns.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "supervisor_leaderboard",
+      "permission_name": "Supervisor Leaderboard",
+      "permission_description": "Provides access to Supervisor Leaderboard",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "supervisor_monitoring",
+      "permission_name": "Supervisor Monitoring",
+      "permission_description": "Provides monitoring access to supervisors.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "telecalling_call_detail_report",
+      "permission_name": "Telecalling Call Detail Report",
+      "permission_description": "Enables download and scheduling (Email/SFTP) of the Telecalling CDR from supported pages.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "telecalling_reports",
+      "permission_name": "Telecalling Reports",
+      "permission_description": "Enables download of all Telecalling reports except Reminder Report, Incoming Lead Report, and CDR.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "toll_free_number",
+      "permission_name": "Toll Free Number Management",
+      "permission_description": "Provides access to Toll Free Number Management.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "voicebot",
+      "permission_name": "Voice Bot",
+      "permission_description": "Provides access to Voice Bot tabs in the Bulk Process and Communication page of the Loan Details.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "voicebot_call_detail_report",
+      "permission_name": "Voicebot Call Detail Report",
+      "permission_description": "Enables download of the Voice Bot CDR from the Portfolio and Bulk Export pages.",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "calling",
+      "permission": "voicebot_did_management",
+      "permission_name": "Voice Bot DID Management",
+      "permission_description": "Provides access to Voice Bot DID Management page",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "voicebot_settings",
+      "permission_name": "Voice Bot Settings",
+      "permission_description": "Provides access to the Voice Bot settings tab in the Company Details page.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "voicebot_template_management",
+      "permission_name": "Voice Bot Template Management",
+      "permission_description": "Provides access to the Template Management section",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "calling",
+      "permission": "voicebot_trigger",
+      "permission_name": "Voice Bot Trigger",
+      "permission_description": "Users with this permission will be able to trigger Voice Bot from the portfolio page.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "dashboard",
+      "permission": "billzy-payments",
+      "permission_name": "Billzy-Payments Dashboard",
+      "permission_description": "Control the visibility of Billzy-Payments Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "calling",
+      "permission_name": "Calling Dashboard",
+      "permission_description": "Control the visibility of Calling Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "collection performance",
+      "permission_name": "Collection Performance",
+      "permission_description": "Collection Performance",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "communication",
+      "permission_name": "Communication Dashboard",
+      "permission_description": "Control the visibility of Communication Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "dashboard",
+      "permission": "dashboard-configuration",
+      "permission_name": "Dashboard Configuration",
+      "permission_description": "Control the configuration of dashboard",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "dashboard",
+      "permission": "digital communication insights",
+      "permission_name": "Digital Communication Insights Dashboard",
+      "permission_description": "Control the visibility of Digital Communication Insights Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "dpd insights",
+      "permission_name": "DPD Insights Dashboard",
+      "permission_description": "Control the visibility of DPD Insights Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "foreclosure",
+      "permission_name": "Foreclosure Dashboard",
+      "permission_description": "Control the visibility of Foreclosure Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "fos",
+      "permission_name": "FOS Dashboard",
+      "permission_description": "Control the visibility of FOS Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "litigation",
+      "permission_name": "Litigation Dashboard",
+      "permission_description": "Control the visibility of Litigation Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "notice",
+      "permission_name": "Notice Dashboard",
+      "permission_description": "Control the visibility of Notice Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "overview",
+      "permission_name": "Overview Dashboard",
+      "permission_description": "Control the visibility of Overview Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "reminder",
+      "permission_name": "Reminder Dashboard",
+      "permission_description": "Control the visibility of Reminder Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "settlement",
+      "permission_name": "Settlement Dashboard",
+      "permission_description": "Control the visibility of Settlement Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "dashboard",
+      "permission": "voicebot",
+      "permission_name": "Voice Bot Dashboard",
+      "permission_description": "Control the visibility of Voice Bot Dashboard to user",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "fos",
+      "permission": "branch_collection_management",
+      "permission_name": "branch_collection_management",
+      "permission_description": "User would be able to view the Branch Collection Managment section and sub-tabs within this section",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "change_requests_module",
+      "permission_name": "change_requests_module",
+      "permission_description": "Used for viewing and responding to edit/cancel verification requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "deferred_verification",
+      "permission_name": "deferred_verification",
+      "permission_description": "Allow user to mark 'Approved As Deferred' in deposit cash verification",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "deposit_verification_module",
+      "permission_name": "deposit_verification_module",
+      "permission_description": "Used for viewing and responding to deposit verification requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "field_collection_dashboard",
+      "permission_name": "field_collection_dashboard",
+      "permission_description": "User would be able to view the Field Collection Dashboard tab and sub-tabs within this section",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "fos",
+      "permission": "form_management",
+      "permission_name": "form_management",
+      "permission_description": "User would be able to view the Form Management tab and sub-tabs within this section",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "fos_settings_module",
+      "permission_name": "fos_settings_module",
+      "permission_description": "Used for viewing and updating fos settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "lead_addition",
+      "permission_name": "add_new_lead",
+      "permission_description": "Used for adding sales leads from fos app",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "live_agent_tracking_module",
+      "permission_name": "live_agent_tracking_module",
+      "permission_description": "Used for viewing live agent location",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "fos",
+      "permission": "non_allocated_loan_access",
+      "permission_name": "non_allocated_loan_access",
+      "permission_description": "Used to allow the agents to perform visits on loans beyond their general allocation",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "online_verification_module",
+      "permission_name": "online_verification_module",
+      "permission_description": "Used for viewing and responding to online deposit verification requests",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "restrict_collection_form",
+      "permission_name": "restrict_collection_form",
+      "permission_description": "restrict collection form access",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "restrict_document_upload_from_gallery",
+      "permission_name": "restrict_document_upload_from_gallery",
+      "permission_description": "Restrict Field Users from uploading documents from the gallery",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "supervisor_visit_cancellation",
+      "permission_name": "supervisor_visit_cancellation",
+      "permission_description": "Allows users to cancel visits for which Collection re-submission is not allowed.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "visibility_basis_of_loan_allocation",
+      "permission_name": "visibility_basis_of_loan_allocation",
+      "permission_description": "allow the user to view data basis loan allocation",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "add_onboarding_stage",
+      "permission_name": "Add Onboarding Stage",
+      "permission_description": "Add new stage during onboarding",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "add_rate_card",
+      "permission_name": "Add Rate Card",
+      "permission_description": "Add a new rate card",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "advocate_de_empanelment",
+      "permission_name": "Advocate De-Empanelment",
+      "permission_description": "Enables you to view advocate de-empanelment details",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "advocate_empanelment",
+      "permission_name": "Advocate Empanelment",
+      "permission_description": "Enables you to view advocate empanelment details",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "advocate_performance",
+      "permission_name": "Advocate Performance",
+      "permission_description": "Enables you to access advocate performance management page and take actions",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "approve_requests",
+      "permission_name": "Approve Requests",
+      "permission_description": "Approve stages or case actions requests",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "assign_case_manager",
+      "permission_name": "Assign Case Manager",
+      "permission_description": "Enables you to assign/unassign managers to a case",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "billing_management",
+      "permission_name": "Billing Management",
+      "permission_description": "Access to the Billing Management Page",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "litigation",
+      "permission": "borrower_settings",
+      "permission_name": "Borrower Settings",
+      "permission_description": "Enables user to access and update borrower settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "bulk_case_upload",
+      "permission_name": "Bulk Case Upload",
+      "permission_description": "Enables you to access legal bulk upload page",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "litigation",
+      "permission": "case_finder",
+      "permission_name": "E-Court Services Page",
+      "permission_description": "Enables you to view E-Court Services page and take actions",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "case_manager_overview",
+      "permission_name": "Case Manager Overview",
+      "permission_description": "View case manager overview page",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "case_status",
+      "permission_name": "Case Status",
+      "permission_description": "Update case status",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "case_view",
+      "permission_name": "Case View Mobile App",
+      "permission_description": "Enables users to log in to the CaseView App and perform actions",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "case_view_management",
+      "permission_name": "Case View Management",
+      "permission_description": "Enables users to manage, update, and edit all features of the CaseView app.",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "clear_onboarding_form",
+      "permission_name": "Clear Onboarding Form",
+      "permission_description": "Clear onboarding form",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "company_settings",
+      "permission_name": "Company Settings",
+      "permission_description": "Enables user to access and update company settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "dashboard",
+      "permission_name": "Legal Operations Board",
+      "permission_description": "View Litigation Dashboard",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "litigation",
+      "permission": "data_deletion_allocation",
+      "permission_name": "Data Deletion: Allocation Details",
+      "permission_description": "Permission to delete vendor allocation details",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "data_deletion_cases",
+      "permission_name": "Data Deletion: Cases",
+      "permission_description": "Permission to delete entire cases",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "data_deletion_ecourt",
+      "permission_name": "Data Deletion: eCourt Tracking",
+      "permission_description": "Permission to delete eCourt tracking information",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "data_deletion_stages",
+      "permission_name": "Data Deletion: Stages",
+      "permission_description": "Permission to delete stages",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "delete_rate_card",
+      "permission_name": "Delete Rate Card",
+      "permission_description": "Delete a rate card ",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "delete_saved_cases",
+      "permission_name": "Delete Saved Cases",
+      "permission_description": "Enables you to bulk delete saved cases from case finder",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "derived_variables",
+      "permission_name": "Derived Variables",
+      "permission_description": "Enables you to take actions related to Derived Variables",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "edit_history",
+      "permission_name": "Edit History",
+      "permission_description": "View edit history",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "litigation",
+      "permission": "edit_onboarding_stage",
+      "permission_name": "Edit Onboarding Stage",
+      "permission_description": "Edit existing stage during onboarding",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "edit_rate_card",
+      "permission_name": "Edit Rate Card",
+      "permission_description": "Edit existing rate card ",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "edit_stage_documents",
+      "permission_name": "Edit Stage Documents",
+      "permission_description": "Update stage and case Documents",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "edit_vendor_fees",
+      "permission_name": "Edit Vendor Fees",
+      "permission_description": "Edit pre-filled vendor fees",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "legal_approvals",
+      "permission_name": "Legal Approvals",
+      "permission_description": "Enables you to access legal approvals page",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "legal_config",
+      "permission_name": "Legal Config",
+      "permission_description": "Enables you to access and update legal configurations",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "legal_process_tracking",
+      "permission_name": "Legal Process Tracking",
+      "permission_description": "Enables you to access legal process tracking page",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "litigation",
+      "permission": "legal_report_export",
+      "permission_name": "Legal Report Export",
+      "permission_description": "Enables you to view the Legal tab under Bulk export to download the legal reports",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "reminder",
+      "permission_name": "Reminder",
+      "permission_description": "Enables you to view reminders page on UI",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "litigation",
+      "permission": "replace_case",
+      "permission_name": "Replace Case",
+      "permission_description": "Access to Replace Case Page",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "schedule_meeting",
+      "permission_name": "Schedule Meeting",
+      "permission_description": "Enables you to view schedule meetings, update and cancel them",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "stage",
+      "permission_name": "Stage",
+      "permission_description": "Create or update stage and case",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "update_payment_details",
+      "permission_name": "Update Payment Details",
+      "permission_description": "Update billing payment details",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "litigation",
+      "permission": "virtual_hearing",
+      "permission_name": "Virtual Hearing",
+      "permission_description": "Enables you to view scheduled hearings and take action on them",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "litigation-v2",
+      "permission": "legal_portfolio",
+      "permission_name": "Legal Portfolio",
+      "permission_description": "Enables you to access legal portfolio",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "litigation-v2",
+      "permission": "update_case_data",
+      "permission_name": "Update Case Data: Legal Portfolio",
+      "permission_description": "Enables you to view and edit cases data",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "notice",
+      "permission": "download_digital_notice_pdf",
+      "permission_name": "Download Digital Notice PDF",
+      "permission_description": "User will be able to download the digital notice PDFs generated on the platform",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "notice",
+      "permission": "download_notice_documents",
+      "permission_name": "Download Notice Documents",
+      "permission_description": "User will be able to download the notice documents ZIP generated on the platform",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "notice",
+      "permission": "download_notice_tracking_pdf",
+      "permission_name": "Download Notice Tracking PDF",
+      "permission_description": "User will be able to download the physical notice tracking details",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "notice",
+      "permission": "download_preview",
+      "permission_name": "Download Preview",
+      "permission_description": "User will be able to Download Preview",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "notice",
+      "permission": "export_digital_notice",
+      "permission_name": "Digital Notice Export",
+      "permission_description": "Download report which will give you status & tracking of digital notice generated on the platform",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "notice",
+      "permission": "export_physical_notice",
+      "permission_name": "Physical Notice Tracking Export",
+      "permission_description": "Download report which will give you data points around delivery status and tracking funnel of physical notices",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "notice",
+      "permission": "forms",
+      "permission_name": "Forms",
+      "permission_description": "User will be able to view and create forms",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "notice",
+      "permission": "generate_notice",
+      "permission_name": "Generate Notice",
+      "permission_description": "Generate notices",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "notice",
+      "permission": "notice_draft",
+      "permission_name": "Notice Draft",
+      "permission_description": "View or upload notice drafts",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "notice",
+      "permission": "notice_tracking_page",
+      "permission_name": "Notice Tracking Page",
+      "permission_description": "User will be able to view Notice Tracking Page",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "notice",
+      "permission": "notice_upload",
+      "permission_name": "Notice Upload",
+      "permission_description": "Upload Notices",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "notice",
+      "permission": "pod_upload",
+      "permission_name": "Notice POD Upload",
+      "permission_description": "Upload Notice POD Pdf",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "asset_management",
+      "permission_name": "asset_management",
+      "permission_description": "Used for viewing and editing asset management page",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "repossession_data_upload",
+      "permission_name": "repossession_data_upload",
+      "permission_description": "",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "repossession_draft",
+      "permission_name": "repossession_draft",
+      "permission_description": "This setting will manage the access of repossession drafts",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "repossession_eligibility_update",
+      "permission_name": "repossession_eligibility_update",
+      "permission_description": "This setting will manage the access of marking eligibility of repossession on a Loan.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "repossession_form_update",
+      "permission_name": "repossession_form_update",
+      "permission_description": "This setting will manage the access of scheduling repo visit and filling of repossession form on a Loan in application.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "repossession_management",
+      "permission_name": "repossession_management",
+      "permission_description": "Used for viewing and editing repo management page",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "repossession_settings",
+      "permission_name": "repossession_settings",
+      "permission_description": "Used for viewing and editing repossession settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "repossession_tracker",
+      "permission_name": "repossession_tracker",
+      "permission_description": "This setting will manage the access of the Repossession Tracker section that will be inside a Loan.",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "restrict_document_upload_from_gallery",
+      "permission_name": "restrict_document_upload_from_gallery",
+      "permission_description": "Restrict Field Users from uploading documents from the gallery",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "repossession",
+      "permission": "stockyard_management",
+      "permission_name": "stockyard_management",
+      "permission_description": "Used for viewing and editing stockyard management page",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "all_data_access",
+      "permission_name": "All Data Access",
+      "permission_description": "Users can access all settlement data",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "settlement",
+      "permission": "assigning_foreclosure_bucket",
+      "permission_name": "Assigning Foreclosure Bucket",
+      "permission_description": "Users with this permission will be able to Assign Bucket/Mark Eligible or Reassign bucket for foreclosure on the platform",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "assigning_settlement_bucket",
+      "permission_name": "Assigning Settlement Bucket",
+      "permission_description": "Users with this permission will be able to Assign Bucket/Mark Eligible or Reassign bucket on the platform",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "discount_limit",
+      "permission_name": "Settlement discount limit",
+      "permission_description": "User with this permission will be able to see settlement discount limit on UI",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "settlement",
+      "permission": "edit_bifurcation_variables",
+      "permission_name": "Edit Settlement Bifurcation Variables",
+      "permission_description": "Users with this permission will be able to edit the bifurcation amount while raising settlement requests",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "edit_foreclosure_bifurcation_variables",
+      "permission_name": "Edit Foreclosure Bifurcation Variables",
+      "permission_description": "Users with this permission will be able to edit the bifurcation amount while raising foreclosure requests",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "edit_foreclosure_request",
+      "permission_name": "Edit Foreclosure Request Details",
+      "permission_description": "Users with this permission will be able to edit the foreclosure amount, payment schedule and other foreclosure attributes",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "edit_settlement_request",
+      "permission_name": "Edit Settlement Request Details",
+      "permission_description": "Users with this permission will be able to edit the settlement amount, payment schedule and other settlement attributes",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "foreclosure_bucket_management",
+      "permission_name": "Foreclosure Bucket Management",
+      "permission_description": "Users with this permission will be able to view/edit the foreclosure buckets and their settings for an organization",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "foreclosure_discount_limit",
+      "permission_name": "Foreclosure discount limit",
+      "permission_description": "User with this permission will be able to see foreclosure discount limit on UI",
+      "expected_levels": null,
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "settlement",
+      "permission": "foreclosure_draft",
+      "permission_name": "Foreclosure Draft",
+      "permission_description": "View or upload foreclosure drafts",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "foreclosure_tracking_page",
+      "permission_name": "View Manage Foreclosure Page",
+      "permission_description": "Users with this permission will be able to view the manage foreclosure page",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "generate_foreclosure",
+      "permission_name": "Generate Foreclosure",
+      "permission_description": "Users with this permission will be able to generate foreclosure offer letter on the platform",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "generate_settlement",
+      "permission_name": "Generate Settlement",
+      "permission_description": "Users with this permission will be able to generate settlement offer letter on the platform",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "raise_foreclosure_request",
+      "permission_name": "Raise Foreclosure Request",
+      "permission_description": "Users with this given permission will be able to see and use the raise foreclosure request option",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "raise_settlement_request",
+      "permission_name": "Raise Settlement Request",
+      "permission_description": "Users with this given permission will be able to see and use the raise settlement request option",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "settlement_bucket_management",
+      "permission_name": "Settlement Bucket Management",
+      "permission_description": "Users with this permission will be able to view/edit the settlement buckets and their settings for an organization",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "settlement_company_settings",
+      "permission_name": "Settlement & Foreclosure Settings Module",
+      "permission_description": "Users can view and edit settlement module settings",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "settlement_draft",
+      "permission_name": "Settlement Draft",
+      "permission_description": "View or upload settlement drafts",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "settlement_tracking_page",
+      "permission_name": "View Manage Settlement Page",
+      "permission_description": "Users with this permission will be able to view the manage settlement page",
+      "expected_levels": null,
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "update_foreclosure_status",
+      "permission_name": "Update Foreclosure Request Status",
+      "permission_description": "Users with this permission will be able to update foreclosure status on the platform",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "settlement",
+      "permission": "update_settlement_status",
+      "permission_name": "Update Settlement Request Status",
+      "permission_description": "Users with this permission will be able to update settlement status on the platform",
+      "expected_levels": null,
+      "read": false,
+      "write": true
+    }
+  ]
+}

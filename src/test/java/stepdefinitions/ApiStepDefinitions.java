@@ -546,34 +546,65 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
     }
 //
 
-@Then("the response body field {string} should be captured value {string} increased by {int}")
+@Then("the response body field {string} should be captured value {string} {string} by {int}")
 public void the_response_body_field_should_be_captured_value_increased_by(
-        String jsonPath, String capturedKey, int increment) {
+        String jsonPath,
+        String capturedKey,
+        String operation,
+        int increment) {
 
-    String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+    String resolvedPath =
+            scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
 
-    String capturedValue = testContext.getCapturedValue(capturedKey);
+    String capturedValue =
+            testContext.getCapturedValue(capturedKey);
 
     if (capturedValue == null || capturedValue.isBlank()) {
         throw new AssertionError(
                 "No captured value found for '" + capturedKey + "'.");
     }
 
-    int expectedValue;
+    int captured;
 
     try {
-        expectedValue = Integer.parseInt(capturedValue) + increment;
+        captured = Integer.parseInt(capturedValue);
     } catch (NumberFormatException e) {
         throw new AssertionError(
-                "Captured value '" + capturedValue + "' for key '" + capturedKey
+                "Captured value '" + capturedValue
+                        + "' for key '" + capturedKey
                         + "' is not a valid integer.");
     }
 
-    Object actualValue = activeResponse().jsonPath().get(resolvedPath);
+    String resolvedOperation =
+            scenarioTestDataResolver
+                    .replaceScenarioPlaceholders(operation)
+                    .trim()
+                    .toLowerCase();
+
+    int expectedValue;
+
+    switch (resolvedOperation) {
+        case "increase":
+            expectedValue = captured + increment;
+            break;
+
+        case "decrease":
+            expectedValue = captured - increment;
+            break;
+
+        default:
+            throw new IllegalArgumentException(
+                    "Unsupported operation '" + operation
+                            + "'. Expected 'increase' or 'decrease'.");
+    }
+
+    Object actualValue =
+            activeResponse().jsonPath().get(resolvedPath);
 
     if (actualValue == null) {
         throw new AssertionError(
-                "Response field '" + resolvedPath + "' was not found. Body: "
+                "Response field '" + resolvedPath
+                        + "' was not found. Body: "
                         + activeResponse().getBody().asString());
     }
 
@@ -583,15 +614,25 @@ public void the_response_body_field_should_be_captured_value_increased_by(
         actual = Integer.parseInt(String.valueOf(actualValue));
     } catch (NumberFormatException e) {
         throw new AssertionError(
-                "Response field '" + resolvedPath + "' is not numeric. Actual value: "
+                "Response field '" + resolvedPath
+                        + "' is not numeric. Actual value: "
                         + actualValue);
     }
 
     Assert.assertEquals(
             actual,
             expectedValue,
-            "Response field '" + resolvedPath + "' mismatch. Expected: "
-                    + expectedValue + ", Actual: " + actual);
+            "Response field '" + resolvedPath
+                    + "' mismatch. Operation: "
+                    + resolvedOperation
+                    + ", captured value: "
+                    + captured
+                    + ", increment: "
+                    + increment
+                    + ", expected: "
+                    + expectedValue
+                    + ", actual: "
+                    + actual);
 }
 
     @Then("the response body should contain field {string} as {string} with value {string}")
