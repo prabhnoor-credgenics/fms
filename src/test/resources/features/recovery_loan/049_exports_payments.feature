@@ -2,10 +2,8 @@
 Feature: Exports Payments Logs — GET /recovery/exports/payments
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
-
 
 
   @positive @smoke @creator
@@ -171,9 +169,9 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
   Scenario: Search by author with no match returns 200 (empty list)
     Given I prepare a request
     And I set the query parameters:
-      | company_id      | {COMPANY_ID}            |
-      | export_category | payment                 |
-      | search_type     | author                  |
+      | company_id      | {COMPANY_ID}                  |
+      | export_category | payment                       |
+      | search_type     | author                        |
       | search_query    | NoSuchAuthor{RANDOM_STRING:6} |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -240,7 +238,6 @@ Feature: Exports Payments Logs — GET /recovery/exports/payments
     When I send a "GET" request to "/recovery/exports/payments"
     Then the response status code should be 400
     And the "export_payments_logs" failure response should be valid
-
 
 
   @negative @creator

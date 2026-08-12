@@ -21,9 +21,9 @@ Feature: Loan Details (Metadata) API
     Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body:
@@ -47,9 +47,9 @@ Feature: Loan Details (Metadata) API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | Loan047122 |
     And I set the request body:
@@ -72,9 +72,9 @@ Feature: Loan Details (Metadata) API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | Loan047122 |
     And I set the request body:
@@ -94,9 +94,9 @@ Feature: Loan Details (Metadata) API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
-      | Content-Type        | application/json                     |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | loan_id | undefined |
     And I set the request body:
@@ -118,10 +118,10 @@ Feature: Loan Details (Metadata) API
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept       | application/json, text/plain, */*    |
-      | Content-Type | application/json                     |
+      | accept       | application/json, text/plain, */* |
+      | Content-Type | application/json                  |
     And I set the path parameters:
-      | loan_id |Loan047122 |
+      | loan_id | Loan047122 |
     And I set the request body:
       """
       {

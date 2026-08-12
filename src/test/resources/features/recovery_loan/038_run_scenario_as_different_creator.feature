@@ -25,7 +25,6 @@ Feature: Running a scenario as a different creator — three ways
     Then the response status code should be 200
 
 
-
   @manual @way2-keyed-token
   Scenario: Way 2 — target a specific remembered creator per-request via keyed placeholders
     Given I authenticate as "creator" slot 0 and remember as "creator0"

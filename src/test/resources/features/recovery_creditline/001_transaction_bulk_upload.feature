@@ -174,7 +174,6 @@ Feature: Credit-line Transaction Bulk Upload — POST /recovery/v1/bulk/transact
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
 
-
   @negative @creditline @boundary
   Scenario: More than 1000 transactions in one request returns 400 (max_length 1000)
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"

@@ -82,24 +82,24 @@ Feature: Loan Update — per-field matrix (PATCH /recovery/loan/<loan_id>)
     Then the response status code should be one of "200"
 
     Examples:
-      | tc         | field                             | value             |
-      | TC_LUU_075 | applicant_gender                  | female            |
-      | TC_LUU_076 | applicant_language                | hindi             |
-      | TC_LUU_078 | applicant_name                    | AutoQA Name 2     |
-      | TC_LUU_080 | applicant_occupation              | Doctor            |
-      | TC_LUU_081 | applicant_pan_number              | PQRSX6789Z        |
-      | TC_LUU_083 | business_name                     | AutoQA Traders 2  |
-      | TC_LUU_108 | group_id                          | GRP-AUTO-02       |
-      | TC_LUU_110 | loan_branch                       | AutoQA Branch 2   |
-      | TC_LUU_114 | loan_region                       | East              |
-      | TC_LUU_116 | loan_type                         | Home Loan         |
-      | TC_LUU_118 | loan_zone                         | Zone-B            |
-      | TC_LUU_119 | make_and_model                    | AutoQA Model Y    |
-      | TC_LUU_122 | payment_mode                      | NEFT              |
-      | TC_LUU_123 | product_type                      | Secured           |
-      | TC_LUU_136 | security_type                     | Property          |
-      | TC_LUU_137 | tags                              | AutoQA-Tag-2      |
-      | TC_LUU_139 | vehicle_registration_number       | MH02CD5678        |
+      | tc         | field                       | value            |
+      | TC_LUU_075 | applicant_gender            | female           |
+      | TC_LUU_076 | applicant_language          | hindi            |
+      | TC_LUU_078 | applicant_name              | AutoQA Name 2    |
+      | TC_LUU_080 | applicant_occupation        | Doctor           |
+      | TC_LUU_081 | applicant_pan_number        | PQRSX6789Z       |
+      | TC_LUU_083 | business_name               | AutoQA Traders 2 |
+      | TC_LUU_108 | group_id                    | GRP-AUTO-02      |
+      | TC_LUU_110 | loan_branch                 | AutoQA Branch 2  |
+      | TC_LUU_114 | loan_region                 | East             |
+      | TC_LUU_116 | loan_type                   | Home Loan        |
+      | TC_LUU_118 | loan_zone                   | Zone-B           |
+      | TC_LUU_119 | make_and_model              | AutoQA Model Y   |
+      | TC_LUU_122 | payment_mode                | NEFT             |
+      | TC_LUU_123 | product_type                | Secured          |
+      | TC_LUU_136 | security_type               | Property         |
+      | TC_LUU_137 | tags                        | AutoQA-Tag-2     |
+      | TC_LUU_139 | vehicle_registration_number | MH02CD5678       |
 
   @positive @creator @field-matrix @date
   Scenario Outline: <tc> — Update date variable "<field>" returns 200

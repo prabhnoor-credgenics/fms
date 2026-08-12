@@ -2,7 +2,6 @@
 Feature: Company Users — GET (list) and POST (create) /user/company/users/
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -23,10 +22,10 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
   Scenario: Pagination plus attributes (CSV) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id  | {COMPANY_ID}                                  |
-      | page_number | 1                                             |
-      | page_size   | 25                                            |
-      | attributes  | name,email,mobile,role,profile,profession     |
+      | company_id  | {COMPANY_ID}                              |
+      | page_number | 1                                         |
+      | page_size   | 25                                        |
+      | attributes  | name,email,mobile,role,profile,profession |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
@@ -184,8 +183,8 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
   Scenario: filters.usernames (email + mobile) returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}                       |
-      | usernames  | john@credgenics.com,9876543210     |
+      | company_id | {COMPANY_ID}                   |
+      | usernames  | john@credgenics.com,9876543210 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
@@ -205,24 +204,24 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     And the "company_users_list" success response should be valid
 
     Examples:
-      | profession                          |
-      | advocate                            |
-      | area manager                        |
-      | collection manager                  |
-      | field executive                     |
-      | field collection manager            |
-      | field and telecalling executive     |
-      | field and telecalling supervisor    |
-      | lawyer                              |
-      | telecalling                         |
-      | telecalling supervisor              |
-      | other                               |
+      | profession                       |
+      | advocate                         |
+      | area manager                     |
+      | collection manager               |
+      | field executive                  |
+      | field collection manager         |
+      | field and telecalling executive  |
+      | field and telecalling supervisor |
+      | lawyer                           |
+      | telecalling                      |
+      | telecalling supervisor           |
+      | other                            |
 
   @positive @creator
   Scenario: filters.exclude_profession returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id         | {COMPANY_ID}     |
+      | company_id         | {COMPANY_ID}      |
       | exclude_profession | telecalling,other |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -304,10 +303,10 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
   Scenario: audit_created_date_start older than 6 months returns 400
     Given I prepare a request
     And I set the query parameters:
-      | company_id               | {COMPANY_ID} |
+      | company_id               | {COMPANY_ID}             |
       | data_scope               | permission-audit-details |
-      | audit_created_date_start | 2020-01-01   |
-      | audit_created_date_end   | 2026-06-21   |
+      | audit_created_date_start | 2020-01-01               |
+      | audit_created_date_end   | 2026-06-21               |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/company/users/"
@@ -356,7 +355,6 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     And the response body should not be empty
 
 
-  
   @positive @smoke @creator @company-user-create
   Scenario: Create a super user (email, no identity triple) returns 201
     Given I prepare a request
@@ -912,8 +910,8 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
   Scenario: XSS payload in search_query is treated literally and returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id   | {COMPANY_ID}              |
-      | search_type  | name                     |
+      | company_id   | {COMPANY_ID}        |
+      | search_type  | name                |
       | search_query | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -938,8 +936,8 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
   Scenario: Unicode search_query returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id   | {COMPANY_ID}      |
-      | search_type  | name              |
+      | company_id   | {COMPANY_ID}    |
+      | search_type  | name            |
       | search_query | José Müller 日本語 |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -994,10 +992,10 @@ Feature: Company Users — GET (list) and POST (create) /user/company/users/
     And the "company_users_list" failure response should be valid
 
     Examples:
-      | field              | value      |
-      | search_type        | bogus_type |
-      | sort_by            | name_asc   |
-      | data_scope         | everything |
+      | field       | value      |
+      | search_type | bogus_type |
+      | sort_by     | name_asc   |
+      | data_scope  | everything |
 
   @negative @creator @shouldfail
   Scenario Outline: Invalid NanoID in <field> filter returns 400

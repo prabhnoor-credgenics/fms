@@ -2,7 +2,6 @@
 Feature: Export Loan With Allocated-Users — POST /recovery/export/bulk/loan-with-allocated-users
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique

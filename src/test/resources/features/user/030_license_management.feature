@@ -11,7 +11,7 @@ Feature: License Management (per-company per-profession license configuration)
   @positive @chief-admin
   Scenario: TC_LIC_003 / TC_LIC_006 / TC_LIC_007 / TC_LIC_008 / TC_LIC_009 — View license usage for a company
     Given I set the request headers:
-      | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
+      | authenticationtoken | {AUTH_TOKEN:chiefadmin0} | 
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     When I send a "GET" request to "/user/license-management-config/"
@@ -73,17 +73,17 @@ Feature: License Management (per-company per-profession license configuration)
     And the response body should not be empty
 
     Examples:
-      | profession                         |
-      | advocate                           |
-      | area manager                       |
-      | collection manager                 |
-      | field executive                    |
-      | field collection manager           |
-      | field and telecalling executive    |
-      | field and telecalling supervisor   |
-      | telecalling                        |
-      | telecalling supervisor             |
-      | other                              |
+      | profession                       |
+      | advocate                         |
+      | area manager                     |
+      | collection manager               |
+      | field executive                  |
+      | field collection manager         |
+      | field and telecalling executive  |
+      | field and telecalling supervisor |
+      | telecalling                      |
+      | telecalling supervisor           |
+      | other                            |
 
   @positive @chief-admin @edge
   Scenario: TC_LIC_054 — Min equal to Max passes max>=min validation

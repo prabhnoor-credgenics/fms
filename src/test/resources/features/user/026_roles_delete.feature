@@ -1,7 +1,6 @@
 @api @user @roles-delete
 Feature: Roles — DELETE /user/roles/<role_id> (delete role)
 
-  
 
   @positive @smoke @creator @roles-write
   Scenario: Delete a freshly created leaf role returns 200

@@ -11,7 +11,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_038 / TC_ADV_017 — Save a payload config with a static string value
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -38,7 +38,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_018 / TC_ADV_019 / TC_ADV_042 — Static number & boolean values are accepted
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -63,7 +63,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_015 / TC_ADV_016 — Mapped source key and nested dot-notation mapping are accepted
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -87,7 +87,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_020..027 / TC_ADV_043 — Conditional IF/ELSE with comparison + AND/OR group is accepted
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -130,7 +130,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_031..036 / TC_ADV_044 — Formatting rules (case, date, datetime, decimal) are accepted
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -158,7 +158,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_028..030 / TC_ADV_045 — Conditional key inclusion (do_not_send / null actions) is accepted
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -192,7 +192,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_037 / TC_ADV_011 / TC_ADV_013 — Nested output object via dot-notation key is accepted
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -227,8 +227,8 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
     And I set the query parameters:
       | company_id  | {COMPANY_ID:creator0} |
-      | module_name | Platform     |
-      | event_name  | payment      |
+      | module_name | Platform              |
+      | event_name  | payment               |
     When I send a "GET" request to "/user/outgoing-webhook/v2/aliasing-keys/"
     Then the response status code should be 200
     And the response body should contain field "data"
@@ -238,7 +238,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_003 — Missing/invalid module & event is rejected
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -257,7 +257,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_006a — Empty key_config is rejected (Invalid Configuration Payload)
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -276,7 +276,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_006b — Formatting on an integer field is rejected (Invalid Configuration Payload)
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -299,7 +299,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_006c — Mapped operand missing its path is rejected (Invalid Configuration Payload)
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator0} |
     And I set the request body:
@@ -322,7 +322,7 @@ Feature: Advance Configuration — Payload Transformation (outgoing webhook v2 p
   Scenario: TC_ADV_039 — Editing a non-existent payload config id is rejected
     Given I set the request headers:
       | authenticationtoken | {AUTH_TOKEN:chiefadmin0} |
-      | content-type        | application/json |
+      | content-type        | application/json         |
     And I set the path parameters:
       | configId | non-existent-config-{RANDOM_STRING:8} |
     And I set the query parameters:

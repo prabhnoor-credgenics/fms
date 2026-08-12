@@ -2,7 +2,6 @@
 Feature: Export Loan With Documents — POST /recovery/export/bulk/loan-with-documents
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique

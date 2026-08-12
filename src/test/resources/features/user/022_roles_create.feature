@@ -1,7 +1,6 @@
 @api @user @roles-create
 Feature: Roles — POST /user/roles/ (create role)
 
- 
 
   @positive @smoke @creator @roles-write
   Scenario: Create a role reporting to an existing role returns 201
@@ -169,15 +168,15 @@ Feature: Roles — POST /user/roles/ (create role)
     And the "roles" failure response should be valid
 
     Examples:
-      | case                          | body                                                                  |
-      | missing role_name             | { "reports_to_role_id": "abcd1234efgh5678" }                          |
-      | missing reports_to_role_id    | { "role_name": "autoRoleX1" }                                          |
-      | role_name empty string        | { "role_name": "", "reports_to_role_id": "abcd1234efgh5678" }         |
-      | role_name non-alphanumeric    | { "role_name": "team@lead", "reports_to_role_id": "abcd1234efgh5678" }|
-      | role_name special chars       | { "role_name": "<b>x</b>", "reports_to_role_id": "abcd1234efgh5678" } |
-      | reports_to_role_id short      | { "role_name": "autoRoleX2", "reports_to_role_id": "short" }          |
-      | reports_to_role_id non-alnum  | { "role_name": "autoRoleX3", "reports_to_role_id": "abcd-234-fgh-678" }|
-      | tenant_type invalid enum      | { "role_name": "autoRoleX4", "reports_to_role_id": "abcd1234efgh5678", "tenant_type": "bogus" } |
+      | case                         | body                                                                                            |
+      | missing role_name            | { "reports_to_role_id": "abcd1234efgh5678" }                                                    |
+      | missing reports_to_role_id   | { "role_name": "autoRoleX1" }                                                                   |
+      | role_name empty string       | { "role_name": "", "reports_to_role_id": "abcd1234efgh5678" }                                   |
+      | role_name non-alphanumeric   | { "role_name": "team@lead", "reports_to_role_id": "abcd1234efgh5678" }                          |
+      | role_name special chars      | { "role_name": "<b>x</b>", "reports_to_role_id": "abcd1234efgh5678" }                           |
+      | reports_to_role_id short     | { "role_name": "autoRoleX2", "reports_to_role_id": "short" }                                    |
+      | reports_to_role_id non-alnum | { "role_name": "autoRoleX3", "reports_to_role_id": "abcd-234-fgh-678" }                         |
+      | tenant_type invalid enum     | { "role_name": "autoRoleX4", "reports_to_role_id": "abcd1234efgh5678", "tenant_type": "bogus" } |
 
   @negative @creator @roles-write
   Scenario: Create a role with a null role_name is rejected
@@ -412,7 +411,7 @@ Feature: Roles — POST /user/roles/ (create role)
     And the "roles" failure response should be valid
 
     Examples:
-      | case           | body                                                                                   |
+      | case           | body                                                                                    |
       | apostrophe     | { "role_name": "o'brien", "reports_to_role_id": "abcd1234efgh5678" }                    |
       | curly braces   | { "role_name": "role{admin}", "reports_to_role_id": "abcd1234efgh5678" }                |
       | question mark  | { "role_name": "role?name", "reports_to_role_id": "abcd1234efgh5678" }                  |
@@ -438,7 +437,7 @@ Feature: Roles — POST /user/roles/ (create role)
     And the "roles" failure response should be valid
 
     Examples:
-      | case                          | body                                                                                                   |
+      | case                          | body                                                                                                    |
       | reports_to numeric            | { "role_name": "autoRoleTy1", "reports_to_role_id": 1234567890123456 }                                  |
       | reports_to boolean            | { "role_name": "autoRoleTy2", "reports_to_role_id": true }                                              |
       | reports_to null               | { "role_name": "autoRoleTy3", "reports_to_role_id": null }                                              |
@@ -543,6 +542,6 @@ Feature: Roles — POST /user/roles/ (create role)
     Then the response status code should be one of "201,400"
 
     Examples:
-      | case            | role_name                                                                                              |
+      | case            | role_name                                                                                               |
       | unicode letters | rôlé{RANDOM_STRING:4}                                                                                   |
       | over-long name  | autoRole{RANDOM_STRING:8}abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz |

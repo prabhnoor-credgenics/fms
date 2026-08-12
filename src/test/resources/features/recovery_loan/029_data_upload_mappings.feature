@@ -41,7 +41,6 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     Then the response body should not be empty
 
 
-
   @negative @creator
   Scenario: TC-COMP-001 — GET list without company_id query param returns 403
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -81,7 +80,6 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     When I send a "GET" request to "/recovery/data-upload/mappings"
     Then the response status code should be 422
     And the response body should not be empty
-
 
 
   @positive @creator
@@ -149,7 +147,6 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     Then the response body should not be empty
 
 
-
   @positive @creator
   Scenario: TC-DETAIL-001 — GET list returns 200 with correct shape
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -169,8 +166,8 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID}  |
-      | use_case   | loan_upload   |
+      | company_id | {COMPANY_ID} |
+      | use_case   | loan_upload  |
     When I send a "GET" request to "/recovery/data-upload/mappings"
     Then the response status code should be 200
     Then the response body should not be empty
@@ -497,7 +494,6 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     Then the response body should not be empty
 
 
-
   @positive @creator
   Scenario: TC-PATCH-001 — Update mapping variables — happy path
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -692,7 +688,6 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     Then the response body should not be empty
 
 
-
   @positive @creator
   Scenario: TC-FLOW-001 — POST creates mapping then GET detail retrieves it by stored mapping_id
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -721,7 +716,6 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     When I send a "GET" request to "/recovery/data-upload/mappings/{mappingId}"
     Then the response status code should be 400
     Then the response body should not be empty
-
 
 
   @positive @creator
@@ -770,7 +764,6 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     Then the response body should not be empty
 
 
-
   @negative @creator
   Scenario Outline: TC-MIDVAL-00x — mapping_id value "<mid_value>" returns 400 invalid mapping_id
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -784,12 +777,11 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     Then the response body should not be empty
 
     Examples:
-      | mid_value      |
-      | abc            |
-      | not-a-number   |
-      | 0              |
-      | 99999999       |
-
+      | mid_value    |
+      | abc          |
+      | not-a-number |
+      | 0            |
+      | 99999999     |
 
 
   @negative @creator
@@ -808,9 +800,9 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     Then the response body should not be empty
 
     Examples:
-      | absent_field      | body                                                                                         |
-      | mapping_name      | {"company_id": "{COMPANY_ID}", "mapping_variables": {"loan_id": "Loan ID"}}                 |
-      | mapping_variables | {"company_id": "{COMPANY_ID}", "mapping_name": "no-vars-outline-{UUID}"}                    |
+      | absent_field      | body                                                                        |
+      | mapping_name      | {"company_id": "{COMPANY_ID}", "mapping_variables": {"loan_id": "Loan ID"}} |
+      | mapping_variables | {"company_id": "{COMPANY_ID}", "mapping_name": "no-vars-outline-{UUID}"}    |
 
   @negative @creator
   Scenario: TC-POSTMISS-003 — POST body missing company_id returns 403
@@ -826,7 +818,6 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     When I send a "POST" request to "/recovery/data-upload/mappings"
     Then the response status code should be 403
     Then the response body should not be empty
-
 
 
   @negative @creator
@@ -917,7 +908,6 @@ Feature: Data Upload Mappings API — GET / POST / PATCH /recovery/data-upload/m
     When I send a "GET" request to "/recovery/data-upload/mappings"
     Then the response status code should be 200
     Then the response body should not be empty
-
 
 
   @negative @creator

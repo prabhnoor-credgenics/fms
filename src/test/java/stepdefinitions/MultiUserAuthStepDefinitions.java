@@ -4,7 +4,7 @@ import auth.manager.AuthManager;
 import auth.service.UserProfileService;
 import context.TestContext;
 import enums.UserRole;
-import io.cucumber.java.en.Given;
+import io.cucumber.java.en.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,6 +35,52 @@ public class MultiUserAuthStepDefinitions {
     public void i_authenticate_as_for_module_slot_and_remember_as(
             String roleName, String module, int slot, String key) {
         authenticateAndRemember(parseRole(roleName), module, slot, key);
+    }
+
+    @When("I reauthenticate the user remembered as {string}")
+    public void i_reauthenticate_the_user_remembered_as(String key) {
+
+        // 1. Get the existing session before clearing it
+        TestContext.UserSession oldSession = testContext.getUserSession(key);
+
+        if (oldSession == null) {
+            throw new IllegalStateException(
+                    "No remembered user session found for key: " + key);
+        }
+
+        // Store the details required for reauthentication
+        UserRole role = oldSession.role();
+        String module = oldSession.module();
+        int slot = oldSession.slot();
+
+        logger.info(
+                "Reauthenticating user '{}' (role={}, module={}, slot={})",
+                key,
+                role,
+                module,
+                slot
+        );
+
+        // 2. Clear the old session
+        testContext.removeUserSession(key);
+
+        logger.info("Cleared old session for key '{}'", key);
+
+        // 3. Authenticate again
+        authenticateAndRemember(
+                role,
+                module,
+                slot,
+                key
+        );
+
+        // 4. authenticateAndRemember() creates and stores
+        // the new UserSession using the same key
+
+        logger.info(
+                "Successfully reauthenticated user '{}' and stored new session",
+                key
+        );
     }
 
     private void authenticateAndRemember(UserRole role, String module, int slot, String key) {

@@ -1,0 +1,21 @@
+{
+  "company_id": "{COMPANY_ID}",
+  "loan_ids": [
+    "{LOAN_ID}"
+  ],
+  "unique_identifier_key": "loan_id",
+  "unique_identifier_value": "{LOAN_ID}",
+  "module": "loan",
+  "level": "loan",
+  "data": {
+    "users": {
+      "document_type_id": "64ad2a5dd49eef287d8c4d73",
+      "title": "huyt",
+      "file_name": "users",
+      "meta_data": {
+        "size": 49124,
+        "extension": "csv"
+      }
+    }
+  }
+}

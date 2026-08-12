@@ -2,7 +2,6 @@
 Feature: Company Table Names — GET /recovery/company-table-names
 
 
-
   @positive @smoke @creator
   Scenario: Minimal request (no query param → defaults to include_disabled=true) returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -77,15 +76,15 @@ Feature: Company Table Names — GET /recovery/company-table-names
     And the "company_table_names" success response should be valid
 
     Examples:
-      | value |
-      | TRUE  |
-      | True  |
-      | FALSE |
-      | 0     |
-      | 1     |
-      | yes   |
-      | no    |
-      | maybe |
+      | value             |
+      | TRUE              |
+      | True              |
+      | FALSE             |
+      | 0                 |
+      | 1                 |
+      | yes               |
+      | no                |
+      | maybe             |
       | {RANDOM_STRING:8} |
 
   @positive @creator

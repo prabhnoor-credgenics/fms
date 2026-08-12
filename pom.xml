@@ -147,6 +147,13 @@
             <version>42.7.11</version>
         </dependency>
 
+        <!-- Apache POI (Excel .xlsx validation) -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.4.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>

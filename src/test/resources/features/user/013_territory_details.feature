@@ -2,7 +2,6 @@
 Feature: Territory Details — POST /user/territory/details
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -199,7 +198,6 @@ Feature: Territory Details — POST /user/territory/details
     And the "territory_details" success response should be valid
 
 
-
   @negative @creator
   Scenario: Only search_key (no search_value) returns 400
     Given I prepare a request
@@ -352,7 +350,6 @@ Feature: Territory Details — POST /user/territory/details
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/territory/details"
     Then the response status code should be 405
-
 
 
   @positive @creator

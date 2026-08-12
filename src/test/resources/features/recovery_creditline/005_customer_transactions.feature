@@ -9,13 +9,12 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
       | Content-Type | application/json |
 
 
-
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
-      | company_id         | {COMPANY_ID}    |
-      | client_customer_id | CUST_{LOAN_ID}  |
+      | company_id         | {COMPANY_ID}   |
+      | client_customer_id | CUST_{LOAN_ID} |
     When I send a "GET" request to "/recovery/customer/transactions"
     Then the response status code should be 400
     And the response message should be "invalid authentication token"
@@ -25,8 +24,8 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
   Scenario: Invalid authenticationtoken returns 400
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
     And I set the query parameters:
-      | company_id         | {COMPANY_ID}    |
-      | client_customer_id | CUST_{LOAN_ID}  |
+      | company_id         | {COMPANY_ID}   |
+      | client_customer_id | CUST_{LOAN_ID} |
     And I set the request headers:
       | authenticationtoken | invalid_token_12345 |
     When I send a "GET" request to "/recovery/customer/transactions"
@@ -45,7 +44,6 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     Then the response status code should be 400
     And the response message should be "invalid company id"
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
-
 
 
   @positive @smoke @creditline @multistep @500
@@ -79,7 +77,6 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And the response message should be "success"
     And the response body should contain field "output"
     And the response should match json schema "schemas/creditline/success/customer_transactions_success_schema.json"
-
 
 
   @positive @creditline @multistep @500
@@ -133,8 +130,8 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | company_id         | {COMPANY_ID}      |
-      | client_customer_id | CUST_{LOAN_ID}    |
+      | company_id         | {COMPANY_ID}       |
+      | client_customer_id | CUST_{LOAN_ID}     |
       | allocation_month   | <allocation_month> |
     When I send a "GET" request to "/recovery/customer/transactions"
     Then the response status code should be 200
@@ -165,8 +162,8 @@ Feature: Credit-line Customer Transactions — GET /recovery/customer/transactio
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | company_id         | {COMPANY_ID}                       |
-      | client_customer_id | NO_SUCH_CUSTOMER_{LOAN_ID}         |
+      | company_id         | {COMPANY_ID}               |
+      | client_customer_id | NO_SUCH_CUSTOMER_{LOAN_ID} |
     When I send a "GET" request to "/recovery/customer/transactions"
     Then the response status code should be 200
     And the response message should be "success"

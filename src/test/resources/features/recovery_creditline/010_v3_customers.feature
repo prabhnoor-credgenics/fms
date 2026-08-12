@@ -106,7 +106,7 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | company_id          | {COMPANY_ID}      |
+      | company_id          | {COMPANY_ID}                |
       | attribute_variables | customer_total_claim_amount |
     And I set the path parameters:
       | customer_id | CUST_{LOAN_ID} |
@@ -214,12 +214,12 @@ Feature: Credit-line v3 Customers — GET /recovery/v3/customers/<customer_id>[/
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
     Examples:
-      | attribute_level        |
-      | applicant              |
-      | customer_variables     |
-      | transaction_variables  |
-      | payments               |
-      | tags                   |
+      | attribute_level       |
+      | applicant             |
+      | customer_variables    |
+      | transaction_variables |
+      | payments              |
+      | tags                  |
 
 
   @negative @creditline

@@ -2,7 +2,6 @@
 Feature: User Navigation Bar — GET /user/nav-bar/<user_id>
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -141,7 +140,6 @@ Feature: User Navigation Bar — GET /user/nav-bar/<user_id>
     When I send a "GET" request to "/user/nav-bar/{user_id}"
     Then the response status code should be 400
     And the response body should not be empty
-
 
 
   @negative @creator

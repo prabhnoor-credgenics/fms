@@ -381,7 +381,6 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
     Then the response body should not be empty
 
 
-
   @positive @creator @500
   Scenario: TC-HAPPY-001 — Full success loan company — complete response shape verified
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -488,7 +487,6 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
     Then the response body should not be empty
 
 
-
   @positive @creator @500
   Scenario: TC-SHAPE-001 — Success response contains exactly data, message, success keys
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -573,11 +571,10 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
     Then the response body should not be empty
 
     Examples:
-      | absent_field | body                                                                   |
-      | company_id   | {"user_id": "{UUID}", "company_type": "loan"}                          |
-      | user_id      | {"company_id": "{COMPANY_ID}", "company_type": "loan"}                 |
-      | company_type | {"company_id": "{COMPANY_ID}", "user_id": "{UUID}"}                    |
-
+      | absent_field | body                                                   |
+      | company_id   | {"user_id": "{UUID}", "company_type": "loan"}          |
+      | user_id      | {"company_id": "{COMPANY_ID}", "company_type": "loan"} |
+      | company_type | {"company_id": "{COMPANY_ID}", "user_id": "{UUID}"}    |
 
 
   @negative @creator @500
@@ -722,7 +719,6 @@ Feature: Assign Default Dispositions API — POST /recovery/assign-default
     When I send a "POST" request to "/recovery/assign-default"
     Then the response status code should be 400
     Then the response body should not be empty
-
 
 
   @negative @creator

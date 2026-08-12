@@ -5,7 +5,6 @@ Feature: Loan Upload — nested borrower sub-field matrix (POST /recovery/v1/loa
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
 
-
   @positive @creator @field-matrix @text
   Scenario Outline: <tc> — Nested text sub-field "<field>" is accepted on upload
     Given scenario loan id is unique

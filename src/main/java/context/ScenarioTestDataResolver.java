@@ -196,10 +196,10 @@ public class ScenarioTestDataResolver {
                 break; 
             }
             String key = result.substring(start + ContextKeys.CAPTURED_PREFIX.length(), end).trim();
-            if (!testContext.hasCapturedValue(key)) {
+            if (!testContext.hasCapturedPath(key)) {
                 throw new IllegalStateException(
-                        "Nothing captured as '" + key + "'. Use 'I store response field \"<json path>\" as \""
-                                + key + "\"' earlier in the scenario.");
+                        "Nothing captured at '" + key + "'. Capture a root key first, then use "
+                                + "{CAPTURED:rootKey}, {CAPTURED:mapKey.field}, or {CAPTURED:listKey[0]}.");
             }
             String value = testContext.getCapturedValue(key);
             if (value == null) {
