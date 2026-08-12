@@ -65,3 +65,18 @@ Scenario Outline: Role creation fails when the role name already exists
       | role 112  |
       | role 12  |
       | role 111  |
+
+    @positive@api @approver @role-hierarchy
+  Scenario: Validate role hierarchy API response
+    And I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+
+    When I send a "GET" request to "/user/roles/hierarchy"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/user/success/role_hierarchy_success_schema.json"
+    And the response message should be "role hierarchy fetched successfully"
