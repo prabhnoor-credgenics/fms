@@ -15,6 +15,7 @@ import helpers.PayloadHelper;
 import helpers.ResponseHelper;
 import helpers.SchemaHelper;
 import helpers.ValueExpressionHelper;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -33,9 +34,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import java.io.File;
 import static io.restassured.RestAssured.given;
@@ -147,10 +151,10 @@ public class ApiStepDefinitions {
     }
 
     @Given("I set the request headers:")
-    public void i_set_the_request_headers(Map<String, String> headers) {
+    public void i_set_the_request_headers(DataTable dataTable) {
         ensureRequestPrepared();
-        for (Map.Entry<String, String> header : headers.entrySet()) {
-            String headerName = header.getKey();
+        for (ParamRow row : parseParamRows(dataTable)) {
+            String headerName = row.name();
             String headerNameLower = headerName.toLowerCase();
 
             if (headersToRemove.contains(headerNameLower)) {
@@ -158,19 +162,20 @@ public class ApiStepDefinitions {
                 continue;
             }
 
-            String value = header.getValue();
+            String value = row.rawValue();
             if ("authenticationtoken".equals(headerNameLower) && ContextKeys.AUTH_TOKEN.equals(value)) {
                 value = testContext.getAuthToken();
                 logger.info("Using authenticationtoken from TestContext");
-            }
-            if ("x-company-id".equals(headerNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
+            } else if ("x-company-id".equals(headerNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
                 value = scenarioTestDataResolver.resolveCompanyId();
                 logger.info("Using x-company-id from resolved company id");
+            } else {
+                value = scenarioTestDataResolver.replaceScenarioPlaceholders(value);
             }
-            value = scenarioTestDataResolver.resolveNamedSessionPlaceholders(value);
             if (!"Referer".equals(headerName)) {
                 storedHeaders.put(headerName, value);
                 request.header(headerName, value);
+                rememberTableValue(row.rememberAs(), value);
                 logger.info("Added header: {} = {}", headerName, value);
             }
         }
@@ -293,67 +298,43 @@ public class ApiStepDefinitions {
     }
 
     @Given("I set the query parameters:")
-    public void i_set_the_query_parameters(Map<String, String> queryParams) {
+    public void i_set_the_query_parameters(DataTable dataTable) {
         ensureRequestPrepared();
-        for (Map.Entry<String, String> param : queryParams.entrySet()) {
-            String paramName = param.getKey();
-            String paramNameLower = paramName == null ? "" : paramName.toLowerCase();
-            String value = param.getValue();
-            if ("company_id".equals(paramNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
-                value = scenarioTestDataResolver.resolveCompanyId();
-            }
-            if (ContextKeys.AUTH_TOKEN.equals(value)) {
-                value = testContext.getAuthToken();
-            }
-            if (ContextKeys.LOAN_ID.equals(value)) {
-                value = scenarioTestDataResolver.resolveLoanId();
-            }
-            if (ContextKeys.CREATOR_USER_ID.equals(value)) {
-                value = scenarioTestDataResolver.resolveCreatorUserId();
-            }
-            if (ContextKeys.ALLOCATION_MONTH.equals(value)) {
-                value = scenarioTestDataResolver.resolveAllocationMonth();
-            }
-            if (value != null && value.contains("{ALLOCATION_MONTH_OFFSET:")) {
-                value = scenarioTestDataResolver.resolveAllocationMonthOffset(value);
-            }
-            if (value != null && (value.contains(ContextKeys.NOW_PREFIX)
-                    || value.contains(ContextKeys.CAPTURED_TIME_PREFIX))) {
-                value = scenarioTestDataResolver.resolveTimePlaceholders(value);
-            }
-            value = scenarioTestDataResolver.resolveNamedSessionPlaceholders(value);
-            storedQueryParams.put(param.getKey(), value);
-            request.queryParam(param.getKey(), value);
-            logger.info("Added query parameter: {} = {}", param.getKey(), value);
+        for (ParamRow row : parseParamRows(dataTable)) {
+            String value = resolveQueryParamValue(row.name(), row.rawValue());
+            storedQueryParams.put(row.name(), value);
+            request.queryParam(row.name(), value);
+            rememberTableValue(row.rememberAs(), value);
+            logger.info("Added query parameter: {} = {}", row.name(), value);
         }
     }
 
     @Given("I set the path parameters:")
-    public void i_set_the_path_parameters(Map<String, String> pathParams) {
+    public void i_set_the_path_parameters(DataTable dataTable) {
         ensureRequestPrepared();
-        for (Map.Entry<String, String> param : pathParams.entrySet()) {
-            String value = param.getValue();
-            if (("loanId".equals(param.getKey()) || "loan_id".equals(param.getKey()))
-                    && ContextKeys.LOAN_ID.equals(value)) {
-                value = scenarioTestDataResolver.resolveLoanId();
-                logger.info("Using scenario loan id: {}", value);
-            } else {
-                value = scenarioTestDataResolver.replaceScenarioPlaceholders(value);
-            }
-            storedPathParams.put(param.getKey(), value);
-            request.pathParam(param.getKey(), value);
-            logger.info("Added path parameter: {} = {}", param.getKey(), value);
+        for (ParamRow row : parseParamRows(dataTable)) {
+            String value = resolvePathParamValue(row.name(), row.rawValue());
+            storedPathParams.put(row.name(), value);
+            request.pathParam(row.name(), value);
+            rememberTableValue(row.rememberAs(), value);
+            logger.info("Added path parameter: {} = {}", row.name(), value);
         }
     }
 
     @Given("I update JSON field {string} as {string} to {string}")
     public void i_update_json_field_as_type_to(String jsonPath, String type, String value) {
-        updateJsonFieldTypedInternal(jsonPath, type, value);
+        updateJsonFieldTypedInternal(jsonPath, type, value, null);
+    }
+
+    @Given("I update JSON field {string} as {string} to {string} and remember as {string}")
+    public void i_update_json_field_as_type_to_and_remember_as(
+            String jsonPath, String type, String value, String rememberAs) {
+        updateJsonFieldTypedInternal(jsonPath, type, value, rememberAs);
     }
 
     @Given("I update JSON field {string} as {string} to:")
     public void i_update_json_field_as_type_to_docstring(String jsonPath, String type, String docString) {
-        updateJsonFieldTypedInternal(jsonPath, type, docString);
+        updateJsonFieldTypedInternal(jsonPath, type, docString, null);
     }
 
     @Given("I update JSON field {string} from captured {string}")
@@ -900,7 +881,10 @@ public void the_response_body_field_should_be_captured_value_increased_by(
         );
     }
 
-    private void updateJsonFieldTypedInternal(String jsonPath, String type, String value) {
+    private static final Pattern NAMED_RANDOM_STRING =
+            Pattern.compile("\\{RANDOM_STRING:\\d+:([A-Za-z_][\\w.-]*)\\}");
+
+    private void updateJsonFieldTypedInternal(String jsonPath, String type, String value, String rememberAs) {
         String existingBody = currentRequestBody();
         if (existingBody == null || existingBody.isEmpty()) {
             throw new IllegalStateException(
@@ -926,8 +910,99 @@ public void the_response_body_field_should_be_captured_value_increased_by(
             processedType = "null";
         }
         applyRequestBody(JsonHelper.updateFieldTyped(existingBody, processedPath, processedType, processedValue));
+        // Named random aliases capture the FULL resolved field value (e.g. whole email), not just the random part.
+        captureNamedRandomFullValues(value, processedValue);
+        if (rememberAs != null && !rememberAs.isBlank()) {
+            String key = scenarioTestDataResolver.replaceScenarioPlaceholders(rememberAs).trim();
+            if (key.isBlank()) {
+                throw new IllegalArgumentException("Remember-as key must not be blank");
+            }
+            testContext.captureValue(key, processedValue == null ? "null" : processedValue);
+            logger.info("Remembered updated JSON field '{}' value as {{CAPTURED:{}}} = '{}'",
+                    processedPath, key, processedValue);
+        }
         logger.info("Updated JSON field '{}' as {} to '{}' [thread={}]",
                 processedPath, processedType, processedValue, Thread.currentThread().getName());
+    }
+
+    private void captureNamedRandomFullValues(String originalTemplate, String resolvedValue) {
+        if (originalTemplate == null || resolvedValue == null) {
+            return;
+        }
+        Matcher matcher = NAMED_RANDOM_STRING.matcher(originalTemplate);
+        Set<String> aliases = new LinkedHashSet<>();
+        while (matcher.find()) {
+            aliases.add(matcher.group(1));
+        }
+        for (String alias : aliases) {
+            testContext.captureValue(alias, resolvedValue);
+            logger.info("Captured full resolved value as {{CAPTURED:{}}} = '{}'", alias, resolvedValue);
+        }
+    }
+
+    private record ParamRow(String name, String rawValue, String rememberAs) {
+    }
+
+    private List<ParamRow> parseParamRows(DataTable dataTable) {
+        List<ParamRow> rows = new ArrayList<>();
+        for (List<String> row : dataTable.asLists()) {
+            if (row == null || row.isEmpty()) {
+                continue;
+            }
+            String name = row.get(0);
+            if (name == null || name.isBlank()) {
+                continue;
+            }
+            String rawValue = row.size() > 1 ? row.get(1) : "";
+            String rememberAs = row.size() > 2 ? row.get(2) : null;
+            if (rememberAs != null && rememberAs.isBlank()) {
+                rememberAs = null;
+            }
+            rows.add(new ParamRow(name.trim(), rawValue, rememberAs));
+        }
+        return rows;
+    }
+
+    private String resolvePathParamValue(String name, String rawValue) {
+        if (("loanId".equals(name) || "loan_id".equals(name)) && ContextKeys.LOAN_ID.equals(rawValue)) {
+            String value = scenarioTestDataResolver.resolveLoanId();
+            logger.info("Using scenario loan id: {}", value);
+            return value;
+        }
+        return scenarioTestDataResolver.replaceScenarioPlaceholders(rawValue);
+    }
+
+    private String resolveQueryParamValue(String name, String rawValue) {
+        String paramNameLower = name == null ? "" : name.toLowerCase();
+        String value = rawValue;
+        if ("company_id".equals(paramNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
+            return scenarioTestDataResolver.resolveCompanyId();
+        }
+        if (ContextKeys.AUTH_TOKEN.equals(value)) {
+            return testContext.getAuthToken();
+        }
+        if (ContextKeys.LOAN_ID.equals(value)) {
+            return scenarioTestDataResolver.resolveLoanId();
+        }
+        if (ContextKeys.CREATOR_USER_ID.equals(value)) {
+            return scenarioTestDataResolver.resolveCreatorUserId();
+        }
+        if (ContextKeys.ALLOCATION_MONTH.equals(value)) {
+            return scenarioTestDataResolver.resolveAllocationMonth();
+        }
+        return scenarioTestDataResolver.replaceScenarioPlaceholders(value);
+    }
+
+    private void rememberTableValue(String rememberAs, String resolvedValue) {
+        if (rememberAs == null || rememberAs.isBlank()) {
+            return;
+        }
+        String key = scenarioTestDataResolver.replaceScenarioPlaceholders(rememberAs).trim();
+        if (key.isBlank()) {
+            throw new IllegalArgumentException("Remember-as key must not be blank");
+        }
+        testContext.captureValue(key, resolvedValue == null ? "null" : resolvedValue);
+        logger.info("Remembered table value as {{CAPTURED:{}}} = '{}'", key, resolvedValue);
     }
 
     private boolean usedRealAuthToken() {

@@ -2,6 +2,7 @@ package stepdefinitions;
 
 import context.ScenarioTestDataResolver;
 import context.TestContext;
+import helpers.CsvValidator;
 import helpers.ExcelValidator;
 import helpers.FileHelper;
 import io.cucumber.java.en.Given;
@@ -23,23 +24,39 @@ public class ExcelStepDefinitions {
     private final TestContext testContext;
     private final ScenarioTestDataResolver scenarioTestDataResolver;
     private final ExcelValidator excelValidator;
+    private final CsvValidator csvValidator;
 
     public ExcelStepDefinitions(
             TestContext testContext,
             ScenarioTestDataResolver scenarioTestDataResolver,
-            ExcelValidator excelValidator
+            ExcelValidator excelValidator,
+            CsvValidator csvValidator
     ) {
         this.testContext = testContext;
         this.scenarioTestDataResolver = scenarioTestDataResolver;
         this.excelValidator = excelValidator;
+        this.csvValidator = csvValidator;
     }
 
     @When("I download file from absolute url {string} as {string}")
     public void i_download_file_from_absolute_url_as(String absoluteUrl, String captureKey) {
+        i_download_file_from_absolute_url_as_with_extension(absoluteUrl, captureKey, null);
+    }
+
+    @When("I download file from absolute url {string} as {string} with extension {string}")
+    public void i_download_file_from_absolute_url_as_with_extension(
+            String absoluteUrl,
+            String captureKey,
+            String forcedExtension
+    ) {
         String resolvedUrl = requireResolved("absolute url", absoluteUrl);
         String resolvedKey = requireResolved("capture key", captureKey);
 
-        String extension = guessExtension(resolvedUrl);
+        String extension = normalizeExtension(forcedExtension);
+        if (extension == null) {
+            extension = guessExtension(resolvedUrl);
+        }
+
         Path destination = Path.of(
                 "target",
                 "downloads",
@@ -51,6 +68,8 @@ public class ExcelStepDefinitions {
 
         if (extension.equalsIgnoreCase(".xlsx") || extension.equalsIgnoreCase(".xls")) {
             excelValidator.loadDownloaded(downloaded);
+        } else if (extension.equalsIgnoreCase(".csv")) {
+            csvValidator.loadDownloaded(downloaded);
         }
     }
 
@@ -92,6 +111,17 @@ public class ExcelStepDefinitions {
             throw new IllegalArgumentException("Resolved " + label + " is blank");
         }
         return resolved.trim();
+    }
+
+    private static String normalizeExtension(String raw) {
+        if (raw == null || raw.isBlank()) {
+            return null;
+        }
+        String value = raw.trim().toLowerCase();
+        if (!value.startsWith(".")) {
+            value = "." + value;
+        }
+        return value;
     }
 
     private static String guessExtension(String url) {

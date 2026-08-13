@@ -111,4 +111,16 @@ public class ScenarioDataStepDefinitions {
         testContext.captureValue(resolvedKey, sizeBytes);
         logger.info("Stored file size in bytes for '{}' as '{}' = {}", resolvedPath, resolvedKey, sizeBytes);
     }
+
+    @Given("I generate a random string of length {int} and remember as {string}")
+    public void i_generate_a_random_string_of_length_and_remember_as(int length, String rememberAs) {
+        String key = scenarioTestDataResolver.replaceScenarioPlaceholders(rememberAs);
+        if (key == null || key.isBlank()) {
+            throw new IllegalArgumentException("Remember-as key must not be blank");
+        }
+        String value = testDataHelper.generateRandomString(length);
+        testContext.getRandomStringCache().put(key, value);
+        testContext.captureValue(key, value);
+        logger.info("Generated random string length {} as {{CAPTURED:{}}} = '{}'", length, key, value);
+    }
 }
