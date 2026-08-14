@@ -964,33 +964,51 @@ public void the_response_body_field_should_be_captured_value_increased_by(
     }
 
     private String resolvePathParamValue(String name, String rawValue) {
+        String value = resolveParamPlaceholders(name, rawValue);
         if (("loanId".equals(name) || "loan_id".equals(name)) && ContextKeys.LOAN_ID.equals(rawValue)) {
-            String value = scenarioTestDataResolver.resolveLoanId();
             logger.info("Using scenario loan id: {}", value);
-            return value;
         }
-        return scenarioTestDataResolver.replaceScenarioPlaceholders(rawValue);
+        return value;
     }
 
     private String resolveQueryParamValue(String name, String rawValue) {
+        return resolveParamPlaceholders(name, rawValue);
+    }
+
+    private String resolveParamPlaceholders(String name, String rawValue) {
         String paramNameLower = name == null ? "" : name.toLowerCase();
         String value = rawValue;
         if ("company_id".equals(paramNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
-            return scenarioTestDataResolver.resolveCompanyId();
+            value = scenarioTestDataResolver.resolveCompanyId();
+        }
+        if (("loanId".equals(name) || "loan_id".equals(name) || "loanid".equals(paramNameLower))
+                && ContextKeys.LOAN_ID.equals(value)) {
+            value = scenarioTestDataResolver.resolveLoanId();
         }
         if (ContextKeys.AUTH_TOKEN.equals(value)) {
-            return testContext.getAuthToken();
+            value = testContext.getAuthToken();
         }
         if (ContextKeys.LOAN_ID.equals(value)) {
-            return scenarioTestDataResolver.resolveLoanId();
+            value = scenarioTestDataResolver.resolveLoanId();
         }
         if (ContextKeys.CREATOR_USER_ID.equals(value)) {
-            return scenarioTestDataResolver.resolveCreatorUserId();
+            value = scenarioTestDataResolver.resolveCreatorUserId();
         }
         if (ContextKeys.ALLOCATION_MONTH.equals(value)) {
-            return scenarioTestDataResolver.resolveAllocationMonth();
+            value = scenarioTestDataResolver.resolveAllocationMonth();
         }
-        return scenarioTestDataResolver.replaceScenarioPlaceholders(value);
+        if (value != null && value.contains("{ALLOCATION_MONTH_OFFSET:")) {
+            value = scenarioTestDataResolver.resolveAllocationMonthOffset(value);
+        }
+        if (value != null && (value.contains(ContextKeys.NOW_PREFIX)
+                || value.contains(ContextKeys.CAPTURED_TIME_PREFIX))) {
+            value = scenarioTestDataResolver.resolveTimePlaceholders(value);
+        }
+        value = scenarioTestDataResolver.resolveNamedSessionPlaceholders(value);
+        if (value != null && value.contains("{")) {
+            value = scenarioTestDataResolver.replaceScenarioPlaceholders(value);
+        }
+        return value;
     }
 
     private void rememberTableValue(String rememberAs, String resolvedValue) {

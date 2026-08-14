@@ -27,7 +27,7 @@ public class JsonArrayStepDefinitions {
         this.scenarioTestDataResolver = scenarioTestDataResolver;
     }
 
-    // --- Lookup extract / validate ---
+
 
     @Then("I extract {string} from array {string} using {string} with value {string} and remember as {string}")
     public void i_extract_from_array_using_with_value_and_remember_as(
@@ -96,7 +96,7 @@ public class JsonArrayStepDefinitions {
         );
     }
 
-    // --- Size / empty ---
+
 
     @Then("the array {string} should be empty")
     public void the_array_should_be_empty(String arrayPath) {
@@ -338,7 +338,7 @@ public class JsonArrayStepDefinitions {
         );
     }
 
-    /** Allows "$" or blank to mean response root object. */
+
     private String resolvePathAllowingRoot(String raw) {
         String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(raw);
         if (resolved == null) {

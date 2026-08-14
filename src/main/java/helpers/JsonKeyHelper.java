@@ -5,9 +5,7 @@ import io.restassured.response.Response;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Asserts whether a JSON object or array items contain (or do not contain) a given key.
- */
+
 public final class JsonKeyHelper {
 
     private JsonKeyHelper() {

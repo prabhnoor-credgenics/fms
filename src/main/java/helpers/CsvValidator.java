@@ -13,10 +13,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Loads a CSV into memory and validates cell values by reference-column lookup
- * (same workflow as {@link ExcelValidator}).
- */
+
 public class CsvValidator {
 
     private static final Logger logger = LogManager.getLogger(CsvValidator.class);
@@ -180,9 +177,7 @@ public class CsvValidator {
         return line;
     }
 
-    /**
-     * RFC4180-style CSV line parser (comma delimiter, double-quote escaping).
-     */
+
     static List<String> parseLine(String line) {
         List<String> fields = new ArrayList<>();
         if (line == null) {

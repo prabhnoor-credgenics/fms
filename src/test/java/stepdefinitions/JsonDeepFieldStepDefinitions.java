@@ -9,32 +9,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 
-/**
- * Cucumber steps that deep-validate every occurrence of a named field under a
- * response subtree (including nested objects / arrays such as {@code sub_variables}).
- *
- * <p>Prefer scoping with {@code under path "output"} so only the payload is checked.
- *
- * <h3>Examples</h3>
- * <pre>
- * Then all values of "variable_id" under path "output" should have length 8
- * Then all values of "variable_priority" under path "output" should be positive integer or null
- * Then all values of "score" under path "output" should be negative integer or null
- * Then all values of "variable_id" under path "output" should be unique
- * Then all values of "is_validation_enabled" under path "output" should be boolean
- * Then all values of "dropdown_values" under path "output" should be array or null
- * Then key "variable_id" should exist somewhere under path "output"
- * Then the count of "variable_id" under path "output" should be at least 1
- * </pre>
- *
- * <p>Sign rules for integer/number steps: positive, negative, non-negative,
- * non-positive, zero, non-zero.
- */
+
 public class JsonDeepFieldStepDefinitions {
 
     private static final Logger logger = LogManager.getLogger(JsonDeepFieldStepDefinitions.class);
 
-    /** Captured by Cucumber for integer/number sign steps. */
     private static final String SIGN_RULE =
             "(positive|negative|non-negative|non-positive|zero|non-zero)";
 
@@ -49,7 +28,6 @@ public class JsonDeepFieldStepDefinitions {
         this.scenarioTestDataResolver = scenarioTestDataResolver;
     }
 
-    // ── presence / count ──────────────────────────────────────────────────────
 
     @Then("key {string} should exist somewhere in the response")
     public void key_should_exist_somewhere_in_the_response(String key) {
@@ -111,7 +89,6 @@ public class JsonDeepFieldStepDefinitions {
         logger.info("Remembered count of '{}' under '{}' as '{}' = {}", field, displayPath(path), as, count);
     }
 
-    // ── uniqueness ────────────────────────────────────────────────────────────
 
     @Then("all values of {string} in the response should be unique")
     public void all_values_of_in_the_response_should_be_unique(String key) {
@@ -126,7 +103,6 @@ public class JsonDeepFieldStepDefinitions {
         logger.info("Asserted all '{}' under '{}' are unique", field, displayPath(path));
     }
 
-    // ── datatype ──────────────────────────────────────────────────────────────
 
     @Then("all values of {string} in the response should be {string}")
     public void all_values_of_in_the_response_should_be(String key, String datatype) {
@@ -148,7 +124,6 @@ public class JsonDeepFieldStepDefinitions {
         assertDatatype(key, rootPath, datatype, true);
     }
 
-    // ── null ──────────────────────────────────────────────────────────────────
 
     @Then("all values of {string} in the response should be null")
     public void all_values_of_in_the_response_should_be_null(String key) {
@@ -176,7 +151,6 @@ public class JsonDeepFieldStepDefinitions {
         logger.info("Asserted all '{}' under '{}' are not null", field, displayPath(path));
     }
 
-    // ── length ────────────────────────────────────────────────────────────────
 
     @Then("all values of {string} in the response should have length {int}")
     public void all_values_of_in_the_response_should_have_length(String key, int expectedLength) {
@@ -263,7 +237,6 @@ public class JsonDeepFieldStepDefinitions {
         );
     }
 
-    // ── regex ─────────────────────────────────────────────────────────────────
 
     @Then("all values of {string} in the response should match regex {string}")
     public void all_values_of_in_the_response_should_match_regex(String key, String regex) {
@@ -305,8 +278,6 @@ public class JsonDeepFieldStepDefinitions {
         logger.info("Asserted all '{}' under '{}' match regex '{}' or null", field, displayPath(path), pattern);
     }
 
-    // ── numeric sign (positive / negative / non-negative / …) ─────────────────
-    // Pass the sign rule inline: positive, negative, non-negative, non-positive, zero, non-zero
 
     @Then("all values of {string} in the response should be " + SIGN_RULE + " integer")
     public void all_values_of_in_the_response_should_be_sign_integer(String key, String signRule) {
@@ -350,7 +321,6 @@ public class JsonDeepFieldStepDefinitions {
         assertNumeric(key, rootPath, signRule, false, true);
     }
 
-    // ── array size (when the field values themselves are arrays) ──────────────
 
     @Then("all values of {string} in the response should have array size {int}")
     public void all_values_of_in_the_response_should_have_array_size(String key, int expectedSize) {
@@ -440,7 +410,6 @@ public class JsonDeepFieldStepDefinitions {
         );
     }
 
-    // ── helpers ───────────────────────────────────────────────────────────────
 
     private void assertDatatype(String key, String rootPath, String datatype, boolean allowNull) {
         String field = requireResolved("key", key);

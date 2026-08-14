@@ -9,10 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * Finds / validates objects inside a JSON array by reference key/value,
- * plus common array size and content checks.
- */
+
 public final class JsonArrayHelper {
 
     private JsonArrayHelper() {

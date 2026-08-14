@@ -10,10 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-/**
- * Recursively finds every occurrence of a named key in a JSON tree and validates
- * datatype / null / length / numeric sign / uniqueness rules across all matches.
- */
+
 public final class JsonDeepFieldHelper {
 
     public record Occurrence(String path, Object value) {
@@ -282,11 +279,7 @@ public final class JsonDeepFieldHelper {
         failIfAny(failures, "Array min-size check failed for key '" + key + "'");
     }
 
-    /**
-     * Asserts every occurrence of {@code key} under {@code rootPath} has a distinct value.
-     * Numeric values are compared by normalized decimal form (so {@code 1} and {@code 1.0} collide).
-     * Multiple {@code null} values also count as duplicates.
-     */
+
     public static void assertUniqueValues(Response response, String rootPath, String key) {
         List<Occurrence> found = requireOccurrences(response, rootPath, key);
         Map<String, List<String>> pathsByValue = new LinkedHashMap<>();

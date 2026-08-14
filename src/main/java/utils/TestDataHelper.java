@@ -258,9 +258,6 @@ public class TestDataHelper {
                 alias = null;
             }
 
-            // Named: {RANDOM_STRING:8:emailSuffix} — cache random under alias only.
-            // Full composed values (e.g. emails) are captured by update-JSON / remember-as steps.
-            // Unnamed: {RANDOM_STRING:8} — shared per length + {CAPTURED:RANDOM_STRING_8}
             String cacheKey = alias != null ? alias : ("RANDOM_STRING:" + length);
             String randomValue = testContext.getRandomStringCache().computeIfAbsent(
                     cacheKey,
