@@ -246,19 +246,29 @@ public class TestDataHelper {
         while (result.contains("{RANDOM_STRING:")) {
             int start = result.indexOf("{RANDOM_STRING:");
             int end = result.indexOf("}", start);
-            if (end > start) {
-                String placeholder = result.substring(start, end + 1);
-                int length = Integer.parseInt(
-                        placeholder.substring(15, placeholder.length() - 1)
-                );
-                String cacheKey = "RANDOM_STRING:" + length;
-                String randomValue = testContext.getRandomStringCache().computeIfAbsent(
-                        cacheKey,
-                        k -> generateRandomString(length)
-                );
-                result = result.replace(placeholder, randomValue);
+            if (end <= start) {
+                break;
             }
+            String placeholder = result.substring(start, end + 1);
+            String inner = placeholder.substring("{RANDOM_STRING:".length(), placeholder.length() - 1).trim();
+            String[] parts = inner.split(":", 2);
+            int length = Integer.parseInt(parts[0].trim());
+            String alias = parts.length > 1 ? parts[1].trim() : "";
+            if (alias.isBlank()) {
+                alias = null;
+            }
+
+            String cacheKey = alias != null ? alias : ("RANDOM_STRING:" + length);
+            String randomValue = testContext.getRandomStringCache().computeIfAbsent(
+                    cacheKey,
+                    k -> generateRandomString(length)
+            );
+            if (alias == null) {
+                testContext.captureValue("RANDOM_STRING_" + length, randomValue);
+            }
+            result = result.replace(placeholder, randomValue);
         }
+
 
         result = replaceAllocationMonthOffset(result);
         result = replaceCapturedTimePlaceholders(result);

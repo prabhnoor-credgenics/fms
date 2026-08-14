@@ -12,9 +12,10 @@ Feature: Loan Recovery API - Strict Datatype Validation
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/document/document-types"
     Then the response status code should be 200
-
+    And I extract "document_type_id" from array "data" using "document_type" with value "Loan Document" and remember as "documentTypeId"
+    And I validate "document_type" in array "data" using "document_type_id" with value "{CAPTURED:documentTypeId}" equals "Loan Document"
 
   Examples:
     | document_level |
-    | loan      |
-    | user        |
+    | loan           |
+    | user           |
