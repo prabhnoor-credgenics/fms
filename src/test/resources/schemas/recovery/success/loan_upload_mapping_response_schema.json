@@ -1,0 +1,1974 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loan Attributes API Response Schema",
+  "description": "Generated from the supplied API response. Validates response structure and JSON data types; business/runtime rules such as uniqueness, calculations, cross-field dependencies, and external master-data checks should be validated separately.",
+  "type": "object",
+  "properties": {
+    "message": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "applicant_attributes": {
+          "type": "object",
+          "properties": {
+            "loan_level": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "allow_multiple_values": {
+                    "type": "boolean"
+                  },
+                  "allow_negative": {
+                    "type": "boolean"
+                  },
+                  "allowed_special_characters": {
+                    "type": "null"
+                  },
+                  "calculation_formula": {
+                    "type": "null"
+                  },
+                  "created": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                  },
+                  "data_type": {
+                    "type": "string"
+                  },
+                  "dropdown_values": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "is_allocation_variable": {
+                    "type": "boolean"
+                  },
+                  "is_auto_calculation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_casing_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_default_variable": {
+                    "type": "boolean"
+                  },
+                  "is_derivable": {
+                    "type": "boolean"
+                  },
+                  "is_dropdown": {
+                    "type": "boolean"
+                  },
+                  "is_mandatory": {
+                    "type": "boolean"
+                  },
+                  "is_non_editable": {
+                    "type": "boolean"
+                  },
+                  "is_top_level": {
+                    "type": "boolean"
+                  },
+                  "is_trackable": {
+                    "type": "boolean"
+                  },
+                  "is_validation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_workflow_editable": {
+                    "type": "boolean"
+                  },
+                  "length_constr": {
+                    "type": "null"
+                  },
+                  "sub_variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "allow_multiple_values": {
+                          "type": "boolean"
+                        },
+                        "allow_negative": {
+                          "type": "boolean"
+                        },
+                        "allowed_special_characters": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "calculation_formula": {
+                          "type": "null"
+                        },
+                        "created": {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                        },
+                        "data_type": {
+                          "type": "string"
+                        },
+                        "dropdown_values": {
+                          "type": "null"
+                        },
+                        "is_allocation_variable": {
+                          "type": "boolean"
+                        },
+                        "is_auto_calculation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_casing_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_default_variable": {
+                          "type": "boolean"
+                        },
+                        "is_derivable": {
+                          "type": "boolean"
+                        },
+                        "is_dropdown": {
+                          "type": "boolean"
+                        },
+                        "is_mandatory": {
+                          "type": "boolean"
+                        },
+                        "is_non_editable": {
+                          "type": "boolean"
+                        },
+                        "is_trackable": {
+                          "type": "boolean"
+                        },
+                        "is_validation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_workflow_editable": {
+                          "type": "boolean"
+                        },
+                        "length_constr": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "variable_category": {
+                          "type": "string"
+                        },
+                        "variable_id": {
+                          "type": "string"
+                        },
+                        "variable_name": {
+                          "type": "string"
+                        },
+                        "variable_path": {
+                          "type": "string"
+                        },
+                        "variable_priority": {
+                          "type": "integer"
+                        },
+                        "variable_type": {
+                          "type": "string"
+                        },
+                        "warning_allowed_special_characters": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "warning_length_constr": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "active",
+                        "allow_multiple_values",
+                        "allow_negative",
+                        "allowed_special_characters",
+                        "calculation_formula",
+                        "created",
+                        "data_type",
+                        "dropdown_values",
+                        "is_allocation_variable",
+                        "is_auto_calculation_enabled",
+                        "is_casing_enabled",
+                        "is_default_variable",
+                        "is_derivable",
+                        "is_dropdown",
+                        "is_mandatory",
+                        "is_non_editable",
+                        "is_trackable",
+                        "is_validation_enabled",
+                        "is_workflow_editable",
+                        "length_constr",
+                        "variable_category",
+                        "variable_id",
+                        "variable_name",
+                        "variable_path",
+                        "variable_priority",
+                        "variable_type",
+                        "warning_allowed_special_characters",
+                        "warning_length_constr"
+                      ]
+                    }
+                  },
+                  "variable_category": {
+                    "type": "string"
+                  },
+                  "variable_id": {
+                    "type": "string"
+                  },
+                  "variable_name": {
+                    "type": "string"
+                  },
+                  "variable_path": {
+                    "type": "string"
+                  },
+                  "variable_priority": {
+                    "type": "integer"
+                  },
+                  "variable_type": {
+                    "type": "string"
+                  },
+                  "warning_allowed_special_characters": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "warning_length_constr": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "active",
+                  "allow_multiple_values",
+                  "allow_negative",
+                  "allowed_special_characters",
+                  "calculation_formula",
+                  "created",
+                  "data_type",
+                  "dropdown_values",
+                  "is_allocation_variable",
+                  "is_auto_calculation_enabled",
+                  "is_casing_enabled",
+                  "is_default_variable",
+                  "is_derivable",
+                  "is_dropdown",
+                  "is_mandatory",
+                  "is_non_editable",
+                  "is_top_level",
+                  "is_trackable",
+                  "is_validation_enabled",
+                  "is_workflow_editable",
+                  "length_constr",
+                  "variable_category",
+                  "variable_id",
+                  "variable_name",
+                  "variable_path",
+                  "variable_priority",
+                  "variable_type",
+                  "warning_allowed_special_characters",
+                  "warning_length_constr"
+                ]
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "loan_level"
+          ]
+        },
+        "applicant_references": {
+          "type": "object",
+          "properties": {
+            "loan_level": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "allow_multiple_values": {
+                    "type": "boolean"
+                  },
+                  "allow_negative": {
+                    "type": "boolean"
+                  },
+                  "allowed_special_characters": {
+                    "type": "null"
+                  },
+                  "calculation_formula": {
+                    "type": "null"
+                  },
+                  "created": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                  },
+                  "data_type": {
+                    "type": "string"
+                  },
+                  "dropdown_values": {
+                    "type": "null"
+                  },
+                  "is_allocation_variable": {
+                    "type": "boolean"
+                  },
+                  "is_auto_calculation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_casing_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_default_variable": {
+                    "type": "boolean"
+                  },
+                  "is_derivable": {
+                    "type": "boolean"
+                  },
+                  "is_dropdown": {
+                    "type": "boolean"
+                  },
+                  "is_mandatory": {
+                    "type": "boolean"
+                  },
+                  "is_non_editable": {
+                    "type": "boolean"
+                  },
+                  "is_top_level": {
+                    "type": "boolean"
+                  },
+                  "is_trackable": {
+                    "type": "boolean"
+                  },
+                  "is_validation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_workflow_editable": {
+                    "type": "boolean"
+                  },
+                  "length_constr": {
+                    "type": "null"
+                  },
+                  "sub_variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "allow_multiple_values": {
+                          "type": "boolean"
+                        },
+                        "allow_negative": {
+                          "type": "boolean"
+                        },
+                        "allowed_special_characters": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "calculation_formula": {
+                          "type": "null"
+                        },
+                        "created": {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                        },
+                        "data_type": {
+                          "type": "string"
+                        },
+                        "dropdown_values": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "is_allocation_variable": {
+                          "type": "boolean"
+                        },
+                        "is_auto_calculation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_casing_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_default_variable": {
+                          "type": "boolean"
+                        },
+                        "is_derivable": {
+                          "type": "boolean"
+                        },
+                        "is_dropdown": {
+                          "type": "boolean"
+                        },
+                        "is_mandatory": {
+                          "type": "boolean"
+                        },
+                        "is_non_editable": {
+                          "type": "boolean"
+                        },
+                        "is_trackable": {
+                          "type": "boolean"
+                        },
+                        "is_validation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_workflow_editable": {
+                          "type": "boolean"
+                        },
+                        "length_constr": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "sub_variables": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "allow_multiple_values": {
+                                "type": "boolean"
+                              },
+                              "allow_negative": {
+                                "type": "boolean"
+                              },
+                              "allowed_special_characters": {
+                                "type": "integer"
+                              },
+                              "calculation_formula": {
+                                "type": "null"
+                              },
+                              "created": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                              },
+                              "data_type": {
+                                "type": "string"
+                              },
+                              "dropdown_values": {
+                                "type": "null"
+                              },
+                              "is_allocation_variable": {
+                                "type": "boolean"
+                              },
+                              "is_auto_calculation_enabled": {
+                                "type": "boolean"
+                              },
+                              "is_casing_enabled": {
+                                "type": "boolean"
+                              },
+                              "is_default_variable": {
+                                "type": "boolean"
+                              },
+                              "is_derivable": {
+                                "type": "boolean"
+                              },
+                              "is_dropdown": {
+                                "type": "boolean"
+                              },
+                              "is_mandatory": {
+                                "type": "boolean"
+                              },
+                              "is_non_editable": {
+                                "type": "boolean"
+                              },
+                              "is_trackable": {
+                                "type": "boolean"
+                              },
+                              "is_validation_enabled": {
+                                "type": "boolean"
+                              },
+                              "is_workflow_editable": {
+                                "type": "boolean"
+                              },
+                              "length_constr": {
+                                "type": "integer"
+                              },
+                              "variable_category": {
+                                "type": "string"
+                              },
+                              "variable_id": {
+                                "type": "string"
+                              },
+                              "variable_name": {
+                                "type": "string"
+                              },
+                              "variable_path": {
+                                "type": "string"
+                              },
+                              "variable_priority": {
+                                "type": "integer"
+                              },
+                              "variable_type": {
+                                "type": "string"
+                              },
+                              "warning_allowed_special_characters": {
+                                "type": "null"
+                              },
+                              "warning_length_constr": {
+                                "type": "null"
+                              }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                              "active",
+                              "allow_multiple_values",
+                              "allow_negative",
+                              "allowed_special_characters",
+                              "calculation_formula",
+                              "created",
+                              "data_type",
+                              "dropdown_values",
+                              "is_allocation_variable",
+                              "is_auto_calculation_enabled",
+                              "is_casing_enabled",
+                              "is_default_variable",
+                              "is_derivable",
+                              "is_dropdown",
+                              "is_mandatory",
+                              "is_non_editable",
+                              "is_trackable",
+                              "is_validation_enabled",
+                              "is_workflow_editable",
+                              "length_constr",
+                              "variable_category",
+                              "variable_id",
+                              "variable_name",
+                              "variable_path",
+                              "variable_priority",
+                              "variable_type",
+                              "warning_allowed_special_characters",
+                              "warning_length_constr"
+                            ]
+                          }
+                        },
+                        "variable_category": {
+                          "type": "string"
+                        },
+                        "variable_id": {
+                          "type": "string"
+                        },
+                        "variable_name": {
+                          "type": "string"
+                        },
+                        "variable_path": {
+                          "type": "string"
+                        },
+                        "variable_priority": {
+                          "type": "integer"
+                        },
+                        "variable_type": {
+                          "type": "string"
+                        },
+                        "warning_allowed_special_characters": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "warning_length_constr": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "active",
+                        "allow_multiple_values",
+                        "allow_negative",
+                        "allowed_special_characters",
+                        "calculation_formula",
+                        "created",
+                        "data_type",
+                        "dropdown_values",
+                        "is_allocation_variable",
+                        "is_auto_calculation_enabled",
+                        "is_casing_enabled",
+                        "is_default_variable",
+                        "is_derivable",
+                        "is_dropdown",
+                        "is_mandatory",
+                        "is_non_editable",
+                        "is_trackable",
+                        "is_validation_enabled",
+                        "is_workflow_editable",
+                        "length_constr",
+                        "variable_category",
+                        "variable_id",
+                        "variable_name",
+                        "variable_path",
+                        "variable_priority",
+                        "variable_type",
+                        "warning_allowed_special_characters",
+                        "warning_length_constr"
+                      ]
+                    }
+                  },
+                  "variable_category": {
+                    "type": "string"
+                  },
+                  "variable_id": {
+                    "type": "string"
+                  },
+                  "variable_name": {
+                    "type": "string"
+                  },
+                  "variable_path": {
+                    "type": "string"
+                  },
+                  "variable_priority": {
+                    "type": "integer"
+                  },
+                  "variable_type": {
+                    "type": "string"
+                  },
+                  "warning_allowed_special_characters": {
+                    "type": "null"
+                  },
+                  "warning_length_constr": {
+                    "type": "null"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "active",
+                  "allow_multiple_values",
+                  "allow_negative",
+                  "allowed_special_characters",
+                  "calculation_formula",
+                  "created",
+                  "data_type",
+                  "dropdown_values",
+                  "is_allocation_variable",
+                  "is_auto_calculation_enabled",
+                  "is_casing_enabled",
+                  "is_default_variable",
+                  "is_derivable",
+                  "is_dropdown",
+                  "is_mandatory",
+                  "is_non_editable",
+                  "is_top_level",
+                  "is_trackable",
+                  "is_validation_enabled",
+                  "is_workflow_editable",
+                  "length_constr",
+                  "sub_variables",
+                  "variable_category",
+                  "variable_id",
+                  "variable_name",
+                  "variable_path",
+                  "variable_priority",
+                  "variable_type",
+                  "warning_allowed_special_characters",
+                  "warning_length_constr"
+                ]
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "loan_level"
+          ]
+        },
+        "co_applicant_attributes": {
+          "type": "object",
+          "properties": {
+            "loan_level": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "allow_multiple_values": {
+                    "type": "boolean"
+                  },
+                  "allow_negative": {
+                    "type": "boolean"
+                  },
+                  "allowed_special_characters": {
+                    "type": "null"
+                  },
+                  "calculation_formula": {
+                    "type": "null"
+                  },
+                  "created": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                  },
+                  "data_type": {
+                    "type": "string"
+                  },
+                  "dropdown_values": {
+                    "type": "null"
+                  },
+                  "is_allocation_variable": {
+                    "type": "boolean"
+                  },
+                  "is_auto_calculation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_casing_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_default_variable": {
+                    "type": "boolean"
+                  },
+                  "is_derivable": {
+                    "type": "boolean"
+                  },
+                  "is_dropdown": {
+                    "type": "boolean"
+                  },
+                  "is_mandatory": {
+                    "type": "boolean"
+                  },
+                  "is_non_editable": {
+                    "type": "boolean"
+                  },
+                  "is_top_level": {
+                    "type": "boolean"
+                  },
+                  "is_trackable": {
+                    "type": "boolean"
+                  },
+                  "is_validation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_workflow_editable": {
+                    "type": "boolean"
+                  },
+                  "length_constr": {
+                    "type": "null"
+                  },
+                  "sub_variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "allow_multiple_values": {
+                          "type": "boolean"
+                        },
+                        "allow_negative": {
+                          "type": "boolean"
+                        },
+                        "allowed_special_characters": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "calculation_formula": {
+                          "type": "null"
+                        },
+                        "created": {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                        },
+                        "data_type": {
+                          "type": "string"
+                        },
+                        "dropdown_values": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "is_allocation_variable": {
+                          "type": "boolean"
+                        },
+                        "is_auto_calculation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_casing_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_default_variable": {
+                          "type": "boolean"
+                        },
+                        "is_derivable": {
+                          "type": "boolean"
+                        },
+                        "is_dropdown": {
+                          "type": "boolean"
+                        },
+                        "is_mandatory": {
+                          "type": "boolean"
+                        },
+                        "is_non_editable": {
+                          "type": "boolean"
+                        },
+                        "is_trackable": {
+                          "type": "boolean"
+                        },
+                        "is_validation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_workflow_editable": {
+                          "type": "boolean"
+                        },
+                        "length_constr": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "sub_variables": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "allow_multiple_values": {
+                                "type": "boolean"
+                              },
+                              "allow_negative": {
+                                "type": "boolean"
+                              },
+                              "allowed_special_characters": {
+                                "type": "integer"
+                              },
+                              "calculation_formula": {
+                                "type": "null"
+                              },
+                              "created": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                              },
+                              "data_type": {
+                                "type": "string"
+                              },
+                              "dropdown_values": {
+                                "type": "null"
+                              },
+                              "is_allocation_variable": {
+                                "type": "boolean"
+                              },
+                              "is_auto_calculation_enabled": {
+                                "type": "boolean"
+                              },
+                              "is_casing_enabled": {
+                                "type": "boolean"
+                              },
+                              "is_default_variable": {
+                                "type": "boolean"
+                              },
+                              "is_derivable": {
+                                "type": "boolean"
+                              },
+                              "is_dropdown": {
+                                "type": "boolean"
+                              },
+                              "is_mandatory": {
+                                "type": "boolean"
+                              },
+                              "is_non_editable": {
+                                "type": "boolean"
+                              },
+                              "is_trackable": {
+                                "type": "boolean"
+                              },
+                              "is_validation_enabled": {
+                                "type": "boolean"
+                              },
+                              "is_workflow_editable": {
+                                "type": "boolean"
+                              },
+                              "length_constr": {
+                                "type": "integer"
+                              },
+                              "variable_category": {
+                                "type": "string"
+                              },
+                              "variable_id": {
+                                "type": "string"
+                              },
+                              "variable_name": {
+                                "type": "string"
+                              },
+                              "variable_path": {
+                                "type": "string"
+                              },
+                              "variable_priority": {
+                                "type": "integer"
+                              },
+                              "variable_type": {
+                                "type": "string"
+                              },
+                              "warning_allowed_special_characters": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "warning_length_constr": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                              "active",
+                              "allow_multiple_values",
+                              "allow_negative",
+                              "allowed_special_characters",
+                              "calculation_formula",
+                              "created",
+                              "data_type",
+                              "dropdown_values",
+                              "is_allocation_variable",
+                              "is_auto_calculation_enabled",
+                              "is_casing_enabled",
+                              "is_default_variable",
+                              "is_derivable",
+                              "is_dropdown",
+                              "is_mandatory",
+                              "is_non_editable",
+                              "is_trackable",
+                              "is_validation_enabled",
+                              "is_workflow_editable",
+                              "length_constr",
+                              "variable_category",
+                              "variable_id",
+                              "variable_name",
+                              "variable_path",
+                              "variable_priority",
+                              "variable_type",
+                              "warning_allowed_special_characters",
+                              "warning_length_constr"
+                            ]
+                          }
+                        },
+                        "variable_category": {
+                          "type": "string"
+                        },
+                        "variable_id": {
+                          "type": "string"
+                        },
+                        "variable_name": {
+                          "type": "string"
+                        },
+                        "variable_path": {
+                          "type": "string"
+                        },
+                        "variable_priority": {
+                          "type": "integer"
+                        },
+                        "variable_type": {
+                          "type": "string"
+                        },
+                        "warning_allowed_special_characters": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "warning_length_constr": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "active",
+                        "allow_multiple_values",
+                        "allow_negative",
+                        "allowed_special_characters",
+                        "calculation_formula",
+                        "created",
+                        "data_type",
+                        "dropdown_values",
+                        "is_allocation_variable",
+                        "is_auto_calculation_enabled",
+                        "is_casing_enabled",
+                        "is_default_variable",
+                        "is_derivable",
+                        "is_dropdown",
+                        "is_mandatory",
+                        "is_non_editable",
+                        "is_trackable",
+                        "is_validation_enabled",
+                        "is_workflow_editable",
+                        "length_constr",
+                        "variable_category",
+                        "variable_id",
+                        "variable_name",
+                        "variable_path",
+                        "variable_priority",
+                        "variable_type",
+                        "warning_allowed_special_characters",
+                        "warning_length_constr"
+                      ]
+                    }
+                  },
+                  "variable_category": {
+                    "type": "string"
+                  },
+                  "variable_id": {
+                    "type": "string"
+                  },
+                  "variable_name": {
+                    "type": "string"
+                  },
+                  "variable_path": {
+                    "type": "string"
+                  },
+                  "variable_priority": {
+                    "type": "integer"
+                  },
+                  "variable_type": {
+                    "type": "string"
+                  },
+                  "warning_allowed_special_characters": {
+                    "type": "null"
+                  },
+                  "warning_length_constr": {
+                    "type": "null"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "active",
+                  "allow_multiple_values",
+                  "allow_negative",
+                  "allowed_special_characters",
+                  "calculation_formula",
+                  "created",
+                  "data_type",
+                  "dropdown_values",
+                  "is_allocation_variable",
+                  "is_auto_calculation_enabled",
+                  "is_casing_enabled",
+                  "is_default_variable",
+                  "is_derivable",
+                  "is_dropdown",
+                  "is_mandatory",
+                  "is_non_editable",
+                  "is_top_level",
+                  "is_trackable",
+                  "is_validation_enabled",
+                  "is_workflow_editable",
+                  "length_constr",
+                  "sub_variables",
+                  "variable_category",
+                  "variable_id",
+                  "variable_name",
+                  "variable_path",
+                  "variable_priority",
+                  "variable_type",
+                  "warning_allowed_special_characters",
+                  "warning_length_constr"
+                ]
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "loan_level"
+          ]
+        },
+        "loan_attributes": {
+          "type": "object",
+          "properties": {
+            "allocation_level": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "allow_multiple_values": {
+                    "type": "boolean"
+                  },
+                  "allow_negative": {
+                    "type": "boolean"
+                  },
+                  "allowed_special_characters": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "calculation_formula": {
+                    "type": "null"
+                  },
+                  "created": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                  },
+                  "data_type": {
+                    "type": "string"
+                  },
+                  "dropdown_values": {
+                    "type": "null"
+                  },
+                  "is_allocation_variable": {
+                    "type": "boolean"
+                  },
+                  "is_auto_calculation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_casing_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_default_variable": {
+                    "type": "boolean"
+                  },
+                  "is_derivable": {
+                    "type": "boolean"
+                  },
+                  "is_dropdown": {
+                    "type": "boolean"
+                  },
+                  "is_mandatory": {
+                    "type": "boolean"
+                  },
+                  "is_non_editable": {
+                    "type": "boolean"
+                  },
+                  "is_top_level": {
+                    "type": "boolean"
+                  },
+                  "is_trackable": {
+                    "type": "boolean"
+                  },
+                  "is_validation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_workflow_editable": {
+                    "type": "boolean"
+                  },
+                  "length_constr": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "variable_category": {
+                    "type": "string"
+                  },
+                  "variable_id": {
+                    "type": "string"
+                  },
+                  "variable_name": {
+                    "type": "string"
+                  },
+                  "variable_path": {
+                    "type": "string"
+                  },
+                  "variable_priority": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "variable_type": {
+                    "type": "string"
+                  },
+                  "warning_allowed_special_characters": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "warning_length_constr": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "active",
+                  "allow_multiple_values",
+                  "allow_negative",
+                  "allowed_special_characters",
+                  "calculation_formula",
+                  "created",
+                  "data_type",
+                  "dropdown_values",
+                  "is_allocation_variable",
+                  "is_auto_calculation_enabled",
+                  "is_casing_enabled",
+                  "is_default_variable",
+                  "is_derivable",
+                  "is_dropdown",
+                  "is_mandatory",
+                  "is_non_editable",
+                  "is_top_level",
+                  "is_trackable",
+                  "is_validation_enabled",
+                  "is_workflow_editable",
+                  "length_constr",
+                  "variable_category",
+                  "variable_id",
+                  "variable_name",
+                  "variable_path",
+                  "variable_priority",
+                  "variable_type",
+                  "warning_allowed_special_characters",
+                  "warning_length_constr"
+                ]
+              }
+            },
+            "loan_level": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "allow_multiple_values": {
+                    "type": "boolean"
+                  },
+                  "allow_negative": {
+                    "type": "boolean"
+                  },
+                  "allowed_special_characters": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "calculation_formula": {
+                    "type": "null"
+                  },
+                  "created": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                  },
+                  "data_type": {
+                    "type": "string"
+                  },
+                  "dropdown_values": {
+                    "type": [
+                      "array",
+                      "null"
+                    ],
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "is_allocation_variable": {
+                    "type": "boolean"
+                  },
+                  "is_auto_calculation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_casing_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_default_variable": {
+                    "type": "boolean"
+                  },
+                  "is_derivable": {
+                    "type": "boolean"
+                  },
+                  "is_dropdown": {
+                    "type": "boolean"
+                  },
+                  "is_mandatory": {
+                    "type": "boolean"
+                  },
+                  "is_non_editable": {
+                    "type": "boolean"
+                  },
+                  "is_top_level": {
+                    "type": "boolean"
+                  },
+                  "is_trackable": {
+                    "type": "boolean"
+                  },
+                  "is_validation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_workflow_editable": {
+                    "type": "boolean"
+                  },
+                  "length_constr": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "sub_variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "allow_multiple_values": {
+                          "type": "boolean"
+                        },
+                        "allow_negative": {
+                          "type": "boolean"
+                        },
+                        "allowed_special_characters": {
+                          "type": "null"
+                        },
+                        "calculation_formula": {
+                          "type": "null"
+                        },
+                        "created": {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                        },
+                        "data_type": {
+                          "type": "string"
+                        },
+                        "dropdown_values": {
+                          "type": "null"
+                        },
+                        "is_allocation_variable": {
+                          "type": "boolean"
+                        },
+                        "is_auto_calculation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_casing_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_default_variable": {
+                          "type": "boolean"
+                        },
+                        "is_derivable": {
+                          "type": "boolean"
+                        },
+                        "is_dropdown": {
+                          "type": "boolean"
+                        },
+                        "is_mandatory": {
+                          "type": "boolean"
+                        },
+                        "is_non_editable": {
+                          "type": "boolean"
+                        },
+                        "is_trackable": {
+                          "type": "boolean"
+                        },
+                        "is_validation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_workflow_editable": {
+                          "type": "boolean"
+                        },
+                        "length_constr": {
+                          "type": "null"
+                        },
+                        "variable_category": {
+                          "type": "string"
+                        },
+                        "variable_id": {
+                          "type": "string"
+                        },
+                        "variable_name": {
+                          "type": "string"
+                        },
+                        "variable_path": {
+                          "type": "string"
+                        },
+                        "variable_priority": {
+                          "type": "integer"
+                        },
+                        "variable_type": {
+                          "type": "string"
+                        },
+                        "warning_allowed_special_characters": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "warning_length_constr": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "active",
+                        "allow_multiple_values",
+                        "allow_negative",
+                        "allowed_special_characters",
+                        "calculation_formula",
+                        "created",
+                        "data_type",
+                        "dropdown_values",
+                        "is_allocation_variable",
+                        "is_auto_calculation_enabled",
+                        "is_casing_enabled",
+                        "is_default_variable",
+                        "is_derivable",
+                        "is_dropdown",
+                        "is_mandatory",
+                        "is_non_editable",
+                        "is_trackable",
+                        "is_validation_enabled",
+                        "is_workflow_editable",
+                        "length_constr",
+                        "variable_category",
+                        "variable_id",
+                        "variable_name",
+                        "variable_path",
+                        "variable_priority",
+                        "variable_type",
+                        "warning_allowed_special_characters",
+                        "warning_length_constr"
+                      ]
+                    }
+                  },
+                  "variable_category": {
+                    "type": "string"
+                  },
+                  "variable_id": {
+                    "type": "string"
+                  },
+                  "variable_name": {
+                    "type": "string"
+                  },
+                  "variable_path": {
+                    "type": "string"
+                  },
+                  "variable_priority": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "variable_type": {
+                    "type": "string"
+                  },
+                  "warning_allowed_special_characters": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  },
+                  "warning_length_constr": {
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "active",
+                  "allow_multiple_values",
+                  "allow_negative",
+                  "allowed_special_characters",
+                  "calculation_formula",
+                  "created",
+                  "data_type",
+                  "dropdown_values",
+                  "is_allocation_variable",
+                  "is_auto_calculation_enabled",
+                  "is_casing_enabled",
+                  "is_default_variable",
+                  "is_derivable",
+                  "is_dropdown",
+                  "is_mandatory",
+                  "is_non_editable",
+                  "is_top_level",
+                  "is_trackable",
+                  "is_validation_enabled",
+                  "is_workflow_editable",
+                  "length_constr",
+                  "variable_category",
+                  "variable_id",
+                  "variable_name",
+                  "variable_path",
+                  "variable_priority",
+                  "variable_type",
+                  "warning_allowed_special_characters",
+                  "warning_length_constr"
+                ]
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "allocation_level",
+            "loan_level"
+          ]
+        },
+        "loan_guarantor_attributes": {
+          "type": "object",
+          "properties": {
+            "loan_level": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "allow_multiple_values": {
+                    "type": "boolean"
+                  },
+                  "allow_negative": {
+                    "type": "boolean"
+                  },
+                  "allowed_special_characters": {
+                    "type": "null"
+                  },
+                  "calculation_formula": {
+                    "type": "null"
+                  },
+                  "created": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                  },
+                  "data_type": {
+                    "type": "string"
+                  },
+                  "dropdown_values": {
+                    "type": "null"
+                  },
+                  "is_allocation_variable": {
+                    "type": "boolean"
+                  },
+                  "is_auto_calculation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_casing_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_default_variable": {
+                    "type": "boolean"
+                  },
+                  "is_derivable": {
+                    "type": "boolean"
+                  },
+                  "is_dropdown": {
+                    "type": "boolean"
+                  },
+                  "is_mandatory": {
+                    "type": "boolean"
+                  },
+                  "is_non_editable": {
+                    "type": "boolean"
+                  },
+                  "is_top_level": {
+                    "type": "boolean"
+                  },
+                  "is_trackable": {
+                    "type": "boolean"
+                  },
+                  "is_validation_enabled": {
+                    "type": "boolean"
+                  },
+                  "is_workflow_editable": {
+                    "type": "boolean"
+                  },
+                  "length_constr": {
+                    "type": "null"
+                  },
+                  "sub_variables": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "allow_multiple_values": {
+                          "type": "boolean"
+                        },
+                        "allow_negative": {
+                          "type": "boolean"
+                        },
+                        "allowed_special_characters": {
+                          "type": "integer"
+                        },
+                        "calculation_formula": {
+                          "type": "null"
+                        },
+                        "created": {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                        },
+                        "data_type": {
+                          "type": "string"
+                        },
+                        "dropdown_values": {
+                          "type": [
+                            "array",
+                            "null"
+                          ],
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "is_allocation_variable": {
+                          "type": "boolean"
+                        },
+                        "is_auto_calculation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_casing_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_default_variable": {
+                          "type": "boolean"
+                        },
+                        "is_derivable": {
+                          "type": "boolean"
+                        },
+                        "is_dropdown": {
+                          "type": "boolean"
+                        },
+                        "is_mandatory": {
+                          "type": "boolean"
+                        },
+                        "is_non_editable": {
+                          "type": "boolean"
+                        },
+                        "is_trackable": {
+                          "type": "boolean"
+                        },
+                        "is_validation_enabled": {
+                          "type": "boolean"
+                        },
+                        "is_workflow_editable": {
+                          "type": "boolean"
+                        },
+                        "length_constr": {
+                          "type": "integer"
+                        },
+                        "sub_variables": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "active": {
+                                "type": "boolean"
+                              },
+                              "allow_multiple_values": {
+                                "type": "boolean"
+                              },
+                              "allow_negative": {
+                                "type": "boolean"
+                              },
+                              "allowed_special_characters": {
+                                "type": "integer"
+                              },
+                              "calculation_formula": {
+                                "type": "null"
+                              },
+                              "created": {
+                                "type": "string",
+                                "pattern": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+                              },
+                              "data_type": {
+                                "type": "string"
+                              },
+                              "dropdown_values": {
+                                "type": "null"
+                              },
+                              "is_allocation_variable": {
+                                "type": "boolean"
+                              },
+                              "is_auto_calculation_enabled": {
+                                "type": "boolean"
+                              },
+                              "is_casing_enabled": {
+                                "type": "boolean"
+                              },
+                              "is_default_variable": {
+                                "type": "boolean"
+                              },
+                              "is_derivable": {
+                                "type": "boolean"
+                              },
+                              "is_dropdown": {
+                                "type": "boolean"
+                              },
+                              "is_mandatory": {
+                                "type": "boolean"
+                              },
+                              "is_non_editable": {
+                                "type": "boolean"
+                              },
+                              "is_trackable": {
+                                "type": "boolean"
+                              },
+                              "is_validation_enabled": {
+                                "type": "boolean"
+                              },
+                              "is_workflow_editable": {
+                                "type": "boolean"
+                              },
+                              "length_constr": {
+                                "type": "integer"
+                              },
+                              "variable_category": {
+                                "type": "string"
+                              },
+                              "variable_id": {
+                                "type": "string"
+                              },
+                              "variable_name": {
+                                "type": "string"
+                              },
+                              "variable_path": {
+                                "type": "string"
+                              },
+                              "variable_priority": {
+                                "type": "integer"
+                              },
+                              "variable_type": {
+                                "type": "string"
+                              },
+                              "warning_allowed_special_characters": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              },
+                              "warning_length_constr": {
+                                "type": [
+                                  "integer",
+                                  "null"
+                                ]
+                              }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                              "active",
+                              "allow_multiple_values",
+                              "allow_negative",
+                              "allowed_special_characters",
+                              "calculation_formula",
+                              "created",
+                              "data_type",
+                              "dropdown_values",
+                              "is_allocation_variable",
+                              "is_auto_calculation_enabled",
+                              "is_casing_enabled",
+                              "is_default_variable",
+                              "is_derivable",
+                              "is_dropdown",
+                              "is_mandatory",
+                              "is_non_editable",
+                              "is_trackable",
+                              "is_validation_enabled",
+                              "is_workflow_editable",
+                              "length_constr",
+                              "variable_category",
+                              "variable_id",
+                              "variable_name",
+                              "variable_path",
+                              "variable_priority",
+                              "variable_type",
+                              "warning_allowed_special_characters",
+                              "warning_length_constr"
+                            ]
+                          }
+                        },
+                        "variable_category": {
+                          "type": "string"
+                        },
+                        "variable_id": {
+                          "type": "string"
+                        },
+                        "variable_name": {
+                          "type": "string"
+                        },
+                        "variable_path": {
+                          "type": "string"
+                        },
+                        "variable_priority": {
+                          "type": "integer"
+                        },
+                        "variable_type": {
+                          "type": "string"
+                        },
+                        "warning_allowed_special_characters": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        },
+                        "warning_length_constr": {
+                          "type": [
+                            "integer",
+                            "null"
+                          ]
+                        }
+                      },
+                      "additionalProperties": false,
+                      "required": [
+                        "active",
+                        "allow_multiple_values",
+                        "allow_negative",
+                        "allowed_special_characters",
+                        "calculation_formula",
+                        "created",
+                        "data_type",
+                        "dropdown_values",
+                        "is_allocation_variable",
+                        "is_auto_calculation_enabled",
+                        "is_casing_enabled",
+                        "is_default_variable",
+                        "is_derivable",
+                        "is_dropdown",
+                        "is_mandatory",
+                        "is_non_editable",
+                        "is_trackable",
+                        "is_validation_enabled",
+                        "is_workflow_editable",
+                        "length_constr",
+                        "variable_category",
+                        "variable_id",
+                        "variable_name",
+                        "variable_path",
+                        "variable_priority",
+                        "variable_type",
+                        "warning_allowed_special_characters",
+                        "warning_length_constr"
+                      ]
+                    }
+                  },
+                  "variable_category": {
+                    "type": "string"
+                  },
+                  "variable_id": {
+                    "type": "string"
+                  },
+                  "variable_name": {
+                    "type": "string"
+                  },
+                  "variable_path": {
+                    "type": "string"
+                  },
+                  "variable_priority": {
+                    "type": "integer"
+                  },
+                  "variable_type": {
+                    "type": "string"
+                  },
+                  "warning_allowed_special_characters": {
+                    "type": "null"
+                  },
+                  "warning_length_constr": {
+                    "type": "null"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "active",
+                  "allow_multiple_values",
+                  "allow_negative",
+                  "allowed_special_characters",
+                  "calculation_formula",
+                  "created",
+                  "data_type",
+                  "dropdown_values",
+                  "is_allocation_variable",
+                  "is_auto_calculation_enabled",
+                  "is_casing_enabled",
+                  "is_default_variable",
+                  "is_derivable",
+                  "is_dropdown",
+                  "is_mandatory",
+                  "is_non_editable",
+                  "is_top_level",
+                  "is_trackable",
+                  "is_validation_enabled",
+                  "is_workflow_editable",
+                  "length_constr",
+                  "sub_variables",
+                  "variable_category",
+                  "variable_id",
+                  "variable_name",
+                  "variable_path",
+                  "variable_priority",
+                  "variable_type",
+                  "warning_allowed_special_characters",
+                  "warning_length_constr"
+                ]
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "loan_level"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "applicant_attributes",
+        "applicant_references",
+        "co_applicant_attributes",
+        "loan_attributes",
+        "loan_guarantor_attributes"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "message",
+    "message_placeholder",
+    "message_template",
+    "output"
+  ]
+}

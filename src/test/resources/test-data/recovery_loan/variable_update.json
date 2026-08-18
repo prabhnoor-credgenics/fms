@@ -1,0 +1,27 @@
+{
+    "variable_id": "oja534jk",
+    "is_mandatory": false,
+    "variable_type": "list",
+    "sub_variables": [
+        {
+            "variable_id": "fek42nkf",
+            "variable_type": "text"
+        },
+        {
+            "variable_id": "X8a9YBcR",
+            "variable_type": "bool",
+			"is_mandatory":true
+        },
+        {
+            "variable_id": "X2o9VJcT",
+            "variable_type": "bool",
+            "is_dropdown": false,
+			"is_mandatory":true
+        },
+        {
+            "variable_id": "dasp8ij1",
+            "variable_type": "mobile number"
+        }
+    ],
+    "company_id": "{COMPANY_ID}"
+}

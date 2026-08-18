@@ -1,4 +1,18 @@
 package stepdefinitions;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
+
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
 
 import auth.manager.AuthManager;
 import base.RestAssuredBase;
@@ -15,32 +29,16 @@ import helpers.PayloadHelper;
 import helpers.ResponseHelper;
 import helpers.SchemaHelper;
 import helpers.ValueExpressionHelper;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.http.Header;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import utils.JsonUtils;
-import utils.ResponseValidator;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-
-import java.io.File;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
-import static org.hamcrest.Matchers.equalTo;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.testng.Assert;
+import io.restassured.specification.RequestSpecification;
+import utils.JsonUtils;
+import utils.ResponseValidator;
 
 public class ApiStepDefinitions {
 
@@ -257,7 +255,11 @@ public class ApiStepDefinitions {
     }
 
     @Given("I update JSON field {string} as {string} to {string}")
-    public void i_update_json_field_as_type_to(String jsonPath, String type, String value) {
+    public void i_update_json_field_as_type_to(
+            String jsonPath,
+            String type,
+            String value) {
+
         updateJsonFieldTypedInternal(jsonPath, type, value);
     }
 
@@ -565,6 +567,12 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         AssertionHelper.assertFieldExists(activeResponse(), jsonPath);
     }
 
+    @Then("the response body should not contain field {string}")
+    public void the_response_body_should_not_contain_field(String jsonPath) {
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+        AssertionHelper.assertFieldAbsent(activeResponse(), resolvedPath);
+    }
+
     @Then("the response body should contain text {string}")
     public void the_response_body_should_contain_text(String expected) {
         String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(expected);
@@ -624,35 +632,78 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
         );
     }
 
-    private void updateJsonFieldTypedInternal(String jsonPath, String type, String value) {
+    private void updateJsonFieldTypedInternal(
+            String jsonPath,
+            String type,
+            String value) {
+
         String existingBody = currentRequestBody();
+
         if (existingBody == null || existingBody.isEmpty()) {
             throw new IllegalStateException(
                     "Request body must be set before updating JSON field. "
-                            + "Use 'I set the request body' or 'I set the request body from file' first."
+                            + "Use 'I set the request body' or "
+                            + "'I set the request body from file' first."
             );
         }
-        String processedType = scenarioTestDataResolver.replaceScenarioPlaceholders(type).trim();
-        String processedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+
+        String processedType =
+                scenarioTestDataResolver
+                        .replaceScenarioPlaceholders(type)
+                        .trim();
+
+        String processedPath =
+                scenarioTestDataResolver
+                        .replaceScenarioPlaceholders(jsonPath);
+
         String processedValue = value;
+
         if (processedValue != null) {
+
             processedValue = ValueExpressionHelper.resolve(
                     processedValue,
                     scenarioTestDataResolver::replaceScenarioPlaceholders
             );
-            if (PayloadHelper.isNullToken(processedValue) || "null".equalsIgnoreCase(processedType)) {
+
+            if (PayloadHelper.isNullToken(processedValue)
+                    || "null".equalsIgnoreCase(processedType)) {
+
                 processedValue = null;
                 processedType = "null";
-            } else if (!ValueExpressionHelper.looksLikeConcatExpression(value)) {
-                processedValue = PayloadHelper.stripSurroundingQuotes(processedValue);
+
+            } else if (!ValueExpressionHelper
+                    .looksLikeConcatExpression(value)) {
+
+                processedValue =
+                        PayloadHelper.stripSurroundingQuotes(
+                                processedValue
+                        );
             }
+
         } else if (!"null".equalsIgnoreCase(processedType)) {
+
             processedType = "null";
         }
-        applyRequestBody(JsonHelper.updateFieldTyped(existingBody, processedPath, processedType, processedValue));
-        logger.info("Updated JSON field '{}' as {} to '{}' [thread={}]",
-                processedPath, processedType, processedValue, Thread.currentThread().getName());
+
+        // KEEP THIS HERE
+        applyRequestBody(
+                JsonHelper.updateFieldTyped(
+                        existingBody,
+                        processedPath,
+                        processedType,
+                        processedValue
+                )
+        );
+
+        logger.info(
+                "Updated JSON field '{}' as {} to '{}' [thread={}]",
+                processedPath,
+                processedType,
+                processedValue,
+                Thread.currentThread().getName()
+        );
     }
+
 
     private boolean usedRealAuthToken() {
         String realToken = testContext.getAuthToken();
@@ -729,5 +780,101 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
             case DELETE -> request.delete(endpoint);
             default -> throw new IllegalArgumentException("Unsupported HTTP method: " + method);
         };
+    }
+    @And("I remove JSON field {string}")
+    public void i_remove_json_field(String jsonPath) {
+        removeJsonFieldInternal(jsonPath);
+    }
+    private void removeJsonFieldInternal(String jsonPath) {
+
+        String existingBody = currentRequestBody();
+
+        if (existingBody == null || existingBody.isEmpty()) {
+            throw new IllegalStateException(
+                    "Request body must be set before removing JSON field. "
+                            + "Use 'I set the request body' or "
+                            + "'I set the request body from file' first."
+            );
+        }
+
+        String processedPath =
+                scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+
+        String updatedBody =
+                JsonHelper.removeField(existingBody, processedPath);
+
+        applyRequestBody(updatedBody);
+
+        logger.info(
+                "Removed JSON field '{}' [thread={}]",
+                processedPath,
+                Thread.currentThread().getName()
+        );
+    }
+    
+    @And("I add JSON field {string} as {string} with value {string}")
+    public void i_add_json_field(String jsonPath, String type, String value) {
+        addJsonFieldInternal(jsonPath, type, value);
+    }
+    private void addJsonFieldInternal(String jsonPath, String type, String value) {
+
+        String existingBody = currentRequestBody();
+
+        if (existingBody == null || existingBody.isEmpty()) {
+            throw new IllegalStateException(
+                    "Request body must be set before adding JSON field. "
+                            + "Use 'I set the request body' or "
+                            + "'I set the request body from file' first."
+            );
+        }
+
+        String processedType =
+                scenarioTestDataResolver.replaceScenarioPlaceholders(type).trim();
+
+        String processedPath =
+                scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+
+        String processedValue = value;
+
+        if (processedValue != null) {
+
+            processedValue = ValueExpressionHelper.resolve(
+                    processedValue,
+                    scenarioTestDataResolver::replaceScenarioPlaceholders
+            );
+
+            if (PayloadHelper.isNullToken(processedValue)
+                    || "null".equalsIgnoreCase(processedType)) {
+
+                processedValue = null;
+                processedType = "null";
+
+            } else if (!ValueExpressionHelper.looksLikeConcatExpression(value)) {
+
+                processedValue =
+                        PayloadHelper.stripSurroundingQuotes(processedValue);
+            }
+
+        } else if (!"null".equalsIgnoreCase(processedType)) {
+
+            processedType = "null";
+        }
+
+        String updatedBody = JsonHelper.addField(
+                existingBody,
+                processedPath,
+                processedType,
+                processedValue
+        );
+
+        applyRequestBody(updatedBody);
+
+        logger.info(
+                "Added JSON field '{}' as {} with value '{}' [thread={}]",
+                processedPath,
+                processedType,
+                processedValue,
+                Thread.currentThread().getName()
+        );
     }
 }
