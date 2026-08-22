@@ -1,0 +1,26 @@
+{
+    "variable_id": "grh23kfh",
+    "is_mandatory": false,
+    "variable_type": "list",
+    "sub_variables": [
+        {
+            "variable_id": "nkr2kn39",
+            "variable_type": "text"
+        },
+        {
+            "variable_id": "0dsajk23",
+            "variable_type": "email address"
+        },
+        {
+            "variable_id": "Xa4oNQcT",
+            "variable_type": "bool",
+            "is_mandatory": true
+        },
+        {
+            "variable_id": "X9q2TObY",
+            "variable_type": "bool",
+            "is_mandatory": true
+        }
+    ],
+    "company_id": " {COMPANY_ID}"
+}

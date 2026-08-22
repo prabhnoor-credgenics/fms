@@ -44,4 +44,10 @@ public final class AssertionHelper {
         assertThat("Field " + jsonPath + " should exist", value, Matchers.notNullValue());
         LOGGER.info("Field '{}' exists in response with value: {}", jsonPath, value);
     }
+
+    public static void assertFieldAbsent(Response response, String jsonPath) {
+        Object value = response.jsonPath().get(jsonPath);
+        assertThat("Field " + jsonPath + " should be absent", value, Matchers.nullValue());
+        LOGGER.info("Field '{}' is absent from response", jsonPath);
+    }
 }
