@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        features = "src/test/resources/features/",
+        features = "src/test/resources/features/recovery_loan/0001_loan_upload_new.feature",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -25,8 +25,8 @@ import org.testng.annotations.DataProvider;
                 "hooks.ThreadStatsListener",
                 "rerun:rerun/failedrerun.txt"
         },
-        tags="not @creditline",
-        monochrome = true
+        		
+        monochrome = true,tags=" @TC_LUU_049"
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 

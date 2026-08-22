@@ -15,7 +15,7 @@ Feature: Loan Recovery API - Strict Datatype Validation
   Scenario: API should return 400 when authentication token is missing
     Given I authenticate as "approver" for "lending" slot 0 and remember as "approver0"
     Given I set the query parameters:
-      | company_id | {COMPANY_ID:approver0} |`
+      | company_id | {COMPANY_ID:approver0} |
     And I set the path parameters:
       | loan_id | {LOAN_ID} |
     And I set the request body from file "test-data/loan_recovery_request.json"

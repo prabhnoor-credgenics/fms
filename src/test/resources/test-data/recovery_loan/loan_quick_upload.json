@@ -75,12 +75,11 @@
       "co_applicant_email_details": [
         {
           "co_applicant_email": "shivam.tyagi1@credgenics.com",
-          "co_applicant_email_type": "Personal"
-        },
-        {
-          "co_applicant_email": "shivam1.tyagi1@credgenics.com",
-          "co_applicant_email_type": "Official"
+          "co_applicant_email_type": "Personal",
+		  "co_applicant_email_is_valid":true,
+		  "co_applicant_email_is_active":true
         }
+        
       ],
       "co_applicant_photo_link": "https://www.rediff.com/",
       "co_applicant_address": [
@@ -181,7 +180,9 @@
       "loan_guarantor_contact_details": [
         {
           "loan_guarantor_contact_type": "Home",
-          "loan_guarantor_contact_number": "9876543290"
+          "loan_guarantor_contact_number": "9876543290",
+		  "loan_guarantor_contact_number_is_valid":true,
+		  	  "loan_guarantor_contact_number_is_active":true 
         }
       ],
       "loan_guarantor_address": [
@@ -198,7 +199,10 @@
       "loan_guarantor_email_details": [
         {
           "loan_guarantor_email_type": "Self",
-          "loan_guarantor_email": "loanguarantor@yopmail.com"
+          "loan_guarantor_email": "loanguarantor@yopmail.com",
+		  "loan_guarantor_email_is_active": true
+
+		 
         }
       ],
       "loan_guarantor_name": "LGN Divyam"
@@ -229,7 +233,9 @@
       "reference_contact_details": [
         {
           "reference_contact_number_type": "Home",
-          "contact_number": "9988007791"
+          "contact_number": "9988007791",
+		  "reference_contact_number_is_valid":true,
+		  "reference_contact_number_is_active":true
         }
       ],
       "reference_gender": "Male",
@@ -246,7 +252,9 @@
       "reference_email_details": [
         {
           "reference_email": "reference_user1@yopmai.com",
-          "reference_email_type": "Personal"
+          "reference_email_type": "Personal",
+		  "reference_email_is_valid":true,
+		  "reference_email_is_valid":true
         }
       ],
       "reference_pan_number": "ERTYUI4321P",

@@ -222,6 +222,10 @@ public class ApiStepDefinitions {
             if (ContextKeys.ALLOCATION_MONTH.equals(value)) {
                 value = scenarioTestDataResolver.resolveAllocationMonth();
             }
+            
+            if (ContextKeys.VARIABLE_NAME.equals(value)) {
+                value = scenarioTestDataResolver.resolveVariableName();
+            }
             if (value != null && value.contains("{ALLOCATION_MONTH_OFFSET:")) {
                 value = scenarioTestDataResolver.resolveAllocationMonthOffset(value);
             }
@@ -877,4 +881,6 @@ public void i_send_a_request_to(String httpMethod, String endpoint) {
                 Thread.currentThread().getName()
         );
     }
+    
+  
 }
