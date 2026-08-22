@@ -29,7 +29,7 @@ import org.testng.annotations.Listeners;
                 "rerun:rerun/failedrerun.txt",
                 "hooks.SlackReportCucumberPlugin"
         },
-        tags="@test",
+        tags="@document-type and @array-lookup",
         monochrome = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

@@ -1,0 +1,15 @@
+{
+    "location": {
+      "latitude": 28.4476909,
+      "longitude": 77.5171228,
+      "accuracy": 15.72
+    },
+    "battery_level": 35,
+    "device_id": "lito",
+    "app_version": "3.4.7",
+    "agent_mobile": "",
+    "agent_email": "sanvitestuser@gmail.com",
+    "user_employee_id": "san7889",
+    "agent_name": "Sanvi 2",
+    "company_id": "{COMPANY_ID}"
+  }

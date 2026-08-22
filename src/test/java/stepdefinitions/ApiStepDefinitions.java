@@ -1,5 +1,27 @@
 package stepdefinitions;
 
+import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
+
 import auth.manager.AuthManager;
 import base.RestAssuredBase;
 import config.ConfigReader;
@@ -16,38 +38,17 @@ import helpers.ResponseHelper;
 import helpers.SchemaHelper;
 import helpers.ValueExpressionHelper;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.restassured.http.ContentType;
 import io.restassured.http.Header;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import utils.JsonUtils;
 import utils.ResponseValidator;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import java.io.File;
-import static io.restassured.RestAssured.given;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
-import static org.hamcrest.Matchers.equalTo;
-import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
-import org.testng.Assert;
 
 public class ApiStepDefinitions {
 
@@ -350,16 +351,24 @@ public class ApiStepDefinitions {
         }
     }
 
-    @Given("I update JSON field {string} as {string} to {string}")
-    public void i_update_json_field_as_type_to(String jsonPath, String type, String value) {
-        updateJsonFieldTypedInternal(jsonPath, type, value, null);
-    }
+@Given("I update JSON field {string} as {string} to {string}")
+public void i_update_json_field_as_type_to(
+        String jsonPath,
+        String type,
+        String value) {
 
-    @Given("I update JSON field {string} as {string} to {string} and remember as {string}")
-    public void i_update_json_field_as_type_to_and_remember_as(
-            String jsonPath, String type, String value, String rememberAs) {
-        updateJsonFieldTypedInternal(jsonPath, type, value, rememberAs);
-    }
+    updateJsonFieldTypedInternal(jsonPath, type, value, null);
+}
+
+@Given("I update JSON field {string} as {string} to {string} and remember as {string}")
+public void i_update_json_field_as_type_to_and_remember_as(
+        String jsonPath,
+        String type,
+        String value,
+        String rememberAs) {
+
+    updateJsonFieldTypedInternal(jsonPath, type, value, rememberAs);
+}
 
     @Given("I update JSON field {string} as {string} to:")
     public void i_update_json_field_as_type_to_docstring(String jsonPath, String type, String docString) {
@@ -851,6 +860,12 @@ public void the_response_body_field_should_be_captured_value_increased_by(
         AssertionHelper.assertFieldExists(activeResponse(), jsonPath);
     }
 
+    @Then("the response body should not contain field {string}")
+    public void the_response_body_should_not_contain_field(String jsonPath) {
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+        AssertionHelper.assertFieldAbsent(activeResponse(), resolvedPath);
+    }
+
     @Then("the response body should contain text {string}")
     public void the_response_body_should_contain_text(String expected) {
         String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(expected);
@@ -910,147 +925,299 @@ public void the_response_body_field_should_be_captured_value_increased_by(
         );
     }
 
-    private static final Pattern NAMED_RANDOM_STRING =
-            Pattern.compile("\\{RANDOM_STRING:\\d+:([A-Za-z_][\\w.-]*)\\}");
+private static final Pattern NAMED_RANDOM_STRING =
+        Pattern.compile("\\{RANDOM_STRING:\\d+:([A-Za-z_][\\w.-]*)\\}");
 
-    private void updateJsonFieldTypedInternal(String jsonPath, String type, String value, String rememberAs) {
-        String existingBody = currentRequestBody();
-        if (existingBody == null || existingBody.isEmpty()) {
-            throw new IllegalStateException(
-                    "Request body must be set before updating JSON field. "
-                            + "Use 'I set the request body' or 'I set the request body from file' first."
-            );
-        }
-        String processedType = scenarioTestDataResolver.replaceScenarioPlaceholders(type).trim();
-        String processedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
-        String processedValue = value;
-        if (processedValue != null) {
-            processedValue = ValueExpressionHelper.resolve(
-                    processedValue,
-                    scenarioTestDataResolver::replaceScenarioPlaceholders
-            );
-            if (PayloadHelper.isNullToken(processedValue) || "null".equalsIgnoreCase(processedType)) {
-                processedValue = null;
-                processedType = "null";
-            } else if (!ValueExpressionHelper.looksLikeConcatExpression(value)) {
-                processedValue = PayloadHelper.stripSurroundingQuotes(processedValue);
-            }
-        } else if (!"null".equalsIgnoreCase(processedType)) {
+private void updateJsonFieldTypedInternal(
+        String jsonPath,
+        String type,
+        String value,
+        String rememberAs) {
+
+    String existingBody = currentRequestBody();
+
+    if (existingBody == null || existingBody.isEmpty()) {
+        throw new IllegalStateException(
+                "Request body must be set before updating JSON field. "
+                        + "Use 'I set the request body' or "
+                        + "'I set the request body from file' first."
+        );
+    }
+
+    String processedType =
+            scenarioTestDataResolver
+                    .replaceScenarioPlaceholders(type)
+                    .trim();
+
+    String processedPath =
+            scenarioTestDataResolver
+                    .replaceScenarioPlaceholders(jsonPath);
+
+    String processedValue = value;
+
+    if (processedValue != null) {
+
+        processedValue = ValueExpressionHelper.resolve(
+                processedValue,
+                scenarioTestDataResolver::replaceScenarioPlaceholders
+        );
+
+        if (PayloadHelper.isNullToken(processedValue)
+                || "null".equalsIgnoreCase(processedType)) {
+
+            processedValue = null;
             processedType = "null";
+
+        } else if (!ValueExpressionHelper
+                .looksLikeConcatExpression(value)) {
+
+            processedValue =
+                    PayloadHelper.stripSurroundingQuotes(
+                            processedValue
+                    );
         }
-        applyRequestBody(JsonHelper.updateFieldTyped(existingBody, processedPath, processedType, processedValue));
-        // Named random aliases capture the FULL resolved field value (e.g. whole email), not just the random part.
-        captureNamedRandomFullValues(value, processedValue);
-        if (rememberAs != null && !rememberAs.isBlank()) {
-            String key = scenarioTestDataResolver.replaceScenarioPlaceholders(rememberAs).trim();
-            if (key.isBlank()) {
-                throw new IllegalArgumentException("Remember-as key must not be blank");
-            }
-            testContext.captureValue(key, processedValue == null ? "null" : processedValue);
-            logger.info("Remembered updated JSON field '{}' value as {{CAPTURED:{}}} = '{}'",
-                    processedPath, key, processedValue);
-        }
-        logger.info("Updated JSON field '{}' as {} to '{}' [thread={}]",
-                processedPath, processedType, processedValue, Thread.currentThread().getName());
+
+    } else if (!"null".equalsIgnoreCase(processedType)) {
+
+        processedType = "null";
     }
 
-    private void captureNamedRandomFullValues(String originalTemplate, String resolvedValue) {
-        if (originalTemplate == null || resolvedValue == null) {
-            return;
-        }
-        Matcher matcher = NAMED_RANDOM_STRING.matcher(originalTemplate);
-        Set<String> aliases = new LinkedHashSet<>();
-        while (matcher.find()) {
-            aliases.add(matcher.group(1));
-        }
-        for (String alias : aliases) {
-            testContext.captureValue(alias, resolvedValue);
-            logger.info("Captured full resolved value as {{CAPTURED:{}}} = '{}'", alias, resolvedValue);
-        }
-    }
+    // Update the request body
+    applyRequestBody(
+            JsonHelper.updateFieldTyped(
+                    existingBody,
+                    processedPath,
+                    processedType,
+                    processedValue
+            )
+    );
 
-    private record ParamRow(String name, String rawValue, String rememberAs) {
-    }
+    // Named random aliases capture the FULL resolved field value
+    captureNamedRandomFullValues(value, processedValue);
 
-    private List<ParamRow> parseParamRows(DataTable dataTable) {
-        List<ParamRow> rows = new ArrayList<>();
-        for (List<String> row : dataTable.asLists()) {
-            if (row == null || row.isEmpty()) {
-                continue;
-            }
-            String name = row.get(0);
-            if (name == null || name.isBlank()) {
-                continue;
-            }
-            String rawValue = row.size() > 1 ? row.get(1) : "";
-            String rememberAs = row.size() > 2 ? row.get(2) : null;
-            if (rememberAs != null && rememberAs.isBlank()) {
-                rememberAs = null;
-            }
-            rows.add(new ParamRow(name.trim(), rawValue, rememberAs));
-        }
-        return rows;
-    }
+    // Remember the updated JSON field value if requested
+    if (rememberAs != null && !rememberAs.isBlank()) {
 
-    private String resolvePathParamValue(String name, String rawValue) {
-        String value = resolveParamPlaceholders(name, rawValue);
-        if (("loanId".equals(name) || "loan_id".equals(name)) && ContextKeys.LOAN_ID.equals(rawValue)) {
-            logger.info("Using scenario loan id: {}", value);
-        }
-        return value;
-    }
+        String key =
+                scenarioTestDataResolver
+                        .replaceScenarioPlaceholders(rememberAs)
+                        .trim();
 
-    private String resolveQueryParamValue(String name, String rawValue) {
-        return resolveParamPlaceholders(name, rawValue);
-    }
-
-    private String resolveParamPlaceholders(String name, String rawValue) {
-        String paramNameLower = name == null ? "" : name.toLowerCase();
-        String value = rawValue;
-        if ("company_id".equals(paramNameLower) && ContextKeys.COMPANY_ID.equals(value)) {
-            value = scenarioTestDataResolver.resolveCompanyId();
-        }
-        if (("loanId".equals(name) || "loan_id".equals(name) || "loanid".equals(paramNameLower))
-                && ContextKeys.LOAN_ID.equals(value)) {
-            value = scenarioTestDataResolver.resolveLoanId();
-        }
-        if (ContextKeys.AUTH_TOKEN.equals(value)) {
-            value = testContext.getAuthToken();
-        }
-        if (ContextKeys.LOAN_ID.equals(value)) {
-            value = scenarioTestDataResolver.resolveLoanId();
-        }
-        if (ContextKeys.CREATOR_USER_ID.equals(value)) {
-            value = scenarioTestDataResolver.resolveCreatorUserId();
-        }
-        if (ContextKeys.ALLOCATION_MONTH.equals(value)) {
-            value = scenarioTestDataResolver.resolveAllocationMonth();
-        }
-        if (value != null && value.contains("{ALLOCATION_MONTH_OFFSET:")) {
-            value = scenarioTestDataResolver.resolveAllocationMonthOffset(value);
-        }
-        if (value != null && (value.contains(ContextKeys.NOW_PREFIX)
-                || value.contains(ContextKeys.CAPTURED_TIME_PREFIX))) {
-            value = scenarioTestDataResolver.resolveTimePlaceholders(value);
-        }
-        value = scenarioTestDataResolver.resolveNamedSessionPlaceholders(value);
-        if (value != null && value.contains("{")) {
-            value = scenarioTestDataResolver.replaceScenarioPlaceholders(value);
-        }
-        return value;
-    }
-
-    private void rememberTableValue(String rememberAs, String resolvedValue) {
-        if (rememberAs == null || rememberAs.isBlank()) {
-            return;
-        }
-        String key = scenarioTestDataResolver.replaceScenarioPlaceholders(rememberAs).trim();
         if (key.isBlank()) {
-            throw new IllegalArgumentException("Remember-as key must not be blank");
+            throw new IllegalArgumentException(
+                    "Remember-as key must not be blank"
+            );
         }
-        testContext.captureValue(key, resolvedValue == null ? "null" : resolvedValue);
-        logger.info("Remembered table value as {{CAPTURED:{}}} = '{}'", key, resolvedValue);
+
+        testContext.captureValue(
+                key,
+                processedValue == null ? "null" : processedValue
+        );
+
+        logger.info(
+                "Remembered updated JSON field '{}' value as {{CAPTURED:{}}} = '{}'",
+                processedPath,
+                key,
+                processedValue
+        );
     }
+
+    logger.info(
+            "Updated JSON field '{}' as {} to '{}' [thread={}]",
+            processedPath,
+            processedType,
+            processedValue,
+            Thread.currentThread().getName()
+    );
+}
+
+private void captureNamedRandomFullValues(
+        String originalTemplate,
+        String resolvedValue) {
+
+    if (originalTemplate == null || resolvedValue == null) {
+        return;
+    }
+
+    Matcher matcher = NAMED_RANDOM_STRING.matcher(originalTemplate);
+    Set<String> aliases = new LinkedHashSet<>();
+
+    while (matcher.find()) {
+        aliases.add(matcher.group(1));
+    }
+
+    for (String alias : aliases) {
+        testContext.captureValue(alias, resolvedValue);
+
+        logger.info(
+                "Captured full resolved value as {{CAPTURED:{}}} = '{}'",
+                alias,
+                resolvedValue
+        );
+    }
+}
+
+private record ParamRow(
+        String name,
+        String rawValue,
+        String rememberAs) {
+}
+
+private List<ParamRow> parseParamRows(DataTable dataTable) {
+    List<ParamRow> rows = new ArrayList<>();
+
+    for (List<String> row : dataTable.asLists()) {
+
+        if (row == null || row.isEmpty()) {
+            continue;
+        }
+
+        String name = row.get(0);
+
+        if (name == null || name.isBlank()) {
+            continue;
+        }
+
+        String rawValue = row.size() > 1 ? row.get(1) : "";
+        String rememberAs = row.size() > 2 ? row.get(2) : null;
+
+        if (rememberAs != null && rememberAs.isBlank()) {
+            rememberAs = null;
+        }
+
+        rows.add(
+                new ParamRow(
+                        name.trim(),
+                        rawValue,
+                        rememberAs
+                )
+        );
+    }
+
+    return rows;
+}
+
+private String resolvePathParamValue(
+        String name,
+        String rawValue) {
+
+    String value = resolveParamPlaceholders(name, rawValue);
+
+    if (("loanId".equals(name) || "loan_id".equals(name))
+            && ContextKeys.LOAN_ID.equals(rawValue)) {
+
+        logger.info("Using scenario loan id: {}", value);
+    }
+
+    return value;
+}
+
+private String resolveQueryParamValue(
+        String name,
+        String rawValue) {
+
+    return resolveParamPlaceholders(name, rawValue);
+}
+
+private String resolveParamPlaceholders(
+        String name,
+        String rawValue) {
+
+    String paramNameLower =
+            name == null ? "" : name.toLowerCase();
+
+    String value = rawValue;
+
+    if ("company_id".equals(paramNameLower)
+            && ContextKeys.COMPANY_ID.equals(value)) {
+
+        value = scenarioTestDataResolver.resolveCompanyId();
+    }
+
+    if (("loanId".equals(name)
+            || "loan_id".equals(name)
+            || "loanid".equals(paramNameLower))
+            && ContextKeys.LOAN_ID.equals(value)) {
+
+        value = scenarioTestDataResolver.resolveLoanId();
+    }
+
+    if (ContextKeys.AUTH_TOKEN.equals(value)) {
+        value = testContext.getAuthToken();
+    }
+
+    if (ContextKeys.LOAN_ID.equals(value)) {
+        value = scenarioTestDataResolver.resolveLoanId();
+    }
+
+    if (ContextKeys.CREATOR_USER_ID.equals(value)) {
+        value = scenarioTestDataResolver.resolveCreatorUserId();
+    }
+
+    if (ContextKeys.ALLOCATION_MONTH.equals(value)) {
+        value = scenarioTestDataResolver.resolveAllocationMonth();
+    }
+
+    if (value != null
+            && value.contains("{ALLOCATION_MONTH_OFFSET:")) {
+
+        value =
+                scenarioTestDataResolver
+                        .resolveAllocationMonthOffset(value);
+    }
+
+    if (value != null
+            && (value.contains(ContextKeys.NOW_PREFIX)
+            || value.contains(ContextKeys.CAPTURED_TIME_PREFIX))) {
+
+        value =
+                scenarioTestDataResolver
+                        .resolveTimePlaceholders(value);
+    }
+
+    value =
+            scenarioTestDataResolver
+                    .resolveNamedSessionPlaceholders(value);
+
+    if (value != null && value.contains("{")) {
+        value =
+                scenarioTestDataResolver
+                        .replaceScenarioPlaceholders(value);
+    }
+
+    return value;
+}
+
+private void rememberTableValue(
+        String rememberAs,
+        String resolvedValue) {
+
+    if (rememberAs == null || rememberAs.isBlank()) {
+        return;
+    }
+
+    String key =
+            scenarioTestDataResolver
+                    .replaceScenarioPlaceholders(rememberAs)
+                    .trim();
+
+    if (key.isBlank()) {
+        throw new IllegalArgumentException(
+                "Remember-as key must not be blank"
+        );
+    }
+
+    testContext.captureValue(
+            key,
+            resolvedValue == null ? "null" : resolvedValue
+    );
+
+    logger.info(
+            "Remembered table value as {{CAPTURED:{}}} = '{}'",
+            key,
+            resolvedValue
+    );
+}
 
     private boolean usedRealAuthToken() {
         String realToken = testContext.getAuthToken();
@@ -1176,54 +1343,172 @@ public void the_response_body_field_should_be_captured_value_increased_by(
             default -> throw new IllegalArgumentException("Unsupported HTTP method: " + method);
         };
     }
+@And("I remove JSON field {string}")
+public void i_remove_json_field(String jsonPath) {
+    removeJsonFieldInternal(jsonPath);
+}
 
-    private void clearBinaryBody() {
-        binaryBodyFile = null;
-        binaryBodyContentType = null;
+private void removeJsonFieldInternal(String jsonPath) {
+
+    String existingBody = currentRequestBody();
+
+    if (existingBody == null || existingBody.isEmpty()) {
+        throw new IllegalStateException(
+                "Request body must be set before removing JSON field. "
+                        + "Use 'I set the request body' or "
+                        + "'I set the request body from file' first."
+        );
     }
 
-    private boolean hasBinaryBody() {
-        return binaryBodyFile != null;
+    String processedPath =
+            scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+
+    String updatedBody =
+            JsonHelper.removeField(existingBody, processedPath);
+
+    applyRequestBody(updatedBody);
+
+    logger.info(
+            "Removed JSON field '{}' [thread={}]",
+            processedPath,
+            Thread.currentThread().getName()
+    );
+}
+
+@And("I add JSON field {string} as {string} with value {string}")
+public void i_add_json_field(String jsonPath, String type, String value) {
+    addJsonFieldInternal(jsonPath, type, value);
+}
+
+private void addJsonFieldInternal(String jsonPath, String type, String value) {
+
+    String existingBody = currentRequestBody();
+
+    if (existingBody == null || existingBody.isEmpty()) {
+        throw new IllegalStateException(
+                "Request body must be set before adding JSON field. "
+                        + "Use 'I set the request body' or "
+                        + "'I set the request body from file' first."
+        );
     }
 
-    private void applyHeadersAndQueryParamsToAbsoluteRequest(RequestSpecification absoluteRequest) {
-        for (Map.Entry<String, String> header : storedHeaders.entrySet()) {
-            absoluteRequest.header(header.getKey(), header.getValue());
+    String processedType =
+            scenarioTestDataResolver.replaceScenarioPlaceholders(type).trim();
+
+    String processedPath =
+            scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+
+    String processedValue = value;
+
+    if (processedValue != null) {
+
+        processedValue = ValueExpressionHelper.resolve(
+                processedValue,
+                scenarioTestDataResolver::replaceScenarioPlaceholders
+        );
+
+        if (PayloadHelper.isNullToken(processedValue)
+                || "null".equalsIgnoreCase(processedType)) {
+
+            processedValue = null;
+            processedType = "null";
+
+        } else if (!ValueExpressionHelper.looksLikeConcatExpression(value)) {
+
+            processedValue =
+                    PayloadHelper.stripSurroundingQuotes(processedValue);
         }
-        for (Map.Entry<String, String> query : storedQueryParams.entrySet()) {
-            absoluteRequest.queryParam(query.getKey(), query.getValue());
-        }
+
+    } else if (!"null".equalsIgnoreCase(processedType)) {
+
+        processedType = "null";
     }
 
-    private String applyPayloadToAbsoluteRequest(RequestSpecification absoluteRequest) {
-        if (hasMultipartParts()) {
-            absoluteRequest.contentType(ContentType.MULTIPART);
-            for (MultipartTextPart field : multipartFields) {
-                absoluteRequest.multiPart(field.controlName(), field.value());
-            }
-            for (MultipartFilePart part : multipartFiles) {
-                absoluteRequest.multiPart(part.controlName(), part.file(), part.mimeType());
-            }
-            String summary = summarizeMultipartForLogging();
-            testContext.setLastRequestBody(summary);
-            return summary;
-        }
-        if (hasBinaryBody()) {
-            if (binaryBodyContentType != null && !binaryBodyContentType.isBlank()) {
-                absoluteRequest.contentType(binaryBodyContentType);
-            }
-            absoluteRequest.body(binaryBodyFile);
-            String summary = "binary-file=" + binaryBodyFile.getPath()
-                    + " (" + binaryBodyContentType + ", " + binaryBodyFile.length() + " bytes)";
-            testContext.setLastRequestBody(summary);
-            return summary;
-        }
-        String body = currentRequestBody();
-        if (body != null && !body.isBlank()) {
-            absoluteRequest.body(body);
-            testContext.setLastRequestBody(body);
-            return body;
-        }
-        return null;
+    String updatedBody = JsonHelper.addField(
+            existingBody,
+            processedPath,
+            processedType,
+            processedValue
+    );
+
+    applyRequestBody(updatedBody);
+
+    logger.info(
+            "Added JSON field '{}' as {} with value '{}' [thread={}]",
+            processedPath,
+            processedType,
+            processedValue,
+            Thread.currentThread().getName()
+    );
+}
+
+private void clearBinaryBody() {
+    binaryBodyFile = null;
+    binaryBodyContentType = null;
+}
+
+private boolean hasBinaryBody() {
+    return binaryBodyFile != null;
+}
+
+private void applyHeadersAndQueryParamsToAbsoluteRequest(
+        RequestSpecification absoluteRequest) {
+
+    for (Map.Entry<String, String> header : storedHeaders.entrySet()) {
+        absoluteRequest.header(header.getKey(), header.getValue());
     }
+
+    for (Map.Entry<String, String> query : storedQueryParams.entrySet()) {
+        absoluteRequest.queryParam(query.getKey(), query.getValue());
+    }
+}
+
+private String applyPayloadToAbsoluteRequest(
+        RequestSpecification absoluteRequest) {
+
+    if (hasMultipartParts()) {
+        absoluteRequest.contentType(ContentType.MULTIPART);
+
+        for (MultipartTextPart field : multipartFields) {
+            absoluteRequest.multiPart(field.controlName(), field.value());
+        }
+
+        for (MultipartFilePart part : multipartFiles) {
+            absoluteRequest.multiPart(
+                    part.controlName(),
+                    part.file(),
+                    part.mimeType()
+            );
+        }
+
+        String summary = summarizeMultipartForLogging();
+        testContext.setLastRequestBody(summary);
+        return summary;
+    }
+
+    if (hasBinaryBody()) {
+        if (binaryBodyContentType != null && !binaryBodyContentType.isBlank()) {
+            absoluteRequest.contentType(binaryBodyContentType);
+        }
+
+        absoluteRequest.body(binaryBodyFile);
+
+        String summary = "binary-file=" + binaryBodyFile.getPath()
+                + " (" + binaryBodyContentType + ", "
+                + binaryBodyFile.length() + " bytes)";
+
+        testContext.setLastRequestBody(summary);
+        return summary;
+    }
+
+    String body = currentRequestBody();
+
+    if (body != null && !body.isBlank()) {
+        absoluteRequest.body(body);
+        testContext.setLastRequestBody(body);
+        return body;
+    }
+
+    return null;
+}
 }

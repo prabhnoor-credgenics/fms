@@ -41,34 +41,46 @@ public class ResponseValidator {
     }
 
     public static void validateJsonFieldAuto(Response response, String jsonPath, String expectedRaw) {
-        Object actualValue = response.jsonPath().get(jsonPath);
+
+        Object actualValue = getJsonValue(response, jsonPath);
+
         String raw = PayloadHelper.stripSurroundingQuotes(
                 expectedRaw == null ? null : expectedRaw.trim());
 
         if (actualValue instanceof List<?> list) {
             if (raw != null && ("[]".equals(raw) || "empty".equalsIgnoreCase(raw))) {
-                assertThat("Expected empty array at path: " + jsonPath, list, Matchers.empty());
+                assertThat("Expected empty array at path: " + jsonPath,
+                        list, Matchers.empty());
                 return;
             }
+
             if (raw != null && "not empty".equalsIgnoreCase(raw)) {
-                assertThat("Expected non-empty array at path: " + jsonPath, list, Matchers.not(Matchers.empty()));
+                assertThat("Expected non-empty array at path: " + jsonPath,
+                        list, Matchers.not(Matchers.empty()));
                 return;
             }
         }
 
         Object expectedValue = coerceExpected(actualValue, raw);
-        logger.info("Validating JSON field '{}' (auto). Expected: {} ({}), Actual: {} ({})",
-                jsonPath, expectedValue, typeName(expectedValue), actualValue, typeName(actualValue));
+
+        logger.info(
+                "Validating JSON field '{}' (auto). Expected: {} ({}), Actual: {} ({})",
+                jsonPath,
+                expectedValue,
+                typeName(expectedValue),
+                actualValue,
+                typeName(actualValue)
+        );
+
         assertValuesEqual(jsonPath, actualValue, expectedValue);
     }
-
     public static void validateJsonFieldTyped(Response response, String jsonPath, String type, String expectedRaw) {
         String normalized = type == null ? "auto" : type.trim().toLowerCase();
         if ("auto".equals(normalized) || "any".equals(normalized) || "coerce".equals(normalized)) {
             validateJsonFieldAuto(response, jsonPath, expectedRaw);
             return;
         }
-
+        logger.info("JSON path received by validator: [{}]", jsonPath);
         Object actualValue = response.jsonPath().get(jsonPath);
         String raw = PayloadHelper.stripSurroundingQuotes(
                 expectedRaw == null ? null : expectedRaw.trim());
@@ -196,5 +208,72 @@ public class ResponseValidator {
 
     private static String typeName(Object value) {
         return value == null ? "null" : value.getClass().getSimpleName();
+    }
+    
+    
+    private static Object getJsonValue(Response response, String jsonPath) {
+
+        Object value = response.jsonPath().get(jsonPath);
+
+        // RestAssured successfully resolved the path
+        if (value != null) {
+            return value;
+        }
+
+        // Only fallback for simple paths.
+        // Do NOT try to manually parse Groovy/GPath expressions.
+        if (jsonPath.contains("find {")) {
+            return null;
+        }
+
+        return resolveNumericMapPath(response, jsonPath);
+    }
+    private static Object resolveNumericMapPath(Response response, String jsonPath) {
+
+        String path = jsonPath;
+
+        if (path.startsWith("$.")) {
+            path = path.substring(2);
+        }
+
+        String[] parts = path.split("\\.");
+
+        Object current = response.jsonPath().get("$");
+
+        for (String part : parts) {
+
+            if (current == null) {
+                return null;
+            }
+
+            // Remove bracket notation:
+            // ['0'] -> 0
+            // ["0"] -> 0
+            part = part.replaceAll("^\\['(.+)'\\]$", "$1");
+            part = part.replaceAll("^\\[\"(.+)\"\\]$", "$1");
+
+            if (current instanceof Map<?, ?> map) {
+
+                if (map.containsKey(part)) {
+                    current = map.get(part);
+                } else {
+                    return null;
+                }
+
+            } else if (current instanceof List<?> list) {
+
+                try {
+                    int index = Integer.parseInt(part);
+                    current = list.get(index);
+                } catch (NumberFormatException | IndexOutOfBoundsException e) {
+                    return null;
+                }
+
+            } else {
+                return null;
+            }
+        }
+
+        return current;
     }
 }

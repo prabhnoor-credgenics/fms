@@ -24,7 +24,10 @@ public class JsonUtils {
 
     private static final String TEST_RESOURCES_PATH = "src/test/resources/";
     private static final Pattern SEGMENT_PATTERN = Pattern.compile("([^.\\[\\]]+)|\\[(\\d+)]");
-
+    private static final Pattern FIND_PATH_PATTERN =
+            Pattern.compile(
+                    "^(.+?)\\.find\\s*\\{\\s*it\\.([A-Za-z0-9_]+)\\s*==\\s*['\"]([^'\"]+)['\"]\\s*\\}\\.(.+)$"
+            );
     private JsonUtils() {
     }
 
@@ -61,13 +64,28 @@ public class JsonUtils {
         return updateJsonFieldInternal(jsonString, jsonPath, newValue, false);
     }
 
-    public static String updateJsonFieldTyped(String jsonString, String jsonPath, String type, String rawValue) {
-        String normalized = type == null ? "" : type.trim().toLowerCase(Locale.ROOT);
-        Object typedValue = parseTypedValue(normalized.isEmpty() ? "auto" : normalized, rawValue);
-        boolean forceString = isStringType(normalized);
-        return updateJsonFieldInternal(jsonString, jsonPath, typedValue, forceString);
-    }
+    public static String updateJsonFieldTyped(
+            String jsonString,
+            String jsonPath,
+            String type,
+            String rawValue) {
 
+        String normalized = type == null
+                ? ""
+                : type.trim().toLowerCase(Locale.ROOT);
+
+        Object typedValue = parseTypedValue(
+                normalized.isEmpty() ? "auto" : normalized,
+                rawValue);
+
+        boolean forceString = isStringType(normalized);
+
+        return updateJsonFieldInternal(
+                jsonString,
+                jsonPath,
+                typedValue,
+                forceString);
+    }
     public static Object parseTypedValue(String type, String rawValue) {
         if (type == null || type.isBlank()) {
             throw new IllegalArgumentException("JSON field type must be provided");
@@ -150,37 +168,116 @@ public class JsonUtils {
         return node;
     }
 
-    private static String updateJsonFieldInternal(String jsonString, String jsonPath, Object newValue, boolean forceString) {
+    private static String updateJsonFieldInternal(
+            String jsonString,
+            String jsonPath,
+            Object newValue,
+            boolean forceString) {
+
         try {
-            JsonNode rootNode = objectMapper.readTree(jsonString);
-            List<PathSegment> segments = parsePath(jsonPath);
-            if (segments.isEmpty()) {
-                throw new IllegalArgumentException("JSON path must not be empty");
+            if (jsonString == null || jsonString.isBlank()) {
+                throw new IllegalArgumentException(
+                        "JSON body must not be null or empty"
+                );
             }
 
-            JsonNode valueNode = toNode(newValue, forceString);
-            ensureContainerRoot(rootNode, segments.get(0));
+            if (jsonPath == null || jsonPath.isBlank()) {
+                throw new IllegalArgumentException(
+                        "JSON path must not be null or empty"
+                );
+            }
+
+            String path = jsonPath.trim();
+
+            Matcher findMatcher =
+                    FIND_PATH_PATTERN.matcher(path);
+
+            // Special support for:
+            // sub_variables.find { it.variable_id == 'X2o9VJcT' }.is_mandatory
+            if (findMatcher.matches()) {
+
+                String arrayPath = findMatcher.group(1);
+                String lookupField = findMatcher.group(2);
+                String lookupValue = findMatcher.group(3);
+                String targetField = findMatcher.group(4);
+
+                return updateJsonFieldByFind(
+                        jsonString,
+                        arrayPath,
+                        lookupField,
+                        lookupValue,
+                        targetField,
+                        newValue,
+                        forceString
+                );
+            }
+
+            // Existing normal path logic
+            JsonNode rootNode =
+                    objectMapper.readTree(jsonString);
+
+            List<PathSegment> segments =
+                    parsePath(jsonPath);
+
+            if (segments.isEmpty()) {
+                throw new IllegalArgumentException(
+                        "JSON path must not be empty: " + jsonPath
+                );
+            }
+
+            JsonNode valueNode =
+                    toNode(newValue, forceString);
+
+            ensureContainerRoot(
+                    rootNode,
+                    segments.get(0)
+            );
 
             JsonNode parent = rootNode;
+
             for (int i = 0; i < segments.size() - 1; i++) {
+
                 PathSegment segment = segments.get(i);
                 PathSegment next = segments.get(i + 1);
-                parent = descendCreating(parent, segment, next);
+
+                parent = descendCreating(
+                        parent,
+                        segment,
+                        next
+                );
             }
 
-            PathSegment last = segments.get(segments.size() - 1);
-            setAtSegment(parent, last, valueNode);
+            PathSegment last =
+                    segments.get(segments.size() - 1);
 
-            logger.info("Updated JSON path '{}' ({} level(s))", jsonPath, segments.size());
-            return objectMapper.writeValueAsString(rootNode);
+            setAtSegment(
+                    parent,
+                    last,
+                    valueNode
+            );
+
+            return objectMapper.writeValueAsString(
+                    rootNode
+            );
+
         } catch (RuntimeException e) {
             throw e;
+
         } catch (Exception e) {
-            logger.error("Error updating JSON field '{}': {}", jsonPath, e.getMessage(), e);
-            throw new RuntimeException("Failed to update JSON field: " + jsonPath, e);
+            logger.error(
+                    "Error updating JSON field '{}': {}",
+                    jsonPath,
+                    e.getMessage(),
+                    e
+            );
+
+            throw new RuntimeException(
+                    "Failed to update JSON field: " + jsonPath,
+                    e
+            );
         }
     }
-
+    
     public static String removeJsonField(String jsonString, String jsonPath) {
         try {
             JsonNode rootNode = objectMapper.readTree(jsonString);
@@ -400,21 +497,234 @@ public class JsonUtils {
         return objectMapper.getNodeFactory().textNode(value.toString());
     }
 
-    static final class PathSegment {
-        final String fieldName;
-        final int index;
+     static final class PathSegment {
 
-        private PathSegment(String fieldName, int index) {
+        private final String fieldName;
+        private final Integer index;
+
+        private PathSegment(String fieldName, Integer index) {
             this.fieldName = fieldName;
             this.index = index;
         }
 
-        static PathSegment field(String name) {
-            return new PathSegment(name, -1);
+        public static PathSegment field(String fieldName) {
+            return new PathSegment(fieldName, null);
         }
 
-        static PathSegment index(int index) {
+        public static PathSegment index(int index) {
             return new PathSegment(null, index);
         }
+
+        public boolean isField() {
+            return fieldName != null;
+        }
+
+        public boolean isIndex() {
+            return index != null;
+        }
+
+        public String fieldName() {
+            return fieldName;
+        }
+
+        public int index() {
+            return index;
+        }
     }
+    
+    private static String updateJsonFieldByFind(
+            String jsonString,
+            String arrayPath,
+            String lookupField,
+            String lookupValue,
+            String targetField,
+            Object newValue,
+            boolean forceString) {
+
+        try {
+            JsonNode rootNode =
+                    objectMapper.readTree(jsonString);
+            logger.info("========== FIND UPDATE DEBUG ==========");
+            logger.info("arrayPath    = [{}]", arrayPath);
+            logger.info("lookupField  = [{}]", lookupField);
+            logger.info("lookupValue  = [{}]", lookupValue);
+            logger.info("targetField  = [{}]", targetField);
+            logger.info("newValue     = [{}]", newValue);
+            logger.info("JSON         = {}", jsonString);
+            logger.info("========================================");
+            JsonNode arrayNode =
+                    resolveExistingPath(
+                            rootNode,
+                            arrayPath
+                    );
+
+            if (arrayNode == null) {
+                throw new IllegalArgumentException(
+                        "JSON path does not exist: "
+                                + arrayPath
+                );
+            }
+
+            if (!arrayNode.isArray()) {
+                throw new IllegalArgumentException(
+                        "Path '" + arrayPath
+                                + "' exists but is not an array"
+                );
+            }
+
+            JsonNode valueNode =
+                    toNode(newValue, forceString);
+
+            for (JsonNode item : arrayNode) {
+
+                if (!item.isObject()) {
+                    continue;
+                }
+
+                JsonNode lookupNode =
+                        item.get(lookupField);
+
+                if (lookupNode == null) {
+                    continue;
+                }
+
+                if (lookupValue.equals(
+                        lookupNode.asText())) {
+
+                    // Don't allow a wrong target field
+                    // to silently create a new field.
+                    if (!item.has(targetField)) {
+                        throw new IllegalArgumentException(
+                                "Target field '"
+                                        + targetField
+                                        + "' does not exist for element where "
+                                        + lookupField
+                                        + " = '"
+                                        + lookupValue
+                                        + "'"
+                        );
+                    }
+
+                    ((ObjectNode) item).set(
+                            targetField,
+                            valueNode
+                    );
+
+                    logger.info(
+                            "Updated field '{}' where {}='{}'",
+                            targetField,
+                            lookupField,
+                            lookupValue
+                    );
+
+                    return objectMapper.writeValueAsString(
+                            rootNode
+                    );
+                }
+            }
+
+            // No matching ID found
+            throw new IllegalArgumentException(
+                    "No element found in '"
+                            + arrayPath
+                            + "' where "
+                            + lookupField
+                            + " = '"
+                            + lookupValue
+                            + "'"
+            );
+
+        } catch (RuntimeException e) {
+            throw e;
+
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Failed to update JSON field using find expression: "
+                            + arrayPath,
+                    e
+            );
+        }
+    }
+    private static JsonNode resolveExistingPath(
+            JsonNode rootNode,
+            String jsonPath) {
+
+        if (jsonPath == null || jsonPath.isBlank()) {
+            throw new IllegalArgumentException(
+                    "JSON path must not be empty"
+            );
+        }
+
+        String normalized =
+                jsonPath.trim();
+
+        if (normalized.startsWith("$.")) {
+            normalized = normalized.substring(2);
+
+        } else if (normalized.startsWith("$")) {
+            normalized = normalized.substring(1);
+
+            if (normalized.startsWith(".")) {
+                normalized = normalized.substring(1);
+            }
+        }
+
+        List<PathSegment> segments =
+                parsePath(normalized);
+
+        JsonNode current = rootNode;
+
+        for (PathSegment segment : segments) {
+
+            if (segment.isField()) {
+
+                if (!current.isObject()) {
+                    throw new IllegalArgumentException(
+                            "Expected object while resolving path: "
+                                    + jsonPath
+                    );
+                }
+
+                JsonNode next =
+                        current.get(segment.fieldName());
+
+                if (next == null) {
+                    throw new IllegalArgumentException(
+                            "JSON path does not exist: "
+                                    + jsonPath
+                    );
+                }
+
+                current = next;
+
+            } else {
+
+                if (!current.isArray()) {
+                    throw new IllegalArgumentException(
+                            "Expected array while resolving path: "
+                                    + jsonPath
+                    );
+                }
+
+                int index =
+                        segment.index();
+
+                if (index < 0 ||
+                        index >= current.size()) {
+
+                    throw new IllegalArgumentException(
+                            "Array index "
+                                    + index
+                                    + " does not exist in path: "
+                                    + jsonPath
+                    );
+                }
+
+                current = current.get(index);
+            }
+        }
+
+        return current;
+    }
+    
 }
