@@ -1,6 +1,14 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
+  "required": [
+    "success",
+    "message",
+    "data",
+    "message_template",
+    "message_placeholder",
+    "output"
+  ],
   "properties": {
     "success": {
       "type": "boolean"
@@ -9,19 +17,36 @@
       "type": "string"
     },
     "data": {
-      "type": ["object", "array", "null"]
+      "type": [
+        "object",
+        "array",
+        "null"
+      ]
     },
     "message_template": {
       "type": "string"
     },
     "message_placeholder": {
-      "type": ["object", "array", "null"]
+      "type": [
+        "object",
+        "array",
+        "string",
+        "null"
+      ]
     },
     "output": {
       "type": "object",
+      "required": [
+        "error"
+      ],
       "properties": {
         "error": {
           "type": "object",
+          "required": [
+            "code",
+            "data",
+            "detail"
+          ],
           "properties": {
             "code": {
               "type": "string"
@@ -33,27 +58,11 @@
               "type": "string"
             }
           },
-          "required": [
-            "code",
-            "data",
-            "detail"
-          ],
           "additionalProperties": true
         }
       },
-      "required": [
-        "error"
-      ],
       "additionalProperties": true
     }
   },
-  "required": [
-    "success",
-    "message",
-    "data",
-    "message_template",
-    "message_placeholder",
-    "output"
-  ],
   "additionalProperties": true
 }
