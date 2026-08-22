@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="API Test Suite (Parallel Cucumber)" data-provider-thread-count="40">
+    <listeners>
+        <listener class-name="hooks.SlackReportListener"/>
+    </listeners>
+    <test name="API Tests Parallel Cucumber">
+        <classes>
+            <class name="runners.ParallelCucumberRunner"/>
+        </classes>
+    </test>
+</suite>

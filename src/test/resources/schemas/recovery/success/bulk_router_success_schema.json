@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["success", "message", "output", "message_template", "message_placeholder"],
+  "properties": {
+    "success": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    },
+    "output": {
+      "type": "string"
+    },
+    "message_template": {
+      "type": "string"
+    },
+    "message_placeholder": {
+      "type": "object",
+      "required": ["total_count", "request_type"],
+      "properties": {
+        "total_count": {
+          "type": "integer"
+        },
+        "request_type": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

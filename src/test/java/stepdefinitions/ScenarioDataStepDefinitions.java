@@ -112,6 +112,19 @@ public class ScenarioDataStepDefinitions {
         logger.info("Stored file size in bytes for '{}' as '{}' = {}", resolvedPath, resolvedKey, sizeBytes);
     }
 
+    @Given("I store file extension of {string} as {string}")
+    public void i_store_file_extension_of_as(String filePath, String variableName) {
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(filePath);
+        String resolvedKey = scenarioTestDataResolver.replaceScenarioPlaceholders(variableName);
+        if (resolvedKey == null || resolvedKey.isBlank()) {
+            throw new IllegalArgumentException("Variable name must not be blank");
+        }
+        String extension = FileHelper.fileExtension(resolvedPath);
+        testContext.captureValue(resolvedKey, extension);
+        logger.info("Stored file extension for '{}' as '{{CAPTURED:{}}}' = '{}'",
+                resolvedPath, resolvedKey, extension);
+    }
+
     @Given("I generate a random string of length {int} and remember as {string}")
     public void i_generate_a_random_string_of_length_and_remember_as(int length, String rememberAs) {
         String key = scenarioTestDataResolver.replaceScenarioPlaceholders(rememberAs);

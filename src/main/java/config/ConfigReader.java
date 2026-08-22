@@ -297,4 +297,40 @@ public class ConfigReader {
                 "103.55.60.250,103.55.60.251"
         );
     }
+
+    public boolean isSlackReportEnabled() {
+        String override = System.getProperty("slack.report.enabled");
+        if (override != null && !override.isBlank()) {
+            return Boolean.parseBoolean(override.trim());
+        }
+        String env = System.getenv("SLACK_REPORT_ENABLED");
+        if (env != null && !env.isBlank()) {
+            return Boolean.parseBoolean(env.trim());
+        }
+        return Boolean.parseBoolean(getProperty("slack_report_enabled", "false"));
+    }
+
+    public boolean isSlackUploadReportEnabled() {
+        String override = System.getProperty("slack.upload.report");
+        if (override != null && !override.isBlank()) {
+            return Boolean.parseBoolean(override.trim());
+        }
+        return Boolean.parseBoolean(getProperty("slack_upload_report", "true"));
+    }
+
+    public String getSlackChannel() {
+        String override = System.getProperty("slack.channel");
+        if (override != null && !override.isBlank()) {
+            return override.trim();
+        }
+        return getProperty("slack_channel", "");
+    }
+
+    public String getSlackChannelId() {
+        String override = System.getProperty("slack.channel.id");
+        if (override != null && !override.isBlank()) {
+            return override.trim();
+        }
+        return getProperty("slack_channel_id", "");
+    }
 }

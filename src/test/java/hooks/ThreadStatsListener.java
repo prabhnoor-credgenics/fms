@@ -43,7 +43,10 @@ public class ThreadStatsListener implements ConcurrentEventListener {
     private static void registerReportSanitiser() {
         if (SANITISER_REGISTERED.compareAndSet(false, true)) {
             Runtime.getRuntime().addShutdownHook(new Thread(
-                    () -> utils.ReportSanitizer.sanitizeReportsUnder(REPORT_BASE_DIR),
+                    () -> {
+                        utils.ReportSanitizer.sanitizeReportsUnder(REPORT_BASE_DIR);
+                        helpers.SlackReporter.publishLatestIfEnabled();
+                    },
                     "extent-report-sanitiser"));
         }
     }

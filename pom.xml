@@ -32,6 +32,10 @@
 
         <cucumber.filter.tags></cucumber.filter.tags>
 
+        <!-- Leave blank so Surefire/IntelliJ do not inject -Dslack.report.enabled=false
+             and override global.properties. Force on with -Pslack or -Dslack.report.enabled=true. -->
+        <slack.report.enabled></slack.report.enabled>
+
     </properties>
 
     <dependencies>
@@ -218,6 +222,10 @@
                             ${cucumber.filter.tags}
                         </cucumber.filter.tags>
 
+                        <slack.report.enabled>
+                            ${slack.report.enabled}
+                        </slack.report.enabled>
+
                     </systemPropertyVariables>
 
                     <runOrder>
@@ -252,6 +260,30 @@
                     testng-parallel.xml
                 </suiteXmlFile>
 
+            </properties>
+
+        </profile>
+
+        <profile>
+
+            <id>parallel-cucumber</id>
+
+            <properties>
+
+                <suiteXmlFile>
+                    testng-parallel-cucumber.xml
+                </suiteXmlFile>
+
+            </properties>
+
+        </profile>
+
+        <profile>
+
+            <id>slack</id>
+
+            <properties>
+                <slack.report.enabled>true</slack.report.enabled>
             </properties>
 
         </profile>

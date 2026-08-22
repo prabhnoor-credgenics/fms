@@ -115,4 +115,29 @@ public final class FileHelper {
     public static String fileSizeBytesAsString(String path) {
         return Long.toString(fileSizeBytes(path));
     }
+
+    /**
+     * Last filename suffix without the leading dot (e.g. {@code users.csv} → {@code csv}).
+     */
+    public static String fileExtension(String path) {
+        File file = resolveTestFile(path);
+        return fileExtension(file);
+    }
+
+    public static String fileExtension(File file) {
+        if (file == null) {
+            throw new IllegalArgumentException("File must not be null");
+        }
+        String name = file.getName();
+        int dot = name.lastIndexOf('.');
+        if (dot < 0 || dot == name.length() - 1) {
+            throw new IllegalArgumentException("File has no extension: " + file.getPath());
+        }
+        String extension = name.substring(dot + 1).toLowerCase(Locale.ROOT).trim();
+        if (extension.isEmpty()) {
+            throw new IllegalArgumentException("File has no extension: " + file.getPath());
+        }
+        LOGGER.debug("File extension for '{}': {}", file.getPath(), extension);
+        return extension;
+    }
 }
