@@ -257,8 +257,8 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I set the request headers:
-      | Content-Type        | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
+      | Content-Type        | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
     And I set the request body:
       """
       {
@@ -425,10 +425,10 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
     And the "allocation_details" failure response should be valid
 
     Examples:
-      | case            | value             |
-      | 15 (one below)  | abcd1234efgh567   |
-      | 17 (one above)  | abcd1234efgh56789 |
-      | 1 (far below)   | x                 |
+      | case           | value             |
+      | 15 (one below) | abcd1234efgh567   |
+      | 17 (one above) | abcd1234efgh56789 |
+      | 1 (far below)  | x                 |
 
   @negative @creator
   Scenario Outline: wrong field type "<case>" returns 400
@@ -448,11 +448,11 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
     And the "allocation_details" failure response should be valid
 
     Examples:
-      | case                              | body                                            |
-      | loan_ids as string not list       | { "loan_ids": "LOAN0001" }                      |
-      | loan_ids as integer               | { "loan_ids": 12345 }                           |
-      | allocated_user_ids as string      | { "allocated_user_ids": "abcd1234efgh5678" }    |
-      | allocated_user_ids int wrong length| { "allocated_user_ids": [123] }                 |
+      | case                                | body                                         |
+      | loan_ids as string not list         | { "loan_ids": "LOAN0001" }                   |
+      | loan_ids as integer                 | { "loan_ids": 12345 }                        |
+      | allocated_user_ids as string        | { "allocated_user_ids": "abcd1234efgh5678" } |
+      | allocated_user_ids int wrong length | { "allocated_user_ids": [123] }              |
 
 
   @negative @creator
@@ -495,7 +495,7 @@ Feature: Allocation Details fetch — POST /recovery/allocation/details
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
-      | Content-Type        | application/json                                  |
+      | Content-Type        | application/json                                 |
       | authenticationtoken | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.expired.sig |
     And I set the request body:
       """

@@ -2,7 +2,6 @@
 Feature: Multi-user reporting hierarchy — four users authenticated at once
 
 
-
   @manual @multi-user-auth
   Scenario: All four users in the hierarchy authenticate and every token is independently usable
 

@@ -1,7 +1,6 @@
 @api @user @company-users-export
 Feature: Company Users Export — POST /user/company/users/export
 
-  
 
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"

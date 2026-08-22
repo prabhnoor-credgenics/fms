@@ -85,9 +85,9 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json                                  |
+      | accept              | application/json                                 |
       | authenticationtoken | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.expired.sig |
-      | Content-Type        | application/json                                  |
+      | Content-Type        | application/json                                 |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request body:
@@ -261,9 +261,9 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     And the response should match json schema "schemas/recovery/error/quick_deallocation_error_schema.json"
 
     Examples:
-      | missing  | body                         |
-      | loan_ids | { "source": "portfolio" }    |
-      | source   | { "loan_ids": ["{LOAN_ID}"] }   |
+      | missing  | body                          |
+      | loan_ids | { "source": "portfolio" }     |
+      | source   | { "loan_ids": ["{LOAN_ID}"] } |
 
   @negative @validation @creator
   Scenario: REQ-002 — All required fields absent (empty body object) returns 400
@@ -332,7 +332,7 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     Examples:
       | field    | body                                          |
       | loan_ids | { "loan_ids": null, "source": "portfolio" }   |
-      | source   | { "loan_ids": ["{LOAN_ID}"], "source": null }    |
+      | source   | { "loan_ids": ["{LOAN_ID}"], "source": null } |
 
   @negative @validation @creator
   Scenario: REQ-004 — Required enum field source present but empty string returns 400
@@ -365,7 +365,6 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 400
     And the response body should not be empty
-
 
 
   @negative @validation @type @creator
@@ -401,16 +400,16 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     And the response body should not be empty
 
     Examples:
-      | case                                  | body                                                                                                          |
-      | loan_ids as string not list           | { "loan_ids": "{LOAN_ID}", "source": "portfolio" }                                                               |
-      | loan_ids as integer                   | { "loan_ids": 123, "source": "portfolio" }                                                                    |
-      | loan_ids as object                    | { "loan_ids": {}, "source": "portfolio" }                                                                     |
-      | source as integer                     | { "loan_ids": ["{LOAN_ID}"], "source": 1 }                                                                       |
-      | allocation_type as integer            | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": 5 }                                       |
-      | workflow_id as non-numeric string     | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "workflow_id": "abc" }                                       |
-      | parent_company_id not a UUID          | { "loan_ids": ["{LOAN_ID}"], "source": "legal", "allocation_type": "agency", "parent_company_id": "not-a-uuid" } |
-      | user_filters value not a list         | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "user_filters": { "teams": "team-north" } }                  |
-      | selected_users value is a string      | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_abc1234567890xy": "x" } }           |
+      | case                              | body                                                                                                             |
+      | loan_ids as string not list       | { "loan_ids": "{LOAN_ID}", "source": "portfolio" }                                                               |
+      | loan_ids as integer               | { "loan_ids": 123, "source": "portfolio" }                                                                       |
+      | loan_ids as object                | { "loan_ids": {}, "source": "portfolio" }                                                                        |
+      | source as integer                 | { "loan_ids": ["{LOAN_ID}"], "source": 1 }                                                                       |
+      | allocation_type as integer        | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": 5 }                                       |
+      | workflow_id as non-numeric string | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "workflow_id": "abc" }                                       |
+      | parent_company_id not a UUID      | { "loan_ids": ["{LOAN_ID}"], "source": "legal", "allocation_type": "agency", "parent_company_id": "not-a-uuid" } |
+      | user_filters value not a list     | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "user_filters": { "teams": "team-north" } }                  |
+      | selected_users value is a string  | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_abc1234567890xy": "x" } }           |
 
   @negative @validation @enum @creator
   Scenario Outline: ENUM-001 — Invalid enum value for "<field>" returns 400
@@ -445,9 +444,9 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     And the response body should not be empty
 
     Examples:
-      | field           | body                                                                                |
-      | source          | { "loan_ids": ["{LOAN_ID}"], "source": "bogus_src" }                                   |
-      | allocation_type | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "bogus_type" }  |
+      | field           | body                                                                                  |
+      | source          | { "loan_ids": ["{LOAN_ID}"], "source": "bogus_src" }                                  |
+      | allocation_type | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "allocation_type": "bogus_type" } |
 
 
   @negative @validation @creator
@@ -483,12 +482,12 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     And the response body should not be empty
 
     Examples:
-      | case                              | body                                                                                                                                            |
-      | key shorter than 16 chars         | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "short_key": null } }                                                      |
-      | key longer than 36 chars          | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_this_key_is_definitely_far_too_long_to_be_valid": null } }            |
-      | value is a positive integer       | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_abc1234567890xy": 5 } }                                               |
-      | value is zero                     | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_abc1234567890xy": 0 } }                                               |
-      | value is a boolean                | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_abc1234567890xy": true } }                                            |
+      | case                        | body                                                                                                                                    |
+      | key shorter than 16 chars   | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "short_key": null } }                                           |
+      | key longer than 36 chars    | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_this_key_is_definitely_far_too_long_to_be_valid": null } } |
+      | value is a positive integer | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_abc1234567890xy": 5 } }                                    |
+      | value is zero               | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_abc1234567890xy": 0 } }                                    |
+      | value is a boolean          | { "loan_ids": ["{LOAN_ID}"], "source": "portfolio", "selected_users": { "usr_abc1234567890xy": true } }                                 |
 
   @negative @validation @creator
   Scenario: NEST-002 — user_filters with a key outside the four allowed literals returns 400
@@ -607,9 +606,9 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     And I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
-      | Content-Type        | application/json |
+      | accept              | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
+      | Content-Type        | application/json      |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I authenticate as "creator" slot 0 and remember as "creator0"
@@ -641,9 +640,9 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     And I authenticate as "creator" slot 0 and remember as "creator0"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
-      | Content-Type        | application/json |
+      | accept              | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
+      | Content-Type        | application/json      |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I set the request body:
@@ -674,9 +673,9 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     And I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the request headers:
-      | accept              | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
-      | Content-Type        | application/json |
+      | accept              | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
+      | Content-Type        | application/json      |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I set the request body:
@@ -706,9 +705,9 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json |
-      | authenticationtoken | {AUTH_TOKEN:creator1}     |
-      | Content-Type        | application/json |
+      | accept              | application/json      |
+      | authenticationtoken | {AUTH_TOKEN:creator1} |
+      | Content-Type        | application/json      |
     And I set the query parameters:
       | company_id | {COMPANY_ID:creator1} |
     And I set the request body:
@@ -969,9 +968,9 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     Then the response status code should be one of "201"
     Given I prepare a request
     And I set the request headers:
-      | accept              | application/json |
-      | authenticationtoken | {AUTH_TOKEN:approver0}     |
-      | Content-Type        | application/json |
+      | accept              | application/json       |
+      | authenticationtoken | {AUTH_TOKEN:approver0} |
+      | Content-Type        | application/json       |
     And I set the query parameters:
       | company_id | {COMPANY_ID:approver0} |
     And I set the request body:
@@ -1013,7 +1012,6 @@ Feature: Quick De-Allocation API — POST /recovery/deallocation
     When I send a "POST" request to "/recovery/deallocation"
     Then the response status code should be 200
     And the "quick_deallocation" success response should be valid
-
 
 
   @manual @positive @creator

@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "data",
+    "message"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "profile_details"
+      ],
+      "properties": {
+        "profile_details": {
+          "type": "object",
+          "required": [
+            "created",
+            "created_by",
+            "created_by_contact",
+            "created_by_name",
+            "parent_company_id",
+            "permissions",
+            "profile_description",
+            "profile_id",
+            "profile_name",
+            "updated",
+            "updated_by",
+            "updated_by_contact",
+            "updated_by_name"
+          ],
+          "properties": {
+            "created": {
+              "type": "string"
+            },
+            "created_by": {
+              "type": "string"
+            },
+            "created_by_contact": {
+              "type": "string"
+            },
+            "created_by_name": {
+              "type": "string"
+            },
+            "parent_company_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "permissions": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "levels": {
+                      "type": [
+                        "string",
+                        "array"
+                      ]
+                    },
+                    "meta_data": {
+                      "type": "object",
+                      "required": [
+                        "description",
+                        "name"
+                      ],
+                      "properties": {
+                        "description": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": true
+                    },
+                    "read": {
+                      "type": "boolean"
+                    },
+                    "write": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": true
+                }
+              }
+            },
+            "profile_description": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "profile_id": {
+              "type": "string"
+            },
+            "profile_name": {
+              "type": "string"
+            },
+            "updated": {
+              "type": "string"
+            },
+            "updated_by": {
+              "type": "string"
+            },
+            "updated_by_contact": {
+              "type": "string"
+            },
+            "updated_by_name": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "message": {
+      "type": "string"
+    }
+  }
+}

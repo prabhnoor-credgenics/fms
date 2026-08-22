@@ -1,7 +1,6 @@
 @api @final-status @recovery
 Feature: Final Status API — GET /recovery/final/status/<loan_id>
 
- 
 
   @positive @smoke @creator
   Scenario: GET final status with no allocation_month defaults to Overall
@@ -188,7 +187,6 @@ Feature: Final Status API — GET /recovery/final/status/<loan_id>
     And the response body should contain field "output"
     And the response body should contain field "message" as "auto" with value "success"
 
-  
 
   @negative @creator
   Scenario: GET final status with a single quote embedded in loan_id returns 400
@@ -286,7 +284,6 @@ Feature: Final Status API — GET /recovery/final/status/<loan_id>
     When I send a "GET" request to "/recovery/final/status/BRANCH01/LOAN0001"
     Then the response status code should be 400
     And the response body should contain field "message"
-
 
 
   @positive @performance @creator

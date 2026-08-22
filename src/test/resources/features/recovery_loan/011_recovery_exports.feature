@@ -9,13 +9,13 @@ Feature: Recovery Exports API
   Scenario: List recovery exports for configured company_id
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}                                      |
-      | page_number      | 1                                                 |
-      | page_size        | 10                                                |
-      | export_category  | loan,portfolio_data,portfolio_allocated_users     |
+      | company_id      | {COMPANY_ID}                                  |
+      | page_number     | 1                                             |
+      | page_size       | 10                                            |
+      | export_category | loan,portfolio_data,portfolio_allocated_users |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     And the response content type should be "application/json"
@@ -29,13 +29,13 @@ Feature: Recovery Exports API
   Scenario: Recovery exports API response time should be within threshold
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}                                      |
-      | page_number      | 1                                                 |
-      | page_size        | 10                                                |
-      | export_category  | loan,portfolio_data,portfolio_allocated_users     |
+      | company_id      | {COMPANY_ID}                                  |
+      | page_number     | 1                                             |
+      | page_size       | 10                                            |
+      | export_category | loan,portfolio_data,portfolio_allocated_users |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 200
     And the response time should be less than 5000 milliseconds
@@ -44,12 +44,12 @@ Feature: Recovery Exports API
   Scenario: API should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}                                      |
-      | page_number      | 1                                                 |
-      | page_size        | 10                                                |
-      | export_category  | loan,portfolio_data,portfolio_allocated_users     |
+      | company_id      | {COMPANY_ID}                                  |
+      | page_number     | 1                                             |
+      | page_size       | 10                                            |
+      | export_category | loan,portfolio_data,portfolio_allocated_users |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
@@ -58,13 +58,13 @@ Feature: Recovery Exports API
   Scenario: API should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | invalid_token_12345               |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | invalid_token_12345               |
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}                                      |
-      | page_number      | 1                                                 |
-      | page_size        | 10                                                |
-      | export_category  | loan,portfolio_data,portfolio_allocated_users     |
+      | company_id      | {COMPANY_ID}                                  |
+      | page_number     | 1                                             |
+      | page_size       | 10                                            |
+      | export_category | loan,portfolio_data,portfolio_allocated_users |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
@@ -73,12 +73,12 @@ Feature: Recovery Exports API
   Scenario: API should fail when company_id query parameter is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | page_number      | 1                                                 |
-      | page_size        | 10                                                |
-      | export_category  | loan,portfolio_data,portfolio_allocated_users     |
+      | page_number     | 1                                             |
+      | page_size       | 10                                            |
+      | export_category | loan,portfolio_data,portfolio_allocated_users |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 403
     And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
@@ -87,13 +87,13 @@ Feature: Recovery Exports API
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id       | invalid-company-id                                |
-      | page_number      | 1                                                 |
-      | page_size        | 10                                                |
-      | export_category  | loan,portfolio_data,portfolio_allocated_users     |
+      | company_id      | invalid-company-id                            |
+      | page_number     | 1                                             |
+      | page_size       | 10                                            |
+      | export_category | loan,portfolio_data,portfolio_allocated_users |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
@@ -102,13 +102,13 @@ Feature: Recovery Exports API
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id       | 00000000-0000-0000-0000-000000000000              |
-      | page_number      | 1                                                 |
-      | page_size        | 10                                                |
-      | export_category  | loan,portfolio_data,portfolio_allocated_users     |
+      | company_id      | 00000000-0000-0000-0000-000000000000          |
+      | page_number     | 1                                             |
+      | page_size       | 10                                            |
+      | export_category | loan,portfolio_data,portfolio_allocated_users |
     When I send a "GET" request to "/recovery/exports"
     Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/recovery_exports_error_schema.json"
@@ -123,18 +123,20 @@ Feature: Recovery Exports API
     Then the response status code should be 400
     And the response should match json schema "schemas/invalid_schema.json"
     And the response body should contain field "message" as "auto" with value "invalid company id"
+
   @negative @creator
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/bulk/tasks"
     Then the response status code should be 422
     And the response should match json schema "schemas/invalid_schema.json"
-     And the response body should contain field "message" as "auto" with value "one or more companies not found"
+    And the response body should contain field "message" as "auto" with value "one or more companies not found"
+
   @negative @creator
   Scenario: API should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"

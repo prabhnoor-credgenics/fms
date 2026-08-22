@@ -9,7 +9,6 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
       | Content-Type | application/json |
 
 
-
   @negative @creditline
   Scenario: Request without authenticationtoken header returns 400
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
@@ -48,7 +47,6 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     And the response should match json schema "schemas/creditline/error/creditline_error_schema.json"
 
 
-
   @positive @smoke @creditline @multistep
   Scenario: Upload a transaction then fetch its details returns 200 with output and message "success"
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
@@ -80,7 +78,6 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     And the response should match json schema "schemas/creditline/success/transaction_details_success_schema.json"
 
 
-
   @positive @creditline @multistep @500
   Scenario Outline: attributes selector "<attributes>" is accepted and returns 200 "success"
     Given I authenticate as "creator" for "creditline" slot 0 and remember as "creatorc0"
@@ -100,8 +97,8 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     Then the response status code should be 201
     And I prepare a request
     And I set the query parameters:
-      | company_id | {COMPANY_ID}   |
-      | attributes | <attributes>   |
+      | company_id | {COMPANY_ID} |
+      | attributes | <attributes> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the path parameters:
@@ -112,13 +109,11 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     And the response should match json schema "schemas/creditline/success/transaction_details_success_schema.json"
 
     Examples:
-      | attributes      |
-      | loan_attributes |
-      | emi_schedule    |
+      | attributes            |
+      | loan_attributes       |
+      | emi_schedule          |
       | all                   |
       | additional_attributes |
-
-
 
 
   @positive @creditline @multistep
@@ -140,8 +135,8 @@ Feature: Credit-line Transaction Details — GET /recovery/transaction/details/<
     Then the response status code should be 201
     And I prepare a request
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}         |
-      | allocation_month | <allocation_month>   |
+      | company_id       | {COMPANY_ID}       |
+      | allocation_month | <allocation_month> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the path parameters:

@@ -1,7 +1,6 @@
 @api @user @role-details
 Feature: Roles — GET /user/roles/<role_id> (get one role)
 
-  
 
   @positive @smoke @creator @role-details
   Scenario: Get a single role's details returns 200

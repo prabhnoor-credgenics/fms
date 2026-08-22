@@ -2,7 +2,6 @@
 Feature: User Details — GET /user/users/
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -85,7 +84,6 @@ Feature: User Details — GET /user/users/
       """
     When I send a "POST" request to "/user/users/"
     Then the response status code should be 405
-
 
 
   @positive @creator

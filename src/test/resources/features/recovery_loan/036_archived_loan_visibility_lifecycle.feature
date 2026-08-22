@@ -114,7 +114,6 @@ Feature: Archived loan visibility lifecycle
     And the response body should not contain text "{LOAN_ID}"
 
 
-
   @manual @creator @get-loan
   Scenario: Archived loan visibility lifecycle verified via get-loan API
     Given scenario loan id is unique

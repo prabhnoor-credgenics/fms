@@ -22,8 +22,8 @@ Feature: User Variables — GET /user/variables/
   Scenario Outline: include_user_level_variables=<flag> returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id                    | {COMPANY_ID} |
-      | include_user_level_variables  | <flag>       |
+      | company_id                   | {COMPANY_ID} |
+      | include_user_level_variables | <flag>       |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
@@ -39,8 +39,8 @@ Feature: User Variables — GET /user/variables/
   Scenario: include_all_default_variables=true returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id                   | {COMPANY_ID} |
-      | include_all_default_variables | true        |
+      | company_id                    | {COMPANY_ID} |
+      | include_all_default_variables | true         |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/variables/"
@@ -161,8 +161,8 @@ Feature: User Variables — GET /user/variables/
   Scenario: Injection strings in flag params are coerced to false and return 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id                    | {COMPANY_ID}              |
-      | include_user_level_variables  | ' OR '1'='1               |
+      | company_id                    | {COMPANY_ID}        |
+      | include_user_level_variables  | ' OR '1'='1         |
       | include_all_default_variables | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
@@ -208,10 +208,10 @@ Feature: User Variables — GET /user/variables/
     And the response body should not be empty
 
     Examples:
-      | label         | value                         |
-      | non-uuid text | not-a-valid-uuid              |
-      | sql injection | ' OR '1'='1                   |
-      | xss payload   | <xss>alert(1)</xss>     |
+      | label         | value                     |
+      | non-uuid text | not-a-valid-uuid          |
+      | sql injection | ' OR '1'='1               |
+      | xss payload   | <xss>alert(1)</xss>       |
       | long unicode  | 名前テスト-{RANDOM_STRING:200} |
 
   @negative @creator

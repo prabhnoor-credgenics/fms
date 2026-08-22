@@ -86,7 +86,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response body should not be empty
 
 
-
   @negative @creator
   Scenario: TC-COMP-001 — Missing company_id returns 403
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -148,7 +147,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     When I send a "POST" request to "/recovery/data-operations"
     Then the response status code should be 422
     And the response body should not be empty
-
 
 
   @positive @creator
@@ -277,7 +275,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response body should not be empty
 
 
-
   @positive @creator
   Scenario: TC-OP-001 — operation_type "archive" returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -360,7 +357,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     When I send a "POST" request to "/recovery/data-operations"
     Then the response status code should be 400
     Then the response body should not be empty
-
 
 
   @positive @creator
@@ -468,7 +464,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response body should not be empty
 
 
-
   @positive @creator
   Scenario: TC-MONTH-001 — Valid allocation_month "2026-5-01" returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -574,7 +569,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response body should not be empty
 
 
-
   @positive @creator
   Scenario: TC-MODE-001 — execution_mode "real-time" explicit — synchronous v1 path returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -663,7 +657,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response body should not be empty
 
 
-
   @positive @creator
   Scenario: TC-SRC-001 — source absent defaults to "unknown" — operation succeeds
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -728,7 +721,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     When I send a "POST" request to "/recovery/data-operations"
     Then the response status code should be 200
     Then the response body should not be empty
-
 
 
   @negative @creator
@@ -809,7 +801,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     When I send a "POST" request to "/recovery/data-operations"
     Then the response status code should be 400
     Then the response body should not be empty
-
 
 
   @positive @creator
@@ -952,7 +943,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response body should not be empty
 
 
-
   @negative @creator
   Scenario Outline: TC-MISS-00x — Body missing <absent_field> returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -969,11 +959,11 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response body should not be empty
 
     Examples:
-      | absent_field     | body                                                                                                                                          |
-      | category         | {"company_id": "{COMPANY_ID}", "operation_type": "archive", "data": ["{LOAN_ID}"], "allocation_month": "2026-5-01"}                          |
-      | operation_type   | {"company_id": "{COMPANY_ID}", "category": "loan", "data": ["{LOAN_ID}"], "allocation_month": "2026-5-01"}                                   |
-      | data             | {"company_id": "{COMPANY_ID}", "category": "loan", "operation_type": "archive", "allocation_month": "2026-5-01"}                             |
-      | allocation_month | {"company_id": "{COMPANY_ID}", "category": "loan", "operation_type": "archive", "data": ["{LOAN_ID}"]}                                       |
+      | absent_field     | body                                                                                                                |
+      | category         | {"company_id": "{COMPANY_ID}", "operation_type": "archive", "data": ["{LOAN_ID}"], "allocation_month": "2026-5-01"} |
+      | operation_type   | {"company_id": "{COMPANY_ID}", "category": "loan", "data": ["{LOAN_ID}"], "allocation_month": "2026-5-01"}          |
+      | data             | {"company_id": "{COMPANY_ID}", "category": "loan", "operation_type": "archive", "allocation_month": "2026-5-01"}    |
+      | allocation_month | {"company_id": "{COMPANY_ID}", "category": "loan", "operation_type": "archive", "data": ["{LOAN_ID}"]}              |
 
   @negative @creator
   Scenario: TC-MISS-005 — Body missing company_id returns 403
@@ -989,7 +979,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     When I send a "POST" request to "/recovery/data-operations"
     Then the response status code should be 403
     Then the response body should not be empty
-
 
 
   @negative @creator
@@ -1015,11 +1004,10 @@ Feature: Data Operations API — POST /recovery/data-operations
     Then the response body should not be empty
 
     Examples:
-      | field          | invalid_value   |
-      | category       | orders          |
-      | operation_type | delete          |
-      | execution_mode | instant         |
-
+      | field          | invalid_value |
+      | category       | orders        |
+      | operation_type | delete        |
+      | execution_mode | instant       |
 
 
   @positive @creator
@@ -1107,7 +1095,6 @@ Feature: Data Operations API — POST /recovery/data-operations
     When I send a "POST" request to "/recovery/data-operations"
     Then the response status code should be 202
     Then the response body should not be empty
-
 
 
   @negative @creator

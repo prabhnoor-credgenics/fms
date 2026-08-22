@@ -92,8 +92,8 @@ Feature: Linked Loans API
       | company_id       | {COMPANY_ID}          |
       | allocation_month | overall               |
       | group_id         | linked-loans-auto-grp |
-      | page_number      |                     1 |
-      | page_size        |                    10 |
+      | page_number      | 1                     |
+      | page_size        | 10                    |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be 200
     And the response message should be "success"
@@ -117,10 +117,10 @@ Feature: Linked Loans API
   Scenario: GET linked loans should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}                         |
-      | allocation_month | overall                              |
+      | company_id       | {COMPANY_ID} |
+      | allocation_month | overall      |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be 400
     And the response body should contain field "message" as "auto" with value "invalid authentication token"
@@ -132,8 +132,8 @@ Feature: Linked Loans API
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | invalid_token_12345               |
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}                         |
-      | allocation_month | overall                              |
+      | company_id       | {COMPANY_ID} |
+      | allocation_month | overall      |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be one of "400"
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
@@ -178,7 +178,7 @@ Feature: Linked Loans API
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/invalid_schema.json"
     And the response body should contain field "message" as "auto" with value "Invalid company_id"
-    
+
   @negative @creator @500
   Scenario: GET linked loans should fail when allocation_month does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -186,8 +186,8 @@ Feature: Linked Loans API
       | accept              | application/json, text/plain, */* |
       | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}                                        |
-      | allocation_month |   invalid_allocation_month                          |
+      | company_id       | {COMPANY_ID}             |
+      | allocation_month | invalid_allocation_month |
     When I send a "GET" request to "/recovery/linked/loans"
     Then the response status code should be 422
     And the response body should contain field "message" as "auto" with value "one or more companies not found"

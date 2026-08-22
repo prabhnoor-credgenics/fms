@@ -41,8 +41,8 @@ Feature: Saved Filter API
   Scenario: API should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept              | application/json, text/plain, */*    |
-      | authenticationtoken | {AUTH_TOKEN}                         |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | 00000000-0000-0000-0000-000000000000 |
     When I send a "GET" request to "/recovery/move-loan-restriction"

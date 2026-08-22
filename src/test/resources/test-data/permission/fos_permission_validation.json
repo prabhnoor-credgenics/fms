@@ -1,0 +1,116 @@
+{
+  "permissions": [
+    {
+      "module": "fos",
+      "permission": "branch_collection_management",
+      "permission_name": "branch_collection_management",
+      "permission_description": "User would be able to view the Branch Collection Managment section and sub-tabs within this section",
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "change_requests_module",
+      "permission_name": "change_requests_module",
+      "permission_description": "Used for viewing and responding to edit/cancel verification requests",
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "deferred_verification",
+      "permission_name": "deferred_verification",
+      "permission_description": "Allow user to mark 'Approved As Deferred' in deposit cash verification",
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "deposit_verification_module",
+      "permission_name": "deposit_verification_module",
+      "permission_description": "Used for viewing and responding to deposit verification requests",
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "field_collection_dashboard",
+      "permission_name": "field_collection_dashboard",
+      "permission_description": "User would be able to view the Field Collection Dashboard tab and sub-tabs within this section",
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "fos",
+      "permission": "form_management",
+      "permission_name": "form_management",
+      "permission_description": "User would be able to view the Form Management tab and sub-tabs within this section",
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "fos_settings_module",
+      "permission_name": "fos_settings_module",
+      "permission_description": "Used for viewing and updating fos settings",
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "lead_addition",
+      "permission_name": "add_new_lead",
+      "permission_description": "Used for adding sales leads from fos app",
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "live_agent_tracking_module",
+      "permission_name": "live_agent_tracking_module",
+      "permission_description": "Used for viewing live agent location",
+      "read": true,
+      "write": false
+    },
+    {
+      "module": "fos",
+      "permission": "non_allocated_loan_access",
+      "permission_name": "non_allocated_loan_access",
+      "permission_description": "Used to allow the agents to perform visits on loans beyond their general allocation",
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "online_verification_module",
+      "permission_name": "online_verification_module",
+      "permission_description": "Used for viewing and responding to online deposit verification requests",
+      "read": true,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "restrict_collection_form",
+      "permission_name": "restrict_collection_form",
+      "permission_description": "restrict collection form access",
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "restrict_document_upload_from_gallery",
+      "permission_name": "restrict_document_upload_from_gallery",
+      "permission_description": "Restrict Field Users from uploading documents from the gallery",
+      "read": false,
+      "write": true
+    },
+    {
+      "module": "fos",
+      "permission": "visibility_basis_of_loan_allocation",
+      "permission_name": "visibility_basis_of_loan_allocation",
+      "permission_description": "allow the user to view data basis loan allocation",
+      "read": false,
+      "write": true
+    }
+  ]
+}

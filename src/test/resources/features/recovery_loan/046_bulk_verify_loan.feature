@@ -2,7 +2,6 @@
 Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And scenario loan id is unique
@@ -232,14 +231,14 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
     And the "bulk_verify_loan" failure response should be valid
 
     Examples:
-      | case                      | body                                                       |
-      | company_id absent         | { "loan_ids": ["{LOAN_ID}"] }                              |
-      | company_id non-uuid       | { "company_id": "not-a-uuid", "loan_ids": ["{LOAN_ID}"] }  |
-      | company_id null           | { "company_id": null, "loan_ids": ["{LOAN_ID}"] }          |
-      | loan_ids absent           | { "company_id": "{COMPANY_ID}" }                           |
-      | loan_ids empty list       | { "company_id": "{COMPANY_ID}", "loan_ids": [] }           |
-      | loan_ids null             | { "company_id": "{COMPANY_ID}", "loan_ids": null }         |
-      | loan_ids string not list  | { "company_id": "{COMPANY_ID}", "loan_ids": "L1" }         |
+      | case                     | body                                                      |
+      | company_id absent        | { "loan_ids": ["{LOAN_ID}"] }                             |
+      | company_id non-uuid      | { "company_id": "not-a-uuid", "loan_ids": ["{LOAN_ID}"] } |
+      | company_id null          | { "company_id": null, "loan_ids": ["{LOAN_ID}"] }         |
+      | loan_ids absent          | { "company_id": "{COMPANY_ID}" }                          |
+      | loan_ids empty list      | { "company_id": "{COMPANY_ID}", "loan_ids": [] }          |
+      | loan_ids null            | { "company_id": "{COMPANY_ID}", "loan_ids": null }        |
+      | loan_ids string not list | { "company_id": "{COMPANY_ID}", "loan_ids": "L1" }        |
 
 
   @negative @creator
@@ -279,7 +278,7 @@ Feature: Bulk Verify Loan — POST /recovery/bulk/verify-loan
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the request headers:
-      | Content-Type        | application/json                                  |
+      | Content-Type        | application/json                                 |
       | authenticationtoken | eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.expired.sig |
     And I set the request body:
       """

@@ -1,7 +1,6 @@
 @api @user @roles-create
 Feature: Roles — POST /user/roles/ (create role)
 
- 
 
   @positive @smoke @creator @roles-write
   Scenario: Create a role reporting to an existing role returns 201
@@ -169,15 +168,15 @@ Feature: Roles — POST /user/roles/ (create role)
     And the "roles" failure response should be valid
 
     Examples:
-      | case                          | body                                                                  |
-      | missing role_name             | { "reports_to_role_id": "abcd1234efgh5678" }                          |
-      | missing reports_to_role_id    | { "role_name": "autoRoleX1" }                                          |
-      | role_name empty string        | { "role_name": "", "reports_to_role_id": "abcd1234efgh5678" }         |
-      | role_name non-alphanumeric    | { "role_name": "team@lead", "reports_to_role_id": "abcd1234efgh5678" }|
-      | role_name special chars       | { "role_name": "<b>x</b>", "reports_to_role_id": "abcd1234efgh5678" } |
-      | reports_to_role_id short      | { "role_name": "autoRoleX2", "reports_to_role_id": "short" }          |
-      | reports_to_role_id non-alnum  | { "role_name": "autoRoleX3", "reports_to_role_id": "abcd-234-fgh-678" }|
-      | tenant_type invalid enum      | { "role_name": "autoRoleX4", "reports_to_role_id": "abcd1234efgh5678", "tenant_type": "bogus" } |
+      | case                         | body                                                                                            |
+      | missing role_name            | { "reports_to_role_id": "abcd1234efgh5678" }                                                    |
+      | missing reports_to_role_id   | { "role_name": "autoRoleX1" }                                                                   |
+      | role_name empty string       | { "role_name": "", "reports_to_role_id": "abcd1234efgh5678" }                                   |
+      | role_name non-alphanumeric   | { "role_name": "team@lead", "reports_to_role_id": "abcd1234efgh5678" }                          |
+      | role_name special chars      | { "role_name": "<b>x</b>", "reports_to_role_id": "abcd1234efgh5678" }                           |
+      | reports_to_role_id short     | { "role_name": "autoRoleX2", "reports_to_role_id": "short" }                                    |
+      | reports_to_role_id non-alnum | { "role_name": "autoRoleX3", "reports_to_role_id": "abcd-234-fgh-678" }                         |
+      | tenant_type invalid enum     | { "role_name": "autoRoleX4", "reports_to_role_id": "abcd1234efgh5678", "tenant_type": "bogus" } |
 
   @negative @creator @roles-write
   Scenario: Create a role with a null role_name is rejected
@@ -412,7 +411,7 @@ Feature: Roles — POST /user/roles/ (create role)
     And the "roles" failure response should be valid
 
     Examples:
-      | case           | body                                                                                   |
+      | case           | body                                                                                    |
       | apostrophe     | { "role_name": "o'brien", "reports_to_role_id": "abcd1234efgh5678" }                    |
       | curly braces   | { "role_name": "role{admin}", "reports_to_role_id": "abcd1234efgh5678" }                |
       | question mark  | { "role_name": "role?name", "reports_to_role_id": "abcd1234efgh5678" }                  |
@@ -438,7 +437,7 @@ Feature: Roles — POST /user/roles/ (create role)
     And the "roles" failure response should be valid
 
     Examples:
-      | case                          | body                                                                                                   |
+      | case                          | body                                                                                                    |
       | reports_to numeric            | { "role_name": "autoRoleTy1", "reports_to_role_id": 1234567890123456 }                                  |
       | reports_to boolean            | { "role_name": "autoRoleTy2", "reports_to_role_id": true }                                              |
       | reports_to null               | { "role_name": "autoRoleTy3", "reports_to_role_id": null }                                              |
@@ -543,6 +542,81 @@ Feature: Roles — POST /user/roles/ (create role)
     Then the response status code should be one of "201,400"
 
     Examples:
-      | case            | role_name                                                                                              |
+      | case            | role_name                                                                                               |
       | unicode letters | rôlé{RANDOM_STRING:4}                                                                                   |
       | over-long name  | autoRole{RANDOM_STRING:8}abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz |
+
+@negative @validation @approver @roles-list
+Scenario Outline: Role creation fails when role name contains non-alphanumeric characters
+Given I authenticate as "approver" slot 0 and remember as "approver0"
+    And I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request body from file "test-data/create_role_name.json"
+    And I update JSON field "role_name" as "auto" to "<role_name>"
+    When I send a "POST" request to "/user/roles/"
+    Then the response status code should be 400
+    And the response should match json schema "schemas/user/error/role_create_validation_error_schema.json"
+    And the response message should be "Assertion failed, must be alphanumeric"
+
+Examples:
+| role_name |
+| 333# |
+| **** |
+| Admin!|
+| Test$ |
+| User% |
+| Team& |
+| Dev* |
+| Role+ |
+| Role= |
+| Role? |
+| Role/ |
+| Role: |
+| Role; |
+| Role~ |
+| Role` |
+| Role. |
+
+@negative @duplicate @approver @role-create 
+Scenario Outline: Role creation fails when the role name already exists
+Given I authenticate as "approver" slot 0 and remember as "approver0"
+    And I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+    And I set the request body from file "test-data/create_role_name.json"
+    And I update JSON field "role_name" as "auto" to "<role_name>"
+    When I send a "POST" request to "/user/roles/"
+    Then the response status code should be 409
+    And the response message should be "A role with provided name already exists, please provide a different name"
+
+    Examples:
+      | role_name |
+      | role      |
+      | role 1    |
+      | role 11   |
+      | role 111  |
+      | role 112  |
+      | role 12   |
+      | role 111  |
+
+  @positive @approver @role-hierarchy
+  Scenario: Validate role hierarchy API response
+    And I prepare a request
+    And I set the request headers:
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
+
+    And I set the query parameters:
+      | company_id | {COMPANY_ID} |
+
+    When I send a "GET" request to "/user/roles/hierarchy"
+    Then the response status code should be 200
+    And the response should match json schema "schemas/user/success/role_hierarchy_success_schema.json"
+    And the response message should be "role hierarchy fetched successfully"

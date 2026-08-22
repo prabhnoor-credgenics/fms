@@ -2,10 +2,8 @@
 Feature: Profiles List — GET /user/profiles/
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
-
 
 
   @positive @smoke @creator
@@ -70,8 +68,8 @@ Feature: Profiles List — GET /user/profiles/
   Scenario: include_parent_company_profiles=true returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id                       | {COMPANY_ID} |
-      | include_parent_company_profiles  | true         |
+      | company_id                      | {COMPANY_ID} |
+      | include_parent_company_profiles | true         |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/profiles/"
@@ -157,7 +155,6 @@ Feature: Profiles List — GET /user/profiles/
     When I send a "GET" request to "/user/profiles/"
     Then the response status code should be 400
     And the response body should not be empty
-
 
 
   @positive @creator
@@ -302,8 +299,8 @@ Feature: Profiles List — GET /user/profiles/
       | SELF                                             |
       | Shared                                           |
       | self' OR '1'='1                                  |
-      | <xss>alert(1)</xss>                        |
-      | セルフ                                            |
+      | <xss>alert(1)</xss>                              |
+      | セルフ                                              |
       | selfselfselfselfselfselfselfselfselfselfselfself |
 
   @negative @creator

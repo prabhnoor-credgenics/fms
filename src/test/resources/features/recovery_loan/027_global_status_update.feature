@@ -68,7 +68,6 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     Then the response body should not be empty
 
 
-
   @negative @creator
   Scenario: TC-LOAN-001 — loan_id path value "undefined" returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -172,7 +171,6 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     When I send a "PATCH" request to "/recovery/global-status/update/NBFC-LOAN-001"
     Then the response status code should be 400
     Then the response body should not be empty
-
 
 
   @negative @creator
@@ -284,7 +282,6 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     When I send a "PATCH" request to "/recovery/global-status/update/{loanId}"
     Then the response status code should be 400
     Then the response body should not be empty
-
 
 
   @positive @creator
@@ -463,7 +460,6 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     When I send a "PATCH" request to "/recovery/global-status/update/{loanId}"
     Then the response status code should be 400
     Then the response body should not be empty
-
 
 
   @negative @creator
@@ -657,7 +653,6 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     Then the response body should not be empty
 
 
-
   @positive @creator
   Scenario: TC-SHAPE-001 — Success response always contains exactly message and output keys
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -705,7 +700,6 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     Then the response body should not be empty
     And the response body should contain field "output"
     And the response body should not be empty
-
 
 
   @negative @creator
@@ -820,7 +814,6 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     Then the response body should not be empty
 
 
-
   @negative @creator
   Scenario Outline: TC-LVAL-00x — Reserved loan_id value "<loan_id_value>" returns 400
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -877,7 +870,6 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
       | disposition  |
 
 
-
   @negative @creator
   Scenario Outline: TC-SVAL-00x — <description> returns 400 No status provided
     Given I authenticate as "creator" slot 0 and remember as "creator0"
@@ -898,12 +890,11 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     Then the response body should not be empty
 
     Examples:
-      | description                              | body                                                    |
-      | status_name absent, status_id absent     | {"module": "global"}                                    |
-      | status_name null, status_id absent       | {"module": "global", "status_name": null}               |
-      | status_name absent, status_id null       | {"module": "global", "status_id": null}                 |
-      | status_name null, status_id null         | {"module": "global", "status_name": null, "status_id": null} |
-
+      | description                          | body                                                         |
+      | status_name absent, status_id absent | {"module": "global"}                                         |
+      | status_name null, status_id absent   | {"module": "global", "status_name": null}                    |
+      | status_name absent, status_id null   | {"module": "global", "status_id": null}                      |
+      | status_name null, status_id null     | {"module": "global", "status_name": null, "status_id": null} |
 
 
   @positive @performance @creator
@@ -927,7 +918,6 @@ Feature: Global Status Update API — PATCH /recovery/global-status/update/<loan
     When I send a "PATCH" request to "/recovery/global-status/update/{loanId}"
     Then the response status code should be 400
     Then the response time should be within configured limit
-
 
 
   @negative @creator

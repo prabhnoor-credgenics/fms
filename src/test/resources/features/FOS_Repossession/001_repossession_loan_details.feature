@@ -2,13 +2,12 @@
 Feature: Repossession Loan Details API — GET /repossession/loan-details
 
 
-
   @positive @smoke @creator
   Scenario: TC-POS-001 — Valid request with default pagination returns 200
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I prepare a request
     And I set the request headers:
-      | authenticationtoken | {AUTH_TOKEN} |
+      | authenticationtoken | {AUTH_TOKEN}     |
       | accept              | application/json |
     And I set the query parameters:
       | company_id   | {COMPANY_ID} |
@@ -143,7 +142,6 @@ Feature: Repossession Loan Details API — GET /repossession/loan-details
     And the response should match json schema "schemas/recovery/success/repossession_loan_details_success_schema.json"
 
 
-
   @negative
   Scenario: TC-AUTH-001 — Missing authenticationtoken header returns 401
     Given I prepare a request
@@ -187,7 +185,6 @@ Feature: Repossession Loan Details API — GET /repossession/loan-details
       | search_value |              |
     When I send a "GET" request to "/repossession/loan-details"
     Then the response status code should be one of "400, 401"
-
 
 
   @negative @creator
@@ -249,7 +246,6 @@ Feature: Repossession Loan Details API — GET /repossession/loan-details
       | search_value |                                      |
     When I send a "GET" request to "/repossession/loan-details"
     Then the response status code should be one of "422"
-
 
 
   @negative @creator
@@ -333,10 +329,10 @@ Feature: Repossession Loan Details API — GET /repossession/loan-details
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     And I set the query parameters:
-      | company_id   | {COMPANY_ID}          |
-      | page_number  | 1                     |
-      | page_size    | 10                    |
-      | search_by    | loan_id               |
+      | company_id   | {COMPANY_ID}           |
+      | page_number  | 1                      |
+      | page_size    | 10                     |
+      | search_by    | loan_id                |
       | search_value | '; DROP TABLE loans;-- |
     When I send a "GET" request to "/repossession/loan-details"
     Then the response status code should be one of "200, 400"

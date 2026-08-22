@@ -2,7 +2,6 @@
 Feature: Assigned Companies — GET /user/companies/<user_id>
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -217,8 +216,8 @@ Feature: Assigned Companies — GET /user/companies/<user_id>
     And I set the path parameters:
       | user_id | {CREATOR_USER_ID} |
     And I set the query parameters:
-      | company_id | {COMPANY_ID} |
-      | source | <xss>alert(1)</xss> |
+      | company_id | {COMPANY_ID}        |
+      | source     | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
     When I send a "GET" request to "/user/companies/{user_id}"

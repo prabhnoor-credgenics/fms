@@ -41,15 +41,15 @@ Feature: Recovery Company API and Company Creation Flow
     And the response should match json schema "schemas/company_creation/error/company_creation_error_schema.json"
 
     Examples:
-      | field_name                        |
-      | company_name                      |
-      | trademark                         |
-      | company_type                      |
-      | company_code                      |
-      | gst_number                        |
-      | is_test_company                   |
-      | authorized_representative_name    |
-      | authorized_representative_email   |
+      | field_name                      |
+      | company_name                    |
+      | trademark                       |
+      | company_type                    |
+      | company_code                    |
+      | gst_number                      |
+      | is_test_company                 |
+      | authorized_representative_name  |
+      | authorized_representative_email |
 
   @negative @company-creation-step3 @chief-admin @requires-clean-state
   Scenario Outline: Step 3 should fail when mandatory admin field <field_name> is missing
@@ -60,8 +60,8 @@ Feature: Recovery Company API and Company Creation Flow
     And the response should match json schema "schemas/company_creation/error/company_creation_error_schema.json"
 
     Examples:
-      | field_name  |
-      | first_name  |
+      | field_name |
+      | first_name |
 
   @negative @company-creation-step3 @chief-admin @requires-clean-state
   Scenario: Step 3 should fail when email is missing and mobile is not provided
@@ -80,17 +80,16 @@ Feature: Recovery Company API and Company Creation Flow
     And the response should match json schema "schemas/company_creation/error/company_creation_error_schema.json"
 
 
-
   @positive @creator @get-company
   Scenario: Get full company details with bifurcation prefix true
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id          | {COMPANY_ID} |
-      | bifurcation_prefix  | true         |
+      | company_id         | {COMPANY_ID} |
+      | bifurcation_prefix | true         |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response message should be "success"
@@ -102,12 +101,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Get full company details with bifurcation prefix false
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id          | {COMPANY_ID} |
-      | bifurcation_prefix  | false        |
+      | company_id         | {COMPANY_ID} |
+      | bifurcation_prefix | false        |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response message should be "success"
@@ -117,12 +116,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Get company details with specific company_key is_amount_bifurcation_enabled
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id    | {COMPANY_ID}                  |
-      | company_keys  | is_amount_bifurcation_enabled |
+      | company_id   | {COMPANY_ID}                  |
+      | company_keys | is_amount_bifurcation_enabled |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
@@ -132,13 +131,13 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Get company details with is_amount_bifurcation_enabled and bifurcation prefix
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id    | {COMPANY_ID}                  |
-      | company_keys  | is_amount_bifurcation_enabled |
-      | bifurcation_prefix | false                    |
+      | company_id         | {COMPANY_ID}                  |
+      | company_keys       | is_amount_bifurcation_enabled |
+      | bifurcation_prefix | false                         |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
@@ -148,12 +147,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Get company details filtered by module_name payment
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id   | {COMPANY_ID} |
-      | module_name  | payment      |
+      | company_id  | {COMPANY_ID} |
+      | module_name | payment      |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
@@ -162,12 +161,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Get company details filtered by module_name fos
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id   | {COMPANY_ID} |
-      | module_name  | fos          |
+      | company_id  | {COMPANY_ID} |
+      | module_name | fos          |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
@@ -176,12 +175,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Get company details filtered by module_name settlement
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id   | {COMPANY_ID} |
-      | module_name  | settlement   |
+      | company_id  | {COMPANY_ID} |
+      | module_name | settlement   |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
@@ -190,29 +189,28 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Get company details with company_key and bifurcation_prefix combined
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id          | {COMPANY_ID}              |
-      | company_keys        | is_amount_bifurcation_enabled |
-      | bifurcation_prefix  | true                      |
+      | company_id         | {COMPANY_ID}                  |
+      | company_keys       | is_amount_bifurcation_enabled |
+      | bifurcation_prefix | true                          |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response should match json schema "schemas/recovery/success/recovery_company_filtered_success_schema.json"
-
 
 
   @negative @auth @get-company
   Scenario: GET should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | invalid_token_12345 |
+      | Content-Type        | application/json    |
+      | accept              | application/json    |
+      | authenticationtoken | invalid_token_12345 |
     And I set the query parameters:
-      | company_id          | {COMPANY_ID} |
-      | bifurcation_prefix  | true         |
+      | company_id         | {COMPANY_ID} |
+      | bifurcation_prefix | true         |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
@@ -221,11 +219,11 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: GET should fail when company_id is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | bifurcation_prefix  | true |
+      | bifurcation_prefix | true |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 403
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
@@ -234,12 +232,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: GET should fail when company_id is invalid UUID format
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id          | invalid-company-id |
-      | bifurcation_prefix  | true               |
+      | company_id         | invalid-company-id |
+      | bifurcation_prefix | true               |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
@@ -248,12 +246,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: GET should fail when company_id does not exist
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id          | 00000000-0000-0000-0000-000000000000 |
-      | bifurcation_prefix  | true                                 |
+      | company_id         | 00000000-0000-0000-0000-000000000000 |
+      | bifurcation_prefix | true                                 |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 422
     And the response should match json schema "schemas/recovery/error/recovery_company_error_schema.json"
@@ -262,12 +260,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: GET should fail with invalid company_keys value
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id    | {COMPANY_ID}        |
-      | company_keys  | invalid_key_xyz     |
+      | company_id   | {COMPANY_ID}    |
+      | company_keys | invalid_key_xyz |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 400
     And the response body should not be empty
@@ -276,12 +274,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: GET should fail with invalid module_name value
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id   | {COMPANY_ID}  |
-      | module_name  | invalid_module |
+      | company_id  | {COMPANY_ID}   |
+      | module_name | invalid_module |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 400
     And the response body should not be empty
@@ -290,12 +288,12 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario Outline: GET should return 200 for non-boolean bifurcation_prefix string values
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id          | {COMPANY_ID}         |
-      | bifurcation_prefix  | <bifurcation_prefix> |
+      | company_id         | {COMPANY_ID}         |
+      | bifurcation_prefix | <bifurcation_prefix> |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 200
     And the response body should not be empty
@@ -309,25 +307,24 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: GET should return 400 when bifurcation_prefix is null
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the query parameters:
-      | company_id          | {COMPANY_ID}   |
-      | bifurcation_prefix  | null           |
+      | company_id         | {COMPANY_ID} |
+      | bifurcation_prefix | null         |
     When I send a "GET" request to "/recovery/company"
     Then the response status code should be 400
     And the response body should not be empty
-
 
 
   @positive @creator @put-company
   Scenario: Update company enable_auto_calculation to true
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -344,9 +341,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Update company enable_auto_calculation to false
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -362,9 +359,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Update company show_balance_claim_amount flag
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -380,9 +377,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Update company payment_allocation_month
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -398,9 +395,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Enable amount bifurcation with payment module
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -419,9 +416,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Enable amount bifurcation with multiple modules
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -441,9 +438,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: Update multiple company fields in single request
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -458,14 +455,13 @@ Feature: Recovery Company API and Company Creation Flow
     And the response should match json schema "schemas/recovery/success/recovery_company_put_success_schema.json"
 
 
-
   @negative @put-company @creator
   Scenario: PUT should fail when company_id is missing from body
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -480,9 +476,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should fail when company_id is invalid UUID
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -498,9 +494,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should fail or error when amount_bifurcation_modules has invalid module_name
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -518,8 +514,8 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should fail without authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type  | application/json |
-      | accept        | application/json |
+      | Content-Type | application/json |
+      | accept       | application/json |
     And I set the request body:
       """
       {
@@ -535,9 +531,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | invalid_token_xyz |
+      | Content-Type        | application/json  |
+      | accept              | application/json  |
+      | authenticationtoken | invalid_token_xyz |
     And I set the request body:
       """
       {
@@ -553,9 +549,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should return 200 when enabling bifurcation with fos module only
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -573,9 +569,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should return 200 when enabling bifurcation with settlement module only
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -593,9 +589,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should return 200 when enabling bifurcation with all modules disabled
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -614,9 +610,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should return 200 when bifurcation enabled with empty modules array
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -633,9 +629,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should return 200 when bifurcation modules array contains duplicate module names
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -653,9 +649,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should return 200 when bifurcation module_name is null
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {
@@ -673,9 +669,9 @@ Feature: Recovery Company API and Company Creation Flow
   Scenario: PUT should return 200 when disabling bifurcation while providing modules array
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | Content-Type         | application/json |
-      | accept               | application/json |
-      | authenticationtoken  | {AUTH_TOKEN}     |
+      | Content-Type        | application/json |
+      | accept              | application/json |
+      | authenticationtoken | {AUTH_TOKEN}     |
     And I set the request body:
       """
       {

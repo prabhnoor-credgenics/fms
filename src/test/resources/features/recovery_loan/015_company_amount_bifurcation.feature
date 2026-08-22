@@ -6,13 +6,12 @@ Feature: Company Amount Bifurcation Variables API
     And I prepare a request
 
 
-
   @positive @smoke @chief-admin
   Scenario: Get amount bifurcation variables for configured company_id
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
@@ -24,8 +23,8 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: Get amount bifurcation variables with bifurcation_prefix true
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id         | {COMPANY_ID} |
       | bifurcation_prefix | true         |
@@ -37,8 +36,8 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: Get amount bifurcation variables with include_deleted true
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id      | {COMPANY_ID} |
       | include_deleted | true         |
@@ -50,8 +49,8 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: Amount bifurcation GET response time should be within threshold
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
@@ -62,7 +61,7 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: GET amount bifurcation should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
@@ -73,8 +72,8 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: GET amount bifurcation should fail with invalid authentication token
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | invalid_token_12345               |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | invalid_token_12345               |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
@@ -85,21 +84,20 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: GET amount bifurcation should fail when company_id is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     When I send a "GET" request to "/recovery/company/amount-bifurcation"
     Then the response status code should be 400
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
-
 
 
   @positive @create @chief-admin
   Scenario: Add a variable to amount bifurcation
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -116,9 +114,9 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: POST amount bifurcation should fail when variable_id is missing
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -148,14 +146,13 @@ Feature: Company Amount Bifurcation Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @positive @update @chief-admin @500
   Scenario: Reorder amount bifurcation variables via PATCH
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -171,9 +168,9 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: PATCH amount bifurcation should fail when variables_order is missing
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -189,9 +186,9 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: PATCH amount bifurcation should fail when variables_order is empty
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the request body:
       """
       {
@@ -221,14 +218,13 @@ Feature: Company Amount Bifurcation Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @positive @update @chief-admin
   Scenario: Update a specific amount bifurcation variable properties via PATCH
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
-      | Content-Type         | application/json                  |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
+      | Content-Type        | application/json                  |
     And I set the path parameters:
       | variable_id | 00000000-0000-0000-0000-000000000001 |
     And I set the request body:
@@ -262,13 +258,12 @@ Feature: Company Amount Bifurcation Variables API
     And the response should match json schema "schemas/recovery/error/recovery_variables_error_schema.json"
 
 
-
   @positive @delete @chief-admin
   Scenario: Delete a specific amount bifurcation variable
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -281,8 +276,8 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: DELETE amount bifurcation variable should fail for non-existent variable_id
     Given I authenticate as "chief-admin" slot 0 and remember as "chiefadmin0"
     And I set the request headers:
-      | accept               | application/json, text/plain, */* |
-      | authenticationtoken  | {AUTH_TOKEN}                      |
+      | accept              | application/json, text/plain, */* |
+      | authenticationtoken | {AUTH_TOKEN}                      |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:
@@ -295,7 +290,7 @@ Feature: Company Amount Bifurcation Variables API
   Scenario: DELETE amount bifurcation variable should fail when authentication token is missing
     Given I authenticate as "creator" slot 0 and remember as "creator0"
     And I set the request headers:
-      | accept       | application/json, text/plain, */* |
+      | accept | application/json, text/plain, */* |
     And I set the query parameters:
       | company_id | {COMPANY_ID} |
     And I set the path parameters:

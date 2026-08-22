@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "data",
+    "message"
+  ],
+  "properties": {
+    "data": {
+      "type": "object",
+      "required": [
+        "filters"
+      ],
+      "properties": {
+        "filters": {
+          "type": "object",
+          "required": [
+            "address_states",
+            "coverage_areas",
+            "departments",
+            "locations",
+            "permission_groups",
+            "professions",
+            "reports_to",
+            "roles",
+            "teams"
+          ],
+          "properties": {
+            "address_states": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+
+            "coverage_areas": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+
+            "departments": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+
+            "locations": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+
+            "permission_groups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "value"
+                ],
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+
+            "professions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+
+            "reports_to": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "value"
+                ],
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+
+            "roles": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "label",
+                  "value"
+                ],
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+
+            "teams": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "message": {
+      "type": "string",
+      "const": "user accounts filter data fetched successfully"
+    }
+  },
+  "additionalProperties": false
+}

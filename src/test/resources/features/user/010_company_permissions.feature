@@ -2,7 +2,6 @@
 Feature: Company Permissions — GET /user/company/permissions/
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -119,7 +118,6 @@ Feature: Company Permissions — GET /user/company/permissions/
     And the "company_permissions" failure response should be valid
 
 
-
   @positive @creator
   Scenario: inject_meta_data uppercase TRUE is case-insensitively truthy and returns 200
     Given I prepare a request
@@ -195,7 +193,7 @@ Feature: Company Permissions — GET /user/company/permissions/
   Scenario: XSS-like inject_meta_data is coerced to false and returns 200
     Given I prepare a request
     And I set the query parameters:
-      | company_id       | {COMPANY_ID}              |
+      | company_id       | {COMPANY_ID}        |
       | inject_meta_data | <xss>alert(1)</xss> |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |

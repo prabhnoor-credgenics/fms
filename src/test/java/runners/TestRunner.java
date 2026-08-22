@@ -25,8 +25,8 @@ import org.testng.annotations.DataProvider;
                 "hooks.ThreadStatsListener",
                 "rerun:rerun/failedrerun.txt"
         },
-        		
-        monochrome = true,tags=" @TC_LUU_049"
+        tags="@document-type and @array-lookup",
+        monochrome = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
 

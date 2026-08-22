@@ -2,7 +2,6 @@
 Feature: Verify User — GET /user/public/verify/user/
 
 
-
   Background:
     Given I authenticate as "creator" slot 0 and remember as "creator0"
 
@@ -41,10 +40,10 @@ Feature: Verify User — GET /user/public/verify/user/
       | auth_token | {AUTH_TOKEN} |
       | company_id | {COMPANY_ID} |
     And I set the request headers:
-      | authenticationtoken | {AUTH_TOKEN}        |
-      | referer             | abc                 |
-      | api_endpoint        | recovery/all-loans  |
-      | api_method          | GET                 |
+      | authenticationtoken | {AUTH_TOKEN}       |
+      | referer             | abc                |
+      | api_endpoint        | recovery/all-loans |
+      | api_method          | GET                |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
     And the "verify_user" success response should be valid
@@ -67,15 +66,15 @@ Feature: Verify User — GET /user/public/verify/user/
   Scenario: All optional inputs together returns 200
     Given I prepare a request
     And I set the query parameters:
-      | auth_token      | {AUTH_TOKEN}       |
+      | auth_token      | {AUTH_TOKEN}         |
       | key_name        | authentication_token |
-      | company_id      | {COMPANY_ID}       |
-      | is_test_request | true               |
+      | company_id      | {COMPANY_ID}         |
+      | is_test_request | true                 |
     And I set the request headers:
-      | authenticationtoken | {AUTH_TOKEN}        |
-      | referer             | abc                 |
-      | api_endpoint        | recovery/all-loans  |
-      | api_method          | GET                 |
+      | authenticationtoken | {AUTH_TOKEN}       |
+      | referer             | abc                |
+      | api_endpoint        | recovery/all-loans |
+      | api_method          | GET                |
     When I send a "GET" request to "/user/public/verify/user/"
     Then the response status code should be 200
     And the "verify_user" success response should be valid
@@ -96,9 +95,9 @@ Feature: Verify User — GET /user/public/verify/user/
     And the "verify_user" success response should be valid
 
     Examples:
-      | key_name | key_value                                       |
-      | email    | testapiautomationusersrole11@yopmail.com        |
-      | user_id  | {USER_ID:creator0}                              |
+      | key_name | key_value                                |
+      | email    | testapiautomationusersrole11@yopmail.com |
+      | user_id  | {USER_ID:creator0}                       |
 
 
   @negative @creator
@@ -129,7 +128,7 @@ Feature: Verify User — GET /user/public/verify/user/
   Scenario: Non-UUID auth_token (authentication_token flow) returns 400
     Given I prepare a request
     And I set the query parameters:
-      | auth_token | not-a-uuid   |
+      | auth_token | not-a-uuid |
     And I set the request headers:
       | authenticationtoken | {AUTH_TOKEN} |
       | referer             | abc          |
@@ -296,11 +295,11 @@ Feature: Verify User — GET /user/public/verify/user/
     And the response body should not be empty
 
     Examples:
-      | key_value                          | status_code |
-      | ' OR '1'='1                        |200          |
-      | admin'--                           |200          |
-      | <xss>alert(1)</xss>@x.com          |200          |
-      | 日本語ユーザー@yopmail.com            |401              |
+      | key_value                 | status_code |
+      | ' OR '1'='1               | 200         |
+      | admin'--                  | 200         |
+      | <xss>alert(1)</xss>@x.com | 200         |
+      | 日本語ユーザー@yopmail.com       | 401         |
 
   @negative @creator
   Scenario: Missing key_value entirely for a non-default key_name returns 400

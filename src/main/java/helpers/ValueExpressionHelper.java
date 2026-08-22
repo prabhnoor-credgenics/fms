@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public final class ValueExpressionHelper {
 
     private static final Pattern BARE_RANDOM_STRING =
-            Pattern.compile("(?<!\\{)RANDOM_STRING:(\\d+)(?!\\})");
+            Pattern.compile("(?<!\\{)RANDOM_STRING:(\\d+)(?::([A-Za-z_][\\w.-]*))?(?!\\})");
 
     private ValueExpressionHelper() {
         throw new UnsupportedOperationException("Utility class");
@@ -62,7 +62,12 @@ public final class ValueExpressionHelper {
         Matcher matcher = BARE_RANDOM_STRING.matcher(expression);
         StringBuffer sb = new StringBuffer();
         while (matcher.find()) {
-            matcher.appendReplacement(sb, Matcher.quoteReplacement("{RANDOM_STRING:" + matcher.group(1) + "}"));
+            String length = matcher.group(1);
+            String alias = matcher.group(2);
+            String token = alias == null || alias.isBlank()
+                    ? "{RANDOM_STRING:" + length + "}"
+                    : "{RANDOM_STRING:" + length + ":" + alias + "}";
+            matcher.appendReplacement(sb, Matcher.quoteReplacement(token));
         }
         matcher.appendTail(sb);
         return sb.toString();
