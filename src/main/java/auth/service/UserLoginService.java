@@ -148,6 +148,58 @@ public class UserLoginService {
 
         testContext.setCompanyId(companyId);
         logger.info("Company ID stored for user slot {}: {}", testContext.getUserSlot(), companyId);
+
+        String userId = firstNonBlank(jp,
+                "output.user_id",
+                "output.user_profile_id",
+                "output.profile_id",
+                "output.user_nano_id",
+                "output.nano_id",
+                "output._id",
+                "output.id",
+                "data.output.user_id",
+                "data.output.profile_id",
+                "data.output._id");
+        String userName = firstNonBlank(jp,
+                "output.name",
+                "output.full_name",
+                "output.user_name",
+                "output.username",
+                "data.output.name",
+                "data.output.full_name",
+                "data.output.user_name");
+        String userEmail = firstNonBlank(jp,
+                "output.email",
+                "output.username",
+                "data.output.email",
+                "data.output.username");
+        String userMobile = firstNonBlank(jp,
+                "output.mobile",
+                "output.phone",
+                "output.mobile_number",
+                "data.output.mobile",
+                "data.output.phone",
+                "data.output.mobile_number");
+
+        testContext.applyVerifiedUserProfile(userId, userName, userEmail, userMobile);
+        logger.info(
+                "Verified user profile stored for slot {}: userId={}, user_name={}, user_email={}, user_mobile={}",
+                testContext.getUserSlot(),
+                userId,
+                userName,
+                userEmail,
+                userMobile
+        );
+    }
+
+    private static String firstNonBlank(JsonPath jp, String... paths) {
+        for (String path : paths) {
+            String value = jp.getString(path);
+            if (value != null && !value.isBlank()) {
+                return value.trim();
+            }
+        }
+        return null;
     }
 
     private void assertStatus(Response response, int expected, String operation) {

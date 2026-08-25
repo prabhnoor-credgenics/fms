@@ -8,32 +8,18 @@
           "applicant_city": "City1",
           "applicant_state": "Punjab",
           "applicant_pincode": "122016"
-        },
-        {
-          "applicant_address_text": "H no 1, New Delhi, India",
-          "applicant_city": "New City1",
-          "applicant_state": "Delhi",
-          "applicant_pincode": "110016"
         }
       ],
       "applicant_contact_details": [
         {
           "applicant_contact_number_type": "Home",
           "applicant_contact_number": "9988007799"
-        },
-        {
-          "applicant_contact_number_type": "Office",
-          "applicant_contact_number": "9988998891"
         }
       ],
       "applicant_email_details": [
         {
           "applicant_email_type": "Personal",
           "applicant_email": "Applicant@yopmail.com"
-        },
-        {
-          "applicant_email_type": "Official",
-          "applicant_email": "Applicants@yopmail.com"
         }
       ],
       "client_customer_id": "Client_Customer_Id_1",
@@ -59,32 +45,18 @@
           "applicant_city": "City1",
           "applicant_state": "Punjab",
           "applicant_pincode": "122016"
-        },
-        {
-          "applicant_address_text": "H no 1, New Delhi, India",
-          "applicant_city": "New City1",
-          "applicant_state": "Delhi",
-          "applicant_pincode": "110016"
         }
       ],
       "applicant_contact_details": [
         {
           "applicant_contact_number_type": "Home",
           "applicant_contact_number": "9988007799"
-        },
-        {
-          "applicant_contact_number_type": "Office",
-          "applicant_contact_number": "9988998891"
         }
       ],
       "applicant_email_details": [
         {
           "applicant_email_type": "Personal",
           "applicant_email": "Applicant@yopmail.com"
-        },
-        {
-          "applicant_email_type": "Official",
-          "applicant_email": "Applicants@yopmail.com"
         }
       ],
       "client_customer_id": "Client_Customer_Id_1",

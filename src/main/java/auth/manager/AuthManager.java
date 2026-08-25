@@ -60,10 +60,7 @@ public class AuthManager {
 
         AuthTokenCache.CachedSession cached = authTokenCache.getIfValid(env, effectiveModule, role, userType, userSlot);
         if (cached != null) {
-            testContext.setAuthToken(cached.authToken());
-            if (cached.companyId() != null) {
-                testContext.setCompanyId(cached.companyId());
-            }
+            applyCachedSession(cached);
             return;
         }
 
@@ -72,10 +69,7 @@ public class AuthManager {
         synchronized (lock) {
             cached = authTokenCache.getIfValid(env, effectiveModule, role, userType, userSlot);
             if (cached != null) {
-                testContext.setAuthToken(cached.authToken());
-                if (cached.companyId() != null) {
-                    testContext.setCompanyId(cached.companyId());
-                }
+                applyCachedSession(cached);
                 return;
             }
 
@@ -88,9 +82,33 @@ public class AuthManager {
                 );
             }
 
-            authTokenCache.put(env, effectiveModule, role, userType, userSlot,
-                    testContext.getAuthToken(), testContext.getCompanyId());
+            authTokenCache.put(
+                    env,
+                    effectiveModule,
+                    role,
+                    userType,
+                    userSlot,
+                    testContext.getAuthToken(),
+                    testContext.getCompanyId(),
+                    testContext.getUserId(),
+                    testContext.getUserName(),
+                    testContext.getUserEmail(),
+                    testContext.getUserMobile()
+            );
         }
+    }
+
+    private void applyCachedSession(AuthTokenCache.CachedSession cached) {
+        testContext.setAuthToken(cached.authToken());
+        if (cached.companyId() != null) {
+            testContext.setCompanyId(cached.companyId());
+        }
+        testContext.applyVerifiedUserProfile(
+                cached.userId(),
+                cached.userName(),
+                cached.userEmail(),
+                cached.userMobile()
+        );
     }
 
     private String resolveModule(String module) {

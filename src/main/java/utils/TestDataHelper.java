@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -130,8 +131,39 @@ public class TestDataHelper {
         if (template == null) {
             return null;
         }
+        String result = replaceNowOffsetPlaceholders(template);
+        int searchFrom = 0;
+        while (true) {
+            int start = result.indexOf(ContextKeys.NOW_PREFIX, searchFrom);
+            if (start < 0) {
+                break;
+            }
+            if (result.startsWith(ContextKeys.NOW_OFFSET_PREFIX, start)) {
+                searchFrom = start + ContextKeys.NOW_OFFSET_PREFIX.length();
+                continue;
+            }
+            int end = result.indexOf("}", start);
+            if (end <= start) {
+                break;
+            }
+            String placeholder = result.substring(start, end + 1);
+            String format = placeholder.substring(ContextKeys.NOW_PREFIX.length(), placeholder.length() - 1).trim();
+            result = result.substring(0, start) + currentTime(format) + result.substring(end + 1);
+            searchFrom = start;
+        }
+        return result;
+    }
+
+    /**
+     * {@code {NOW_OFFSET:&lt;amount&gt;:&lt;unit&gt;:&lt;format&gt;}} — negative amount is past, positive is future.
+     * Example: {@code {NOW_OFFSET:-7:days:iso_date}}
+     */
+    public String replaceNowOffsetPlaceholders(String template) {
+        if (template == null) {
+            return null;
+        }
         String result = template;
-        String prefix = "{NOW:";
+        String prefix = ContextKeys.NOW_OFFSET_PREFIX;
         while (result.contains(prefix)) {
             int start = result.indexOf(prefix);
             int end = result.indexOf("}", start);
@@ -139,8 +171,19 @@ public class TestDataHelper {
                 break;
             }
             String placeholder = result.substring(start, end + 1);
-            String format = placeholder.substring(prefix.length(), placeholder.length() - 1).trim();
-            result = result.replace(placeholder, currentTime(format));
+            String inner = placeholder.substring(prefix.length(), placeholder.length() - 1).trim();
+            String[] parts = inner.split(":");
+            if (parts.length != 3) {
+                throw new IllegalArgumentException(
+                        "Malformed placeholder '" + placeholder
+                                + "'. Expected {NOW_OFFSET:<amount>:<unit>:<format>} "
+                                + "e.g. {NOW_OFFSET:-7:days:iso_date}.");
+            }
+            long amount = Long.parseLong(parts[0].trim());
+            String unit = parts[1].trim();
+            String format = parts[2].trim();
+            long adjusted = applyCapturedTimeOffset(System.currentTimeMillis(), amount, unit, placeholder);
+            result = result.replace(placeholder, formatEpochMillis(adjusted, format));
         }
         return result;
     }
@@ -196,23 +239,21 @@ public class TestDataHelper {
     }
 
     private long applyCapturedTimeOffset(long epochMillis, long amount, String unit, String placeholder) {
-        switch (unit.toLowerCase()) {
-            case "second":
-            case "seconds":
-                return epochMillis + amount * 1000L;
-            case "minute":
-            case "minutes":
-                return epochMillis + amount * 60_000L;
-            case "hour":
-            case "hours":
-                return epochMillis + amount * 3_600_000L;
-            case "day":
-            case "days":
-                return epochMillis + amount * 86_400_000L;
-            default:
-                throw new IllegalArgumentException(
-                        "Unsupported offset unit in '" + placeholder + "'. Use seconds, minutes, hours, or days.");
-        }
+        ZonedDateTime zoned = Instant.ofEpochMilli(epochMillis).atZone(ZoneId.systemDefault());
+        String normalized = unit.toLowerCase();
+        ZonedDateTime adjusted = switch (normalized) {
+            case "second", "seconds" -> zoned.plusSeconds(amount);
+            case "minute", "minutes" -> zoned.plusMinutes(amount);
+            case "hour", "hours" -> zoned.plusHours(amount);
+            case "day", "days" -> zoned.plusDays(amount);
+            case "week", "weeks" -> zoned.plusWeeks(amount);
+            case "month", "months" -> zoned.plusMonths(amount);
+            case "year", "years" -> zoned.plusYears(amount);
+            default -> throw new IllegalArgumentException(
+                    "Unsupported offset unit in '" + placeholder
+                            + "'. Use seconds, minutes, hours, days, weeks, months, or years.");
+        };
+        return adjusted.toInstant().toEpochMilli();
     }
 
     public String replacePlaceholders(String template) {
@@ -272,6 +313,7 @@ public class TestDataHelper {
 
         result = replaceAllocationMonthOffset(result);
         result = replaceCapturedTimePlaceholders(result);
+        result = replaceNowOffsetPlaceholders(result);
         result = replaceNowPlaceholders(result);
 
         logger.debug("Replaced placeholders in template");

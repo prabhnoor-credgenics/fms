@@ -12,7 +12,15 @@ public class AuthTokenCache {
 
     private record CacheKey(Environment env, String module, UserRole role, String userType, int userSlot) {}
 
-    private record CachedAuth(String authToken, String companyId, Instant expiresAt) {}
+    private record CachedAuth(
+            String authToken,
+            String companyId,
+            String userId,
+            String userName,
+            String userEmail,
+            String userMobile,
+            Instant expiresAt
+    ) {}
 
     private static final Map<CacheKey, CachedAuth> CACHE = new ConcurrentHashMap<>();
 
@@ -34,7 +42,14 @@ public class AuthTokenCache {
         if (cached == null || Instant.now().isAfter(cached.expiresAt())) {
             return null;
         }
-        return new CachedSession(cached.authToken(), cached.companyId());
+        return new CachedSession(
+                cached.authToken(),
+                cached.companyId(),
+                cached.userId(),
+                cached.userName(),
+                cached.userEmail(),
+                cached.userMobile()
+        );
     }
 
     public void put(
@@ -46,13 +61,29 @@ public class AuthTokenCache {
             String authToken,
             String companyId
     ) {
+        put(env, module, role, userType, userSlot, authToken, companyId, null, null, null, null);
+    }
+
+    public void put(
+            Environment env,
+            String module,
+            UserRole role,
+            String userType,
+            int userSlot,
+            String authToken,
+            String companyId,
+            String userId,
+            String userName,
+            String userEmail,
+            String userMobile
+    ) {
         if (!isEnabled()) {
             return;
         }
         Instant expiresAt = Instant.now().plusSeconds(configReader.getAuthTokenCacheTtlMinutes() * 60L);
         CACHE.put(
                 new CacheKey(env, module, role, userType, userSlot),
-                new CachedAuth(authToken, companyId, expiresAt)
+                new CachedAuth(authToken, companyId, userId, userName, userEmail, userMobile, expiresAt)
         );
     }
 
@@ -64,5 +95,12 @@ public class AuthTokenCache {
         CACHE.clear();
     }
 
-    public record CachedSession(String authToken, String companyId) {}
+    public record CachedSession(
+            String authToken,
+            String companyId,
+            String userId,
+            String userName,
+            String userEmail,
+            String userMobile
+    ) {}
 }

@@ -90,18 +90,45 @@ public class MultiUserAuthStepDefinitions {
         String companyId = testContext.getCompanyId();
         String effectiveModule = testContext.getActiveModule();
 
-        String userId = null;
-        try {
-            userId = userProfileService.fetchUserId(token);
-        } catch (RuntimeException e) {
-            logger.warn("Could not resolve user id for remembered user '{}' (role={}, module={}, slot={}): {}. "
-                    + "{{USER_ID:{}}} will be unavailable.", key, role, effectiveModule, slot, e.getMessage(), key);
+        String userId = testContext.getUserId();
+        if (userId == null || userId.isBlank()) {
+            try {
+                userId = userProfileService.fetchUserId(token);
+                testContext.setUserId(userId);
+            } catch (RuntimeException e) {
+                logger.warn("Could not resolve user id for remembered user '{}' (role={}, module={}, slot={}): {}. "
+                                + "{{USER_ID:{}}} will be unavailable.",
+                        key, role, effectiveModule, slot, e.getMessage(), key);
+            }
         }
 
+        String userName = testContext.getUserName();
+        String userEmail = testContext.getUserEmail();
+        String userMobile = testContext.getUserMobile();
+
         testContext.rememberUserSession(key,
-                new TestContext.UserSession(token, companyId, userId, role, slot, effectiveModule));
-        logger.info("Authenticated + remembered user '{}' (role={}, module={}, slot={}, companyId={}, userId={}) — now the active user",
-                key, role, effectiveModule == null ? "-" : effectiveModule, slot, companyId, userId);
+                new TestContext.UserSession(
+                        token,
+                        companyId,
+                        userId,
+                        userName,
+                        userEmail,
+                        userMobile,
+                        role,
+                        slot,
+                        effectiveModule));
+        logger.info(
+                "Authenticated + remembered user '{}' (role={}, module={}, slot={}, companyId={}, userId={}, "
+                        + "userName={}, userEmail={}, userMobile={}) — now the active user",
+                key,
+                role,
+                effectiveModule == null ? "-" : effectiveModule,
+                slot,
+                companyId,
+                userId,
+                userName,
+                userEmail,
+                userMobile);
     }
 
     @Given("I authenticate using the API key")
@@ -114,7 +141,15 @@ public class MultiUserAuthStepDefinitions {
     public void i_authenticate_using_the_api_key_and_remember_as(String key) {
         authManager.initializeApiKeyAuthentication();
         testContext.rememberUserSession(key, new TestContext.UserSession(
-                testContext.getAuthToken(), testContext.getCompanyId(), null, null, 0, null));
+                testContext.getAuthToken(),
+                testContext.getCompanyId(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                0,
+                null));
         logger.info("Authenticated via API key + remembered as '{}' (company id={}) — now the active session",
                 key, testContext.getCompanyId());
     }
@@ -129,10 +164,14 @@ public class MultiUserAuthStepDefinitions {
         }
         testContext.setAuthToken(session.authToken());
         testContext.setCompanyId(session.companyId());
-        testContext.setUserId(session.userId());
         testContext.setUserSlot(session.slot());
         testContext.setUserRole(session.role());
         testContext.setActiveModule(session.module());
+        testContext.applyVerifiedUserProfile(
+                session.userId(),
+                session.userName(),
+                session.userEmail(),
+                session.userMobile());
         logger.info("Active user is now '{}' (role={}, module={}, slot={})",
                 key, session.role(), session.module() == null ? "-" : session.module(), session.slot());
     }

@@ -8,7 +8,7 @@ import org.testng.annotations.Listeners;
 
 @Listeners(SlackReportListener.class)
 @CucumberOptions(
-        features = "src/test/resources/features/recovery_loan/068_bulk_export_now_loan.feature",
+        features = "src/test/resources/features/",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -29,7 +29,6 @@ import org.testng.annotations.Listeners;
                 "rerun:rerun/failedrerun.txt",
                 "hooks.SlackReportCucumberPlugin"
         },
-        tags="@document-type and @array-lookup",
         monochrome = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

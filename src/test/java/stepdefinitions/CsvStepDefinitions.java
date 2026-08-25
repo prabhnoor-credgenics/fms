@@ -50,6 +50,12 @@ public class CsvStepDefinitions {
         csvValidator.validateCellValue(refCol, refVal, targetCol, expected);
     }
 
+    @Then("the CSV column {string} should be blank in all rows")
+    public void the_csv_column_should_be_blank_in_all_rows(String columnName) {
+        String column = requireResolved("column name", columnName);
+        csvValidator.validateColumnBlankInAllRows(column);
+    }
+
     @Given("I clear the loaded csv")
     public void i_clear_the_loaded_csv() {
         String previous = csvValidator.getLoadedFilePath();

@@ -1,0 +1,19 @@
+{
+  "allocation_month": "2026-8-01",
+  "search_type": "loan_id",
+  "export_type": "portfolio_data",
+  "inc_doc_links": false,
+  "tags_column": false,
+  "doc_detail_columns": false,
+  "include_fos_users": false,
+  "include_calling_users": false,
+  "co_applicant_columns": false,
+  "archive": false,
+  "include_allocated_users": false,
+  "include_derivable_variables": false,
+  "include_additional_columns": false,
+  "company_id": "c1509239-02a2-44b3-9fa3-69a40ec3bc02",
+  "deselected": [],
+  "selected_loan_ids": [
+  ]
+}

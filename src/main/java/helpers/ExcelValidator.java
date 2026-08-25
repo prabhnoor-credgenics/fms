@@ -17,6 +17,8 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ExcelValidator {
@@ -111,6 +113,39 @@ public class ExcelValidator {
         Assert.fail(
                 "No row found where '" + referenceColumn + "' = '" + referenceValue
                         + "' in Excel file: " + loadedFilePath
+        );
+    }
+
+    /**
+     * Asserts every data row has a blank/empty value in {@code columnName}.
+     */
+    public void validateColumnBlankInAllRows(String columnName) {
+        requireSheetLoaded();
+        int columnIndex = getColumnIndex(columnName);
+        List<String> failures = new ArrayList<>();
+        int checked = 0;
+        for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+            Row row = sheet.getRow(rowIndex);
+            if (row == null) {
+                continue;
+            }
+            checked++;
+            String actual = getCellValue(row.getCell(columnIndex));
+            if (!actual.isBlank()) {
+                failures.add("row " + (rowIndex + 1) + "='" + actual + "'");
+            }
+        }
+        if (!failures.isEmpty()) {
+            Assert.fail(
+                    "Expected Excel column '" + columnName + "' to be blank in all rows but found values: "
+                            + String.join(", ", failures) + ". File: " + loadedFilePath
+            );
+        }
+        logger.info(
+                "Excel column '{}' is blank in all {} data row(s) ({})",
+                columnName,
+                checked,
+                loadedFilePath
         );
     }
 

@@ -1,5 +1,7 @@
 package helpers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
 
 import java.util.ArrayList;
@@ -8,9 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public final class JsonArrayHelper {
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final Pattern PATH_SEGMENT =
+            Pattern.compile("([^.\\[\\]]+)|\\[(\\d+)]");
 
     private JsonArrayHelper() {
         throw new UnsupportedOperationException("Utility class");
@@ -28,7 +36,11 @@ public final class JsonArrayHelper {
             throw new IllegalArgumentException("Array path must not be blank");
         }
 
-        Object raw = response.jsonPath().get(arrayPath.trim());
+        String path = arrayPath.trim();
+        Object raw = response.jsonPath().get(path);
+        if (raw == null) {
+            raw = resolveThroughStringifiedJson(response.getBody().asString(), path);
+        }
         if (raw == null) {
             throw new AssertionError(
                     "Array path '" + arrayPath + "' is missing/null in response. Body: "
@@ -44,6 +56,66 @@ public final class JsonArrayHelper {
             throw new AssertionError("Array path '" + arrayPath + "' is empty.");
         }
         return list;
+    }
+
+    /**
+     * Walks a dotted path and parses intermediate string values that contain JSON
+     * (e.g. {@code output} is a stringified object, then {@code variable_filter_value}).
+     */
+    static Object resolveThroughStringifiedJson(String body, String path) {
+        if (body == null || body.isBlank() || path == null || path.isBlank()) {
+            return null;
+        }
+        try {
+            JsonNode node = OBJECT_MAPPER.readTree(body);
+            Matcher matcher = PATH_SEGMENT.matcher(path.trim());
+            boolean matched = false;
+            while (matcher.find()) {
+                matched = true;
+                node = unwrapStringifiedJson(node);
+                if (node == null || node.isMissingNode() || node.isNull()) {
+                    return null;
+                }
+                String field = matcher.group(1);
+                String index = matcher.group(2);
+                if (field != null) {
+                    if (!node.isObject()) {
+                        return null;
+                    }
+                    node = node.get(field);
+                } else if (index != null) {
+                    if (!node.isArray()) {
+                        return null;
+                    }
+                    int i = Integer.parseInt(index);
+                    if (i < 0 || i >= node.size()) {
+                        return null;
+                    }
+                    node = node.get(i);
+                }
+            }
+            if (!matched) {
+                return null;
+            }
+            node = unwrapStringifiedJson(node);
+            if (node == null || node.isMissingNode() || node.isNull()) {
+                return null;
+            }
+            return OBJECT_MAPPER.convertValue(node, Object.class);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static JsonNode unwrapStringifiedJson(JsonNode node) throws Exception {
+        if (node == null || !node.isTextual()) {
+            return node;
+        }
+        String text = node.asText().trim();
+        if (!(text.startsWith("{") || text.startsWith("["))) {
+            return node;
+        }
+        return OBJECT_MAPPER.readTree(text);
     }
 
     @SuppressWarnings("unchecked")
@@ -191,7 +263,35 @@ public final class JsonArrayHelper {
                 return item;
             }
         }
+
+        // header-list shape: [{ "header": "...", "options": [{ "label": "...", "value": ... }] }]
+        for (Map<String, Object> item : array) {
+            for (Object nested : item.values()) {
+                List<Map<String, Object>> nestedObjects = asObjectMapListOrNull(nested);
+                if (nestedObjects == null || nestedObjects.isEmpty()) {
+                    continue;
+                }
+                Map<String, Object> found =
+                        findObjectByReferenceOrNull(nestedObjects, referenceKey, referenceValue);
+                if (found != null) {
+                    return found;
+                }
+            }
+        }
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static List<Map<String, Object>> asObjectMapListOrNull(Object value) {
+        if (!(value instanceof List<?> list) || list.isEmpty()) {
+            return null;
+        }
+        for (Object item : list) {
+            if (!(item instanceof Map<?, ?>)) {
+                return null;
+            }
+        }
+        return (List<Map<String, Object>>) (List<?>) list;
     }
 
     public static void assertContainsItem(

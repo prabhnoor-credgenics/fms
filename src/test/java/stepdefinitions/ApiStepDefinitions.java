@@ -1167,7 +1167,8 @@ private String resolveParamPlaceholders(
     }
 
     if (value != null
-            && (value.contains(ContextKeys.NOW_PREFIX)
+            && (value.contains(ContextKeys.NOW_OFFSET_PREFIX)
+            || value.contains(ContextKeys.NOW_PREFIX)
             || value.contains(ContextKeys.CAPTURED_TIME_PREFIX))) {
 
         value =
@@ -1378,6 +1379,11 @@ private void removeJsonFieldInternal(String jsonPath) {
 @And("I add JSON field {string} as {string} with value {string}")
 public void i_add_json_field(String jsonPath, String type, String value) {
     addJsonFieldInternal(jsonPath, type, value);
+}
+
+@And("I add JSON field {string} as {string} with value:")
+public void i_add_json_field_docstring(String jsonPath, String type, String docString) {
+    addJsonFieldInternal(jsonPath, type, docString);
 }
 
 private void addJsonFieldInternal(String jsonPath, String type, String value) {

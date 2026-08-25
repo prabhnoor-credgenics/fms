@@ -1,6 +1,7 @@
 package stepdefinitions;
 
 import config.ConfigReader;
+import context.ContextKeys;
 import context.ScenarioTestDataResolver;
 import context.TestContext;
 import helpers.FileHelper;
@@ -135,5 +136,54 @@ public class ScenarioDataStepDefinitions {
         testContext.getRandomStringCache().put(key, value);
         testContext.captureValue(key, value);
         logger.info("Generated random string length {} as {{CAPTURED:{}}} = '{}'", length, key, value);
+    }
+
+    @Given("I capitalize first letter of {string} and remember as {string}")
+    public void i_capitalize_first_letter_of_and_remember_as(String source, String rememberAs) {
+        String key = scenarioTestDataResolver.replaceScenarioPlaceholders(rememberAs);
+        if (key == null || key.isBlank()) {
+            throw new IllegalArgumentException("Remember-as key must not be blank");
+        }
+        String original = resolveStringForTransform(source);
+        String capitalized = capitalizeFirstLetter(original);
+        testContext.captureValue(key, capitalized);
+        logger.info("Capitalized first letter of '{}' as {{CAPTURED:{}}} = '{}'", original, key, capitalized);
+    }
+
+    private String resolveStringForTransform(String source) {
+        if (source == null || source.isBlank()) {
+            throw new IllegalArgumentException("Value to capitalize must not be blank");
+        }
+        String capturedKey = unwrapCapturedKey(source);
+        if (!capturedKey.equals(source.trim()) || testContext.hasCapturedPath(capturedKey)) {
+            Object raw = testContext.getCapturedObject(capturedKey);
+            String value = TestContext.stringifyCaptured(raw);
+            if (value == null || value.isBlank()) {
+                throw new IllegalArgumentException(
+                        "Captured value '{{CAPTURED:" + capturedKey + "}}' is blank; cannot capitalize");
+            }
+            return value;
+        }
+        String resolved = scenarioTestDataResolver.replaceScenarioPlaceholders(source);
+        if (resolved == null || resolved.isBlank()) {
+            throw new IllegalArgumentException("Value to capitalize must not be blank");
+        }
+        return resolved;
+    }
+
+    static String capitalizeFirstLetter(String value) {
+        if (value == null || value.isEmpty()) {
+            return value;
+        }
+        int first = value.offsetByCodePoints(0, 1);
+        return value.substring(0, first).toUpperCase() + value.substring(first);
+    }
+
+    private static String unwrapCapturedKey(String key) {
+        String trimmed = key.trim();
+        if (trimmed.startsWith(ContextKeys.CAPTURED_PREFIX) && trimmed.endsWith("}")) {
+            return trimmed.substring(ContextKeys.CAPTURED_PREFIX.length(), trimmed.length() - 1).trim();
+        }
+        return trimmed;
     }
 }
