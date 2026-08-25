@@ -107,6 +107,7 @@ public class ScenarioTestDataResolver {
 
     public String resolveTimePlaceholders(String text) {
         String result = testDataHelper.replaceCapturedTimePlaceholders(text);
+        result = testDataHelper.replaceNowOffsetPlaceholders(result);
         result = testDataHelper.replaceNowPlaceholders(result);
         return result;
     }
@@ -131,6 +132,15 @@ public class ScenarioTestDataResolver {
             result = result.replace(ContextKeys.VARIABLE_NAME, resolveVariableName());
         }
         result = result.replace(ContextKeys.COMPANY_ID, resolveCompanyId());
+        if (result.contains(ContextKeys.USER_NAME)) {
+            result = result.replace(ContextKeys.USER_NAME, resolveUserName());
+        }
+        if (result.contains(ContextKeys.USER_EMAIL)) {
+            result = result.replace(ContextKeys.USER_EMAIL, resolveUserEmail());
+        }
+        if (result.contains(ContextKeys.USER_MOBILE)) {
+            result = result.replace(ContextKeys.USER_MOBILE, resolveUserMobile());
+        }
         String allocationMonth = resolveAllocationMonth();
         if (allocationMonth != null && !allocationMonth.isBlank()) {
             result = result.replace(ContextKeys.ALLOCATION_MONTH, allocationMonth);
@@ -151,6 +161,33 @@ public class ScenarioTestDataResolver {
             result = result.replace(ContextKeys.CLIENT_SECRET, resolveClientSecret());
         }
         return result;
+    }
+
+    public String resolveUserName() {
+        if (testContext.getUserName() != null && !testContext.getUserName().isBlank()) {
+            return testContext.getUserName();
+        }
+        throw new IllegalStateException(
+                "User name is not set. It is normally stored from verify/user during Before-hook auth."
+        );
+    }
+
+    public String resolveUserEmail() {
+        if (testContext.getUserEmail() != null && !testContext.getUserEmail().isBlank()) {
+            return testContext.getUserEmail();
+        }
+        throw new IllegalStateException(
+                "User email is not set. It is normally stored from verify/user during Before-hook auth."
+        );
+    }
+
+    public String resolveUserMobile() {
+        if (testContext.getUserMobile() != null && !testContext.getUserMobile().isBlank()) {
+            return testContext.getUserMobile();
+        }
+        throw new IllegalStateException(
+                "User mobile is not set. It is normally stored from verify/user during Before-hook auth."
+        );
     }
 
     public String resolveClientId() {
@@ -184,6 +221,12 @@ public class ScenarioTestDataResolver {
                 session -> session.companyId());
         result = replaceKeyed(result, ContextKeys.USER_ID_FOR_PREFIX, "user id",
                 session -> session.userId());
+        result = replaceKeyed(result, ContextKeys.USER_NAME_FOR_PREFIX, "user name",
+                session -> session.userName());
+        result = replaceKeyed(result, ContextKeys.USER_EMAIL_FOR_PREFIX, "user email",
+                session -> session.userEmail());
+        result = replaceKeyed(result, ContextKeys.USER_MOBILE_FOR_PREFIX, "user mobile",
+                session -> session.userMobile());
         return result;
     }
 

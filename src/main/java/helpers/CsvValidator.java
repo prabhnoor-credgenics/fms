@@ -94,6 +94,33 @@ public class CsvValidator {
         );
     }
 
+    /**
+     * Asserts every data row has a blank/empty value in {@code columnName}.
+     */
+    public void validateColumnBlankInAllRows(String columnName) {
+        requireLoaded();
+        int columnIndex = getColumnIndex(columnName);
+        List<String> failures = new ArrayList<>();
+        for (int rowIndex = 0; rowIndex < dataRows.size(); rowIndex++) {
+            String actual = cellAt(dataRows.get(rowIndex), columnIndex);
+            if (!actual.isBlank()) {
+                failures.add("row " + (rowIndex + 2) + "='" + actual + "'");
+            }
+        }
+        if (!failures.isEmpty()) {
+            Assert.fail(
+                    "Expected CSV column '" + columnName + "' to be blank in all rows but found values: "
+                            + String.join(", ", failures) + ". File: " + loadedFilePath
+            );
+        }
+        logger.info(
+                "CSV column '{}' is blank in all {} data row(s) ({})",
+                columnName,
+                dataRows.size(),
+                loadedFilePath
+        );
+    }
+
     public void closeQuietly() {
         headers = null;
         dataRows = null;

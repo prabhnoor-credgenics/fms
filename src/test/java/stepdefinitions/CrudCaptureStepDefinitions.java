@@ -1,9 +1,9 @@
 package stepdefinitions;
 
+import context.ContextKeys;
 import context.TestContext;
 import helpers.ResponseHelper;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.restassured.path.json.JsonPath;
@@ -11,11 +11,16 @@ import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CrudCaptureStepDefinitions {
 
@@ -88,6 +93,42 @@ public void i_capture_request_field_as(String jsonPath, String key) {
         testContext.captureObject(key, raw);
         logger.info("Stored response field '{}' ({}) as {{CAPTURED:{}}} [thread={}]",
                 jsonPath, describeType(raw), key, Thread.currentThread().getName());
+    }
+
+    @Then("I extract query parameter {string} from response path {string} and remember as {string}")
+    public void i_extract_query_parameter_from_response_path_and_remember_as(
+            String queryParam, String jsonPath, String rememberAs) {
+        String field = requireFieldAsString(jsonPath, rememberAs);
+        String value = extractQueryParameter(field, queryParam);
+        if (value == null || value.isBlank()) {
+            throw new AssertionError(
+                    "Query parameter '" + queryParam + "' in response path '" + jsonPath
+                            + "' is blank. Field: " + field);
+        }
+        testContext.captureObject(rememberAs, value);
+        logger.info(
+                "Extracted query '{}'='{}' from response path '{}' and remembered as {{CAPTURED:{}}} [thread={}]",
+                queryParam, value, jsonPath, rememberAs, Thread.currentThread().getName());
+    }
+
+    @Then("the captured value {string} should equal captured value {string}")
+    public void the_captured_value_should_equal_captured_value(String firstKey, String secondKey) {
+        assertCapturedValuesEqual(firstKey, secondKey, true);
+    }
+
+    @Then("the captured value {string} should not equal captured value {string}")
+    public void the_captured_value_should_not_equal_captured_value(String firstKey, String secondKey) {
+        assertCapturedValuesEqual(firstKey, secondKey, false);
+    }
+
+    @Then("I validate captured values {string} and {string} are equal")
+    public void i_validate_captured_values_are_equal(String firstKey, String secondKey) {
+        assertCapturedValuesEqual(firstKey, secondKey, true);
+    }
+
+    @Then("I validate captured values {string} and {string} are not equal")
+    public void i_validate_captured_values_are_not_equal(String firstKey, String secondKey) {
+        assertCapturedValuesEqual(firstKey, secondKey, false);
     }
 
     @Then("I store response field {string} as map {string}")
@@ -282,7 +323,67 @@ public void i_capture_request_field_as(String jsonPath, String key) {
         return value == null ? "" : value.trim();
     }
 
+    /**
+     * Reads {@code queryParam} from a URL or from HTML that contains an {@code href}
+     * (including relative paths and {@code &amp;} entities).
+     */
+    static String extractQueryParameter(String text, String queryParam) {
+        if (text == null || queryParam == null || queryParam.isBlank()) {
+            return null;
+        }
+        String decodedHtml = text.replace("&amp;", "&");
+        List<String> candidates = new ArrayList<>();
+        Matcher href = Pattern.compile("(?i)href\\s*=\\s*['\"]([^'\"]+)['\"]").matcher(decodedHtml);
+        while (href.find()) {
+            candidates.add(href.group(1));
+        }
+        candidates.add(decodedHtml);
+
+        Pattern qp = Pattern.compile("[?&]" + Pattern.quote(queryParam) + "=([^&\"'<>\\s]*)");
+        for (String candidate : candidates) {
+            Matcher matcher = qp.matcher(candidate);
+            if (matcher.find()) {
+                return URLDecoder.decode(matcher.group(1), StandardCharsets.UTF_8);
+            }
+        }
+        throw new AssertionError(
+                "Query parameter '" + queryParam + "' was not found in: " + text);
+    }
+
     private Response activeResponse() {
         return ResponseHelper.resolve(null, testContext);
+    }
+
+    private void assertCapturedValuesEqual(String firstKey, String secondKey, boolean expectEqual) {
+        String leftKey = unwrapCapturedKey(firstKey);
+        String rightKey = unwrapCapturedKey(secondKey);
+        String left = TestContext.stringifyCaptured(testContext.getCapturedObject(leftKey));
+        String right = TestContext.stringifyCaptured(testContext.getCapturedObject(rightKey));
+        boolean equal = Objects.equals(left, right);
+        if (expectEqual && !equal) {
+            throw new AssertionError(
+                    "Captured values are not equal: {{CAPTURED:" + leftKey + "}}='" + left
+                            + "' vs {{CAPTURED:" + rightKey + "}}='" + right + "'");
+        }
+        if (!expectEqual && equal) {
+            throw new AssertionError(
+                    "Captured values were expected to differ but both are '" + left
+                            + "' ({{CAPTURED:" + leftKey + "}} and {{CAPTURED:" + rightKey + "}})");
+        }
+        logger.info(
+                "Captured value comparison {}: {{CAPTURED:{}}}='{}' {} {{CAPTURED:{}}}='{}'",
+                expectEqual ? "equal" : "not equal",
+                leftKey, left, expectEqual ? "==" : "!=", rightKey, right);
+    }
+
+    private static String unwrapCapturedKey(String key) {
+        if (key == null || key.isBlank()) {
+            throw new AssertionError("Captured key must not be blank");
+        }
+        String trimmed = key.trim();
+        if (trimmed.startsWith(ContextKeys.CAPTURED_PREFIX) && trimmed.endsWith("}")) {
+            return trimmed.substring(ContextKeys.CAPTURED_PREFIX.length(), trimmed.length() - 1).trim();
+        }
+        return trimmed;
     }
 }

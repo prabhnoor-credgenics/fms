@@ -1,11 +1,14 @@
 package runners;
 
+import hooks.SlackReportListener;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 
+@Listeners(SlackReportListener.class)
 @CucumberOptions(
-        features = "src/test/resources/features/recovery_loan/0001_loan_upload_new.feature",
+        features = "src/test/resources/features/",
         glue = {
                 "stepdefinitions",
                 "hooks",
@@ -23,9 +26,9 @@ import org.testng.annotations.DataProvider;
                 "pretty",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
                 "hooks.ThreadStatsListener",
-                "rerun:rerun/failedrerun.txt"
+                "rerun:rerun/failedrerun.txt",
+                "hooks.SlackReportCucumberPlugin"
         },
-        tags="@document-type and @array-lookup",
         monochrome = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {

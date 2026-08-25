@@ -21,6 +21,9 @@ public class TestContext {
     private String adminLastName;
     private String profileId;
     private String userId;
+    private String userName;
+    private String userEmail;
+    private String userMobile;
     private String companyType;
     private String clientType;
     private String companySubType;
@@ -189,8 +192,17 @@ public class TestContext {
         }
     }
 
-    public record UserSession(String authToken, String companyId, String userId, UserRole role, int slot,
-                              String module) {}
+    public record UserSession(
+            String authToken,
+            String companyId,
+            String userId,
+            String userName,
+            String userEmail,
+            String userMobile,
+            UserRole role,
+            int slot,
+            String module
+    ) {}
 
     private final Map<String, UserSession> namedSessions = new LinkedHashMap<>();
 
@@ -328,6 +340,52 @@ public class TestContext {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getUserMobile() {
+        return userMobile;
+    }
+
+    public void setUserMobile(String userMobile) {
+        this.userMobile = userMobile;
+    }
+
+    /**
+     * Stores verify/user profile fields on context and as capture keys
+     * ({@code user_name}, {@code user_email}, {@code user_mobile}).
+     */
+    public void applyVerifiedUserProfile(String userId, String userName, String userEmail, String userMobile) {
+        if (userId != null && !userId.isBlank()) {
+            setUserId(userId);
+        }
+        if (userName != null && !userName.isBlank()) {
+            setUserName(userName);
+            captureValue(ContextKeys.CAPTURE_KEY_USER_NAME, userName);
+        }
+        if (userEmail != null && !userEmail.isBlank()) {
+            setUserEmail(userEmail);
+            captureValue(ContextKeys.CAPTURE_KEY_USER_EMAIL, userEmail);
+        }
+        if (userMobile != null && !userMobile.isBlank()) {
+            setUserMobile(userMobile);
+            captureValue(ContextKeys.CAPTURE_KEY_USER_MOBILE, userMobile);
+        }
     }
 
     public String getCompanyType() {

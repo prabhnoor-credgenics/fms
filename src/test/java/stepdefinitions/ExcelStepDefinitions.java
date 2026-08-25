@@ -98,6 +98,12 @@ public class ExcelStepDefinitions {
         excelValidator.validateCellValue(refCol, refVal, targetCol, expected);
     }
 
+    @Then("the Excel column {string} should be blank in all rows")
+    public void the_excel_column_should_be_blank_in_all_rows(String columnName) {
+        String column = requireResolved("column name", columnName);
+        excelValidator.validateColumnBlankInAllRows(column);
+    }
+
     @Given("I clear the loaded excel")
     public void i_clear_the_loaded_excel() {
         String previous = excelValidator.getLoadedFilePath();

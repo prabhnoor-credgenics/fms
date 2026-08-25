@@ -137,6 +137,35 @@ public class ApiStepDefinitions {
         logger.warn("Poll exhausted: '{}' still present after {} attempts", resolved, maxAttempts);
     }
 
+    @When("I poll a {string} request to {string} until the response body contains field {string} as {string} with value {string}")
+    public void i_poll_until_body_contains_field_as_type_with_value(
+            String httpMethod, String endpoint, String jsonPath, String type, String expectedValue) {
+        String resolvedPath = scenarioTestDataResolver.replaceScenarioPlaceholders(jsonPath);
+        String resolvedType = scenarioTestDataResolver.replaceScenarioPlaceholders(type);
+        String resolvedValue = scenarioTestDataResolver.replaceScenarioPlaceholders(expectedValue);
+        int maxAttempts = 3;
+        int delaySeconds = 5;
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            i_send_a_request_to(httpMethod, endpoint);
+            if (ResponseValidator.matchesJsonFieldTyped(
+                    activeResponse(), resolvedPath, resolvedType, resolvedValue)) {
+                logger.info(
+                        "Poll matched: field '{}' equals '{}' on attempt {}/{}",
+                        resolvedPath, resolvedValue, attempt, maxAttempts);
+                return;
+            }
+            logger.info(
+                    "Poll attempt {}/{}: field '{}' != '{}' yet",
+                    attempt, maxAttempts, resolvedPath, resolvedValue);
+            if (attempt < maxAttempts) {
+                i_wait_for_seconds(delaySeconds);
+            }
+        }
+        logger.warn(
+                "Poll exhausted: field '{}' never matched '{}' after {} attempts",
+                resolvedPath, resolvedValue, maxAttempts);
+    }
+
     @Given("I prepare a request")
     public void i_prepare_a_request() {
         request = restAssuredBase.getRequestSpec();
@@ -1138,7 +1167,8 @@ private String resolveParamPlaceholders(
     }
 
     if (value != null
-            && (value.contains(ContextKeys.NOW_PREFIX)
+            && (value.contains(ContextKeys.NOW_OFFSET_PREFIX)
+            || value.contains(ContextKeys.NOW_PREFIX)
             || value.contains(ContextKeys.CAPTURED_TIME_PREFIX))) {
 
         value =
@@ -1349,6 +1379,11 @@ private void removeJsonFieldInternal(String jsonPath) {
 @And("I add JSON field {string} as {string} with value {string}")
 public void i_add_json_field(String jsonPath, String type, String value) {
     addJsonFieldInternal(jsonPath, type, value);
+}
+
+@And("I add JSON field {string} as {string} with value:")
+public void i_add_json_field_docstring(String jsonPath, String type, String docString) {
+    addJsonFieldInternal(jsonPath, type, docString);
 }
 
 private void addJsonFieldInternal(String jsonPath, String type, String value) {

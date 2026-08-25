@@ -102,6 +102,19 @@ public class ResponseValidator {
         assertValuesEqual(jsonPath, actualValue, expectedValue);
     }
 
+    /**
+     * Non-throwing check used by poll steps. Returns false when the field is missing or unequal.
+     */
+    public static boolean matchesJsonFieldTyped(Response response, String jsonPath, String type, String expectedRaw) {
+        try {
+            validateJsonFieldTyped(response, jsonPath, type, expectedRaw);
+            return true;
+        } catch (AssertionError e) {
+            logger.debug("Field '{}' did not match yet: {}", jsonPath, e.getMessage());
+            return false;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public static void validateJsonField(Response response, String jsonPath, Matcher<?> matcher) {
         Object actualValue = response.jsonPath().get(jsonPath);

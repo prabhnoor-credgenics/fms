@@ -1,0 +1,79 @@
+{
+  "upload_type": "default",
+  "loan_data": [
+    {
+      "applicant_address": [
+        {
+          "applicant_address_text": "H no 1, Delhi, India",
+          "applicant_city": "City1",
+          "applicant_state": "Punjab",
+          "applicant_pincode": "122016"
+        }
+      ],
+      "applicant_contact_details": [
+        {
+          "applicant_contact_number_type": "Home",
+          "applicant_contact_number": "9988007799"
+        }
+      ],
+      "applicant_email_details": [
+        {
+          "applicant_email_type": "Personal",
+          "applicant_email": "Applicant@yopmail.com"
+        }
+      ],
+      "client_customer_id": "Client_Customer_Id_1",
+      "defaults":
+      {
+        "date_of_default": "2026-1-01",
+        "total_claim_amount": "10098.98",
+        "principal_outstanding_amount": "1098.98",
+        "allocation_month":"2023-01-01"
+      },
+
+      "loan_id": "Test_loan_2",
+      "loan_region": "North India",
+      "loan_type": "Bike",
+      "product_type": "Bike",
+      "tags": "Tags_Loan_1",
+      "group_id": "group_id_1"
+    },
+    {
+      "applicant_address": [
+        {
+          "applicant_address_text": "H no 1, Delhi, India",
+          "applicant_city": "City1",
+          "applicant_state": "Punjab",
+          "applicant_pincode": "122016"
+        }
+      ],
+      "applicant_contact_details": [
+        {
+          "applicant_contact_number_type": "Home",
+          "applicant_contact_number": "9988007799"
+        }
+      ],
+      "applicant_email_details": [
+        {
+          "applicant_email_type": "Personal",
+          "applicant_email": "Applicant@yopmail.com"
+        }
+      ],
+      "client_customer_id": "Client_Customer_Id_1",
+      "defaults":
+      {
+        "date_of_default": "2026-1-01",
+        "total_claim_amount": "10098.98",
+        "principal_outstanding_amount": "1098.98",
+        "allocation_month":"2023-01-01"
+      }
+    ,
+      "loan_id": "Test_loan_1",
+      "loan_region": "North India",
+      "loan_type": "Bike",
+      "product_type": "Bike",
+      "tags": "Tags_Loan_2",
+      "group_id": "group_id_2"
+    }
+  ]
+}

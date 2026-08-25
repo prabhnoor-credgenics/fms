@@ -10,7 +10,10 @@ import org.apache.logging.log4j.Logger;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
+import hooks.SlackReportListener;
 
 import java.net.URI;
 
@@ -21,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+@Listeners(SlackReportListener.class)
 @CucumberOptions(
         features = "src/test/resources/features/",
         glue = {
@@ -38,9 +42,10 @@ import java.util.Map;
         },
         plugin = {
                 "pretty",
-                "hooks.ThreadStatsListener",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
-                "rerun:rerun/failedparallelrerun.txt"
+                "hooks.ThreadStatsListener",
+                "rerun:rerun/failedparallelrerun.txt",
+                "hooks.SlackReportCucumberPlugin"
         },
         tags="not @shouldfail and not @500 and not @public-access-token and not @internal-register-route and not @first-login and not @creditline",
         monochrome = true
@@ -183,9 +188,11 @@ public class ParallelTestRunner {
 
     @AfterClass(alwaysRun = true)
     public void tearDownClass() {
-
-        testNGCucumberRunner.finish();
-
+        if (testNGCucumberRunner != null) {
+            testNGCucumberRunner.finish();
+        }
+        utils.ReportSanitizer.sanitizeReportsUnder("TestReports");
+        helpers.SlackReporter.publishLatestIfEnabled();
     }
 
 }

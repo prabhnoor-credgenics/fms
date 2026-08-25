@@ -7,6 +7,9 @@
   Run: mvn test -Pparallel
 -->
 <suite name="API Test Suite (Parallel)" data-provider-thread-count="60">
+    <listeners>
+        <listener class-name="hooks.SlackReportListener"/>
+    </listeners>
     <test name="API Tests Parallel">
         <classes>
             <class name="runners.ParallelTestRunner"/>
