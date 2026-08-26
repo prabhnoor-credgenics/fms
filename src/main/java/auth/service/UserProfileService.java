@@ -152,7 +152,7 @@ public class UserProfileService {
                 .queryParam("key_name", keyName)
                 .queryParam("key_value", keyValue);
 
-        if (companyId != null && !companyId.isBlank()) {
+        if (companyId != null && !companyId.isBlank() && !"all".equalsIgnoreCase(companyId.trim())) {
             request = request.queryParam("company_id", companyId);
         }
 
