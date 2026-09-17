@@ -8,7 +8,7 @@ import org.testng.annotations.Listeners;
 
 @Listeners(SlackReportListener.class)
 @CucumberOptions(
-        features = "src/test/resources/features/",
+        features = "src/test/resources/features/FOS_Repossession/001_repossession_loan_details.feature",
         glue = {
                 "stepdefinitions",
                 "hooks",
