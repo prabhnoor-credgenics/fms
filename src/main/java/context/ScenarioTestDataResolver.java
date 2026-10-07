@@ -160,6 +160,21 @@ public class ScenarioTestDataResolver {
         if (result.contains(ContextKeys.CLIENT_SECRET)) {
             result = result.replace(ContextKeys.CLIENT_SECRET, resolveClientSecret());
         }
+        if (result.contains(ContextKeys.FMS_USER_ID)) {
+            result = result.replace(ContextKeys.FMS_USER_ID, resolveFmsUserId());
+        }
+        if (result.contains(ContextKeys.FMS_API_KEY)) {
+            result = result.replace(ContextKeys.FMS_API_KEY, resolveFmsApiKey());
+        }
+        if (result.contains(ContextKeys.FMS_IMEI)) {
+            result = result.replace(ContextKeys.FMS_IMEI, resolveFmsImei());
+        }
+        if (result.contains(ContextKeys.FMS_APP_VERSION)) {
+            result = result.replace(ContextKeys.FMS_APP_VERSION, resolveFmsAppVersion());
+        }
+        if (result.contains(ContextKeys.FMS_TOKEN_V2)) {
+            result = result.replace(ContextKeys.FMS_TOKEN_V2, resolveFmsTokenV2());
+        }
         return result;
     }
 
@@ -200,6 +215,44 @@ public class ScenarioTestDataResolver {
         return configReader.getCryptoProperty(key);
     }
 
+    public String resolveFmsUserId() {
+        if (testContext.getFmsUserId() != null && !testContext.getFmsUserId().isBlank()) {
+            return testContext.getFmsUserId();
+        }
+        throw new IllegalStateException(
+                "FMS user id is not set. Use 'Given I authorize as FMS user' "
+                        + "before referencing {FMS_USER_ID}."
+        );
+    }
+
+    public String resolveFmsApiKey() {
+        if (testContext.getFmsApiKey() != null && !testContext.getFmsApiKey().isBlank()) {
+            return testContext.getFmsApiKey();
+        }
+        return configReader.getFmsApiKey();
+    }
+
+    public String resolveFmsImei() {
+        if (testContext.getFmsImei() != null && !testContext.getFmsImei().isBlank()) {
+            return testContext.getFmsImei();
+        }
+        return configReader.getFmsImei();
+    }
+
+    public String resolveFmsAppVersion() {
+        if (testContext.getFmsAppVersion() != null && !testContext.getFmsAppVersion().isBlank()) {
+            return testContext.getFmsAppVersion();
+        }
+        return configReader.getFmsAppVersion();
+    }
+
+    public String resolveFmsTokenV2() {
+        if (testContext.getFmsTokenV2() != null && !testContext.getFmsTokenV2().isBlank()) {
+            return testContext.getFmsTokenV2();
+        }
+        return configReader.getFmsTokenV2();
+    }
+
     public String resolveCreatorUserId() {
         if (testContext.getUserId() != null && !testContext.getUserId().isBlank()) {
             return testContext.getUserId();
@@ -227,6 +280,46 @@ public class ScenarioTestDataResolver {
                 session -> session.userEmail());
         result = replaceKeyed(result, ContextKeys.USER_MOBILE_FOR_PREFIX, "user mobile",
                 session -> session.userMobile());
+        result = replaceFmsKeyed(result);
+        return result;
+    }
+
+    private String replaceFmsKeyed(String text) {
+        String result = text;
+        result = replaceFmsKeyed(result, ContextKeys.FMS_USER_ID_FOR_PREFIX, "FMS user id",
+                TestContext.FmsSession::userId);
+        result = replaceFmsKeyed(result, ContextKeys.FMS_API_KEY_FOR_PREFIX, "FMS api key",
+                TestContext.FmsSession::apiKey);
+        return result;
+    }
+
+    private String replaceFmsKeyed(
+            String text,
+            String prefix,
+            String fieldLabel,
+            java.util.function.Function<TestContext.FmsSession, String> extractor
+    ) {
+        String result = text;
+        int start;
+        while ((start = result.indexOf(prefix)) >= 0) {
+            int end = result.indexOf('}', start);
+            if (end < 0) {
+                break;
+            }
+            String key = result.substring(start + prefix.length(), end).trim();
+            TestContext.FmsSession session = testContext.getFmsSession(key);
+            if (session == null) {
+                throw new IllegalStateException(
+                        "No FMS user remembered as '" + key + "'. Use "
+                                + "'I authorize as FMS user and remember as \"" + key + "\"' first.");
+            }
+            String value = extractor.apply(session);
+            if (value == null || value.isBlank()) {
+                throw new IllegalStateException(
+                        "Remembered FMS user '" + key + "' has no " + fieldLabel + " captured.");
+            }
+            result = result.substring(0, start) + value + result.substring(end + 1);
+        }
         return result;
     }
 

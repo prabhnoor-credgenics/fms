@@ -20,12 +20,20 @@ public final class ContextKeys {
     public static final String CLIENT_ID = "{CLIENT_ID}";
     public static final String CLIENT_SECRET = "{CLIENT_SECRET}";
 
+    public static final String FMS_USER_ID = "{FMS_USER_ID}";
+    public static final String FMS_API_KEY = "{FMS_API_KEY}";
+    public static final String FMS_IMEI = "{FMS_IMEI}";
+    public static final String FMS_APP_VERSION = "{FMS_APP_VERSION}";
+    public static final String FMS_TOKEN_V2 = "{FMS_TOKEN_V2}";
+
     public static final String AUTH_TOKEN_FOR_PREFIX = "{AUTH_TOKEN:";
     public static final String COMPANY_ID_FOR_PREFIX = "{COMPANY_ID:";
     public static final String USER_ID_FOR_PREFIX = "{USER_ID:";
     public static final String USER_NAME_FOR_PREFIX = "{USER_NAME:";
     public static final String USER_EMAIL_FOR_PREFIX = "{USER_EMAIL:";
     public static final String USER_MOBILE_FOR_PREFIX = "{USER_MOBILE:";
+    public static final String FMS_USER_ID_FOR_PREFIX = "{FMS_USER_ID:";
+    public static final String FMS_API_KEY_FOR_PREFIX = "{FMS_API_KEY:";
 
     /** Capture keys populated from verify/user during Before-hook auth. */
     public static final String CAPTURE_KEY_USER_NAME = "user_name";

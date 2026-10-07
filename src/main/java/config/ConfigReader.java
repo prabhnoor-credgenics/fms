@@ -298,6 +298,71 @@ public class ConfigReader {
         );
     }
 
+    // --- FMS (FixMyScore) secure credentials ---
+    // All secrets live in src/main/resources/secrets/crypto.properties (git-ignored).
+    // Keys are env-scoped: {env}_fms_api_key, {env}_fms_mobile, {env}_fms_imei,
+    // {env}_fms_app_version, {env}_fms_token_v2 (e.g. stag_fms_api_key).
+    // Legacy non-prefixed FMS_USER_API_KEY / FMS_USER_ID are honoured as fallback
+    // so existing local setups keep working after upgrade.
+    public String getFmsApiKey() {
+        return getFmsCryptoProperty("fms_api_key",
+                "FMS_USER_API_KEY",
+                "Add '<env>_fms_api_key' (e.g. stag_fms_api_key) to src/main/resources/secrets/crypto.properties.");
+    }
+
+    public String getFmsMobile() {
+        return getFmsCryptoProperty("fms_mobile",
+                "FMS_MOBILE",
+                "Add '<env>_fms_mobile' (e.g. stag_fms_mobile=9999999999) to src/main/resources/secrets/crypto.properties.");
+    }
+
+    public String getFmsImei() {
+        return getFmsPropertyWithDefault("fms_imei", "FMS_IMEI", "addbf32c80998928");
+    }
+
+    public String getFmsAppVersion() {
+        return getFmsPropertyWithDefault("fms_app_version", "FMS_APP_VERSION", "4.4.6");
+    }
+
+    public String getFmsTokenV2() {
+        return getFmsPropertyWithDefault("fms_token_v2", "FMS_TOKEN_V2", "true");
+    }
+
+    private String getFmsCryptoProperty(String suffix, String legacyKey, String hint) {
+        Environment env = getEnvironment();
+        String scopedKey = env.getValue() + "_" + suffix;
+        String value = getCryptoPropertyOrNull(scopedKey);
+        if (value != null) {
+            return value;
+        }
+        String legacy = getCryptoPropertyOrNull(legacyKey);
+        if (legacy != null) {
+            logger.warn("Using legacy crypto key '{}'; prefer env-scoped '{}' for env={}",
+                    legacyKey, scopedKey, env.name());
+            return legacy;
+        }
+        logger.error("FMS crypto property missing: '{}' (fallback '{}')", scopedKey, legacyKey);
+        throw new RuntimeException("FMS credential missing: '" + scopedKey + "'. " + hint);
+    }
+
+    private String getFmsPropertyWithDefault(String suffix, String legacyKey, String defaultValue) {
+        Environment env = getEnvironment();
+        String scopedKey = env.getValue() + "_" + suffix;
+        String value = getCryptoPropertyOrNull(scopedKey);
+        if (value != null) {
+            return value;
+        }
+        String legacy = getCryptoPropertyOrNull(legacyKey);
+        if (legacy != null) {
+            return legacy;
+        }
+        String plain = getProperty(scopedKey);
+        if (plain != null && !plain.isBlank()) {
+            return plain.trim();
+        }
+        return defaultValue;
+    }
+
     public boolean isSlackReportEnabled() {
         String override = System.getProperty("slack.report.enabled");
         if (override != null && !override.isBlank()) {
@@ -333,4 +398,6 @@ public class ConfigReader {
         }
         return getProperty("slack_channel_id", "");
     }
+
+
 }

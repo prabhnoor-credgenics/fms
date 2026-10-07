@@ -50,6 +50,12 @@ public class TestContext {
 
     private UserRole userRole;
 
+    private String fmsUserId;
+    private String fmsApiKey;
+    private String fmsImei;
+    private String fmsAppVersion;
+    private String fmsTokenV2;
+
     private final Map<String, String> randomStringCache = new HashMap<>();
 
     private final Map<String, Long> capturedTimes = new HashMap<>();
@@ -204,7 +210,32 @@ public class TestContext {
             String module
     ) {}
 
+    public record FmsSession(
+            String userId,
+            String apiKey,
+            String imei,
+            String appVersion,
+            String tokenV2
+    ) {}
+
     private final Map<String, UserSession> namedSessions = new LinkedHashMap<>();
+    private final Map<String, FmsSession> namedFmsSessions = new LinkedHashMap<>();
+
+    public void rememberFmsSession(String key, FmsSession session) {
+        namedFmsSessions.put(key, session);
+    }
+
+    public FmsSession getFmsSession(String key) {
+        return namedFmsSessions.get(key);
+    }
+
+    public void removeFmsSession(String key) {
+        namedFmsSessions.remove(key);
+    }
+
+    public Map<String, FmsSession> getNamedFmsSessions() {
+        return namedFmsSessions;
+    }
 
     public void rememberUserSession(String key, UserSession session) {
         namedSessions.put(key, session);
@@ -510,6 +541,64 @@ public class TestContext {
 
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
+    }
+
+    public String getFmsUserId() {
+        return fmsUserId;
+    }
+
+    public void setFmsUserId(String fmsUserId) {
+        this.fmsUserId = fmsUserId;
+    }
+
+    public String getFmsApiKey() {
+        return fmsApiKey;
+    }
+
+    public void setFmsApiKey(String fmsApiKey) {
+        this.fmsApiKey = fmsApiKey;
+    }
+
+    public String getFmsImei() {
+        return fmsImei;
+    }
+
+    public void setFmsImei(String fmsImei) {
+        this.fmsImei = fmsImei;
+    }
+
+    public String getFmsAppVersion() {
+        return fmsAppVersion;
+    }
+
+    public void setFmsAppVersion(String fmsAppVersion) {
+        this.fmsAppVersion = fmsAppVersion;
+    }
+
+    public String getFmsTokenV2() {
+        return fmsTokenV2;
+    }
+
+    public void setFmsTokenV2(String fmsTokenV2) {
+        this.fmsTokenV2 = fmsTokenV2;
+    }
+
+    public void applyFmsSession(String userId, String apiKey, String imei, String appVersion, String tokenV2) {
+        if (userId != null && !userId.isBlank()) {
+            setFmsUserId(userId);
+        }
+        if (apiKey != null && !apiKey.isBlank()) {
+            setFmsApiKey(apiKey);
+        }
+        if (imei != null && !imei.isBlank()) {
+            setFmsImei(imei);
+        }
+        if (appVersion != null && !appVersion.isBlank()) {
+            setFmsAppVersion(appVersion);
+        }
+        if (tokenV2 != null && !tokenV2.isBlank()) {
+            setFmsTokenV2(tokenV2);
+        }
     }
 
     public Map<String, String> getRandomStringCache() {

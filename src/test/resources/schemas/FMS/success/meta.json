@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Generated Schema",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "android": {
+          "type": "object",
+          "properties": {
+            "vernac_profile_id_list": {
+              "type": "object",
+              "properties": {
+                "en_in": {
+                  "type": "string"
+                },
+                "hi": {
+                  "type": "string"
+                },
+                "ta": {
+                  "type": "string"
+                },
+                "te": {
+                  "type": "string"
+                },
+                "kn": {
+                  "type": "string"
+                },
+                "hi_en": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "en_in",
+                "hi",
+                "ta",
+                "te",
+                "kn",
+                "hi_en"
+              ]
+            },
+            "min_app_version": {
+              "type": "string"
+            },
+            "dist_version": {
+              "type": "string"
+            },
+            "chatbot_enabled": {
+              "type": "boolean"
+            },
+            "language_mapping": {
+              "type": "object",
+              "properties": {
+                "en_in": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "continue_button_text": {
+                      "type": "string"
+                    },
+                    "choose_language_text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "display_name",
+                    "continue_button_text",
+                    "choose_language_text"
+                  ]
+                },
+                "hi": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "continue_button_text": {
+                      "type": "string"
+                    },
+                    "choose_language_text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "display_name",
+                    "continue_button_text",
+                    "choose_language_text"
+                  ]
+                },
+                "hi_en": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "continue_button_text": {
+                      "type": "string"
+                    },
+                    "choose_language_text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "display_name",
+                    "continue_button_text",
+                    "choose_language_text"
+                  ]
+                },
+                "te": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "continue_button_text": {
+                      "type": "string"
+                    },
+                    "choose_language_text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "display_name",
+                    "continue_button_text",
+                    "choose_language_text"
+                  ]
+                },
+                "kn": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "continue_button_text": {
+                      "type": "string"
+                    },
+                    "choose_language_text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "display_name",
+                    "continue_button_text",
+                    "choose_language_text"
+                  ]
+                },
+                "ta": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "continue_button_text": {
+                      "type": "string"
+                    },
+                    "choose_language_text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "display_name",
+                    "continue_button_text",
+                    "choose_language_text"
+                  ]
+                }
+              },
+              "required": [
+                "en_in",
+                "hi",
+                "hi_en",
+                "te",
+                "kn",
+                "ta"
+              ]
+            }
+          },
+          "required": [
+            "vernac_profile_id_list",
+            "min_app_version",
+            "dist_version",
+            "chatbot_enabled",
+            "language_mapping"
+          ]
+        }
+      },
+      "required": [
+        "android"
+      ]
+    },
+    "status": {
+      "type": "integer"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "data",
+    "status",
+    "message"
+  ]
+}
